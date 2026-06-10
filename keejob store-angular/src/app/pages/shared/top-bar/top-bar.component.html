@@ -1,0 +1,165 @@
+  <div class="top-bar">
+    <div class="container">
+      
+      <div class="info-item">
+        <i class="fas  fa-phone"></i>
+        <span>+216 98 989 898</span>
+      </div>
+
+      <div class="info-item">
+        <i class="fas  fa-envelope"></i>
+        <span>contact@storekeejob.com</span>
+      </div>  
+
+      <div class="info-item">
+        <i class="far fa-clock	"></i>
+        <span>Lun - Ven 8:00 - 17:00</span>
+      </div>
+
+      <div class="info-item">
+        <i class="fas  fa-map-marker-alt"></i>
+        <span>Franklin St, Greenpoint Ave</span>
+      </div>
+
+    <div class="social-icons">
+      <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" target="_blank" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" target="_blank" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+    </div>
+
+    </div>
+  </div>
+
+<nav class="navbar">
+  <div class="container">
+
+    <!-- Header mobile : logo + burger -->
+    <div class="navbar-top">
+      <div class="logo">
+        <a href="#">
+          <img src="../../../assets/img_image_306.png" alt="" class="logoK">
+        </a>
+      </div>
+
+      <div class="burger" (click)="toggleMenu()" [class.open]="menuOpen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <!-- Tout le contenu dans le menu burger -->
+    <div class="nav-wrapper" [class.open]="menuOpen">
+
+      <!-- Liens nav -->
+      <ul class="nav-links">
+
+        <li class="dropdown">
+          <a href="evaluation" (click)="toggleDropdownMenu('evaluation', $event)">
+            Evaluation <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'evaluation'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'evaluation'">
+            <li><a [routerLink]="['/evaluation/category', 'Les_tests_psychométriques']">Les tests psychométriques</a></li>
+            <li><a [routerLink]="['/evaluation/category', 'Les_tests_de_compétences']">Les tests de compétences</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="formation" (click)="toggleDropdownMenu('formation', $event)">
+            Formations <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'formation'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'formation'">
+            <li><a [routerLink]="['/formation/category', 'Formations_langues']">Formations Langues</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_office']">Formation office</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_Design']">Formation design</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="certifications" (click)="toggleDropdownMenu('certifications', $event)">
+            Certifications <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'certifications'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'certifications'">
+            <li><a href="tests_psychometriques">Desktop</a></li>
+            <li><a href="tests_competences">Graphique</a></li>
+            <li><a href="tests_competences">Code</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="coaching_emploi" (click)="toggleDropdownMenu('coaching', $event)">
+            Coaching Emploi <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'coaching'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'coaching'">
+            <li><a [routerLink]="['/coaching_emploi/category', 'En_Ligne']">En Ligne</a></li>
+            <li><a [routerLink]="['/coaching_emploi/category', 'Présentiel']">Présentiel</a></li>
+            <li><a [routerLink]="['/coaching_emploi/category', 'Simulation_dentretint']">Simulation d'entretien</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="cv_et_lettre_de_mottivation" (click)="toggleDropdownMenu('cv', $event)">
+            CV et LM <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'cv'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'cv'">
+            <li><a [routerLink]="['/cv_et_lettre_de_mottivation/category', 'Correction_et_rédaction_de_CV']">Correction et rédaction de CV</a></li>
+            <li><a [routerLink]="['/cv_et_lettre_de_mottivation/category', 'Correction_et_rédaction_de_LM']">Correction et rédaction de LM</a></li>
+            <li><a [routerLink]="['/cv_et_lettre_de_mottivation/category', 'Traduction_de_CV_et_LM']">Traduction de CV et LM</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="partenaires" (click)="toggleDropdownMenu('partenaires', $event)">
+            Partenaires <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'partenaires'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'partenaires'">
+            <li><a href="tests_psychometriques">Fiche</a></li>
+            <li><a href="tests_competences">Store</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="international" (click)="toggleDropdownMenu('international', $event)">
+            International <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'international'"></i>
+          </a>
+          <ul class="cool-menu" [class.open-sub]="activeDropdown === 'international'">
+            <li><a href="tests_psychometriques">S'informer</a></li>
+            <li><a href="tests_competences">Préparer et valider mon projet</a></li>
+          </ul>
+        </li>
+
+      </ul>
+
+      <!-- Search + boutons — aussi dans le burger sur mobile -->
+      <div class="nav-actions">
+        <div class="search-box" [class.active]="searchActive">
+          <i class="fas fa-search" (click)="toggleSearch()"></i>
+          <input type="text" placeholder="Rechercher..." />
+        </div>
+
+        <div class="user-menu">
+          <div *ngIf="isLoggedIn; else loggedOut" class="button-group">
+            <button class="btn btn-primary" (click)="toggleDropdownMenu('user', $event)">
+              <i class="fas fa-user-alt"></i> {{ username }}
+              <i class="fas fa-caret-down"></i>
+            </button>
+            <button class="btn btn-cancel" (click)="logout()">Se déconnecter</button>
+          </div>
+          <ng-template #loggedOut>
+            <div class="button-group">
+              <button class="btn btn-primary" routerLink="/login">Se connecter</button>
+              <button class="btn btn-primary" routerLink="/register">S'inscrire</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+    </div>
+    <!-- fin nav-wrapper -->
+
+  </div>
+</nav>
+
+
+
