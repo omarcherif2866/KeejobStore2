@@ -7,4 +7,5 @@ tmp/
 project.tar.gz
 xicom_deploy.tar.gz
 target/
-dist/
+dist/".env" 
+"keejob store-angular/nginx.conf" 
