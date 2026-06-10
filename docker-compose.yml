@@ -19,7 +19,7 @@ services:
 
   backend:
     build:
-      context: ./keejob-backend
+      context: ./keejobStore
       dockerfile: Dockerfile
     container_name: keejob-backend
     restart: always
@@ -38,7 +38,7 @@ services:
 
   frontend:
     build:
-      context: ./keejob-angular
+      context: ./keejob store-angular
       dockerfile: Dockerfile
     container_name: keejob-frontend
     restart: always
