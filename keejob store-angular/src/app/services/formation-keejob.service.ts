@@ -9,7 +9,8 @@ import { FormationCategory, FormationKeejob } from '../models/formation-keejob';
   providedIn: 'root'
 })
 export class FormationKeejobService {
-  private apiUrl = "http://localhost:9090/formationKeejob";
+  // private apiUrl = "http://localhost:9090/formationKeejob";
+  private apiUrl = "/api/formationKeejob";
 
 
   constructor(private http: HttpClient, private router: Router) { }

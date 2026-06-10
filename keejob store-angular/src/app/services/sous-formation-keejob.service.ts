@@ -8,7 +8,8 @@ import { SousFormationKeejob } from '../models/sous-formation-keejob';
   providedIn: 'root'
 })
 export class SousFormationKeejobService {
-  private apiUrl = "http://localhost:9090/sousFormationKeejob";
+  // private apiUrl = "http://localhost:9090/sousFormationKeejob";
+  private apiUrl = "/api/sousFormationKeejob";
 
 
   constructor(private http: HttpClient, private router: Router) { }

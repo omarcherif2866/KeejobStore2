@@ -9,8 +9,11 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EvaluationService {
-  private apiUrl = "http://localhost:9090/evaluation";
-  private apiUrlImage = "http://localhost:9090/images";
+  // private apiUrl = "http://localhost:9090/evaluation";
+  // private apiUrlImage = "http://localhost:9090/images";
+
+  private apiUrl = "/api/evaluation";
+  private apiUrlImage = "/api/images";
 
 
   constructor(private http: HttpClient, private router: Router) { }

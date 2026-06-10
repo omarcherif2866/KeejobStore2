@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ActualiteService {
 
-  private apiUrl = "http://localhost:9090/actualite";
-
+  // private apiUrl = "http://localhost:9090/actualite";
+  private apiUrl = "/api/actualite";
 
   constructor(private http: HttpClient, private router: Router) { }
 
