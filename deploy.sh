@@ -10,7 +10,8 @@ echo "🚀 Starting deployment of keejobstore project..."
 # 1. Update code (if using git)
 if [ -d ".git" ]; then
     echo "📥 Pulling latest changes..."
-    git pull origin main
+    git fetch origin
+    git reset --hard origin/main
 fi
 
 # 2. Ensure .env exists
