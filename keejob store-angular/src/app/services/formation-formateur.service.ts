@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 export class FormationFormateurService {
 
 
-  private apiUrl = 'http://localhost:9090/formationsFormateur';
+  // private apiUrl = 'http://localhost:9090/formationsFormateur';
+  private apiUrl = "/api/formationsFormateur";
 
   constructor(private http: HttpClient) {}
 

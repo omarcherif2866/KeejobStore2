@@ -9,7 +9,8 @@ import { Cv, CVCategory } from '../models/cv';
   providedIn: 'root'
 })
 export class CvService {
-  private apiUrl = "http://localhost:9090/cv";
+  // private apiUrl = "http://localhost:9090/cv";
+  private apiUrl = "/api/cv";
 
 
   constructor(private http: HttpClient, private router: Router) { }

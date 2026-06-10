@@ -10,7 +10,8 @@ import { Logiciel } from '../models/logiciel';
 })
 export class LogicielService {
 
-  private apiUrl = "http://localhost:9090/logiciel";
+  // private apiUrl = "http://localhost:9090/logiciel";
+  private apiUrl = "/api/logiciel";
 
 
   constructor(private http: HttpClient, private router: Router) { }
