@@ -29,8 +29,8 @@ public class WebSecurityConfig  {
     private final AuthenticationProvider authenticationProvider;
     private final JwtTokenFilter jwtTokenFilter;
     private static final String[] WHITE_LIST_URL = {
-            "/api/auth/**",
-            "/api/auth/login",
+            "/auth/**",
+            "/auth/login",
             "/users/**",
             "/actualite/**",
             "/formateur/**",
@@ -73,7 +73,7 @@ public class WebSecurityConfig  {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // Remplacez par l'URL de votre application cliente
+        configuration.setAllowedOrigins(Arrays.asList("https://marketjob.tn","http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
         configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
