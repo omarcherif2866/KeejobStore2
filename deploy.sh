@@ -5,13 +5,12 @@ set -e
 PROJECT_DIR="$(pwd)"
 ENV_FILE=".env"
 
-echo "🚀 Starting deployment of keejobstore project..."
+echo "🚀 Starting deployment of keejob project..."
 
 # 1. Update code (if using git)
 if [ -d ".git" ]; then
     echo "📥 Pulling latest changes..."
-    git fetch origin
-    git reset --hard origin/main
+    git pull origin main
 fi
 
 # 2. Ensure .env exists
@@ -20,7 +19,7 @@ if [ ! -f "$ENV_FILE" ]; then
     cat <<EOF > .env
 MYSQL_DATABASE=keejob_db
 MYSQL_ROOT_PASSWORD=$(openssl rand -hex 12)
-MYSQL_USER=keejb_user
+MYSQL_USER=keejob_user
 MYSQL_PASSWORD=$(openssl rand -hex 12)
 JWT_SECRET=$(openssl rand -hex 24)
 CLOUDINARY_URL=
