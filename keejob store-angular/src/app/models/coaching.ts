@@ -22,7 +22,7 @@ export interface PriceSection {
 
 export enum CoachingCategory {
   En_Ligne = 'En_Ligne',
-  Présentiel = 'Présentiel',
+  Presentiel = 'Presentiel',
   Simulation_dentretint = 'Simulation_dentretint',
 }
 
