@@ -21,8 +21,8 @@ export interface PriceSection {
 }
 
 export enum CVCategory {
-  Correction_et_rédaction_de_CV = 'Correction_et_rédaction_de_CV',
-  Correction_et_rédaction_de_LM = 'Correction_et_rédaction_de_LM',
+  Correction_et_redaction_de_CV = 'Correction_et_redaction_de_CV',
+  Correction_et_redaction_de_LM = 'Correction_et_redaction_de_LM',
   Traduction_de_CV_et_LM = 'Traduction_de_CV_et_LM',
 }
 

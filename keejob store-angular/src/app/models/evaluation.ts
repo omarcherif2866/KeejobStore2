@@ -99,8 +99,8 @@ export interface Details {
 }
 
 export enum EvaluationCategory {
-  Les_tests_psychométriques = 'Les_tests_psychométriques',
-  Les_tests_de_compétences = 'Les_tests_de_compétences'
+  Les_tests_psychometriques = 'Les_tests_psychometriques',
+  Les_tests_de_competences = 'Les_tests_de_competences'
 }
 
 
