@@ -1,12 +1,17 @@
-FROM maven:3.9-eclipse-temurin-21 AS build
+# Build stage
+FROM maven:3.8.5-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY pom.xml .
+# Download dependencies
 RUN mvn dependency:go-offline -B
 COPY src ./src
-RUN mvn clean package -DskipTests -Dfile.encoding=UTF-8 -Dproject.build.sourceEncoding=UTF-8
+# Build the application
+RUN mvn package -DskipTests
 
-FROM eclipse-temurin:21-jre-alpine
+# Run stage
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+# We assume the jar file name based on the artifactId and version in pom.xml
+COPY --from=build /app/target/Xicom-backend-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
