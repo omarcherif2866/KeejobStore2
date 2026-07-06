@@ -1,0 +1,78 @@
+<section class="event-detail-section" *ngIf="event; else notFound">
+
+  <!-- <button class="btn-back" (click)="goBack()">
+    <span class="arrow">←</span> Retour aux événements
+  </button> -->
+
+  <div class="event-detail-layout">
+
+    <!-- Colonne gauche : détail de l'événement -->
+    <div class="event-detail-card">
+
+      <div class="event-detail-hero">
+        <img [src]="event.image" [alt]="event.title">
+        <div class="event-detail-badge">À venir</div>
+      </div>
+
+      <div class="event-detail-body">
+        <h1>{{ event.title }}</h1>
+
+        <div class="event-detail-meta">
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>{{ event.date }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">📍</span>
+            <span>{{ event.location }}</span>
+          </div>
+        </div>
+
+        <div class="event-detail-divider"></div>
+
+        <div class="event-detail-description">
+          <p *ngFor="let paragraph of event.description.split('\n')">
+            {{ paragraph }}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Colonne droite : autres événements -->
+    <aside class="event-sidebar">
+      <h3 class="sidebar-title">Autres événements</h3>
+
+      <div class="sidebar-list">
+        <a
+          class="sidebar-item"
+          *ngFor="let other of events"
+          [class.hidden-current]="other.id === event.id"
+          [routerLink]="['/evenements', other.id]"
+        >
+          <div class="sidebar-item-text">
+            <h4>{{ other.title }}</h4>
+            <div class="sidebar-date">
+              <span class="meta-icon">📅</span>
+              <span>{{ other.date }}</span>
+            </div>
+          </div>
+
+          <div class="sidebar-item-right">
+            <img [src]="other.image" [alt]="other.title">
+            <span class="bookmark-icon">🔖</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+  </div>
+
+</section>
+
+<ng-template #notFound>
+  <!-- <div class="event-not-found">
+    <p>Cet événement est introuvable.</p>
+    <button class="btn-back" (click)="goBack()">← Retour aux événements</button>
+  </div> -->
+</ng-template>

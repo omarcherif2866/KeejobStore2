@@ -16,6 +16,9 @@ body {
   padding: 0 20px;
 }
 
+
+
+
 /* ===================== BUTTONS ===================== */
 .btn-primary {
   background-color: #72B756;
@@ -38,19 +41,7 @@ body {
   height: 18.21px;
 }
 .btn-primary:hover { background-color: #22c55e; }
-.Partner {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 24px 40px;
-  gap: 10px;
-  width: 232px;
-  height: 59px;
-  background: #72B656;
-  border-radius: 40px;
-  margin: 40px auto 0;
-}
+
 
 /* ===================== HERO ===================== */
 .hero { padding: 80px 0; }
@@ -64,8 +55,8 @@ body {
 }
 
 .garantie {
-  width: 370px;
-  height: 30px;
+  width: auto; /* était 370px, fixe et trop étroit selon la police réelle */
+  white-space: nowrap; /* force une seule ligne */
   font-family: 'Poppins';
   font-weight: 700;
   font-size: 17px;
@@ -75,14 +66,22 @@ body {
 }
 
 .hero h1 {
-  width: 585px;
-  height: 168px;
+  text-align: justify;
+
   font-family: 'Poppins';
   font-weight: 400;
   font-size: 36px;
   line-height: 140%;
   letter-spacing: -0.02em;
   color: #262D4C;
+  margin-bottom: 10px; /* enlève la marge par défaut sous le h1 */
+  line-height: 1.3;
+}
+
+.home-page-vector11 {
+  display: block;
+  margin-top: -10px; /* rapproche le trait du texte ; ajustez cette valeur */
+  width: 140px; /* ajustez selon la taille souhaitée du trait */
 }
 
 .hero h1 .highlight {
@@ -102,6 +101,8 @@ body {
   line-height: 30px;
   letter-spacing: 0.005em;
   color: #363636;
+  text-align: justify;
+
 }
 
 .hero-actions {
@@ -120,6 +121,7 @@ body {
   cursor: pointer;
   font-weight: 500;
   font-size: 15px;
+  white-space: nowrap; /* empêche le texte de passer à la ligne */
 }
 .btn-secondary:hover { background-color: #6d28d9; }
 
@@ -282,6 +284,7 @@ body {
   color: white;
   max-width: 1460px;
 }
+ 
 
 .circle {
   box-sizing: border-box;
@@ -351,14 +354,14 @@ body {
 
 .feature-text strong {
   color: #ffffff;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .feature-text span {
   color: #9ca3af;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.3;
   white-space: nowrap;
 }
@@ -622,9 +625,9 @@ body {
 }
 
 .eval-feature-item span {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.4;
-  color: #8a90a3;
+  color: #49494d;
 }
 /* Buttons */
 .eval-buttons {
@@ -897,16 +900,17 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  position: relative;
-  z-index: 2;
+  align-items: stretch;
 }
 
 .info-card {
-  background-color: white;
-  color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 16px;
   padding: 28px;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(30, 39, 73, 0.06);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.06);
 }
 
 .card-icon {
@@ -923,32 +927,30 @@ body {
 .card-icon.blue { background-color: #dbeafe; color: #3b82f6; }
 
 .info-card h3 {
-  font-size: 17px;
-  font-weight: 700;
-  line-height: 1.3;
-  color: #1e2749;
-  margin-bottom: 12px;
+  min-height: 52px;
+  margin: 16px 0 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .info-card p {
-  font-size: 13.5px;
-  color: #6b7280;
-  line-height: 1.5;
-  margin-bottom: 22px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5568;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1; /* pousse le bouton en bas */
 }
 
 .btn-small {
-  background-color: #2f7a1f;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  margin-top: auto;
+  align-self: flex-start;
+  text-decoration: none;
 }
 .btn-small:hover { background-color: #256319; }
 .btn-small .arrow { font-size: 14px; }
@@ -1118,13 +1120,15 @@ body {
 }
 
 .cv-feature-item span {
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #49494d;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  text-align: left; /* au lieu de justify */
   -webkit-box-orient: vertical;
   overflow: hidden;
+  hyphens: none; /* désactive la césure */
+  -webkit-hyphens: none;
 }
 
 .cv-buttons {
@@ -1662,9 +1666,9 @@ body {
 }
 
 .coaching-feature-item span {
-  color: #8a90a3;
-  font-size: 12.5px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #49494d;
 }
 
 /* Boutons */
@@ -2115,9 +2119,9 @@ body {
   line-height: 1.3;
 }
 .intl-feature-item span {
-  color: #8a90a3;
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #49494d;
 }
 
 /* Boutons */
@@ -2479,18 +2483,27 @@ body {
 
 
   /* ---------- COLONNE GAUCHE ---------- */
-  .certif-left {
-    flex: 1;
-    min-width: 0;
-    max-width: 640px;
-
-    > p {
+  
+    .certif-subtext {
+      color: #6b7280;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      margin: 0 0 8px;
+  }
+    p {
       color: #72B656;
       font-weight: 700;
       font-size: 13px;
       letter-spacing: 1.5px;
       margin: 0 0 8px;
     }
+  .certif-left {
+    flex: 1;
+    min-width: 0;
+    max-width: 640px;
+
+   
 
     .section-line {
       display: block;
@@ -2514,13 +2527,7 @@ body {
     }
   }
 
-  .certif-subtext {
-      color: #6b7280;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 1.5px;
-      margin: 0 0 8px;
-  }
+
 
 .certif-features-row {
   display: flex;
@@ -2544,9 +2551,9 @@ body {
   }
 
   span {
-    color: #6b7a90;
-    font-size: 13.5px;
-    line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #49494d;
   }
 }
 
@@ -2754,20 +2761,116 @@ body {
 /* ===================== EVENTS ===================== */
 .events-section { padding: 80px 0; }
 .events-section h2 { font-size: 36px; margin-bottom: 40px; }
-.events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
-.event-card { background-color: white; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-.event-badge { background-color: #72B656; color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin: 20px; font-size: 14px; }
-.event-content { padding: 0 30px 30px 30px; }
-.event-content h3 { font-size: 18px; margin-bottom: 20px; }
-.event-image { height: 120px; background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%); border-radius: 12px; margin-bottom: 20px; }
-.event-info { display: flex; align-items: center; gap: 8px; color: #6b7280; font-size: 14px; margin-bottom: 10px; }
-.event-content p { color: #6b7280; font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch; /* toutes les cartes ont la même hauteur sur la ligne */
+}
 
-.btn-full { width: 100%; background-color: #72B656; color: white; padding: 14px; border-radius: 24px; border: none; cursor: pointer; font-weight: 500; }
+.event-card {
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.event-badge {
+  background-color: #72B656;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 20px;
+  font-size: 14px;
+  align-self: flex-start;
+}
+
+.event-content {
+  padding: 0 30px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* prend toute la hauteur restante de la carte */
+}
+
+.event-content h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  min-height: 66px; /* réserve la place pour 3 lignes de titre, aligne les images en dessous */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-image {
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  background: #e7edf9;
+  border-radius: 12px;
+  flex-shrink: 0; /* empêche l'image de rétrécir */
+}
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.event-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 10px;
+  margin-top: 16px;
+}
+.event-info:first-of-type {
+  margin-top: 16px;
+}
+
+.event-content p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5568;
+  margin-bottom: 16px;
+  white-space: pre-line;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-content p.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+
+.btn-full {
+  background-color: #72B656;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: auto; /* pousse le bouton tout en bas de la carte, peu importe le contenu au-dessus */
+}
+.btn-full:hover {
+  background-color: #5fa347;
+}
+
 .star { color: #fbbf24; font-size: 24px; }
-
-
 /* =====================================================================
    MEDIA QUERIES — RESPONSIVE
    ===================================================================== */

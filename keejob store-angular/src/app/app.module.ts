@@ -7,10 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
-import { EvaluationCategoryComponent } from './pages/evaluation-category/evaluation-category.component';
-import { CoachingCategoryComponent } from './pages/coaching-category/coaching-category.component';
-import { CvCategoryComponent } from './pages/cv-category/cv-category.component';
-import { FormationKeejobCategoryComponent } from './pages/formation-keejob-category/formation-keejob-category.component';
+
 
 
 
@@ -57,6 +54,31 @@ const routes = [
       (m) => m.CertificationsModule
     ),
 },
+
+{
+  path: 'evenements/:id',
+  loadChildren: () =>
+    import('./pages/events/events.module').then(
+      (m) => m.EventsModule
+    ),
+},
+
+{
+  path: 'marche_travails/:id',
+  loadChildren: () =>
+    import('./pages/marche-travails-details/marche-travails-details.module').then(
+      (m) => m.MarcheTravailsDetailsModule
+    ),
+},
+
+{
+  path: 'marche_travails',
+  loadChildren: () =>
+    import('./pages/marche-travails/marche-travails.module').then(
+      (m) => m.MarcheTravailsModule
+    ),
+},
+
 {
   path: 'cv_et_lettre_de_mottivation',
   loadChildren: () =>

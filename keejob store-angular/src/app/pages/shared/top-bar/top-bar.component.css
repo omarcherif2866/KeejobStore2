@@ -80,87 +80,78 @@ body {
   position: relative;
 }
 
+/* IMPORTANT : le container du navbar n'est plus limité à 1200px,
+   il utilise davantage la largeur réelle de l'écran pour éviter
+   toute compression artificielle sur écrans moyens/grands */
 .navbar .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center; /* le bloc entier reste centré, pas étiré */
   flex-wrap: nowrap;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto 0 210px;   /* centre par défaut mais décalé de 60px vers la droite depuis la gauche */
-  padding-left: 10px;
+  gap: clamp(20px, 2.5vw, 50px);
+  max-width: 1400px; /* limite raisonnable, pas 1800px */
+  margin: 0 auto;
+  padding-left: clamp(16px, 2.5vw, 50px);
+  padding-right: clamp(16px, 2.5vw, 50px);
+  width: 100%;
 }
+
 .navbar-top {
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-}
+.logo { display: flex; align-items: center; }
 
 .logoK {
-  width: 144px;
-  height: 58px;
+  width: clamp(80px, 7vw, 144px);
+  height: auto;
 }
 
-/* Burger caché sur desktop */
-.burger {
-  display: none;
-}
+.burger { display: none; }
 
-/* nav-wrapper : ligne unique sur desktop (liens + actions) */
 .nav-wrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-  gap: 30px;
+  justify-content: flex-start;
+  gap: clamp(20px, 2.5vw, 40px); /* espace entre les liens ET les actions */
+  flex-shrink: 0; /* ne s'étire plus pour remplir l'espace */
 }
 
-/* ===================== LIENS DE NAVIGATION ===================== */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: clamp(10px, 1.2vw, 22px);
   list-style: none;
+  flex-wrap: nowrap;
 }
 
-.nav-links li {
-  position: relative; /* essentiel pour positionner .cool-menu correctement */
-}
+.nav-links li { position: relative; }
 
 .nav-links > li > a {
   display: flex;
   align-items: center;
-  gap: 6px;
+  font-size: clamp(13px, 0.95vw, 15px); /* était clamp(11px, 0.85vw, 15px) */
+  gap: 4px;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  font-size: 15px;
   line-height: 21px;
   letter-spacing: 0.005em;
-  color: #5958A0;        /* texte des liens en violet au lieu de gris */
+  color: #5958A0;
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
 }
 
 .nav-links > li > a:hover {
-  color: #3d3c73;        /* violet plus foncé au survol */
+  color: #3d3c73;
   font-weight: bold;
 }
 
-.dropdown-arrow {
-  font-size: 11px;
-  transition: transform 0.3s ease;
-}
-.dropdown-arrow.rotated {
-  transform: rotate(180deg);
-}
+.dropdown-arrow { font-size: 10px; transition: transform 0.3s ease; }
+.dropdown-arrow.rotated { transform: rotate(180deg); }
 
-/* ---- MENU DÉROULANT ---- */
 .cool-menu {
   position: absolute;
   top: 100%;
@@ -169,13 +160,11 @@ body {
   padding: 12px 0;
   list-style: none;
   border-radius: 12px;
-  margin-top: 0;              /* suppression du gap qui coupait le hover */
-
+  margin-top: 0;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-
   display: none;
   opacity: 0;
   transform: translateY(10px);
@@ -189,7 +178,7 @@ body {
   top: 100%;
   left: 0;
   width: 100%;
-  height: 12px;   /* comble l'espace vide entre le lien et le sous-menu */
+  height: 12px;
   z-index: 98;
 }
 
@@ -215,18 +204,10 @@ body {
   border-radius: 8px;
 }
 
-/* Affichage au survol - DESKTOP UNIQUEMENT */
-.dropdown:hover .cool-menu {
-  display: block;
-  opacity: 1;
-  transform: translateY(0px);
-}
-
-/* ===================== ACTIONS (recherche + boutons) ===================== */
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: clamp(6px, 1vw, 16px);
   flex-shrink: 0;
 }
 
@@ -238,13 +219,12 @@ body {
   border-radius: 20px;
   padding: 6px 10px;
   transition: all 0.4s ease;
-  width: 40px;
+  width: 34px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
-.search-box.active {
-  width: 180px;
-}
+.search-box.active { width: 180px; }
 
 .search-box input {
   border: none;
@@ -258,9 +238,7 @@ body {
   transition: opacity 0.3s ease;
 }
 
-.search-box.active input {
-  opacity: 1;
-}
+.search-box.active input { opacity: 1; }
 
 .search-box i {
   color: #5958A0;
@@ -269,73 +247,47 @@ body {
   transition: transform 0.3s ease;
 }
 
-.search-box i:hover {
-  transform: scale(1.2);
-}
+.search-box i:hover { transform: scale(1.2); }
 
 .button-group {
   display: flex;
-  gap: 10px;
+  gap: clamp(6px, 0.8vw, 10px);
+  flex-shrink: 0;
 }
 
 .btn-primary {
   background-color: #72B756;
   color: white;
-  padding: 10px 20px;
+  padding: clamp(6px, 0.6vw, 8px) clamp(10px, 1.2vw, 20px);
   border-radius: 24px;
   border: none;
   cursor: pointer;
   font-weight: 500;
   height: 38px;
-  font-size: 13px;
+  font-size: clamp(10px, 0.75vw, 13px);
   white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.btn-primary i {
-  font-size: 13px;
-}
-.btn-primary:hover {
-  background-color: #22c55e;
-}
+.btn-primary i { font-size: 13px; }
+.btn-primary:hover { background-color: #22c55e; }
 
 .btn-cancel {
   background-color: #e05a6e;
   color: white;
-  padding: 10px 20px;
+  padding: clamp(6px, 0.6vw, 8px) clamp(10px, 1.2vw, 20px);
   border-radius: 24px;
   border: none;
   cursor: pointer;
   font-weight: 500;
   height: 38px;
-  font-size: 13px;
+  font-size: clamp(10px, 0.75vw, 13px);
   white-space: nowrap;
 }
-.btn-cancel:hover {
-  opacity: 0.9;
-}
+.btn-cancel:hover { opacity: 0.9; }
 
-/* ================================================================
-   RESPONSIVE
-   ================================================================ */
-
-/* ---------- Tablette : ≤ 1100px ---------- */
-@media (max-width: 1100px) {
-  .top-bar .container {
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-  }
-  .social-icons {
-    margin-left: 0;
-  }
-  .nav-links {
-    gap: 16px;
-  }
-}
-
-/* ---------- Tablette : ≤ 992px ---------- */
+/* ===================== TOP BAR RESPONSIVE ===================== */
 @media (max-width: 992px) {
   .top-bar .container {
     flex-direction: column;
@@ -343,44 +295,32 @@ body {
     gap: 8px;
     text-align: center;
   }
-  .social-icons {
-    justify-content: center;
-  }
-  .navbar .container {
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .nav-links {
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .nav-links > li > a {
-    font-size: 14px;
-  }
-  .nav-actions {
-    justify-content: center;
-  }
+  .social-icons { justify-content: center; }
 }
 
-/* ---------- Mobile : ≤ 768px ---------- */
-@media (min-width: 769px) {
+
+
+/* ===================== NAVBAR : DESKTOP vs BURGER ===================== */
+/* Le burger apparaît à partir de 1140px et en dessous */
+
+@media (min-width: 1141px) {
   .burger { display: none; }
   .nav-wrapper { display: flex !important; }
 }
 
-@media (max-width: 768px) {
-
-  .navbar {
-    padding: 10px 0;
-    position: relative;
-  }
+@media (max-width: 1140px) {
+  .navbar { padding: 10px 0; position: relative; }
 
   .navbar .container {
     flex-direction: column;
     align-items: stretch;
     gap: 0;
+    justify-content: flex-start; /* override du justify-content: center desktop */
     position: relative;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 100%;
   }
 
   .navbar-top {
@@ -391,10 +331,7 @@ body {
     padding: 0 16px;
   }
 
-  .logoK {
-    width: 110px;
-    height: auto;
-  }
+  .logoK { width: 110px; height: auto; }
 
   .burger {
     display: flex;
@@ -423,6 +360,7 @@ body {
     border-radius: 0 0 16px 16px;
     overflow: hidden;
     gap: 0;
+    flex-shrink: 1; /* override du flex-shrink: 0 desktop */
   }
   .nav-wrapper.open { display: flex; }
 
@@ -436,10 +374,7 @@ body {
     align-items: stretch;
   }
 
-  .nav-links li {
-    width: 100%;
-    border-bottom: 1px solid #efefef;
-  }
+  .nav-links li { width: 100%; border-bottom: 1px solid #efefef; }
 
   .nav-links > li > a {
     display: flex;
@@ -453,11 +388,7 @@ body {
     white-space: normal;
   }
 
-  .dropdown-arrow {
-    font-size: 11px;
-    margin-left: 8px;
-    flex-shrink: 0;
-  }
+  .dropdown-arrow { font-size: 11px; margin-left: 8px; flex-shrink: 0; }
 
   .cool-menu {
     position: static !important;
@@ -473,22 +404,13 @@ body {
     backdrop-filter: none;
     min-width: 100%;
   }
-
-  .cool-menu.open-sub {
-    display: block !important;
-  }
-
+  .cool-menu.open-sub { display: block !important; }
   .dropdown:hover .cool-menu { display: none !important; }
   .dropdown:hover .cool-menu.open-sub { display: block !important; }
 
   .cool-menu li { border-bottom: 1px solid #e8e8f4; }
   .cool-menu li:last-child { border-bottom: none; }
-  .cool-menu li a {
-    padding: 12px 36px;
-    font-size: 14px;
-    color: #5958A0;
-    font-weight: 400;
-  }
+  .cool-menu li a { padding: 12px 36px; font-size: 14px; color: #5958A0; font-weight: 400; }
 
   .nav-actions {
     display: flex;
@@ -500,20 +422,10 @@ body {
     border-top: 1px solid #efefef;
   }
 
-  .button-group {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
+  .button-group { flex-wrap: wrap; justify-content: center; gap: 10px; }
 
-  .btn-primary, .btn-cancel {
-    width: 140px;
-    font-size: 12px;
-  }
+  .btn-primary, .btn-cancel { width: 140px; font-size: 12px; }
 
-  .search-box {
-    width: 100%;
-    border-radius: 20px;
-  }
+  .search-box { width: 100%; border-radius: 20px; }
   .search-box.active { width: 100%; }
 }
