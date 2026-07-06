@@ -944,7 +944,10 @@ body {
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  flex: 1; /* pousse le bouton en bas */
+  flex: 1;
+  letter-spacing: normal; /* annule tout espacement hérité */
+  word-spacing: normal;
+  font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif; /* ou la police de votre choix, explicite */
 }
 
 .btn-small {
