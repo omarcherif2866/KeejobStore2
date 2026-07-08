@@ -37,12 +37,14 @@ getFormateurDetails(formateurId: string): void {
       data.lastName,
       data.university,
       data.image,
+      data.discount, // Assurez-vous que le champ discount est bien présent dans la réponse de l'API
       data.servicesFormateurs,
       data.titleWhyList
     );
 
     console.log("Détails du formateur converti :", this.formateur);
-
+console.log("TitleWhyList reçu :", data.titleWhyList);
+console.log("Nombre d'éléments :", data.titleWhyList?.length);
     // 2 — Récupérer ses formations
     this.formationFormateurService.getByFormateur(Number(formateurId)).subscribe((formations: any[]) => {
       this.formations = formations;

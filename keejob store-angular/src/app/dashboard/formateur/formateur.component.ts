@@ -212,7 +212,8 @@ handleSubmit() {
             response.FirstName,
             response.LastName,
             response.University,
-            response.Image // Ajouter l'image
+            response.Image, // Ajouter l'image
+            response.Discount // Ajouter le discount
         );
 
         this.formateurs.push(newFormateur);
@@ -255,7 +256,8 @@ handleSubmit() {
             response.FirstName,
             response.LastName,
             response.University,
-            response.Image // Ajouter l'image
+            response.Image, // Ajouter l'image
+            response.Discount // Ajouter le discount
           );
         }
         this.showModal = false;

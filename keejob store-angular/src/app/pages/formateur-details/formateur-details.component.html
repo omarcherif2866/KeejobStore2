@@ -1,33 +1,54 @@
 <body>
     <section id="profile" class="profile-section" *ngIf="formateur">
     <div class="container profile-container">
-        <div class="profile-image-wrapper"> 
-        <img [src]="sanitizeImage(formateur.Image)" 
-            [alt]="formateur.FirstName + ' ' + formateur.LastName" 
-            class="profile-image">
+        <div class="profile-image-wrapper">
+            <img [src]="sanitizeImage(formateur.Image)"
+                [alt]="formateur.FirstName + ' ' + formateur.LastName"
+                class="profile-image">
+
+            <button class="profile-favorite-badge" type="button" aria-label="Favori">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </button>
         </div>
+
         <div class="profile-content">
             <h1 class="profile-name">{{ formateur.FirstName }} {{ formateur.LastName }}</h1>
             <p class="profile-title">{{ formateur.Poste }}</p>
-            <div class="profile-badge">
-                <img src="../../assets/390_4396.svg" alt="Feedback icon">
-                <span>92% Rétroaction positive</span>
+
+            <div class="profile-badge" *ngIf="formateur.Discount">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3.24L3 3v6.59a2 2 0 0 0 .59 1.41l9.58 9.58a2 2 0 0 0 2.83 0l4.59-4.59a2 2 0 0 0 0-2.83z"></path>
+                    <circle cx="7.5" cy="7.5" r="1.5"></circle>
+                </svg>
+                <span>{{ formateur.Discount }}% de réduction possible</span>
             </div>
-            <div class="profile-socials">
-                <a href="#"><i class="fa-solid fa-phone"></i></a>
-                <a href="#"><i class="fa-solid fa-envelope"></i></a>
-                <a href="#"><i class="fa-solid fa-video"></i></a>
-            </div>
+
             <p class="profile-description">
                 {{ formateur.Description }}
+            </p>
         </div>
+
         <aside class="info-card">
             <h3 class="info-card-title">INFORMATIONS</h3>
             <ul>
-                <li><img src="../../assets/390_4400.svg" alt="Experience icon"> {{ formateur.Experience }}</li>
-                <li><img src="../../assets/390_4407.svg" alt="University icon"> {{ formateur.University }}</li>
-                <li><img src="../../assets/390_4418.svg" alt="Training center icon"> Centre de formation Tuilab</li>
-                <li><img src="../../assets/390_4392.svg" alt="Location icon"> {{ formateur.Address }}</li>
+                <li>
+                    <img src="../../assets/390_4400.svg" alt="">
+                    {{ formations?.length || 0 }}
+                </li>
+                <li>
+                    <img src="../../assets/390_4407.svg" alt="">
+                    {{ formateur.Experience }} ans d'expérience
+                </li>
+                <li>
+                    <img src="../../assets/390_4418.svg" alt="">
+                    Centre de formation Tuilab
+                </li>
+                <li>
+                    <img src="../../assets/390_4392.svg" alt="">
+                    {{ formateur.Address }}
+                </li>
             </ul>
         </aside>
     </div>
@@ -36,42 +57,56 @@
 <section id="services" class="services-section" *ngIf="formateur">
     <div class="container services-container">
         <div class="services-list">
-            <h2 class="services-title">SERVICES PROPOSÉES</h2>
+            <h2 class="services-title">SERVICES PROPOSÉS</h2>
+            <span class="section-underline"></span>
+
             <article class="service-item" *ngFor="let service of formateur.ServicesFormateurs">
                 <div class="service-icon-wrapper">
-                <!-- Tu peux mettre une image générique ou un champ image si tu en as un -->
-                <img src="../../assets/a6c6a2f913a3b580cc2c70513052dd11ae93d842.png" [alt]="service.title">
+                    <img src="../../assets/a6c6a2f913a3b580cc2c70513052dd11ae93d842.png" [alt]="service.title">
                 </div>
                 <div class="service-text">
-                <h3>{{ service.title }}</h3>
-                <p>{{ service.description }}</p>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.description }}</p>
                 </div>
             </article>
         </div>
-        <div class="why-us-card">
-            <h3>Pourquoi choisir mes services</h3>
-            <div class="why-us-item" *ngFor="let titleWhyList of formateur.TitleWhyList">
-                <div class="why-us-icon-wrapper"><img src="../../assets/e8fdcadb5229342d1108280de18f7c693acffc00.png" alt=""></div>
-                <div>
-                    <h3>{{ titleWhyList.title }}</h3>
-                    <p>{{ titleWhyList.description }}</p>
+<div class="why-us-card">
+    <h3 class="why-us-card-title">Pourquoi choisir mes services</h3>
+
+    <div class="why-us-items">
+        <div class="why-us-item" *ngFor="let titleWhyList of formateur.TitleWhyList">
+            <div class="why-us-item-header">
+                <div class="why-us-header-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3E4CD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
                 </div>
+                <h4>{{ titleWhyList.title }}</h4>
             </div>
-            <!-- <div class="why-us-item">
-                <div class="why-us-icon-wrapper"><img src="../../assets/01cf6e36a293b31136db8a4dcc7987a0d793a55e.png" alt=""></div>
-                <div>
-                    <h4>Approche pratique</h4>
-                    <p>Mes formations sont axées sur l'action et sont conçues pour vous aider à obtenir des résultats tangibles dès que possible.</p>
-                </div>
-            </div>
-            <div class="why-us-item">
-                <div class="why-us-icon-wrapper"><img src="../../assets/7519a8c71f68d14264fbad14667bc1e04c44d3e9.png" alt=""></div>
-                <div>
-                    <h4>Support continu</h4>
-                </div>
-            </div> -->
-            <p class="why-us-conclusion">Si vous êtes prêt à faire passer votre marketing digital au niveau supérieur, n'hésitez pas à me contacter. Je serais ravi de discuter de vos besoins spécifiques et de voir comment je peux vous aider à atteindre vos objectifs.</p>
+            <p *ngIf="titleWhyList.description">{{ titleWhyList.description }}</p>
         </div>
+    </div>
+</div>
+
+        
+        <!-- <div class="why-us-card">
+            <div class="why-us-header">
+                <div class="why-us-header-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3E4CD8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                </div>
+                <h3>Pourquoi choisir mes services ?</h3>
+            </div>
+
+        <div *ngFor="let titleWhyList of formateur.TitleWhyList">
+            <p *ngIf="titleWhyList.description">{{ titleWhyList.description }}</p>
+        </div>
+        </div> -->
     </div>
 </section>
 
@@ -79,14 +114,15 @@
     <div class="container">
         <div class="trainings-header">
             <h2>Mes Formations</h2>
-            <p>Se former tout au long de la vie, c’est essentiel. Tout pour se former à un métier. Acquérir de nouvelles compétences, transformer vos expériences en un diplôme (VAE)</p>
+            <span class="section-underline center"></span>
+            <p>Se former tout au long de la vie, c'est essentiel. Tout pour se former à un métier. Acquérir de nouvelles compétences, transformer vos expériences en un diplôme (VAE)</p>
         </div>
         <div class="trainings-grid">
-        <article 
+        <article
             class="training-card"
             *ngFor="let f of formations; let i = index"
             [ngClass]="getCardClass(i)">
-            
+
             <div class="card-title">
             <h4>formation en</h4>
             <h5>{{ f.title }}</h5>
@@ -107,42 +143,75 @@
 </section>
 
 <section id="contact" class="contact-section">
-    <div class="container">
-        <div class="contact-header">
-            <p class="sub-heading">Prêt à passer à l’action</p>
+    <div class="container contact-flex">
+
+        <div class="contact-intro">
+            <p class="sub-heading">Prêt à passer à l'action ?</p>
             <h2>Contactez-nous pour planifier votre formation</h2>
+
+            <div class="paper-plane-deco">
+                <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                <svg class="dotted-line" width="140" height="40" viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 6 C 40 6, 40 34, 90 34" fill="none" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"></path>
+                </svg>
+            </div>
         </div>
+
         <form class="contact-form">
-            <div class="form-grid">
-                <div class="form-group"><label for="nom">NOM</label><input type="text" id="nom"></div>
-                <div class="form-group"><label for="prenom">PRÉNOM</label><input type="text" id="prenom"></div>
-                <div class="form-group"><label for="organisation">ORGANISATION</label><input type="text" id="organisation"></div>
-                <div class="form-group"><label for="poste">TITRE / POSTE</label><input type="text" id="poste"></div>
-                <div class="form-group phone-group">
-                    <label for="telephone">TÉLÉPHONE</label>
-                    <div class="phone-input-wrapper">
-                        <img src="../../assets/390_4477.svg" alt="France flag">
-                        <input type="tel" id="telephone" placeholder="06 12 34 56 78">
-                    </div>
+            <div class="form-row-3">
+                <div class="form-group icon-input">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8891a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <input type="text" id="nom" placeholder="Votre nom">
                 </div>
-                <div class="form-group"><label for="email">EMAIL</label><input type="email" id="email"></div>
-                <div class="form-group"><label for="adresse-courriel">ADRESSE COURRIEL</label><input type="email" id="adresse-courriel"></div>
-                <div class="form-group">
-                    <label for="formation-vise">TITRE DE FORMATION VISÉ</label>
-                    <div class="select-wrapper">
-                        <select id="formation-vise"><option value="">-</option></select>
-                    </div>
+
+                <div class="form-group icon-input">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8891a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16v16H4z" opacity="0"></path>
+                        <path d="M22 6 12 13 2 6"></path>
+                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                    </svg>
+                    <input type="email" id="email" placeholder="Votre email">
+                </div>
+
+                <div class="form-group icon-input phone-group">
+                    <span class="flag-icon">🇫🇷</span>
+                    <input type="tel" id="telephone" placeholder="06 12 34 56 78">
                 </div>
             </div>
-            <div class="form-group full-width">
-                <label for="commentaires">INFORMATIONS / COMMENTAIRES</label>
-                <textarea id="commentaires" rows="6"></textarea>
+
+            <div class="form-group icon-input full-width select-wrapper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8891a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 5h18M3 5l7 8v6l4-2v-4l7-8"></path>
+                </svg>
+                <select id="formation-vise">
+                    <option value="" selected disabled>Titre de formation visé</option>
+                </select>
             </div>
-            <p class="form-notice">* champs obligatoires<br>Vos données personnelles sont précieuses. Chez KeeJob Store, nous les respectons scrupuleusement. Elles ne sont utilisées que dans le but de vous contacter directement, jamais partagées avec des tiers. Votre confidentialité est notre priorité absolue.</p>
-            <button type="submit" class="btn btn-primary submit-btn">Envoyer</button>
+
+            <div class="form-group icon-input full-width textarea-input">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8891a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <textarea id="commentaires" rows="4" placeholder="Votre message (facultatif)"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary submit-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Envoyer
+            </button>
+
+            <p class="form-notice">* Champs obligatoires. Vos données personnelles sont précieuses. Chez KeoJob Store, nous les respectons scrupuleusement. Elles ne sont utilisées que dans le but de vous contacter directement, jamais partagées avec des tiers. Votre confidentialité est notre priorité absolue.</p>
         </form>
     </div>
 </section>
 
 </body>
-

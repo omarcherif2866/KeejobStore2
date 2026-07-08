@@ -10,12 +10,25 @@ import { CoachingService } from 'src/app/services/coaching.service';
 })
 export class CoachingCategoryComponent implements OnInit {
 
-
   category!: CoachingCategory;
   coachings: Coaching[] = [];
   loading = true;
 
   availableCategories = Object.values(CoachingCategory);
+
+  // Libellés lisibles pour chaque valeur de l'enum CoachingCategory
+  private categoryLabels: { [key: string]: string } = {
+    'En_Ligne': 'en ligne',
+    'Presentiel': 'présentiel',
+    'Simulation_dentretint': 'de simulation d\'entretien'
+  };
+
+  // Config complète pour chaque catégorie (texte du bouton + icône + route)
+  private categoryButtonConfig: { [key: string]: { label: string; icon: string } } = {
+    'En_Ligne': { label: 'Voir les coachings en ligne', icon: '🖥️' },
+    'Presentiel': { label: 'Voir les coachings présentiel', icon: '🏢' },
+    'Simulation_dentretint': { label: "Simulation d'entretien", icon: '🎯' }
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -52,18 +65,29 @@ export class CoachingCategoryComponent implements OnInit {
     this.loadEvaluations();
   }
 
-
-  sanitizeImage(url: string): string {
-  if (!url) return '';
-
-  // Cas où l'URL est en double
-  if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
-    const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
-    return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+  get categoryLabel(): string {
+    return this.categoryLabels[this.category] || (this.category ? this.category.toString().toLowerCase() : '');
   }
 
-  return url;
-}
+  // Retourne les catégories AUTRES que celle affichée actuellement
+  get otherCategories(): { key: string; label: string; icon: string }[] {
+    return this.availableCategories
+      .filter(cat => cat !== this.category)
+      .map(cat => ({
+        key: cat,
+        label: this.categoryButtonConfig[cat]?.label || cat,
+        icon: this.categoryButtonConfig[cat]?.icon || ''
+      }));
+  }
 
+
+  sanitizeImage(url: string): string {
+    if (!url) return '';
+    if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
+      const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
+      return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+    }
+    return url;
+  }
 
 }

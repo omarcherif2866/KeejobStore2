@@ -10,12 +10,26 @@ import { CvService } from 'src/app/services/cv.service';
 })
 export class CvCategoryComponent implements OnInit {
 
-
   category!: CVCategory;
   cvs: Cv[] = [];
   loading = true;
 
   availableCategories = Object.values(CVCategory);
+
+  // Libellés lisibles pour chaque valeur de l'enum CVCategory
+  // ⚠️ adaptez les clés exactes selon votre enum réel (voir note en bas)
+  private categoryLabels: { [key: string]: string } = {
+    'Correction_et_redaction_de_CV': 'de correction et rédaction de CV',
+    'Correction_et_redaction_de_LM': 'de correction et rédaction de lettre de motivation',
+    'Traduction_de_CV_et_LM': 'de traduction de CV et lettre de motivation'
+  };
+
+  // Config des boutons alternatifs pour chaque catégorie
+  private categoryButtonConfig: { [key: string]: { label: string; icon: string } } = {
+    'Correction_et_redaction_de_CV': { label: 'Correction et rédaction de CV', icon: '📄' },
+    'Correction_et_redaction_de_LM': { label: 'Correction et rédaction de LM', icon: '✍️' },
+    'Traduction_de_CV_et_LM': { label: 'Traduction de CV et LM', icon: '🌐' }
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -52,18 +66,35 @@ export class CvCategoryComponent implements OnInit {
     this.loadEvaluations();
   }
 
-
-  sanitizeImage(url: string): string {
-  if (!url) return '';
-
-  // Cas où l'URL est en double
-  if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
-    const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
-    return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+  get categoryLabel(): string {
+    return this.categoryLabels[this.category] || (this.category ? this.category.toString().replace(/_/g, ' ').toLowerCase() : '');
   }
 
-  return url;
-}
+  // Nom de catégorie sans underscore, pour le fil d'ariane
+  get categoryDisplay(): string {
+    return this.category ? this.category.toString().replace(/_/g, ' ') : '';
+  }
 
+  // Retourne les catégories AUTRES que celle affichée actuellement
+  get otherCategories(): { key: string; label: string; icon: string }[] {
+    return this.availableCategories
+      .filter(cat => cat !== this.category)
+      .map(cat => ({
+        key: cat,
+        label: this.categoryButtonConfig[cat]?.label || cat.toString().replace(/_/g, ' '),
+        icon: this.categoryButtonConfig[cat]?.icon || ''
+      }));
+  }
+
+
+
+  sanitizeImage(url: string): string {
+    if (!url) return '';
+    if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
+      const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
+      return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+    }
+    return url;
+  }
 
 }

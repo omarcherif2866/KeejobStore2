@@ -1,32 +1,74 @@
 <section class="expertise-section">
-  <div class="platforms-cards-container">
 
+  <!-- Fil d'ariane -->
+  <div class="breadcrumb">
+    <a routerLink="/">🏠 Accueil</a> ›
+    <a routerLink="/formation">Formations</a> ›
+    <span>{{ categoryDisplay }}</span>
+  </div>
+
+  <!-- État de chargement -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- CAS 1 : il y a des données -->
+  <div class="platforms-cards-container" *ngIf="!loading && formations.length > 0">
     <div *ngFor="let ev of formations" class="platform-card">
 
-      <!-- HEADER CARD -->
       <div class="platform-header">
         <div class="platform-logo-wrapper">
           <img [src]="sanitizeImage(ev.logo)" alt="logo" class="platform-logo">
         </div>
-
         <h3 class="platform-name">{{ ev.title }}</h3>
       </div>
 
-      <!-- DESCRIPTION -->
       <p class="platform-description">{{ ev.description }}</p>
 
-      <!-- RATING -->
       <div class="platform-rating">
         <img src="../../assets/87_913.svg" alt="4.7 stars rating">
         <span class="rating-score">4.7</span>
         <span class="rating-reviews">Basé sur 17 avis</span>
       </div>
 
-      <!-- BUTTON -->
       <a [routerLink]="['/formation', ev.id]" class="btn btn-primary">
         En savoir plus
       </a>
     </div>
-
   </div>
+
+  <!-- CAS 2 : aucune donnée -->
+  <div class="empty-state" *ngIf="!loading && formations.length === 0">
+    <div class="empty-state-content">
+
+      <div class="empty-state-illustration">
+        <img src="../../assets/emptyData/empty-search-illustration.svg" alt="Aucun résultat">
+      </div>
+
+      <div class="empty-state-text">
+        <h2>Aucune formation {{ categoryLabel }} disponible pour le moment</h2>
+        <p>
+          Nous n'avons actuellement aucune formation {{ categoryLabel }} correspondant à votre recherche.
+          Mais ne vous inquiétez pas, de nouvelles formations seront bientôt disponibles !
+        </p>
+
+        <div class="empty-state-notify">
+          <div class="notify-icon">🔔</div>
+          <span>Soyez le premier informé dès qu'une nouvelle formation est disponible.</span>
+        </div>
+
+        <p class="empty-state-alternatives-label">En attendant, découvrez nos autres formations.</p>
+
+        <div class="empty-state-alternatives">
+          <a *ngFor="let cat of otherCategories; let i = index"
+             [routerLink]="['/formation/category', cat.key]"
+             [class]="i === 0 ? 'btn btn-primary' : 'btn btn-outline'">
+            {{ cat.icon }} {{ cat.label }}
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </section>

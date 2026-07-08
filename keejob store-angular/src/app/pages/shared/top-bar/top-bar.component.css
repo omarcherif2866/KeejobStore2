@@ -295,7 +295,11 @@ body {
     gap: 8px;
     text-align: center;
   }
-  .social-icons { justify-content: center; }
+  .social-icons {
+    justify-content: center;
+    margin-left: 0; /* annule le margin-left: auto hérité du desktop */
+    width: 100%;
+  }
 }
 
 

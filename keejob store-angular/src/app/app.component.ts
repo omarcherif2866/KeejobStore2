@@ -11,8 +11,12 @@ export class AppComponent {
   title = 'Keejob Store';
   showTopBar = true;
   showFooter = true;
+isRouteLoading = false;
+isLoading = true;
 
   constructor(private router: Router) {
+
+    
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Masquer TopBar sur ActualiteComponent et FormateurComponent
@@ -31,4 +35,11 @@ export class AppComponent {
       }
     });
   }
+
+ngOnInit() {
+  setTimeout(() => {
+    this.isLoading = false;
+  }, 1000); // ajuste la durée selon tes besoins
+}
+
 }

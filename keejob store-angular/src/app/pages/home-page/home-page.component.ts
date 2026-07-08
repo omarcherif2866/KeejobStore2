@@ -35,7 +35,8 @@ events = [
     title: `Salon RDV Emploi by Keejob 2026 : 2 jours pour accélérer votre carrière`,
     date: '8 et 9 octobre 2026',
     location: `l'UTICA de Tunis`,
-    image: '../../assets/events/event2.jpeg',
+    image: '../../assets/events/SKJ04.png',
+
     description: `Trouver un emploi ne se résume plus à envoyer des dizaines de candidatures en ligne. Les recruteurs recherchent aujourd'hui des profils motivés, capables d'échanger directement avec eux et de valoriser leurs compétences. Les salons de recrutement offrent justement cette opportunité en réunissant, en un même lieu, entreprises, candidats et experts de l'emploi.
 Les 8 et 9 octobre 2026, le Salon RDV Emploi by Keejob revient pour sa 6ᵉ édition à l'UTICA de Tunis. Organisé par Keejob, cet événement s'impose comme l'un des rendez-vous incontournables du recrutement en Tunisie.
 Une rencontre directe avec les recruteurs
@@ -61,7 +62,8 @@ Préparez votre CV, travaillez votre présentation et profitez de ces deux journ
     title: `Salon en ligne de la formation professionnelle 2026 `,
     date: 'le 20 novembre 2026',
     location: 'En ligne',
-    image: '../../assets/events/event1.jpeg',
+    image: '../../assets/events/event2.jpeg',
+
     description: `Dans un marché du travail en constante évolution, développer ses compétences est devenu un véritable atout. Les entreprises recherchent des profils capables de s'adapter rapidement aux nouvelles technologies, aux nouveaux métiers et aux exigences d'un environnement professionnel toujours plus compétitif.
 C'est dans cette dynamique que se tiendra, le 20 novembre 2026, le Salon virtuel de la formation professionnelle, un événement 100 % en ligne dédié à toutes les personnes souhaitant évoluer, se reconvertir ou acquérir de nouvelles compétences.
 Un événement accessible à tous
@@ -88,7 +90,7 @@ Une journée à ne pas manquer pour préparer sereinement son avenir et donner u
     title: `Salon en ligne des PFE 2027 : trouvez votre projet de fin d'études`, // titre reconstitué à partir du contenu
     date: '25 janvier 2027',
     location: 'En ligne',
-    image: '../../assets/events/SKJ04.png',
+    image: '../../assets/events/event1.jpeg',
 
     description: `Dans un marché du travail en constante évolution, développer ses compétences est devenu un véritable atout. Les entreprises recherchent des profils capables de s'adapter rapidement aux nouvelles technologies, aux nouveaux métiers et aux exigences d'un environnement professionnel toujours plus compétitif.
 C'est dans cette dynamique que se tiendra, le 20 novembre 2026, le Salon virtuel de la formation professionnelle, un événement 100 % en ligne dédié à toutes les personnes souhaitant évoluer, se reconvertir ou acquérir de nouvelles compétences.

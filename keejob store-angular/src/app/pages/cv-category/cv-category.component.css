@@ -5,7 +5,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 
 .container {
   max-width: 1200px;
-  margin: 100px auto 0;
+  margin: 0 auto; /* était 100px auto 0, supprimé pour retirer l'espace en haut */
   padding: 0 20px;
   display: flex;
   justify-content: center;
@@ -14,8 +14,33 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   text-align: center;
 }
 
+/* ===================== FIL D'ARIANE ===================== */
+.breadcrumb {
+  max-width: 1600px;
+  margin: 0 auto 30px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.breadcrumb a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+.breadcrumb a:hover { text-decoration: underline; }
+
+.breadcrumb span {
+  color: #1e2749;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 .expertise-section {
-  margin-top: 100px;
+  margin-top: 0; /* était 100px, supprimé pour retirer l'espace en haut */
   background-image:
     url("../../../assets/277_1591.svg"),
     url("../../../assets/ellipse77182-8qp-600h.png");
@@ -27,6 +52,151 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   background-attachment: local;
 }
 
+/* ===================== LOADER ===================== */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 120px 0;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #e4e6fa;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===================== ÉTAT VIDE (aucune donnée) ===================== */
+.empty-state {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.empty-state-content {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.empty-state-illustration {
+  display: flex;
+  justify-content: center;
+}
+
+.empty-state-illustration img {
+  width: 100%;
+  max-width: 320px;
+}
+
+.empty-state-text {
+  text-align: left;
+}
+
+.empty-state-text h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #1e2749;
+  line-height: 1.3;
+  margin-bottom: 16px;
+}
+
+.empty-state-text p {
+  font-size: 15px;
+  color: #4b5568;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.empty-state-notify {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #f4f4fb;
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+
+.notify-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #e4e6fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.empty-state-notify span {
+  flex: 1;
+  font-size: 14px;
+  color: #363636;
+}
+
+.empty-state-alternatives-label {
+  font-weight: 500;
+  color: #1e2749;
+  margin-bottom: 16px;
+}
+
+.empty-state-alternatives {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.empty-state-alternatives .btn-primary {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  height: auto;
+  white-space: nowrap;
+}
+.empty-state-alternatives .btn-primary:hover { opacity: 0.9; }
+
+.empty-state-alternatives .btn-outline {
+  background-color: white;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.empty-state-alternatives .btn-outline:hover {
+  background-color: #f4f4fb;
+}
+
+/* ===================== CARTES ===================== */
 .platforms-cards-container {
   max-width: 1600px;
   margin: 0 auto;
@@ -37,14 +207,13 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   gap: 40px;
 }
 
-/* Carte — taille fixe identique pour toutes */
 .platform-card {
   background-color: var(--color-white);
   border-radius: 20px;
   padding: 20px;
-  width: 320px;          /* ← largeur fixe identique */
-  min-height: 320px;     /* ← hauteur minimale identique */
-  flex: 0 0 320px;       /* ← empêche le redimensionnement flex */
+  width: 320px;
+  min-height: 320px;
+  flex: 0 0 320px;
   box-shadow: 0px 10px 20px rgba(217, 218, 226, 0.3);
   display: flex;
   flex-direction: column;
@@ -69,7 +238,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   font-size: 14px; line-height: 22px;
   color: #919ca2;
   margin: 0 0 20px;
-  flex-grow: 1; /* ← pousse le bouton en bas, égalise les hauteurs */
+  flex-grow: 1;
 }
 .platform-description .font-semibold { font-weight: 600; }
 
@@ -82,7 +251,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   display: flex; align-items: center;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: auto; /* ← colle toujours en bas */
+  margin-top: auto;
   margin-right: 0;
 }
 
@@ -104,7 +273,6 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
    MEDIA QUERIES
    ===================================================================== */
 
-/* --- ≤ 1400px : 4 → 3 cartes par ligne --- */
 @media (max-width: 1400px) {
   .platform-card {
     width: 280px;
@@ -113,7 +281,6 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   .platforms-cards-container { gap: 30px; }
 }
 
-/* --- ≤ 1024px : 3 → 2 cartes par ligne --- */
 @media (max-width: 1024px) {
   .platform-card {
     width: 280px;
@@ -127,16 +294,21 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
     padding: 60px 5%;
     background-size: 1200px auto, 600px auto;
   }
+  .empty-state-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .empty-state-text { text-align: center; }
+  .empty-state-alternatives { justify-content: center; }
 }
 
-/* --- ≤ 768px : 2 cartes par ligne --- */
 @media (max-width: 768px) {
   .platforms-cards-container {
     gap: 16px;
     padding: 12px;
   }
   .platform-card {
-    width: calc(50% - 8px); /* 2 par ligne, écart inclus */
+    width: calc(50% - 8px);
     flex: 0 0 calc(50% - 8px);
     min-height: unset;
     padding: 16px;
@@ -145,15 +317,25 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   .platform-logo-wrapper { width: 56px; height: 56px; }
   .expertise-section {
     padding: 40px 16px;
-    background-image: none; /* retire les SVG décoratifs sur mobile */
+    background-image: none;
     margin-top: 40px;
   }
   .play-btn2 { justify-content: center; margin-top: 16px; }
 
-  
+  .empty-state-text h2 { font-size: 24px; }
+  .empty-state-notify {
+    flex-direction: column;
+    text-align: center;
+  }
+  .empty-state-alternatives {
+    flex-direction: column;
+  }
+  .empty-state-alternatives .btn-primary,
+  .empty-state-alternatives .btn-outline {
+    justify-content: center;
+  }
 }
 
-/* --- ≤ 480px : 1 carte par ligne --- */
 @media (max-width: 480px) {
   .platform-card {
     width: 100%;

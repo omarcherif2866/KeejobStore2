@@ -34,6 +34,7 @@ public class Formateur {
     private String description;
     private String poste;
     private String image;
+    private Integer discount;
 
     @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ServiceFromateur> servicesFormateurs = new ArrayList<>();

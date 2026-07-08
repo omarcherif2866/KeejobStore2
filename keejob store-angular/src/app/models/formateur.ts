@@ -14,10 +14,10 @@ export class Formateur {
     private lastName: string;
     private university: string;
     private image: string;
+    private discount: any;
     private servicesFormateurs: ServiceFormateur[] = [];
     private titleWhyList: TitleWhy[] = [];
     private formationFormateurs: FormationFormateur[] = [];
-  
     constructor(
       id: any,
       phone: string,
@@ -30,6 +30,7 @@ export class Formateur {
       lastName: string,
       university: string,
       image: string,
+      discount: any,
       servicesFormateurs: ServiceFormateur[] = [],
       titleWhyList: TitleWhy[] = [],
       formationFormateurs: FormationFormateur[] = []
@@ -47,6 +48,7 @@ export class Formateur {
       this.lastName = lastName;
       this.university = university;
       this.image = image;
+      this.discount = discount;
     this.servicesFormateurs = servicesFormateurs;
     this.titleWhyList = titleWhyList;
     this.formationFormateurs = formationFormateurs;
@@ -64,6 +66,14 @@ export class Formateur {
   
     public set Address(address: string) {
       this.address = address;
+    }
+
+    public get Discount(): any {
+      return this.discount;
+    }
+  
+    public set Discount(discount: any) {
+      this.discount = discount;
     }
   
     public get Description(): string {

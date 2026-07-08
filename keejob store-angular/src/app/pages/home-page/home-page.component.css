@@ -110,6 +110,17 @@ body {
     border-left: none;
     padding-left: 0;
   }
+    .hero-mini-features {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .hero-stats-row {
+    justify-content: center;
+  }
+
+    .hero-mini-item span br {
+    display: none;
+  }
 }
 /* ===== Stats sous tout le hero (pleine largeur) ===== */
 .hero-stats-row {
@@ -174,19 +185,7 @@ body {
   white-space: nowrap;
 }
 
-@media (max-width: 992px) {
-  .hero-mini-features {
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  .hero-stats-row {
-    justify-content: center;
-  }
-  .hero-stat-item {
-    border-right: none;
-    padding-right: 0;
-  }
-}
+
 
 .hero { padding: 80px 0; }
 
@@ -1450,11 +1449,70 @@ body {
   .cv-section .container {
     grid-template-columns: 1fr;
   }
-  .cv-features-row {
-    grid-template-columns: repeat(2, 1fr);
+
+  /* Padding symétrique pour que le centrage soit réel */
+  .cv-section {
+    padding: 40px 20px;
   }
+
+  .cv-features-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 32px;
+    column-gap: 20px;
+    align-items: start;
+  }
+
+  .cv-feature-item {
+    padding: 0 16px 0 0;
+    border-right: none;
+  }
+
+  .cv-features-row {
+    position: relative;
+  }
+  .cv-features-row::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background-color: #dfe3ee;
+  }
+
+  .cv-feature-item strong,
+  .cv-feature-item span {
+    text-align: left;
+  }
+
+  /* Boutons centrés */
+  .cv-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  /* Cercle réduit et centré */
   .cv-visual {
+    justify-content: center;
     height: 420px;
+  }
+
+  .cv-bg-blob {
+    width: 300px;
+    height: 300px;
+    top: 20px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+  }
+
+  /* Image remontée un peu */
+  .cv-main-img {
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(-20px);
   }
 }
 
@@ -1973,11 +2031,62 @@ body {
 }
 
 @media (max-width: 992px) {
+  .coaching-section {
+    padding: 40px 20px;
+  }
+
   .coaching-section .container {
     grid-template-columns: 1fr;
+
   }
+
+
+
   .coaching-features-row {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 32px;
+    column-gap: 20px;
+  }
+
+  .coaching-feature-item {
+    border-left: none;
+    padding: 0 12px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .coaching-feature-icon {
+    margin: 0 auto 14px;
+  }
+
+  .coaching-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .btn-coaching-primary {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  .link-coaching-secondary {
+    justify-content: center;
+  }
+
+  .coaching-visual {
+    justify-content: center;
+    min-height: 340px;
+  }
+
+  .coaching-main-img {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
   }
 }
 /* ===================== EXPERTS ===================== */
@@ -3162,8 +3271,18 @@ body {
   .newsletter-section { padding: 30px 0; }
   .newsletter-box { padding: 30px 20px; border-radius: 20px; }
   .newsletter-box h2 { font-size: 24px; margin-bottom: 24px; }
-  .cards-grid { grid-template-columns: 1fr; }
-
+  .cards-grid { grid-template-columns: 1fr; z-index: 2 ;}
+  .info-card h3 {
+    min-height: auto;
+    font-size: 16px;
+    line-height: 1.35;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+  }
+    .newsletter-box::before,
+  .newsletter-box::after {
+    z-index: 0; /* on repasse les cercles décoratifs derrière */
+  }
   /* Career */
   .highlight-career { font-size: 28px; }
   .video-placeholder { height: 240px; }
@@ -3190,7 +3309,44 @@ body {
   .atout-section p { font-size: 15px; width: 100%; }
   .atout-section .icon-circle { width: 56px; height: 56px; min-width: 56px; }
   .atout-section .main-title { font-size: 24px; }
+  .atout-bottom-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 24px 20px;
+  }
 
+  .atout-trust {
+    text-align: left;
+  }
+
+  .atout-email-signup {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 20px;
+    gap: 10px;
+  }
+
+  .atout-email-icon {
+    display: none; /* ou repositionner dans l'input si vous préférez le garder */
+  }
+
+  .atout-email-signup input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+  }
+
+  .atout-btn-discover {
+    width: 100%;
+    text-align: center;
+  }
   /* Events */
   .events-section { padding: 40px 0; }
   .events-section h2 { font-size: 26px; }
@@ -3243,4 +3399,443 @@ body {
   .highlight-career { font-size: 22px; }
 
   .expert-card { width: 100%; }
+}
+
+
+/* ============================================================
+   CORRECTIFS AFFICHAGE MOBILE
+   À COLLER À LA TOUTE FIN de votre fichier CSS existant
+   (l'ordre après le reste garantit la priorité en cascade,
+   les sélecteurs sont volontairement identiques à ceux du fichier
+   original pour bien cibler les bonnes règles)
+   ============================================================ */
+
+/* 0. Sécurité globale anti-débordement horizontal */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* 1. Bandeau garantie (hero) : forcé sur une ligne -> déborde.
+   On autorise le retour à la ligne sur mobile/tablette. */
+@media (max-width: 992px) {
+  .garantie {
+    white-space: normal;
+    width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------
+   2. BUG PRINCIPAL — Section Certifications
+   `.container { flex-direction: column; }` n'a AUCUN effet car
+   `.certif-section .container` est en display:grid, pas flex.
+   On corrige avec la bonne propriété grid.
+   ------------------------------------------------------------ */
+@media (max-width: 980px) {
+  .certif-section .container {
+    grid-template-columns: 1fr;
+    transform: none;
+    gap: 30px;
+    padding-right: 20px;
+  }
+  .certif-visual {
+    width: 100%;
+    max-width: 100%;
+    height: 380px;
+    margin-top: 0;
+  }
+  .certif-left { max-width: 100%; }
+}
+
+/* ------------------------------------------------------------
+   3. BUG PRINCIPAL — Section International
+   `.intl-features-row` est display:flex avec flex-wrap:nowrap
+   codé en dur. Le correctif existant modifiait grid-template-columns
+   (sans effet sur un flex). On force réellement le retour à la ligne.
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .international-section {
+    padding: 40px 0 40px 20px; /* on garde 0 à droite pour que l'image touche le bord */
+    overflow: hidden;
+  }
+
+  .international-section .container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  /* Features : 2 par ligne */
+  .intl-features-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 28px;
+    column-gap: 16px;
+    flex-wrap: unset;
+  }
+
+  .intl-feature-item {
+    border-left: none;
+    border-top: none;
+    padding: 0 12px 0 0;
+    flex: none; /* neutralise les anciennes règles flex desktop */
+  }
+
+  .intl-feature-item span {
+    white-space: normal;
+  }
+
+  /* Visuel collé au bord droit */
+  .intl-visual {
+    justify-content: flex-end;
+    min-height: 320px;
+    padding-right: 0;
+  }
+
+  .intl-main-img {
+    position: relative;
+    left: 20px;
+    bottom: -40px;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    border-radius: 24px 0 0 24px; /* arrondi seulement à gauche, à plat contre le bord droit */
+  }
+
+  .intl-corner-img,
+  .intl-dots-corner {
+    display: none; /* décorations superflues sur mobile, source de débordement */
+  }
+}
+
+/* ------------------------------------------------------------
+   4. BUG PRINCIPAL — Section Évaluation
+   `.eval-features-row` garde 5 colonnes sur mobile : les icônes
+   (52px fixes) ne rentrent plus, le texte se chevauche.
+   On passe à 2 colonnes propres.
+   ------------------------------------------------------------ */
+
+
+/* 5. Titres de sections non couverts par les media queries d'origine
+   (seuls certains h2 étaient réduits, pas ces classes spécifiques) */
+@media (max-width: 768px) {
+  .intl-title,
+  .coaching-title,
+  .cv-title,
+  .eval-title,
+  .certif-title {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+}
+
+/* 6. Rangées "features" restantes : sécurisation en 2 colonnes propres */
+@media (max-width: 768px) {
+  .coaching-features-row {
+    flex-wrap: wrap;
+    row-gap: 24px;
+  }
+  .coaching-feature-item {
+    flex: 1 1 45%;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .certif-features-row {
+    flex-wrap: wrap;
+    row-gap: 24px;
+  }
+  .certif-feature-item { flex: 1 1 45%; }
+
+  .cv-feature-item:nth-child(2n) { border-right: none; }
+}
+
+/* 7. Boutons / liens qui débordent sur mobile (texte trop long) */
+@media (max-width: 768px) {
+  .btn-intl-primary,
+  .link-intl-secondary,
+  .link-coaching-secondary,
+  .btn-coaching-primary,
+  .btn-certif-primary,
+  .link-certif-secondary,
+  .btn-eval-primary,
+  .btn-eval-secondary {
+    white-space: normal;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .intl-buttons,
+  .coaching-buttons,
+  .certif-buttons,
+  .eval-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .atout-bottom-bar { flex-direction: column; align-items: stretch; }
+  .atout-email-signup { min-width: 0; width: 100%; }
+  .atout-btn-discover { width: 100%; }
+  .atout-email-signup input { width: 100%; min-width: 0; }
+
+  .email-signup input { min-width: 0; }
+}
+
+/* ------------------------------------------------------------
+   8. Visuel hero (store-section) : cercles flottants positionnés
+   en pixels fixes -> débordent / se chevauchent sur petit écran.
+   ------------------------------------------------------------ */
+@media (max-width: 768px) {
+  .store-section {
+    padding: 30px 20px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .store-section .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .store-section h2 {
+    font-size: 26px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .store-section h3 {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .store-section .highlight,
+  .store-section .highlightWhite {
+    font-size: 40px; /* au lieu de 77px, trop grand pour mobile */
+  }
+
+  /* Features en colonne centrée, plus en ligne figée */
+  .features-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
+    justify-items: center;
+  }
+  .feature-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .feature-icon {
+    margin-bottom: 4px;
+  }
+
+  .feature-text span {
+    white-space: normal; /* le <br> dans le HTML forcera quand même le retour existant */
+  }
+
+  /* Email signup déjà en colonne via règle existante, on centre le bouton */
+  .email-signup {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Visuel : on le recentre et on l'empêche de déborder */
+  .store-visual {
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+    margin: 40px auto 0;
+  }
+
+    .circle-bg { width: 200px; height: 200px; }
+  .dashed-arc { display: none; }
+
+  .floating-circle {
+    transform: scale(0.85);
+    z-index: 5; /* garantit qu'aucun cercle ne soit masqué */
+  }
+
+  .circle-1 { top: 0; left: 50%; transform: translateX(-50%) scale(0.85); }
+  .circle-2 { top: 38%; right: -8px; transform: scale(0.85); }
+  .circle-3 { bottom: 5px; right: 15px; transform: scale(0.85); }
+  .circle-4 { top: 38%; left: -8px; transform: scale(0.85); }
+}
+
+/* 9. Grandes images décoratives absolues : créent des vides énormes
+   ou débordent du cadre arrondi des sections sur mobile. */
+@media (max-width: 768px) {
+  .certif-corner-img,
+  .intl-corner-img,
+  .eval-corner-img,
+  .coaching-corner-img,
+  .certif-dark-corner,
+  .cv-dark-corner,
+  .coaching-dark-corner {
+    display: none;
+  }
+}
+
+/* 10. Stats du hero : bordures verticales qui n'ont plus de sens
+   une fois empilées en colonne sur mobile. */
+@media (max-width: 768px) {
+  .hero-stats-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 24px;
+  }
+  .hero-stat-item {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+    padding-right: 0;
+    padding-bottom: 16px;
+  }
+  .hero-stat-item:last-child { border-bottom: none; padding-bottom: 0; }
+}
+
+/* 11. Cercles de fond décoratifs : largeur bridée pour ne jamais
+   dépasser la largeur de l'écran (cause de scroll horizontal). */
+@media (max-width: 768px) {
+  .eval-visual {
+    position: relative;
+    display: block;          /* on annule le flex/column précédent */
+    width: 100%;
+    max-width: 340px;
+    min-height: 350px;   /* au lieu de 400px, ajusté à la hauteur réelle du contenu */
+    margin: 40px auto 0;
+    padding-bottom: 0;
+  }
+
+  /* Cercle de fond réactivé, mis à l'échelle et positionné à droite */
+  .eval-bg-circle {
+    display: block;
+    width: 280px;
+    height: 280px;
+    top: 0;
+    right: 0;
+  }
+
+  .eval-dots {
+    display: block;
+    width: 60px;
+    height: 60px;
+    top: 10px;
+    right: 0;
+  }
+
+  .eval-main-img {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Carte Résultats : en haut à gauche, chevauche l'image comme sur desktop */
+  .eval-card-results {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 120px;
+    height: 180px;
+    text-align: center;
+    transform: none;
+    margin: 0;
+    z-index: 5;
+  }
+
+  .progress-ring {
+    width: 70px;
+    height: 70px;
+    margin: 6px auto;
+  }
+  .progress-ring svg {
+    width: 70px;
+    height: 70px;
+  }
+  .progress-value {
+    font-size: 15px;
+  }
+  .eval-card-title {
+    font-size: 12px;
+  }
+  .eval-card-label {
+    font-size: 11px;
+  }
+  .eval-card-sub {
+    font-size: 11px;
+  }
+
+  /* Carte Compétences : en bas à gauche, sous la carte résultats */
+  .eval-card-skills {
+    position: absolute;
+    top: 200px;
+    left: -20px;
+    width: 190px;
+    margin: 0;
+    z-index: 5;
+    height: 140px;
+  }
+
+  .skill-name {
+    font-size: 11px;
+    width: 78px;
+  }
+  .skill-percent {
+    font-size: 11px;
+    width: 26px;
+  }
+
+  /* Bulle checkmark réactivée, coin haut droit */
+  .eval-check-bubble {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    top: 0;
+    right: 10px;
+  }
+
+    .eval-features-row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    grid-template-columns: none !important;
+    row-gap: 24px;
+    column-gap: 12px;
+  }
+
+  .eval-feature-item {
+    flex: 0 0 30% !important;
+    max-width: 30% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .eval-feature-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 8px;
+  }
+
+  .eval-feature-item strong {
+    font-size: 14px;
+    margin-bottom: 4px;
+    white-space: normal !important;
+  }
+
+  .eval-feature-item span {
+    font-size: 14px;
+    line-height: 1.3;
+    white-space: normal !important;
+  }
+
+  .eval-feature-item br {
+    display: none;
+  }
 }

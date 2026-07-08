@@ -34,7 +34,8 @@ public class FormateurController {
             @RequestParam("firstName") String firstName,
             @RequestParam("lastName") String lastName,
             @RequestParam("university") String university,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("discount") Integer discount) {
         try {
             // Validation
             if (address == null || address.isEmpty() || description == null || description.isEmpty() ||
@@ -55,6 +56,7 @@ public class FormateurController {
             formateur.setFirstName(firstName);
             formateur.setLastName(lastName);
             formateur.setUniversity(university);
+            formateur.setDiscount(discount);
 
             // Upload de l'image vers Cloudinary
             if (image != null && !image.isEmpty()) {
@@ -105,7 +107,8 @@ public class FormateurController {
             @RequestParam("experience") String experience,
             @RequestParam("poste") String poste,
             @RequestParam("university") String university,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("discount") Integer discount) {
 
         try {
             Formateur existing = formateurService.getFormateurById(id);
@@ -123,6 +126,7 @@ public class FormateurController {
             existing.setExperience(experience);
             existing.setPoste(poste);
             existing.setUniversity(university);
+            existing.setDiscount(discount);
 
             // Si image présente
             if (image != null && !image.isEmpty()) {

@@ -89,6 +89,10 @@ public class FormateurServiceImp implements FormateurService {
                 existingFormateur.setUniversity(Formateur.getUniversity());
             }
 
+            if (Formateur.getDiscount() != null) {
+                existingFormateur.setDiscount(Formateur.getDiscount());
+            }
+
 
             Formateur updatedFormateur = formateurRepository.save(existingFormateur);
 

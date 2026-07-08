@@ -67,9 +67,26 @@
     font-weight: 700;
   }
 
-  @media (max-width: 768px) {
-    .footer-bottom-container {
-      flex-direction: column;
-      gap: 20px;
-    }
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
   }
+
+  .footer-bottom-container {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .footer-links-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 10px;
+    column-gap: 20px;
+  }
+
+  .footer-bottom-container .copyright,
+  .footer-links-group .copyright {
+    white-space: normal;
+  }
+}

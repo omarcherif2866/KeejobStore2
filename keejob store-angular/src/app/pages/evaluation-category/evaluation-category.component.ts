@@ -10,12 +10,24 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
 })
 export class EvaluationCategoryComponent implements OnInit {
 
-
   category!: EvaluationCategory;
   evaluations: Evaluation[] = [];
   loading = true;
 
   availableCategories = Object.values(EvaluationCategory);
+
+  // Libellés lisibles pour chaque valeur de l'enum EvaluationCategory
+  // ⚠️ adaptez les clés exactes selon votre enum réel (voir note en bas)
+  private categoryLabels: { [key: string]: string } = {
+    'Les_tests_psychometriques': 'de tests psychométriques',
+    'Les_tests_de_competences': 'de tests de compétences'
+  };
+
+  // Config des boutons alternatifs pour chaque catégorie
+  private categoryButtonConfig: { [key: string]: { label: string; icon: string } } = {
+    'Les_tests_psychometriques': { label: 'Voir les tests psychométriques', icon: '🧠' },
+    'Les_tests_de_competences': { label: 'Voir les tests de compétences', icon: '📊' }
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -52,18 +64,35 @@ export class EvaluationCategoryComponent implements OnInit {
     this.loadEvaluations();
   }
 
-
-  sanitizeImage(url: string): string {
-  if (!url) return '';
-
-  // Cas où l'URL est en double
-  if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
-    const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
-    return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+  get categoryLabel(): string {
+    return this.categoryLabels[this.category] || (this.category ? this.category.toString().toLowerCase() : '');
   }
 
-  return url;
+  // Retourne les catégories AUTRES que celle affichée actuellement
+get otherCategories(): { key: string; label: string; icon: string }[] {
+  return this.availableCategories
+    .filter(cat => cat !== this.category)
+    .map(cat => ({
+      key: cat,
+      label: this.categoryButtonConfig[cat]?.label || cat.toString().replace(/_/g, ' '),
+      icon: this.categoryButtonConfig[cat]?.icon || ''
+    }));
 }
 
+
+
+  sanitizeImage(url: string): string {
+    if (!url) return '';
+    if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
+      const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
+      return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+    }
+    return url;
+  }
+
+  // Retourne le nom de la catégorie actuelle, sans underscore, pour l'affichage (ex: fil d'ariane)
+get categoryDisplay(): string {
+  return this.category ? this.category.toString().replace(/_/g, ' ') : '';
+}
 
 }
