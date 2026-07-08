@@ -32,10 +32,10 @@ experts = [
 events = [
   {
     id: 1,
-    title: `Salon RDV Emploi by Keejob 2026 : deux jours pour accélérer votre carrière`,
+    title: `Salon RDV Emploi by Keejob 2026 : 2 jours pour accélérer votre carrière`,
     date: '8 et 9 octobre 2026',
     location: `l'UTICA de Tunis`,
-    image: '../../assets/events/SKJ08.png',
+    image: '../../assets/events/event2.jpeg',
     description: `Trouver un emploi ne se résume plus à envoyer des dizaines de candidatures en ligne. Les recruteurs recherchent aujourd'hui des profils motivés, capables d'échanger directement avec eux et de valoriser leurs compétences. Les salons de recrutement offrent justement cette opportunité en réunissant, en un même lieu, entreprises, candidats et experts de l'emploi.
 Les 8 et 9 octobre 2026, le Salon RDV Emploi by Keejob revient pour sa 6ᵉ édition à l'UTICA de Tunis. Organisé par Keejob, cet événement s'impose comme l'un des rendez-vous incontournables du recrutement en Tunisie.
 Une rencontre directe avec les recruteurs
@@ -58,10 +58,10 @@ Préparez votre CV, travaillez votre présentation et profitez de ces deux journ
   },
   {
     id: 2,
-    title: `Salon en ligne de la formation professionnelle 2026 : préparez votre avenir sans vous déplacer`,
+    title: `Salon en ligne de la formation professionnelle 2026 `,
     date: 'le 20 novembre 2026',
     location: 'En ligne',
-    image: '../../assets/events/SKJ03.png',
+    image: '../../assets/events/event1.jpeg',
     description: `Dans un marché du travail en constante évolution, développer ses compétences est devenu un véritable atout. Les entreprises recherchent des profils capables de s'adapter rapidement aux nouvelles technologies, aux nouveaux métiers et aux exigences d'un environnement professionnel toujours plus compétitif.
 C'est dans cette dynamique que se tiendra, le 20 novembre 2026, le Salon virtuel de la formation professionnelle, un événement 100 % en ligne dédié à toutes les personnes souhaitant évoluer, se reconvertir ou acquérir de nouvelles compétences.
 Un événement accessible à tous
@@ -162,7 +162,7 @@ Aujourd'hui, un diplôme ne suffit plus toujours à faire la différence. Les en
   },
   {
     id: 3,
-    title: `La conversation et le marché du travail`, // titre reconstitué à partir du contenu
+    title: `La conversation et le marché du travail pour avenir professionnel`, // titre reconstitué à partir du contenu
         icon: 'target',
     color: 'blue',
     description: `Le marché du travail évolue rapidement sous l'effet de la transformation numérique, des nouveaux modes de collaboration et des attentes des entreprises. Aujourd'hui, la capacité à communiquer efficacement est devenue une compétence essentielle, au même titre que les compétences techniques.
