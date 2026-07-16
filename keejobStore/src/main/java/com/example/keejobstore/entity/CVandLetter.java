@@ -31,15 +31,15 @@ public class CVandLetter {
     private List<CVandLetterSection> sections = new ArrayList<>();
 
     private String image;
-    private String logo;
+//    private String logo;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cv_partenaire",
-            joinColumns = @JoinColumn(name = "cv_id"),
-            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
-    )
-    private List<Partenaire> cvPartenaires = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "cv_partenaire",
+//            joinColumns = @JoinColumn(name = "cv_id"),
+//            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
+//    )
+//    private List<Partenaire> cvPartenaires = new ArrayList<>();
 
 
     @Column(columnDefinition = "JSON")

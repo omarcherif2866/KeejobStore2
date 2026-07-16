@@ -32,11 +32,11 @@ public class CVController {
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam(value = "logo", required = false) MultipartFile logo,
+//            @RequestParam(value = "logo", required = false) MultipartFile logo,
             @RequestParam("categoryCV") String categoryCVStr,
             @RequestParam("sections") String sectionsJson,
             @RequestParam("priceSections") String priceSectionsJson,
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
             @RequestParam(value = "priceIconFiles", required = false) List<MultipartFile> priceIconFiles) throws JsonProcessingException {
 
@@ -174,16 +174,16 @@ public class CVController {
                 cv.setImage(imageUrl);
             }
 
-            if (logo != null && !logo.isEmpty()) {
-                String logoUrl = cloudinaryService.uploadImage(logo);
-                cv.setLogo(logoUrl);
-            }
+//            if (logo != null && !logo.isEmpty()) {
+//                String logoUrl = cloudinaryService.uploadImage(logo);
+//                cv.setLogo(logoUrl);
+//            }
 
             // Ajouter partenaires
-            if (partenairesIds != null && !partenairesIds.isEmpty()) {
-                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
-                cv.setCvPartenaires(partenaires);
-            }
+//            if (partenairesIds != null && !partenairesIds.isEmpty()) {
+//                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
+//                cv.setCvPartenaires(partenaires);
+//            }
 
             CVandLetter saved = cVRepository.save(cv);
             return ResponseEntity.ok(saved);
@@ -221,9 +221,9 @@ public class CVController {
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "sections", required = false) String sectionsJson,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam(value = "logo", required = false) MultipartFile logo,
+//            @RequestParam(value = "logo", required = false) MultipartFile logo,
             @RequestParam("categoryCV") String categoryCVStr,
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "priceSections", required = false) String priceSectionsJson,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
             @RequestParam(value = "priceIconFiles", required = false) List<MultipartFile> priceIconFiles) {
@@ -357,16 +357,16 @@ public class CVController {
                 existing.setImage(imageUrl);
             }
 
-            if (logo != null && !logo.isEmpty()) {
-                String logoUrl = cloudinaryService.uploadImage(logo);
-                existing.setLogo(logoUrl);
-            }
+//            if (logo != null && !logo.isEmpty()) {
+//                String logoUrl = cloudinaryService.uploadImage(logo);
+//                existing.setLogo(logoUrl);
+//            }
 
             // ========== MISE À JOUR PARTENAIRES ==========
-            if (partenairesIds != null) {
-                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
-                existing.setCvPartenaires(partenaires);
-            }
+//            if (partenairesIds != null) {
+//                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
+//                existing.setCvPartenaires(partenaires);
+//            }
 
             CVandLetter saved = cvService.updateCVandLetter(id, existing);
             return ResponseEntity.ok(saved);

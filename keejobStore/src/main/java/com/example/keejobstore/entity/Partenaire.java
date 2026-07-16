@@ -33,12 +33,12 @@ public class Partenaire {
     @JsonIgnore
     private List<Evaluation> evaluations = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "cvPartenaires")
-    @JsonIgnore
-    private List<CVandLetter> cv = new ArrayList<>();
+//    @ManyToMany(mappedBy = "cvPartenaires")
+//    @JsonIgnore
+//    private List<CVandLetter> cv = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "coachingPartenaires")
-    @JsonIgnore
-    private List<CoachingEmploi> coaching = new ArrayList<>();
+//    @ManyToMany(mappedBy = "coachingPartenaires")
+//    @JsonIgnore
+//    private List<CoachingEmploi> coaching = new ArrayList<>();
 }
 

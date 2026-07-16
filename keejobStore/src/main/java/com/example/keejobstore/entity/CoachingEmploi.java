@@ -32,15 +32,15 @@ public class CoachingEmploi {
     private List<CoachingSection> sections = new ArrayList<>();
 
     private String image;
-    private String logo;
+//    private String logo;
 
-    @ManyToMany
-    @JoinTable(
-            name = "coaching_partenaire",
-            joinColumns = @JoinColumn(name = "coaching_id"),
-            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
-    )
-    private List<Partenaire> coachingPartenaires = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "coaching_partenaire",
+//            joinColumns = @JoinColumn(name = "coaching_id"),
+//            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
+//    )
+//    private List<Partenaire> coachingPartenaires = new ArrayList<>();
 
 
     @Column(columnDefinition = "JSON")

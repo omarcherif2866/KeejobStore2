@@ -37,11 +37,11 @@ public class CoachingController {
             @RequestParam("sousTitre") String sousTitre,
             @RequestParam("description") String description,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam(value = "logo", required = false) MultipartFile logo,
+//            @RequestParam(value = "logo", required = false) MultipartFile logo,
             @RequestParam("categoryCoaching") String categoryCoachingStr,
             @RequestParam("sections") String sectionsJson,
             @RequestParam("priceSections") String priceSectionsJson,  // ← Vérifiez le nom
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
             @RequestParam(value = "priceIconFiles", required = false) List<MultipartFile> priceIconFiles
     ) throws JsonProcessingException {
@@ -181,15 +181,15 @@ public class CoachingController {
             }
 
             // Ajouter partenaires
-            if (partenairesIds != null && !partenairesIds.isEmpty()) {
-                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
-                CoachingEmploi.setCoachingPartenaires(partenaires);
-            }
-
-            if (logo != null && !logo.isEmpty()) {
-                String logoUrl = cloudinaryService.uploadImage(logo);
-                CoachingEmploi.setLogo(logoUrl);
-            }
+//            if (partenairesIds != null && !partenairesIds.isEmpty()) {
+//                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
+//                CoachingEmploi.setCoachingPartenaires(partenaires);
+//            }
+//
+//            if (logo != null && !logo.isEmpty()) {
+//                String logoUrl = cloudinaryService.uploadImage(logo);
+//                CoachingEmploi.setLogo(logoUrl);
+//            }
 
             CoachingEmploi saved = coachingRepository
                     .save(CoachingEmploi);
@@ -230,9 +230,9 @@ public class CoachingController {
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "sections", required = false) String sectionsJson,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam(value = "logo", required = false) MultipartFile logo,
+//            @RequestParam(value = "logo", required = false) MultipartFile logo,
             @RequestParam("categoryCoaching") String categoryCoachingStr,
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "priceSections", required = false) String priceSectionsJson,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
             @RequestParam(value = "priceIconFiles", required = false) List<MultipartFile> priceIconFiles) {
@@ -367,15 +367,15 @@ public class CoachingController {
             }
 
             // Mise à jour partenaires
-            if (partenairesIds != null) {
-                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
-                existing.setCoachingPartenaires(partenaires);
-            }
-
-            if (logo != null && !logo.isEmpty()) {
-                String logoUrl = cloudinaryService.uploadImage(logo);
-                existing.setLogo(logoUrl);
-            }
+//            if (partenairesIds != null) {
+//                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
+//                existing.setCoachingPartenaires(partenaires);
+//            }
+//
+//            if (logo != null && !logo.isEmpty()) {
+//                String logoUrl = cloudinaryService.uploadImage(logo);
+//                existing.setLogo(logoUrl);
+//            }
             
             CoachingEmploi saved = coachingService.updateCoachingEmploi(id, existing);
             return ResponseEntity.ok(saved);

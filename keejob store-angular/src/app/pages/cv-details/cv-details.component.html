@@ -1,170 +1,145 @@
 <body>
 
   <div *ngIf="loading" class="loading-container">
-  <div class="spinner"></div>
-  <p>Chargement des évaluations...</p>
-</div>
+    <div class="spinner"></div>
+    <p>Chargement des évaluations...</p>
+  </div>
 
-<div *ngIf="!loading && cvs.length === 0" class="no-data">
-  <p>Aucune évaluation disponible</p>
-</div>
-<div *ngFor="let cv of cvs; let i = index"> 
+  <div *ngIf="!loading && cvs.length === 0" class="no-data">
+    <p>Aucune évaluation disponible</p>
+  </div>
 
+  <div *ngFor="let cv of cvs; let i = index">
+
+    <!-- ===== HERO ===== -->
     <section id="section-hero" class="hero-section">
       <div class="container">
-        <div class="hero-top">
-          <div class="hero-badge">
-            <div class="icon-box">
-              <img [src]="sanitizeImage(cv.image)" [alt]="cv.name + ' icon'">
-            </div>
-            <div class="badge-text">
-              <h1>{{ cv.name }}</h1>
-            </div>
-          </div>
-          
-          <div class="rating-block">
-            <img src="../../assets/89_2735.svg" alt="Stars">
-            <span class="score">4.7</span>
-            <span class="reviews">Basé sur 17 avis</span>
-          </div>
-        </div>
-
         <div class="hero-content">
+          <div class="hero-text">
+            <span class="hero-badge-label">{{ cv.sections[0]?.headline || 'LETTRE DE MOTIVATION' }}</span>
+
+            <h1>{{ cv.name }}</h1>
+
+            <p class="hero-desc">{{ cv.sections[0]?.subtitle }}</p>
+
+            <div class="hero-actions">
+              <a href="#pricing-section" class="btn btn-primary">Commander maintenant</a>
+              <a href="#expertise-section" class="btn btn-outline">En savoir plus</a>
+            </div>
+
+            <div class="hero-trust-row">
+              <div class="trust-item" *ngFor="let detail of cv.sections[0]?.details">
+                <div class="trust-icon">
+                    <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre" style="width: 20px; height: 20px;">
+
+                </div>
+                <div class="trust-text">
+                  <strong>{{ detail.titre }}</strong>
+                  <span>{{ detail.description }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="hero-image">
             <img [src]="sanitizeImage(cv.image)" [alt]="cv.name + ' icon'">
           </div>
-          <div class="hero-text">
-            <p>{{ cv.sections[0]?.headline }}</p>
-            <h2>{{ cv.sections[0]?.subtitle }}</h2>
-            <div class="expertise-right" *ngFor="let detail of cv.sections[0]?.details">
-            <p>{{ detail.description }}</p>
-            </div>
-
-          </div>
         </div>
       </div>
     </section>
 
+    <!-- ===== EXPERTISE (4 icônes) ===== -->
     <section id="expertise-section">
       <div class="container">
-        <div class="expertise-grid">
-          <div class="expertise-left">
-            <p>{{ cv.sections[1]?.headline }}</p>
-            <h2>{{ cv.sections[1]?.subtitle }}</h2>
-            <div class="expertise-right" *ngFor="let detail of cv.sections[1]?.details">
+        <div class="expertise-box">
+          <div class="expertise-item" *ngFor="let detail of cv.sections[1]?.details">
+            <div class="expertise-icon">
+              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+            </div>
+            <h3>{{ detail.titre }}</h3>
             <p>{{ detail.description }}</p>
-            </div>
-          </div>
-          <div class="expertise-right">
-            <h3>{{ cv.sections[2]?.headline }}</h3>
-            <p>{{ cv.sections[2]?.subtitle }}</p>
-            <div class="expertise-right" *ngFor="let detail of cv.sections[2]?.details">
-              <div class="expertise-item">
-                <div class="check-icon">
-          <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="12" r="11" fill="#72B656"/>
-            <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-                </div>
-                <div class="item-text">
-                  <strong>{{ detail.titre }} :</strong> {{ detail.description }}
-                </div>
-              </div>              
-            </div>
-
           </div>
         </div>
       </div>
     </section>
 
-    <!-- prix a regler -->
+    <!-- ===== PRICING ===== -->
     <section id="pricing-section">
       <div class="container">
-        <h2 class="section-title">{{ cv.sections[3]?.headline }}</h2>
-        <p class="section-subtitle">{{ cv.sections[3]?.subtitle }}</p>
+        <h2 class="section-title">{{ cv.sections[3]?.headline || 'Nos packs' }}</h2>
 
         <div class="pricing-cards">
-          <!-- Card 1 -->
-        <div class="pricing-container">
-          <div 
-            class="pricing-card"
-            *ngFor="let ps of cv.priceSections; let i = index"
-            [ngClass]="getColorClass(i)"
-          >
+          <div class="pricing-container">
+            <div class="pricing-card" *ngFor="let ps of cv.priceSections; let i = index" [ngClass]="getColorClass(i)">
 
-            <div class="card-header">
-              <h3>{{ ps.title }}</h3>
-              <div class="price">{{ ps.price }} € / page</div>
+              <div class="card-header">
+                <span class="pack-badge" [ngClass]="getBadgeClass(i)">{{ ps.title }}</span>
+                <div class="price">{{ ps.price }} €</div>
+                <p class="included">{{ ps.subtitle }}</p>
+              </div>
+
+              <div class="card-body">
+                <ul class="feature-list">
+                  <li *ngFor="let detail of ps.details">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="11" [attr.fill]="getIconColor(i)"/>
+                      <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5"/>
+                    </svg>
+                    {{ detail.titre }}
+                  </li>
+                </ul>
+              </div>
+
+              <div class="card-footer">
+                <a href="#" class="btn btn-choose" [ngClass]="getBtnClass(i)">Choisir ce pack</a>
+              </div>
+
             </div>
-
-            <div class="card-body">
-              <p class="included">{{ ps.subtitle }}</p>
-
-              <ul class="feature-list">
-                <li *ngFor="let detail of ps.details">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="11" fill="#72B656"/>
-                    <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5"/>
-                  </svg>
-                  {{ detail.titre }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Commander</a>
-            </div>
-
           </div>
         </div>
-        </div>
       </div>
-    </section> 
+    </section>
 
-    <section id="process-section">
+    <!-- ===== LANGUES (utilise sections[4]) ===== -->
+    <section id="languages-section">
       <div class="container">
-        <h2 class="section-title-pricing">{{ cv.sections[4]?.headline }}</h2>
-        <p class="section-subtitle">{{ cv.sections[4]?.subtitle }}</p>
-        
-<div class="process-steps">
-  <div class="step" *ngFor="let detail of cv.sections[4]?.details">
-    
-    <div class="step-icon">
-      <div style="position: relative; width: 168px; height: 168px; margin: 0 auto;">
-        <div class="heroo-icon">
-          <img [src]="sanitizeImage(detail.icon)" [alt]="cv.name + ' icon'">
+        <h2 class="section-title">{{ cv.sections[4]?.headline || 'Nos services disponibles en plusieurs langues' }}</h2>
+
+        <div class="languages-row">
+          <div class="lang-item" *ngFor="let detail of cv.sections[4]?.details">
+            <div class="lang-flag">
+              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+            </div>
+            <span>{{ detail.titre }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <p class="step-text">{{ detail.titre }}</p>
+    <!-- ===== CONTACT BANNER ===== -->
+    <section id="contact-banner">
+      <div class="container">
+        <div class="contact-box">
+          <div class="contact-left">
+            <div class="phone-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <strong>Besoin d'un conseil ?</strong>
+              <span>Notre équipe est à votre écoute.</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary">Contactez-nous</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>© 2024 Complexic. Tous droits réservés.</p>
+    </footer>
+
   </div>
-</div>
-
-      </div>
-    </section>
-
-    <section id="testimonials-section">
-      <div class="container">
-        <h2 class="section-title">Ils nous font confiance</h2>
-        <p class="section-subtitle">Il serait long et fastidieux de présenter la liste exhaustive de nos clients. Mais voici quelques exemples de collaborations qui illustrent une partie de notre savoir-faire. Alors pourquoi pas vous !</p>
-
-        <div class="testimonial-card">
-          <div class="testimonial-image">
-            <div class="image-bg"></div>
-            <img src="images/af0060a928e1813a3409f33491b715440c54c9e0.png" alt="Aymen B">
-          </div>
-          <div class="testimonial-content">
-            <h4>Ce que nos particuliers disent de nous</h4>
-            <blockquote>"J'ai été très satisfait du service de rédaction et de correction de CV que j'ai reçu. Ils ont vraiment pris le temps de comprendre mes compétences et mes objectifs professionnels, et le résultat final était professionnel et percutant !"</blockquote>
-            <div class="author">
-              <strong>Aymen B</strong><br>
-              Responsable des ressources humaines
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-</div>
 
 </body>

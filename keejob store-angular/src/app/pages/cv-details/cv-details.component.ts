@@ -62,10 +62,23 @@ export class CvDetailsComponent implements OnInit {
   }
 
 getColorClass(i: number): string {
-  const colors = ['card-blue', 'card-yellow', 'card-green'];
+  const colors = ['card-blue', 'card-green', 'card-yellow'];
   return colors[i % 3];   // cycle automatiquement
 }
 
+getBadgeClass(i: number): string {
+  const badges = ['badge-blue', 'badge-green', 'badge-orange'];
+  return badges[i % 3];
+}
 
+getBtnClass(i: number): string {
+  const btns = ['btn-blue', 'btn-green', 'btn-orange'];
+  return btns[i % 3];
+}
+
+getIconColor(i: number): string {
+  const colors = ['#5958A0', '#4caf50', '#f59e0b'];
+  return colors[i % 3];
+}
 
 }

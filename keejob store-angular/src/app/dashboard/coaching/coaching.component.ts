@@ -23,7 +23,7 @@ export class CoachingComponent implements OnInit {
   itemsPerPage = 5;
   showModal = false;
   modalMode: 'add' | 'edit' = 'add';
-  selectedLogo?: File;
+  // selectedLogo?: File;
   availableCoachingCategories = Object.values(CoachingCategory);
 
   formData = {
@@ -33,7 +33,7 @@ export class CoachingComponent implements OnInit {
     sousTitre: '',
     description: '',
     image: '',
-    logo: '',
+    // logo: '',
     categoryCoaching: null as CoachingCategory | null  // NOUVEAU
   };
   
@@ -64,7 +64,7 @@ export class CoachingComponent implements OnInit {
 
   ngOnInit() {
     this.fetchCoachings();
-    this.fetchPartenaires();
+    // this.fetchPartenaires();
     this.fetchAvailableIcons(); // ← AJOUTER CECI
     this.fetchAvailablePriceIcons(); // ✅ NOUVEAU
   }
@@ -102,7 +102,6 @@ export class CoachingComponent implements OnInit {
   private initializeSections() {
     // 4 sections normales + 1 section pour les prix
     this.sections = [
-      { headline: '', subtitle: '', details: [] },
       { headline: '', subtitle: '', details: [] },
       { headline: '', subtitle: '', details: [] },
       { headline: '', subtitle: '', details: [] }
@@ -169,13 +168,13 @@ export class CoachingComponent implements OnInit {
     sousTitre: '',
     description: '',
     image: '',
-    logo: '',
+    // logo: '',
     categoryCoaching: null  // NOUVEAU
     };
     this.selectedImage = null;
     this.initializeSections();
     this.initializePriceSections(); // NOUVEAU
-    this.selectedPartenaires = [];
+    // this.selectedPartenaires = [];
     this.currentModalStep = 1;
     this.showModal = true;
   }
@@ -191,7 +190,7 @@ export class CoachingComponent implements OnInit {
 
       description: Coaching.Description || '',
       image: Coaching.Image || '',
-      logo: Coaching.Logo || '',
+      // logo: Coaching.Logo || '',
       categoryCoaching: Coaching.Category || null
     };
     
@@ -200,7 +199,7 @@ export class CoachingComponent implements OnInit {
     
     if (Coaching.Sections && Coaching.Sections.length > 0) {
       this.sections = [...Coaching.Sections];
-      while (this.sections.length < 4) {
+      while (this.sections.length < 3) {
         this.sections.push({ headline: '', subtitle: '', details: [] });
       }
     } else {
@@ -214,7 +213,7 @@ export class CoachingComponent implements OnInit {
       this.initializePriceSections();
     }
     
-    this.selectedPartenaires = Coaching.Partenaires ? [...Coaching.Partenaires] : [];
+    // this.selectedPartenaires = Coaching.Partenaires ? [...Coaching.Partenaires] : [];
     
     this.currentModalStep = 1;
     this.showModal = true;
@@ -229,14 +228,14 @@ export class CoachingComponent implements OnInit {
     sousTitre: '',
     description: '',
     image: '',
-    logo: '',
+    // logo: '',
     categoryCoaching: null  // NOUVEAU
     };
     this.selectedImage = null;
     this.editId = null;
     this.sections = [];
     this.priceSections = []; // NOUVEAU
-    this.selectedPartenaires = [];
+    // this.selectedPartenaires = [];
     this.currentModalStep = 1;
   }
 
@@ -414,9 +413,9 @@ handleSubmit() {
     formData.append('image', this.selectedImage, this.selectedImage.name);
   }
 
-  if (this.selectedLogo) {
-    formData.append('logo', this.selectedLogo, this.selectedLogo.name);
-  }
+  // if (this.selectedLogo) {
+  //   formData.append('logo', this.selectedLogo, this.selectedLogo.name);
+  // }
 
    // ====== SECTIONS ======
   const iconFiles: (File | null)[] = [];
@@ -630,7 +629,7 @@ handleSubmit() {
         return;
       }
       
-      this.selectedLogo = file;
+      // this.selectedLogo = file;
     }
 }
 
@@ -731,7 +730,7 @@ getIconPreview(icon: any): SafeUrl | string {
       }
     }
 
-    if (this.currentModalStep < 7) {
+    if (this.currentModalStep < 5) {
       this.currentModalStep++;
     }
   }

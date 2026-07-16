@@ -34,10 +34,10 @@ export class Coaching {
   private sousTitre: string | null;
   private description: string | null;
   private image: string | null;
-  private logo: string | null;
+  // private logo: string | null;
   private sections: CoachingSection[];
   private priceSections: PriceSection[];
-  private coachingPartenaires: Partenaire[] = [];
+  // private coachingPartenaires: Partenaire[] = [];
   private categoryCoaching: CoachingCategory;
 
   constructor(data: any = {}) {
@@ -47,12 +47,12 @@ export class Coaching {
     this.sousTitre = data.sousTitre ?? null;
     this.description = data.description ?? null;
     this.image = data.image ?? null;
-    this.logo = data.logo ?? null;
+    // this.logo = data.logo ?? null;
     this.sections = Array.isArray(data.sections) ? data.sections : [];
     this.priceSections = Array.isArray(data.priceSections) ? data.priceSections : [];
-    this.coachingPartenaires = Array.isArray(data.coachingPartenaires) 
-      ? data.coachingPartenaires 
-      : [];
+    // this.coachingPartenaires = Array.isArray(data.coachingPartenaires) 
+    //   ? data.coachingPartenaires 
+    //   : [];
     this.categoryCoaching = data.categoryCoaching ?? null;
   }
 
@@ -114,12 +114,12 @@ export class Coaching {
     this.priceSections = value;
   }
 
-  public get Partenaires(): Partenaire[] {
-    return this.coachingPartenaires;
-  }
-  public set Partenaires(coachingPartenaires: Partenaire[]) {
-    this.coachingPartenaires = coachingPartenaires;
-  }
+  // public get Partenaires(): Partenaire[] {
+  //   return this.coachingPartenaires;
+  // }
+  // public set Partenaires(coachingPartenaires: Partenaire[]) {
+  //   this.coachingPartenaires = coachingPartenaires;
+  // }
 
         public get Category(): CoachingCategory {
           return this.categoryCoaching;
@@ -129,11 +129,11 @@ export class Coaching {
           this.categoryCoaching = categoryCoaching;
         }
   
-      public get Logo(): string | null {
-      return this.logo;
-    }
-    public set Logo(value: string | null) {
-      this.logo = value;
-    }
+    //   public get Logo(): string | null {
+    //   return this.logo;
+    // }
+    // public set Logo(value: string | null) {
+    //   this.logo = value;
+    // }
 
 }

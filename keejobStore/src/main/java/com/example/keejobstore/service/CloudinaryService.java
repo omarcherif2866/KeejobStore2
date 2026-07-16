@@ -56,25 +56,29 @@ public class CloudinaryService {
         List<String> iconUrls = new ArrayList<>();
 
         try {
-            // Récupérer toutes les ressources du dossier "icon"
-            Map result = cloudinary.api().resources(
+            // Utilise l'API dédiée aux vrais dossiers Cloudinary (asset_folder)
+            Map result = cloudinary.api().resourcesByAssetFolder(
+                    folderName,
                     ObjectUtils.asMap(
-                            "type", "upload",
-                            "prefix", folderName + "/",  // "icon/"
-                            "max_results", 500  // Limite à 500 icônes
+                            "max_results", 500
                     )
             );
 
-            // Extraire les URLs
+
             List<Map> resources = (List<Map>) result.get("resources");
-            for (Map resource : resources) {
-                String url = (String) resource.get("secure_url");
-                if (url != null && !url.isEmpty()) {
-                    iconUrls.add(url);
+
+            if (resources != null) {
+                for (Map resource : resources) {
+                    String url = (String) resource.get("secure_url");
+                    String publicId = (String) resource.get("public_id");
+                    String assetFolder = (String) resource.get("asset_folder"); // ✅ bon nom de champ
+
+                    if (url != null && !url.isEmpty()) {
+                        iconUrls.add(url);
+                    }
                 }
             }
 
-            System.out.println("✅ Found " + iconUrls.size() + " icons in folder: " + folderName);
 
         } catch (Exception e) {
             System.err.println("❌ Error listing icons from Cloudinary: " + e.getMessage());
@@ -83,5 +87,6 @@ public class CloudinaryService {
 
         return iconUrls;
     }
+
 
 }

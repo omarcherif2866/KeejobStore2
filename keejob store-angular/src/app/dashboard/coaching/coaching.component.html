@@ -234,42 +234,20 @@
 
       <div class="step-line" [class.completed]="currentModalStep > 4"></div>
 
-      <!-- Step 5: Section 4 -->
-      <div class="step" [class.active]="currentModalStep === 5" [class.completed]="currentModalStep > 5">
+      <!-- Step 5: Packs & Prix -->
+      <div class="step" [class.active]="currentModalStep === 5">
         <div class="step-circle" (click)="goToModalStep(5)">
-          <span *ngIf="currentModalStep > 5">✓</span>
-          <span *ngIf="currentModalStep <= 5">5</span>
-        </div>
-        <div class="step-label">Section 4</div>
-      </div>
-
-      <div class="step-line" [class.completed]="currentModalStep > 5"></div>
-
-      <!-- Step 6: Packs & Prix -->
-      <div class="step" [class.active]="currentModalStep === 6" [class.completed]="currentModalStep > 6">
-        <div class="step-circle" (click)="goToModalStep(6)">
-          <span *ngIf="currentModalStep > 6">✓</span>
-          <span *ngIf="currentModalStep <= 6">6</span>
+          <span>5</span>
         </div>
         <div class="step-label">Packs & Prix</div>
-      </div>
-
-      <div class="step-line" [class.completed]="currentModalStep > 6"></div>
-
-      <!-- Step 7: Partenaires -->
-      <div class="step" [class.active]="currentModalStep === 7">
-        <div class="step-circle" (click)="goToModalStep(7)">
-          <span>7</span>
-        </div>
-        <div class="step-label">Partenaires</div>
       </div>
     </div>
 
     <!-- Progress Indicator -->
     <div class="progress-indicator">
-      <div class="progress-text">Étape {{ currentModalStep }} sur 7</div>
+      <div class="progress-text">Étape {{ currentModalStep }} sur 5</div>
       <div class="progress-bar">
-        <div class="progress-fill" [style.width.%]="(currentModalStep / 7) * 100"></div>
+        <div class="progress-fill" [style.width.%]="(currentModalStep / 5) * 100"></div>
       </div>
     </div>
 
@@ -304,39 +282,20 @@
                   placeholder="Décrivez l'objectif de ce Coaching"
                   class="form-input"></textarea>
 
-  <label>Catégorie de CV et/ou LM *</label>
-  <select [(ngModel)]="formData.categoryCoaching" class="form-input category-select">
-    <option [ngValue]="null" disabled>-- Sélectionnez une catégorie --</option>
-<option *ngFor="let category of availableCoachingCategories" [ngValue]="category">
-  {{ formatCategory(category) }}
-</option>
+        <label>Catégorie de CV et/ou LM *</label>
+        <select [(ngModel)]="formData.categoryCoaching" class="form-input category-select">
+          <option [ngValue]="null" disabled>-- Sélectionnez une catégorie --</option>
+          <option *ngFor="let category of availableCoachingCategories" [ngValue]="category">
+            {{ formatCategory(category) }}
+          </option>
+        </select>
+        <small class="form-text">Choisissez le type de CV et/ou LM</small>
 
-  </select>
-  <small class="form-text">Choisissez le type de CV et/ou LM</small>
-
-  <!-- Aperçu de la catégorie sélectionnée -->
-  <div *ngIf="formData.categoryCoaching" class="selected-category-preview">
-    <span class="category-badge-large">
-      {{ formData.categoryCoaching }}
-    </span>
-  </div>
-
-        <label>Logo *</label>
-        <input 
-          type="file" 
-          id="image" 
-          class="form-input"
-          accept="image/*"
-          (change)="onLogoSelected($event)">
-        <small class="form-text">Formats acceptés: JPG, PNG, GIF (Max 5MB)</small>
-        
-        <div *ngIf="selectedLogo" class="selected-file">
-          <p>✓ Image sélectionnée: {{ selectedLogo.name }}</p>
-        </div>
-
-        <div *ngIf="modalMode === 'edit' && formData.image && !selectedImage" class="current-image">
-          <p>Logo actuel:</p>
-          <img [src]="sanitizeImage(formData.logo)" alt="Logo actuel" style="max-width: 60px; border-radius: 8px;">
+        <!-- Aperçu de la catégorie sélectionnée -->
+        <div *ngIf="formData.categoryCoaching" class="selected-category-preview">
+          <span class="category-badge-large">
+            {{ formData.categoryCoaching }}
+          </span>
         </div>
 
         <label>Image *</label>
@@ -358,7 +317,7 @@
         </div>
       </div>
 
-      <!-- STEP 2-5: Sections 1-4 (Template répété) -->
+      <!-- STEP 2-4: Sections 1-3 (Template répété) -->
       <div *ngFor="let section of sections; let sectionIndex = index" 
            [hidden]="currentModalStep !== sectionIndex + 2">
         <div *ngIf="currentModalStep === sectionIndex + 2" class="step-content">
@@ -379,24 +338,9 @@
 
             <!-- Détails -->
             <div class="details-section">
-              <!-- <div class="details-header">
-                <h5>Détails de la section</h5>
-                <button type="button" 
-                        (click)="addDetailToSection(sectionIndex)" 
-                        class="btn btn-sm btn-blue">
-                  + Ajouter un détail
-                </button>
-              </div> -->
-
               <div *ngFor="let detail of section.details; let i = index" class="detail-card">
                 <div class="detail-header">
                   <span class="detail-number">Détail #{{ i + 1 }}</span>
-                  <!-- <button type="button" 
-                          (click)="removeDetailFromSection(sectionIndex, i)" 
-                          class="btn-icon btn-danger"
-                          title="Supprimer ce détail">
-                    🗑️
-                  </button> -->
                 </div>
 
                 <label>Titre *</label>
@@ -410,8 +354,6 @@
                           rows="2" 
                           placeholder="Ex: Maîtrise du langage JavaScript"
                           class="form-input"></textarea>
-
-
 
                 <!-- Upload d'icône -->
                 <label>Icône * (Image)</label>
@@ -442,7 +384,7 @@
                   
                   <small class="form-text">Format accepté: JPG, PNG, SVG (Max 2MB)</small>
 
-                  <!-- ✅ GALERIE D'ICÔNES INLINE -->
+                  <!-- Galerie d'icônes inline -->
                   <div class="inline-icon-gallery">
                     <div *ngIf="loadingIcons" class="loading-icons">
                       <div class="spinner"></div>
@@ -492,8 +434,8 @@
         </div>
       </div>
 
-      <!-- STEP 6: Packs & Prix (PriceSections) -->
-      <div *ngIf="currentModalStep === 6" class="step-content">
+      <!-- STEP 5: Packs & Prix (PriceSections) -->
+      <div *ngIf="currentModalStep === 5" class="step-content">
         <h4>💰 Packs & Prix</h4>
         
         <div class="price-section">
@@ -501,9 +443,6 @@
             <p class="section-description">
               Créez différents packs de prix avec leurs fonctionnalités
             </p>
-            <!-- <button type="button" (click)="addPriceSection()" class="btn btn-blue">
-              + Ajouter un pack
-            </button> -->
           </div>
 
           <!-- Liste des packs de prix -->
@@ -552,11 +491,6 @@
               <div class="price-features">
                 <div class="features-header">
                   <h6>Fonctionnalités incluses</h6>
-                  <!-- <button type="button" 
-                          (click)="addDetailToPriceSection(psIndex)" 
-                          class="btn btn-sm btn-outline">
-                    + Ajouter une fonctionnalité
-                  </button> -->
                 </div>
 
                 <div *ngFor="let detail of priceSection.details; let dIndex = index" class="feature-item">
@@ -587,62 +521,60 @@
                                 class="form-input"></textarea>
                     </div>
 
+                    <!-- Upload d'icône -->
+                    <label>Icône * (Image)</label>
+                    <div class="icon-upload-section">
+                        <!-- Preview de l'icône -->
+                        <div *ngIf="isImageIcon(detail.icon)" class="icon-preview">
+                          <img [src]="getIconPreview(detail.icon)" alt="Icon preview" class="icon-thumbnail">
+                          <button type="button" 
+                                  (click)="removeIcon(detail)" 
+                                  class="btn-remove-icon"
+                                  title="Supprimer l'icône">
+                            ✕
+                          </button>
+                        </div>
 
+                        <!-- Input file pour upload -->
+                        <div class="file-input-wrapper">
+                          <input type="file" 
+                                (change)="onIconSelected($event, detail)" 
+                                accept="image/*"
+                                [id]="'icon-input-' + psIndex + '-' + dIndex"
+                                class="file-input">
+                          <label [for]="'icon-input-' + psIndex + '-' + dIndex" class="file-label">
+                            <span class="file-icon">📁</span>
+                            <span>{{ detail.icon ? 'Changer l\'icône' : 'Choisir une icône' }}</span>
+                          </label>
+                        </div>
+                      
+                        <small class="form-text">Format accepté: JPG, PNG, SVG (Max 2MB)</small>
 
-                <!-- Upload d'icône -->
-                <label>Icône * (Image)</label>
-                <div class="icon-upload-section">
-                    <!-- Preview de l'icône -->
-                    <div *ngIf="isImageIcon(detail.icon)" class="icon-preview">
-                      <img [src]="getIconPreview(detail.icon)" alt="Icon preview" class="icon-thumbnail">
-                      <button type="button" 
-                              (click)="removeIcon(detail)" 
-                              class="btn-remove-icon"
-                              title="Supprimer l'icône">
-                        ✕
-                      </button>
-                    </div>
+                        <div class="inline-icon-gallery">
+                          <div *ngIf="loadingPriceIcons" class="loading-icons">
+                            <div class="spinner"></div>
+                            <p>Chargement des icônes de prix...</p>
+                          </div>
 
-                    <!-- Input file pour upload -->
-                    <div class="file-input-wrapper">
-                      <input type="file" 
-                            (change)="onIconSelected($event, detail)" 
-                            accept="image/*"
-                            [id]="'icon-input-' + psIndex + '-' + dIndex"
-                            class="file-input">
-                      <label [for]="'icon-input-' + psIndex + '-' + dIndex" class="file-label">
-                        <span class="file-icon">📁</span>
-                        <span>{{ detail.icon ? 'Changer l\'icône' : 'Choisir une icône' }}</span>
-                      </label>
-                    </div>
-                  
-                    <small class="form-text">Format accepté: JPG, PNG, SVG (Max 2MB)</small>
+                          <div *ngIf="!loadingPriceIcons && availablePriceIcons.length === 0" class="no-icons-message">
+                            <p>Aucune icône de prix disponible. Uploadez-en une !</p>
+                          </div>
 
-                    <div class="inline-icon-gallery">
-                      <div *ngIf="loadingPriceIcons" class="loading-icons">
-                        <div class="spinner"></div>
-                        <p>Chargement des icônes de prix...</p>
-                      </div>
-
-                      <div *ngIf="!loadingPriceIcons && availablePriceIcons.length === 0" class="no-icons-message">
-                        <p>Aucune icône de prix disponible. Uploadez-en une !</p>
-                      </div>
-
-                      <div *ngIf="!loadingPriceIcons && availablePriceIcons.length > 0" class="icons-grid-inline">
-                        <div *ngFor="let iconUrl of availablePriceIcons" 
-                            class="icon-item-inline"
-                            [class.selected]="isIconSelected(iconUrl, detail)"
-                            (click)="selectPriceIconFromGallery(iconUrl, detail)"
-                            [title]="iconUrl">
-                          <img [src]="iconUrl" alt="Price Icon" class="gallery-icon-img">
-                          <div class="icon-check" *ngIf="isIconSelected(iconUrl, detail)">
-                            <span class="check-mark">✓</span>
+                          <div *ngIf="!loadingPriceIcons && availablePriceIcons.length > 0" class="icons-grid-inline">
+                            <div *ngFor="let iconUrl of availablePriceIcons" 
+                                class="icon-item-inline"
+                                [class.selected]="isIconSelected(iconUrl, detail)"
+                                (click)="selectPriceIconFromGallery(iconUrl, detail)"
+                                [title]="iconUrl">
+                              <img [src]="iconUrl" alt="Price Icon" class="gallery-icon-img">
+                              <div class="icon-check" *ngIf="isIconSelected(iconUrl, detail)">
+                                <span class="check-mark">✓</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
 
-                </div>
+                    </div>
                   </div>
                 </div>
                 <div class="features-header">
@@ -683,91 +615,33 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- STEP 7: Partenaires -->
-      <div *ngIf="currentModalStep === 7" class="step-content">
-        <h4>🤝 Partenaires</h4>
-        
-        <div class="partners-section">
-          <div class="section-header">
-            <p class="section-description">
-              Sélectionnez les partenaires associés à ce Coaching
-            </p>
-          </div>
-
-          <!-- Liste des partenaires disponibles -->
-          <div class="partners-grid">
-            <div *ngFor="let partenaire of allPartenaires" 
-                class="partner-card"
-                [class.selected]="isPartenaireSelected(partenaire)"
-                (click)="togglePartenaireSelection(partenaire)">
-              
-              <input type="checkbox" 
-                    [checked]="isPartenaireSelected(partenaire)">
-              
-              <div class="partner-image">
-                <img [src]="sanitizeImage(partenaire.image)" [alt]="partenaire.name">
+          <!-- Résumé final -->
+          <div class="summary-box">
+            <h5>📝 Résumé de votre Coaching</h5>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <strong>Nom:</strong> {{ formData.name || 'Non renseigné' }}
               </div>
-              
-              <div class="partner-info">
-                <h5>{{ partenaire.name }}</h5>
+              <div class="summary-item">
+                <strong>Titre:</strong> {{ formData.titre || 'Non renseigné' }}
               </div>
-            </div>
-
-            <div *ngIf="allPartenaires.length === 0" class="no-partners">
-              <p>Aucun partenaire disponible</p>
-            </div>
-          </div>
-
-          <!-- Résumé des partenaires sélectionnés -->
-          <div *ngIf="selectedPartenaires.length > 0" class="selected-partners-summary">
-            <h5>✓ Partenaires sélectionnés ({{ selectedPartenaires.length }})</h5>
-            <div class="selected-chips">
-              <span *ngFor="let p of selectedPartenaires" class="partner-chip">
-                {{ p.Name }}
-                <button type="button" 
-                        (click)="togglePartenaireSelection(p)" 
-                        class="chip-remove">×</button>
-              </span>
-            </div>
-          </div>
-          
-          <div *ngIf="selectedPartenaires.length === 0" class="info-box">
-            <p>ℹ️ Aucun partenaire sélectionné. Vous pouvez continuer sans sélectionner de partenaires.</p>
-          </div>
-        </div>
-
-        <!-- Résumé final -->
-        <div class="summary-box">
-          <h5>📝 Résumé de votre Coaching</h5>
-          <div class="summary-grid">
-            <div class="summary-item">
-              <strong>Nom:</strong> {{ formData.name || 'Non renseigné' }}
-            </div>
-            <div class="summary-item">
-              <strong>Titre:</strong> {{ formData.titre || 'Non renseigné' }}
-            </div>
-            <div class="summary-item">
-              <strong>Sous Titre:</strong> {{ formData.sousTitre || 'Non renseigné' }}
-            </div>                        
-            <div class="summary-item">
-              <strong>Description:</strong> {{ formData.description || 'Non renseignée' }}
-            </div>
-            <div class="summary-item">
-              <strong>Sections complétées:</strong> {{ countCompletedSections() }} / 4
-            </div>
-            <div class="summary-item">
-              <strong>Total de détails:</strong> 
-              {{ sections[0].details.length + sections[1].details.length + 
-                 sections[2].details.length + sections[3].details.length }}
-            </div>
-            <div class="summary-item">
-              <strong>Packs de prix:</strong> {{ priceSections.length }}
-            </div>
-            <div class="summary-item">
-              <strong>Partenaires:</strong> {{ selectedPartenaires.length }}
+              <div class="summary-item">
+                <strong>Sous Titre:</strong> {{ formData.sousTitre || 'Non renseigné' }}
+              </div>                        
+              <div class="summary-item">
+                <strong>Description:</strong> {{ formData.description || 'Non renseignée' }}
+              </div>
+              <div class="summary-item">
+                <strong>Sections complétées:</strong> {{ countCompletedSections() }} / 3
+              </div>
+              <div class="summary-item">
+                <strong>Total de détails:</strong> 
+                {{ sections[0].details.length + sections[1].details.length + sections[2].details.length }}
+              </div>
+              <div class="summary-item">
+                <strong>Packs de prix:</strong> {{ priceSections.length }}
+              </div>
             </div>
           </div>
         </div>
@@ -786,12 +660,12 @@
       </div>
       <div class="actions-right">
         <button (click)="closeModal()" class="btn btn-gray">Annuler</button>
-        <button *ngIf="currentModalStep < 7" 
+        <button *ngIf="currentModalStep < 5" 
                 (click)="nextModalStep()" 
                 class="btn btn-blue">
           Suivant →
         </button>
-        <button *ngIf="currentModalStep === 7" 
+        <button *ngIf="currentModalStep === 5" 
                 (click)="handleSubmit()" 
                 class="btn btn-success">
           {{modalMode === 'add' ? '✓ Créer le Coaching' : '✓ Enregistrer les modifications'}}

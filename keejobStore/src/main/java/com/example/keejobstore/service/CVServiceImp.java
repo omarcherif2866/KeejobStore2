@@ -70,9 +70,9 @@ public class CVServiceImp implements CVService {
             existingCVandLetter.setImage(newData.getImage());
         }
 
-        if (newData.getLogo() != null) {
-            existingCVandLetter.setLogo(newData.getLogo());
-        }
+//        if (newData.getLogo() != null) {
+//            existingCVandLetter.setLogo(newData.getLogo());
+//        }
 
         // 🔹 MISE À JOUR DES SECTIONS
         if (newData.getSections() != null && !newData.getSections().isEmpty()) {

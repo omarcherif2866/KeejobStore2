@@ -82,9 +82,9 @@ public class CoachingServiceImp implements CoachingService {
             existingCoachingEmploi.setImage(newData.getImage());
         }
 
-        if (newData.getLogo() != null) {
-            existingCoachingEmploi.setLogo(newData.getLogo());
-        }
+//        if (newData.getLogo() != null) {
+//            existingCoachingEmploi.setLogo(newData.getLogo());
+//        }
 
         // 🔹 MISE À JOUR DES SECTIONS
         if (newData.getSections() != null && !newData.getSections().isEmpty()) {

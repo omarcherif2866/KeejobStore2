@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
 
-  // private apiUrl = "http://localhost:9090/api/auth";
+  // private apiUrl = "http://localhost:9090/auth";
   // private apiUrlUser = "http://localhost:9090/users";
 
     private apiUrl = "/api/auth";
