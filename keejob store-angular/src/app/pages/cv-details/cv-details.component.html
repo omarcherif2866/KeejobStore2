@@ -103,10 +103,10 @@
     <!-- ===== LANGUES (utilise sections[4]) ===== -->
     <section id="languages-section">
       <div class="container">
-        <h2 class="section-title">{{ cv.sections[4]?.headline || 'Nos services disponibles en plusieurs langues' }}</h2>
+        <h2 class="section-title">{{ cv.sections[2]?.headline || 'Nos services disponibles en plusieurs langues' }}</h2>
 
         <div class="languages-row">
-          <div class="lang-item" *ngFor="let detail of cv.sections[4]?.details">
+          <div class="lang-item" *ngFor="let detail of cv.sections[2]?.details">
             <div class="lang-flag">
               <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
             </div>
