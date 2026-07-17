@@ -273,12 +273,6 @@
           </option>
         </select>
 
-        <!-- Aperçu de la catégorie sélectionnée -->
-        <!-- <div *ngIf="formData.categoryCV" class="selected-category-preview">
-          <span class="category-badge-large">
-            {{ formData.categoryCV }}
-          </span>
-        </div> -->
 
         <label>Image *</label>
         <input
@@ -509,9 +503,8 @@
                     </div>
 
                     <!-- Upload d'icône de prix -->
-                    <label>Icône * (Image)</label>
+                    <!-- <label>Icône * (Image)</label>
                     <div class="icon-upload-section">
-                      <!-- Preview de l'icône -->
                       <div *ngIf="isImageIcon(detail.icon)" class="icon-preview">
                         <img [src]="getIconPreview(detail.icon)" alt="Icon preview" class="icon-thumbnail">
                         <button type="button"
@@ -522,7 +515,6 @@
                         </button>
                       </div>
 
-                      <!-- Input file pour upload -->
                       <div class="file-input-wrapper">
                         <input type="file"
                               (change)="onIconSelected($event, detail)"
@@ -560,7 +552,7 @@
                         </div>
                       </div>
 
-                    </div>
+                    </div> -->
                   </div>
                 </div>
 

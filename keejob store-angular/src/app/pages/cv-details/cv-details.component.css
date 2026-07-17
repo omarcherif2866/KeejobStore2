@@ -18,7 +18,7 @@ body {
 
 /* ===== HERO ===== */
 .hero-section {
-  padding: 60px 0 40px;
+  padding: 60px 0 20px;
 }
 
 .hero-content {
@@ -140,7 +140,11 @@ body {
 
 /* ===== EXPERTISE (4 icônes en boîte grise) ===== */
 #expertise-section {
-  padding: 20px 0 60px;
+  padding: 0 0 40px; 
+}
+
+#expertise2-section {
+  padding: 40px 0 70px;
 }
 
 .expertise-box {
@@ -184,11 +188,14 @@ body {
   font-size: 13px;
   color: #6b7280;
   line-height: 1.5;
+  max-width: 180px;      /* force le retour à la ligne plus tôt */
+  margin: 0 auto;         /* centre le texte sous le titre */
+  min-height: 39px; 
 }
 
 /* ===== PRICING ===== */
 #pricing-section {
-  padding: 60px 0;
+  padding: 0 0;
   text-align: center;
 }
 
@@ -201,11 +208,11 @@ body {
 }
 
 .pricing-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 24px;
-  align-items: stretch; /* force toutes les cartes à la même hauteur */
-
+  align-items: stretch;
 }
 
 .pricing-card {
@@ -214,8 +221,31 @@ body {
   text-align: left;
   display: flex;
   flex-direction: column;
-  height: 100%; /* toutes les cartes prennent la même hauteur que leur conteneur */
+}
 
+/* 1 ou 2 packs : centrés, largeur fixe ET identique */
+.packs-1 .pricing-card,
+.packs-2 .pricing-card {
+  flex: 1 1 0;
+  max-width: 360px;
+}
+
+/* 3 packs : 3 sur la même ligne, largeur identique */
+.packs-3 .pricing-card {
+  flex: 1 1 0;
+  max-width: calc(33.333% - 16px);
+}
+
+/* 4 packs : 4 sur la même ligne, largeur identique */
+.packs-4 .pricing-card {
+  flex: 1 1 0;
+  max-width: calc(25% - 18px);
+}
+
+/* 5 packs et plus : 3 par ligne, largeur identique, dernière ligne centrée */
+.packs-wrap .pricing-card {
+  flex: 1 1 0;
+  max-width: calc(33.333% - 16px);
 }
 
 .card-header {
@@ -298,7 +328,7 @@ body {
 
 /* ===== LANGUAGES ===== */
 #languages-section {
-  padding: 40px 0 60px;
+  padding: 20px 0 40px;
   text-align: center;
 }
 
@@ -340,7 +370,7 @@ body {
 
 /* ===== CONTACT BANNER ===== */
 #contact-banner {
-  padding: 0 0 40px;
+  padding: 10px 0 30px;
 }
 
 .contact-box {
@@ -384,13 +414,6 @@ body {
   color: #6b7280;
 }
 
-/* ===== FOOTER ===== */
-.site-footer {
-  text-align: center;
-  padding: 30px 0;
-  color: #9ca3af;
-  font-size: 13px;
-}
 
 /* ===== LOADING ===== */
 .loading-container {
@@ -409,6 +432,19 @@ body {
   animation: spin 0.8s linear infinite;
   margin-bottom: 16px;
 }
+
+.expertise-title {
+    grid-column: span 4;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.expertise2-title {
+  grid-column: span 4;
+  text-align: center;
+  margin-bottom: 0;   /* si ce n'est pas déjà défini, ajoute de l'air entre "Notre méthode en 4 étapes" et les icônes */
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
@@ -416,4 +452,21 @@ body {
   .hero-content { grid-template-columns: 1fr; }
   .expertise-box { grid-template-columns: repeat(2, 1fr); }
   .pricing-container { grid-template-columns: 1fr; }
+    .packs-4 .pricing-card,
+  .packs-wrap .pricing-card,
+  .packs-3 .pricing-card {
+    flex: 0 1 calc(50% - 12px);   /* 2 par ligne sur tablette */
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-container .pricing-card {
+    flex: 0 1 100%;   /* 1 par ligne sur mobile */
+    max-width: 400px;
+  }
+}
+
+section {
+  padding-top: 30px;
+  padding-bottom: 30px;
 }

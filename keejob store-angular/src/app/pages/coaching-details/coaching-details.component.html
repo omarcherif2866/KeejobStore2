@@ -69,7 +69,7 @@
         <h2 class="section-title">{{ cv.sections[3]?.headline || 'Nos packs' }}</h2>
 
         <div class="pricing-cards">
-          <div class="pricing-container">
+          <div class="pricing-container" [ngClass]="'packs-' + (cv.priceSections.length > 4 ? 'wrap' : cv.priceSections.length)">
             <div class="pricing-card" *ngFor="let ps of cv.priceSections; let i = index" [ngClass]="getColorClass(i)">
 
               <div class="card-header">
@@ -101,10 +101,10 @@
     </section>
 
     <!-- ===== LANGUES (utilise sections[4]) ===== -->
-    <section id="expertise-section">
+    <section id="expertise2-section" *ngIf="cv.sections[2]?.headline || cv.sections[2]?.details?.length">
       <div class="container">
         <div class="expertise-box">
-          <h2 class="expertise-title">{{ cv.sections[2]?.headline }}</h2>
+          <h2 class="expertise2-title">{{ cv.sections[2]?.headline }}</h2>
           <div class="expertise-item" *ngFor="let detail of cv.sections[2]?.details">
             <div class="expertise-icon">
               <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
@@ -136,9 +136,6 @@
       </div>
     </section>
 
-    <footer class="site-footer">
-      <p>© 2024 Complexic. Tous droits réservés.</p>
-    </footer>
 
   </div>
 

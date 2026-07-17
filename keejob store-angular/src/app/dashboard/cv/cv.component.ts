@@ -124,7 +124,8 @@ private initializeSections() {
     this.loading = true;
     this.cvservice.getCv().subscribe({
       next: (response: any[]) => {
-        this.cvs = response.map(data => new Cv(data));
+        this.cvs = response.map(data => new Cv(data))
+        .sort((a, b) => a.Id - b.Id);
         this.loading = false;
         console.log('Données reçues: ', this.cvs);
       },
@@ -192,10 +193,12 @@ handleEdit(cv: Cv) {
   this.selectedImage = null;
   
   if (cv.Sections && cv.Sections.length > 0) {
-    // ✅ On ne garde que Section 1 (index 0), Section 2 (index 1)
-    // et l'ancienne Section 5 (index 4), qui devient notre "Section 3"
-    const indicesToKeep = [0, 1, 4];
     const rawSections = cv.Sections;
+
+    // ✅ Si le CV a déjà été migré (3 sections), on les garde telles quelles.
+    // Si c'est un ancien CV (5 sections), on ne garde que 0, 1 et 4
+    // (Section 1, Section 2, ex-Section 5 → devient Section 3).
+    const indicesToKeep = rawSections.length >= 5 ? [0, 1, 4] : [0, 1, 2];
 
     this.sections = indicesToKeep.map(idx => {
       const section = rawSections[idx];
