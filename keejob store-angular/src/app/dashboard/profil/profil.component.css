@@ -86,6 +86,8 @@ header .sidebar-toggle {
         }
 
         .hero-form-wrapper {
+            display: flex;
+            flex-direction: column;
             flex: 1;
             min-width: 300px;
             background: rgba(255, 255, 255, 0.95);
@@ -95,6 +97,12 @@ header .sidebar-toggle {
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .hero-form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
         .hero-form-wrapper:hover {
             transform: translateY(-5px);
@@ -144,7 +152,7 @@ header .sidebar-toggle {
         .button-container {
             display: flex;
             gap: 15px;
-            margin-top: 30px;
+            margin-top: auto;
         }
 
         .btn {

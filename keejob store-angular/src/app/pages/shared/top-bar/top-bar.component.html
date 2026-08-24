@@ -133,10 +133,21 @@
 
         <div class="user-menu">
           <div *ngIf="isLoggedIn; else loggedOut" class="button-group">
-            <button class="btn btn-primary" (click)="toggleDropdownMenu('user', $event)">
-              <i class="fas fa-user-alt"></i> {{ username }}
-              <i class="fas fa-caret-down"></i>
-            </button>
+            <div class="dropdown-wrapper" (mouseenter)="showUserMenu = true" (mouseleave)="showUserMenu = false">
+              <button class="btn btn-primary" (click)="toggleDropdownMenu('user', $event)">
+                <i class="fas fa-user-alt"></i> {{ username }}
+                <i class="fas fa-caret-down"></i>
+              </button>
+
+              <div class="dropdown-menu-custom" *ngIf="showUserMenu">
+                <a routerLink="/cv" class="dropdown-item-custom">
+                  <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a routerLink="/profil" class="dropdown-item-custom">
+                  <i class="fas fa-user"></i> Profil
+                </a>
+              </div>
+            </div>
             <button class="btn btn-cancel" (click)="logout()">Se déconnecter</button>
           </div>
           <ng-template #loggedOut>

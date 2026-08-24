@@ -16,7 +16,7 @@ searchActive = false;
   showDropdown: boolean = false;
 menuOpen = false;
 activeDropdown: string | null = null
-
+showUserMenu = false;
     constructor(private authService: AuthService,private router:Router, private cdr: ChangeDetectorRef
     ) { }
 
