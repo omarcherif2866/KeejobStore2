@@ -16,9 +16,6 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
-    @Value("${app.mail.recipient}")
-    private String recipientEmail;
-
     @Value("${spring.mail.username}")
     private String senderEmail;
 
@@ -32,7 +29,7 @@ public class MailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
         helper.setFrom(senderEmail);
-        helper.setTo(recipientEmail);
+        helper.setTo(senderEmail); // le compte qui envoie reçoit aussi les demandes
         helper.setSubject("Nouvelle demande de CV - " + request.getFullname());
 
         String htmlContent = buildEmailContent(request);
