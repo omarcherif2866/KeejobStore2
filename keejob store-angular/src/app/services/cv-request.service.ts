@@ -14,8 +14,8 @@ export interface CvRequestPayload {
 })
 export class CvRequestService {
 
-  private apiUrl = 'https://marketjob.tn/api/cv-request';
-
+  // private apiUrl = "http://localhost:9090/cv-request";
+  private apiUrl = "/api/cv-request";
   constructor(private http: HttpClient) {}
 
   sendCvRequest(data: CvRequestPayload): Observable<any> {

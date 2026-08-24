@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/cv-request")
+@RequestMapping("/cv-request")
 @CrossOrigin(origins = "*") // à restreindre en prod à ton domaine front
 public class CvRequestController {
 
