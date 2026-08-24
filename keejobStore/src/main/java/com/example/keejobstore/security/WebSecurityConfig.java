@@ -46,7 +46,8 @@ public class WebSecurityConfig  {
             "/cv/**",
             "/coaching/**",
             "/images/**",
-            "/cv-request/**", "/api/cv-request/**"
+            "/cv-request",
+            "/cv-request/**",
     };
 
 
@@ -60,7 +61,7 @@ public class WebSecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> corsConfigurationSource()) // Ajoutez cette ligne
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))// Ajoutez cette ligne
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(req -> req.requestMatchers(WHITE_LIST_URL).permitAll()
                         .anyRequest().authenticated()

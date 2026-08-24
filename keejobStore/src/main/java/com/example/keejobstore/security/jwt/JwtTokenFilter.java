@@ -24,6 +24,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("URI reçue par le filtre: " + request.getRequestURI());
         try {
             String jwt = getJwt(request);
             if (jwt != null) {
