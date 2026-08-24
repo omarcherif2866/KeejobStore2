@@ -105,7 +105,7 @@ body {
 .logo { display: flex; align-items: center; }
 
 .logoK {
-  width: clamp(80px, 7vw, 144px);
+  width: clamp(200px, 8vw, 170px);   /* était clamp(80px, 7vw, 144px) */
   height: auto;
 }
 
