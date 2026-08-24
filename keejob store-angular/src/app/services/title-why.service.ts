@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TitleWhyService {
 
-  // private apiUrl = 'http://localhost:9090/titleWhy'; 
-  private apiUrl = "/api/titleWhy";
+  private apiUrl = 'http://localhost:9090/titleWhy'; 
+  // private apiUrl = "/api/titleWhy";
 
   constructor(private http: HttpClient) { }
 

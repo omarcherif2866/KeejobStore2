@@ -13,8 +13,8 @@ import { TitleWhy } from '../models/title-why';
 export class FormateurService {
 
 
-  // private apiUrl = "http://localhost:9090/formateur";
-  private apiUrl = "/api/formateur";
+  private apiUrl = "http://localhost:9090/formateur";
+  // private apiUrl = "/api/formateur";
 
 
   constructor(private http: HttpClient, private router: Router) { }
