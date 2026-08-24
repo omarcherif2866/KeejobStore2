@@ -46,7 +46,7 @@ public class WebSecurityConfig  {
             "/cv/**",
             "/coaching/**",
             "/images/**",
-            "/cv-request/**"
+            "/cv-request/**", "/api/cv-request/**"
     };
 
 
