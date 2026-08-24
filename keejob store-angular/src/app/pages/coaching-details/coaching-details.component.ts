@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Coaching } from 'src/app/models/coaching';
 import { Partenaire } from 'src/app/models/partenaire';
 import { CoachingService } from 'src/app/services/coaching.service';
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./coaching-details.component.css']
 })
 export class CoachingDetailsComponent implements OnInit {
+  private routeSub!: Subscription;
 
   coachingId!: number;
   loading = false;
@@ -24,12 +26,15 @@ export class CoachingDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.coachingId = Number(this.route.snapshot.paramMap.get('id'));
-    
-    // Charger l'évaluation spécifique
-    this.fetchCoachingById(this.coachingId);   
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      this.coachingId = Number(params.get('id'));
+      this.fetchCoachingById(this.coachingId);
+    });
   }
 
+  ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
+  }
 
 fetchCoachingById(id: number) {
   this.loading = true;

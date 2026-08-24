@@ -4,6 +4,7 @@ import { Cv } from 'src/app/models/cv';
 import { CvService } from 'src/app/services/cv.service';
 import { PartenaireService } from 'src/app/services/partenaire.service';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cv-details',
@@ -14,18 +15,22 @@ export class CvDetailsComponent implements OnInit {
   cvId!: number;
   loading = false;
   cvs: Cv[] = [];
+  private routeSub!: Subscription;
 
   constructor(
     private cvService: CvService, private partenaireService: PartenaireService,  private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    this.cvId = Number(this.route.snapshot.paramMap.get('id'));
-    
-    // Charger l'évaluation spécifique
-    this.fetchCvById(this.cvId);   
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      this.cvId = Number(params.get('id'));
+      this.fetchCvById(this.cvId);
+    });
   }
 
+    ngOnDestroy(): void {
+    this.routeSub.unsubscribe();
+  }
 
     fetchCvById(id: number) {
       this.loading = true;
