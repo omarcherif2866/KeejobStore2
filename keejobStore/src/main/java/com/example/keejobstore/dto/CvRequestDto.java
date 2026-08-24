@@ -1,25 +1,20 @@
 package com.example.keejobstore.dto;
 
 public class CvRequestDto {
-
     private String fullname;
     private String email;
     private String whatsapp;
+    private String serviceName; // ← ajout
 
-    public CvRequestDto() {}
-
-    public CvRequestDto(String fullname, String email, String whatsapp) {
+    public CvRequestDto(String fullname, String email, String whatsapp, String serviceName) {
         this.fullname = fullname;
         this.email = email;
         this.whatsapp = whatsapp;
+        this.serviceName = serviceName;
     }
 
     public String getFullname() { return fullname; }
-    public void setFullname(String fullname) { this.fullname = fullname; }
-
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
     public String getWhatsapp() { return whatsapp; }
-    public void setWhatsapp(String whatsapp) { this.whatsapp = whatsapp; }
+    public String getServiceName() { return serviceName; }
 }

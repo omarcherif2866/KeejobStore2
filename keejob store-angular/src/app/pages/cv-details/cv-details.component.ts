@@ -100,7 +100,7 @@ onFileSelected(event: Event) {
   }
 }
 
-submitForm() {
+submitForm(cvName: string) {
     if (!this.formData.fullname || !this.formData.email || !this.formData.whatsapp) {
       Swal.fire({
         icon: 'warning',
@@ -117,7 +117,8 @@ submitForm() {
       fullname: this.formData.fullname,
       email: this.formData.email,
       whatsapp: this.formData.whatsapp,
-      cvFile: this.selectedFile
+      cvFile: this.selectedFile,
+      serviceName: cvName        // ← récupéré automatiquement depuis cv.name
     }).subscribe({
       next: () => {
         this.sending = false;

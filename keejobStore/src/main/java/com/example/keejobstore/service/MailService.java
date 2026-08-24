@@ -32,7 +32,7 @@ public class MailService {
             helper.setFrom(senderEmail);
             helper.setTo(senderEmail);
             helper.setReplyTo(request.getEmail());
-            helper.setSubject("Nouvelle demande de CV - " + request.getFullname());
+            helper.setSubject("Nouvelle demande - " + request.getServiceName() + " - " + request.getFullname());
 
             String htmlContent = buildEmailContent(request);
             helper.setText(htmlContent, true);
@@ -52,18 +52,19 @@ public class MailService {
 
     private String buildEmailContent(CvRequestDto request) {
         return """
-            <html>
-              <body style="font-family: Arial, sans-serif; color: #1e2749;">
-                <h2 style="color: #5958A0;">Nouvelle demande de CV</h2>
-                <p><strong>Nom :</strong> %s</p>
-                <p><strong>Email :</strong> %s</p>
-                <p><strong>WhatsApp :</strong> %s</p>
-                <hr>
-                <p style="font-size: 12px; color: #6b7280;">
-                  Ce message a été envoyé automatiquement depuis le formulaire du site marketjob.tn
-                </p>
-              </body>
-            </html>
-            """.formatted(request.getFullname(), request.getEmail(), request.getWhatsapp());
+                <html>
+                  <body style="font-family: Arial, sans-serif; color: #1e2749;">
+                    <h2 style="color: #5958A0;">Nouvelle demande</h2>
+                    <p><strong>Service demandé :</strong> %s</p>
+                    <p><strong>Nom :</strong> %s</p>
+                    <p><strong>Email :</strong> %s</p>
+                    <p><strong>WhatsApp :</strong> %s</p>
+                    <hr>
+                    <p style="font-size: 12px; color: #6b7280;">
+                      Ce message a été envoyé automatiquement depuis le formulaire du site marketjob.tn
+                    </p>
+                  </body>
+                </html>
+                """.formatted(request.getServiceName(), request.getFullname(), request.getEmail(), request.getWhatsapp());
     }
 }

@@ -2,11 +2,11 @@
 
   <div *ngIf="loading" class="loading-container">
     <div class="spinner"></div>
-    <p>Chargement des évaluations...</p>
+    <p>Chargement des CVs...</p>
   </div>
 
   <div *ngIf="!loading && cvs.length === 0" class="no-data">
-    <p>Aucune évaluation disponible</p>
+    <p>Aucune CVs disponible</p>
   </div>
 
   <div *ngFor="let cv of cvs; let i = index" [attr.data-id]="cv.id">
@@ -50,7 +50,7 @@
     <h3>Lancez-vous dès maintenant</h3>
     <p class="form-subtitle">Réponse sous 2h</p>
 
-    <form (ngSubmit)="submitForm()" #heroForm="ngForm">
+    <form (ngSubmit)="submitForm(cv.name)" #heroForm="ngForm">
       <div class="form-group">
         <span class="form-icon">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
@@ -127,7 +127,7 @@
 
               <div class="card-header">
                 <span class="pack-badge" [ngClass]="getBadgeClass(i)">{{ ps.title }}</span>
-                <div class="price">{{ ps.price }} €</div>
+                <div class="price">{{ ps.price }} DNT</div>
                 <p class="included">{{ ps.subtitle }}</p>
               </div>
 

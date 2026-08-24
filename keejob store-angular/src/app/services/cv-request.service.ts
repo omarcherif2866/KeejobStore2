@@ -7,6 +7,8 @@ export interface CvRequestPayload {
   email: string;
   whatsapp: string;
   cvFile?: File | null;
+  serviceName: string;   // ← ajout
+
 }
 
 @Injectable({
@@ -23,6 +25,7 @@ export class CvRequestService {
     formData.append('fullname', data.fullname);
     formData.append('email', data.email);
     formData.append('whatsapp', data.whatsapp);
+    formData.append('serviceName', data.serviceName);  // ← ajout
 
     if (data.cvFile) {
       formData.append('cvFile', data.cvFile);

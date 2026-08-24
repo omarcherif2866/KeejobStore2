@@ -25,15 +25,16 @@ public class CvRequestController {
             @RequestParam("fullname") String fullname,
             @RequestParam("email") String email,
             @RequestParam("whatsapp") String whatsapp,
+            @RequestParam("serviceName") String serviceName,
             @RequestParam(value = "cvFile", required = false) MultipartFile cvFile) {
 
         try {
-            CvRequestDto request = new CvRequestDto(fullname, email, whatsapp);
+            CvRequestDto request = new CvRequestDto(fullname, email, whatsapp, serviceName);
 
             byte[] fileBytes = null;
             String fileName = null;
             if (cvFile != null && !cvFile.isEmpty()) {
-                fileBytes = cvFile.getBytes(); // copie en mémoire avant le passage en async
+                fileBytes = cvFile.getBytes();
                 fileName = cvFile.getOriginalFilename();
             }
 
