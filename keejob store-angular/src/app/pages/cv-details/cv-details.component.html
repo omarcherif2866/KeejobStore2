@@ -9,7 +9,7 @@
     <p>Aucune évaluation disponible</p>
   </div>
 
-  <div *ngFor="let cv of cvs; let i = index">
+  <div *ngFor="let cv of cvs; let i = index" [attr.data-id]="cv.id">
 
     <!-- ===== HERO ===== -->
     <section id="section-hero" class="hero-section">
