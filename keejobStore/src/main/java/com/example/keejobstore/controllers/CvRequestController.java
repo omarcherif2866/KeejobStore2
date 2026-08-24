@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/cv-request")
-@CrossOrigin(origins = "*") // à restreindre en prod à ton domaine front
 public class CvRequestController {
 
     private final MailService mailService;
