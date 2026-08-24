@@ -41,9 +41,62 @@
             </div>
           </div>
 
-          <div class="hero-image">
-            <img [src]="sanitizeImage(cv.image)" [alt]="cv.name + ' icon'">
-          </div>
+<div class="hero-visual">
+  <div class="hero-image-wrap">
+    <img [src]="sanitizeImage(cv.image)" [alt]="cv.name + ' icon'" class="hero-image">
+  </div>
+
+  <div class="hero-form-card">
+    <h3>Lancez-vous dès maintenant</h3>
+    <p class="form-subtitle">Réponse sous 2h</p>
+
+    <form (ngSubmit)="submitForm()" #heroForm="ngForm">
+      <div class="form-group">
+        <span class="form-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </span>
+        <input type="text" name="fullname" [(ngModel)]="formData.fullname" placeholder="Votre nom" required>
+      </div>
+
+      <div class="form-group">
+        <span class="form-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </span>
+        <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Votre email" required>
+      </div>
+
+      <div class="form-group">
+        <span class="form-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <input type="tel" name="whatsapp" [(ngModel)]="formData.whatsapp" placeholder="WhatsApp" required>
+      </div>
+
+      <label class="form-group file-group" for="cvFile">
+        <span class="form-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+        </span>
+        <span class="file-text">
+          Télécharger votre CV<br><small>(PDF, DOC ou DOCX)</small>
+        </span>
+        <span class="upload-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        </span>
+        <input type="file" id="cvFile" name="cvFile" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" hidden>
+      </label>
+
+      <button type="submit" class="btn-submit" [disabled]="sending">
+        {{ sending ? 'Envoi...' : 'Envoyer ma demande' }}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+      </button>
+    </form>
+
+    <p class="form-note">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Vos données sont 100% confidentielles.
+    </p>
+  </div>
+</div>
         </div>
       </div>
     </section>
