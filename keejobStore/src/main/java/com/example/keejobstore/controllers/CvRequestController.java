@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.mail.MessagingException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -30,14 +29,22 @@ public class CvRequestController {
 
         try {
             CvRequestDto request = new CvRequestDto(fullname, email, whatsapp);
-            mailService.sendCvRequest(request, cvFile);
+
+            byte[] fileBytes = null;
+            String fileName = null;
+            if (cvFile != null && !cvFile.isEmpty()) {
+                fileBytes = cvFile.getBytes(); // copie en mémoire avant le passage en async
+                fileName = cvFile.getOriginalFilename();
+            }
+
+            mailService.sendCvRequest(request, fileBytes, fileName);
 
             return ResponseEntity.ok(Map.of("message", "Demande envoyée avec succès"));
 
-        } catch (MessagingException | IOException e) {
+        } catch (IOException e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "Erreur lors de l'envoi de la demande"));
+                    .body(Map.of("message", "Erreur lors de la lecture du fichier"));
         }
     }
 }

@@ -2,14 +2,14 @@ package com.example.keejobstore.service;
 
 import com.example.keejobstore.dto.CvRequestDto;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.io.IOException;
 
 @Service
 public class MailService {
@@ -23,23 +23,31 @@ public class MailService {
         this.mailSender = mailSender;
     }
 
-    public void sendCvRequest(CvRequestDto request, MultipartFile cvFile) throws MessagingException, IOException {
+    @Async
+    public void sendCvRequest(CvRequestDto request, byte[] fileBytes, String fileName) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(senderEmail);
+            helper.setTo(senderEmail);
+            helper.setReplyTo(request.getEmail());
+            helper.setSubject("Nouvelle demande de CV - " + request.getFullname());
 
-        helper.setFrom(senderEmail);
-        helper.setTo(senderEmail); // le compte qui envoie reçoit aussi les demandes
-        helper.setSubject("Nouvelle demande de CV - " + request.getFullname());
+            String htmlContent = buildEmailContent(request);
+            helper.setText(htmlContent, true);
 
-        String htmlContent = buildEmailContent(request);
-        helper.setText(htmlContent, true);
+            if (fileBytes != null && fileBytes.length > 0) {
+                helper.addAttachment(fileName, new ByteArrayResource(fileBytes));
+            }
 
-        if (cvFile != null && !cvFile.isEmpty()) {
-            helper.addAttachment(cvFile.getOriginalFilename(), cvFile);
+            mailSender.send(message);
+
+        } catch (MessagingException e) {
+            System.err.println("Erreur lors de l'envoi de l'email CV request: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Erreur inattendue lors de l'envoi de l'email: " + e.getMessage());
         }
-
-        mailSender.send(message);
     }
 
     private String buildEmailContent(CvRequestDto request) {
