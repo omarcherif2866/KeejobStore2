@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class EvaluationCatalogueService {
-  private apiUrll = "http://localhost:9090/evaluationDescription";
-  // private apiUrll = "/api/evaluationDescription";
+  // private apiUrll = "http://localhost:9090/evaluationDescription";
+  private apiUrll = "/api/evaluationDescription";
 
   constructor(private http: HttpClient, private router: Router) { }
 

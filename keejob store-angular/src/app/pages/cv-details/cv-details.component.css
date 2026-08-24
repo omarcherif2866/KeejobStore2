@@ -236,27 +236,7 @@ body {
   flex-shrink: 0;
 }
 
-.btn-submit {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #5958A0;
-  color: white;
-  border: none;
-  padding: 14px 0;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background-color 0.2s;
-}
 
-.btn-submit:hover { background-color: #46457f; }
-.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .form-note {
   display: flex;
@@ -667,7 +647,27 @@ section {
   margin-bottom: 16px;
 }
 [data-id="1"] .btn-primary:hover { background-color: #46457f; }
+[data-id="1"] .btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #46457f;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.2s;
+}
 
+[data-id="1"] .btn-submit:hover { background-color: #46457f; }
+[data-id="1"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 /* ===== ID = 2 (vert foncé) ===== */
 [data-id="2"] .hero-badge-label {
   display: inline-block;
@@ -706,6 +706,27 @@ section {
   margin-bottom: 16px;
 }
 [data-id="2"] .btn-primary:hover { background-color: #14401a; }
+[data-id="2"] .btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #1B5E20;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.2s;
+}
+
+[data-id="2"] .btn-submit:hover { background-color: #1B5E20; }
+[data-id="2"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ===== ID = 3 (bleu) ===== */
 [data-id="3"] .hero-badge-label {
@@ -745,3 +766,25 @@ section {
   margin-bottom: 16px;
 }
 [data-id="3"] .btn-primary:hover { background-color: #1d4ed8; }
+
+[data-id="3"] .btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background-color 0.2s;
+}
+
+[data-id="3"] .btn-submit:hover { background-color: #2563EB; }
+[data-id="3"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }

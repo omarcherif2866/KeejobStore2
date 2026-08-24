@@ -10,8 +10,8 @@ import { ServiceFormateur } from '../models/service-formateur';
 })
 export class ServiceFormateurService {
 
-  private apiUrl = "http://localhost:9090/serviceFormateur";
-  // private apiUrl = "/api/serviceFormateur";
+  // private apiUrl = "http://localhost:9090/serviceFormateur";
+  private apiUrl = "/api/serviceFormateur";
 
 
   constructor(private http: HttpClient, private router: Router) { }
