@@ -137,33 +137,20 @@ body {
 .hero-image-wrap {
   position: relative;
   width: 82%;
-  aspect-ratio: 4 / 3.4;
-  border-radius: 40px 40px 40px 140px; /* coin bas-gauche très arrondi = effet "goutte" */
-  overflow: visible; /* important : la photo peut déborder du blob */
+  max-width: 480px;
+  aspect-ratio: 3 / 3.6;
 }
 
-
-.hero-image-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #f3f2fb 0%, #e7e5f7 45%, #fdf1ea 100%);
-  border-radius: inherit;
-  z-index: 0;
-}
-
+/* Plus de blob séparé : la photo porte directement la forme */
 .hero-image {
-  position: absolute;
-  top: 8%;
-  left: 8%;
-  width: 84%;
-  height: 84%;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 20px;
-  transform: rotate(-4deg);
-  box-shadow: 0 25px 50px rgba(30, 39, 73, 0.18);
-  z-index: 1;
+  border-radius: 24px 220px 24px 24px; /* gros arrondi coin haut-droit = effet "morsure" circulaire */
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
 }
+
 .hero-form-card {
   position: absolute;
   right: -20px;
@@ -177,6 +164,7 @@ body {
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.15);
   z-index: 2;
 }
+
 
 .hero-form-card h3 {
   font-size: 18px;
