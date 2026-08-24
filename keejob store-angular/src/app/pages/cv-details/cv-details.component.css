@@ -130,22 +130,26 @@ body {
 .hero-visual {
   position: relative;
   min-height: 480px;
+  display: flex;
+  align-items: center;
 }
 
 .hero-image-wrap {
   position: relative;
-  width: 88%;
-  border-radius: 24px;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 28px;
   overflow: hidden;
   isolation: isolate;
 }
 
+/* Fond doux en aplat, sans découpe diagonale */
 .hero-image-wrap::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #f3f2fb 0%, #e7e5f7 45%, #fdf1ea 100%);
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);
+  border-radius: 28px;
   z-index: 0;
 }
 
@@ -153,22 +157,22 @@ body {
   position: relative;
   z-index: 1;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;   /* remplit le cadre, plus de petite image flottante */
   display: block;
-  padding: 24px;
-  box-sizing: border-box;
+  padding: 0;           /* on retire le padding qui rétrécissait l'image */
 }
 
 .hero-form-card {
   position: absolute;
-  right: 0;
-  bottom: -40px;
-  width: 340px;
-  max-width: 90%;
+  right: -24px;
+  bottom: -32px;
+  width: 320px;
+  max-width: 88%;
   background: #ffffff;
   border-radius: 20px;
-  padding: 28px 26px;
-  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
+  padding: 26px 24px;
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.15);
   z-index: 2;
 }
 
@@ -273,14 +277,29 @@ body {
   margin-top: 14px;
 }
 
-/* Responsive */
+.hero-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: nowrap;
+}
+
+.hero-stats .stat-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  white-space: normal;   /* laisse "en 24h à 48h" s'afficher en entier */
+  min-width: max-content;
+}
+
 @media (max-width: 992px) {
-  .hero-image-wrap { width: 100%; }
+  .hero-image-wrap { aspect-ratio: 16 / 10; }
   .hero-form-card {
     position: static;
     width: 100%;
     max-width: 400px;
     margin: -30px auto 0;
+    right: auto;
+    bottom: auto;
   }
   .hero-visual { min-height: auto; }
 }
