@@ -31,7 +31,7 @@
         <div class="container">
             <!-- FORMULAIRE PROFIL -->
            <div class="hero-form-wrapper login-form">
-                <form class="hero-form">
+                <form class="hero-form" (ngSubmit)="login()">
                     <h3>Connexion</h3>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -45,10 +45,10 @@
 
                     <div class="button-container">
                         <div class="button-group">
-                            <button type="button" class="btn btn-primary" (click)="login()">Se connecter</button>
+                            <button type="submit" class="btn btn-primary">Se connecter</button>
                             <button type="button" class="btn btn-cancel">Annuler</button>
                         </div>
-                        
+
                         <div class="links-container">
                             <a href="register">Créer un compte!</a>
                             <a href="forgot-password">Mot de passe oublié!</a>

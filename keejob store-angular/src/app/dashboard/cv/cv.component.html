@@ -179,7 +179,7 @@
     <!-- Stepper Header -->
 <!-- Modal -->
 <!-- Modal -->
-<div *ngIf="showModal" class="modal">
+<!-- <div *ngIf="showModal" class="modal"> -->
   <div class="modal-content-large">
     <h3>{{modalMode === 'add' ? 'Ajouter un CV' : 'Modifier le CV'}}</h3>
 
@@ -299,17 +299,19 @@
           <h4>📊 Section {{ sectionIndex + 1 }}</h4>
 
           <div class="section-card">
-            <label>Titre principal (Headline) *</label>
-            <input type="text"
-                   [(ngModel)]="section.headline"
-                   placeholder="Ex: Compétences techniques"
-                   class="form-input">
+            <ng-container *ngIf="sectionIndex !== 1">
+              <label>Titre principal (Headline) *</label>
+              <input type="text"
+                    [(ngModel)]="section.headline"
+                    placeholder="Ex: Compétences techniques"
+                    class="form-input">
 
-            <label>Sous-titre</label>
-            <input type="text"
-                   [(ngModel)]="section.subtitle"
-                   placeholder="Ex: Évaluation des compétences"
-                   class="form-input">
+              <label>Sous-titre</label>
+              <input type="text"
+                    [(ngModel)]="section.subtitle"
+                    placeholder="Ex: Évaluation des compétences"
+                    class="form-input">
+            </ng-container>
 
             <!-- Détails -->
             <div class="details-section">
@@ -649,7 +651,7 @@
     </div>
   </div>
 </div>
-</div>
+<!-- </div> -->
 
 
 

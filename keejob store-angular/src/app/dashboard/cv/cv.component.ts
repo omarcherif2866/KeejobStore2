@@ -750,14 +750,15 @@ nextModalStep() {
     }
   }
 
-  countCompletedSections(): number {
-    return this.sections.filter((s) => {
-      if (!s.headline || s.details.length === 0) {
-        return false;
-      }
-      return s.details.every(d => d.titre && d.icon);
-    }).length;
-  }
+countCompletedSections(): number {
+  return this.sections.filter((s, index) => {
+    const headlineOk = index === 1 ? true : !!s.headline;
+    if (!headlineOk || s.details.length === 0) {
+      return false;
+    }
+    return s.details.every(d => d.titre && d.icon);
+  }).length;
+}
 
   countCompletedPriceSections(): number {
     return this.priceSections.filter((ps) => {

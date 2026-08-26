@@ -41,8 +41,10 @@ login() {
         const role = response.role;
         if (role === 'Admin') {
           // this.router.navigate(['profil/', this.authService.getUserId()]); // Redirect to admin profile with user ID
+          this.router.navigate(['/cv']); // Redirect to normal user profile with user ID
+
         } else if (role === 'SIMPLEU') {
-          this.router.navigate(['/actualites']); // Redirect to normal user profile with user ID
+          this.router.navigate(['/']); // Redirect to normal user profile with user ID
         }
 
         // Show success message
