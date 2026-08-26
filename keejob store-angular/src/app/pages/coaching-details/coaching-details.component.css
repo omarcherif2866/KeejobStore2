@@ -25,7 +25,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  align-items: center;
+  align-items: stretch;
 }
 
 /* .hero-badge-label {
@@ -131,48 +131,103 @@ body {
 }
 .hero-visual {
   position: relative;
-  min-height: 480px;
-  display: flex;
-  align-items: center;
-}
-
-.hero-image {
-  position: relative;
-  width: 550px;
-  height: 393.94px;
-  border-radius: 24px;
-  overflow: hidden;
-  clip-path: polygon(
-    0% 0%,
-    100% 0%,
-    100% 100%,
-    15% 100%,
-    0% 85%
-  );
-}
-
-.hero-image img {
-  width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
 }
 
+.hero-image-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  height: 100%;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 24px 220px 24px 24px;
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
+}
+
+/* Zone de survol : contient le bouton ET la carte, comme ça le hover reste actif
+   quand la souris passe du bouton à la carte */
+.hero-form-trigger {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
+}
+
+.btn-request-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #5958A0;   /* remplacé par la couleur du thème via [data-id] plus bas */
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(30, 39, 73, 0.25);
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
 
 .hero-form-card {
   position: absolute;
-  right: -20px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 0;
+  bottom: 30%;        /* juste au-dessus du bouton, au lieu de 64px fixe */
+  margin-bottom: 10px; /* petit espace visuel */
   width: 320px;
-  max-width: 88%;
+  max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
   padding: 26px 24px;
-  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.15);
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
   z-index: 2;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
 }
 
+/* Pont invisible : comble l'espace entre le bouton et la carte
+   pour que le survol ne se coupe jamais pendant le passage de la souris */
+.hero-form-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -14px;
+  height: 14px;
+}
+
+/* Affiche la carte au survol du bouton OU de la carte elle-même,
+   et aussi si un champ à l'intérieur a le focus (accessibilité clavier) */
+.hero-form-trigger:hover .hero-form-card,
+.hero-form-trigger:focus-within .hero-form-card {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+      box-shadow: 0 10px 30px rgba(30, 39, 73, 0.12);
+
+}
+
+/* Cache le bouton pendant que la carte est ouverte, pour éviter la superposition visuelle */
+.hero-form-trigger:hover .btn-request-trigger,
+.hero-form-trigger:focus-within .btn-request-trigger {
+  opacity: 0;
+  pointer-events: none;
+}
 
 .hero-form-card h3 {
   font-size: 18px;
@@ -270,17 +325,54 @@ body {
 }
 
 @media (max-width: 992px) {
-  .hero-image-wrap { width: 100%; }
+  .hero-content {   /* et non .hero-section */
+    gap: 0px;
+  }
+
+    .hero-text h1 {
+    margin-bottom: 12px; /* au lieu de 20px */
+  }
+  .hero-desc {
+    margin-bottom: 16px; /* au lieu de 30px */
+  }
+  .hero-actions {
+    margin-bottom: 20px; /* au lieu de 40px */
+  }
+
+  .hero-visual {
+    height: auto;
+    min-height: auto;
+  }
+
+  .hero-image-wrap {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+  }
+
+  .hero-image-wrap::before {
+    display: none;
+  }
+
+  .hero-form-trigger {
+    position: static;
+  }
+
+  .btn-request-trigger {
+    display: none;
+  }
+
   .hero-form-card {
     position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
     width: 100%;
     max-width: 400px;
-    margin: -30px auto 0;
-    transform: none;
-    top: auto;
-    right: auto;
+    margin: 20px auto 0;
+    box-shadow: 0 10px 30px rgba(30, 39, 73, 0.12);
   }
-  .hero-visual { min-height: auto; }
 }
 
 /* ===== EXPERTISE (4 icônes en boîte grise) ===== */
@@ -676,6 +768,8 @@ section {
 
 [data-id="1"] .btn-submit:hover { background-color: #46457f; }
 [data-id="1"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+[data-id="1"] .btn-request-trigger { background-color: #5958A0; }
+
 /* ===== ID = 2 (vert foncé) ===== */
 [data-id="2"] .hero-badge-label {
   display: inline-block;
@@ -735,6 +829,7 @@ section {
 
 [data-id="2"] .btn-submit:hover { background-color: #1B5E20; }
 [data-id="2"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+[data-id="2"] .btn-request-trigger { background-color: #1B5E20; }
 
 /* ===== ID = 3 (bleu) ===== */
 [data-id="3"] .hero-badge-label {
@@ -796,3 +891,4 @@ section {
 
 [data-id="3"] .btn-submit:hover { background-color: #2563EB; }
 [data-id="3"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+[data-id="3"] .btn-request-trigger { background-color: #2563EB; }
