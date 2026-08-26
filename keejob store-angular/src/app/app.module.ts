@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { CentreFormationDetailsComponent } from './pages/centre-formation-details/centre-formation-details.component';
 
 
 
@@ -227,6 +228,13 @@ const routes = [
     ),
 },
 {
+  path: 'centre_formation/:id',
+  loadChildren: () =>
+    import('./pages/centre-formation-details/centre-formation-details.module').then(
+      (m) => m.CentreFormationDetailsModule
+    ),
+},
+{
   path: 'coachingDetails/:id',
   loadChildren: () =>
     import('./pages/coaching-details/coaching-details.module').then(
@@ -280,6 +288,13 @@ const routes = [
   loadChildren: () =>
     import('./dashboard/profil/profil.module').then(
       (m) => m.ProfilModule
+    ),
+},
+{
+  path: 'centre',
+  loadChildren: () =>
+    import('./dashboard/centre/centre.module').then(
+      (m) => m.CentreModule
     ),
 },
 {

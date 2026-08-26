@@ -1,0 +1,68 @@
+package com.example.keejobstore.service;
+
+import com.example.keejobstore.entity.Avis;
+import com.example.keejobstore.entity.CentreFormation;
+import com.example.keejobstore.repository.AvisRepository;
+import com.example.keejobstore.repository.CentreFormationRepository;
+import com.example.keejobstore.service.AvisService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class AvisServiceImpl implements AvisService {
+
+    private final AvisRepository avisRepository;
+    private final CentreFormationRepository centreFormationRepository;
+
+    public AvisServiceImpl(AvisRepository avisRepository, CentreFormationRepository centreFormationRepository) {
+        this.avisRepository = avisRepository;
+        this.centreFormationRepository = centreFormationRepository;
+    }
+
+    @Override
+    public List<Avis> getAllAvis() {
+        return avisRepository.findAll();
+    }
+
+    @Override
+    public List<Avis> getAvisByCentreId(Long centreId) {
+        return avisRepository.findByCentreId(centreId);
+    }
+
+    @Override
+    public Avis getAvisById(Long id) {
+        return avisRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Avis introuvable avec l'id : " + id));
+    }
+
+    @Override
+    public Avis createAvis(Long centreId, Avis avis) {
+        CentreFormation centre = centreFormationRepository.findById(centreId)
+                .orElseThrow(() -> new EntityNotFoundException("Centre de formation introuvable avec l'id : " + centreId));
+
+        avis.setCentre(centre);
+        return avisRepository.save(avis);
+    }
+
+    @Override
+    public Avis updateAvis(Long id, Avis avisDetails) {
+        Avis avis = getAvisById(id);
+
+        avis.setNomAuteur(avisDetails.getNomAuteur());
+        avis.setPoste(avisDetails.getPoste());
+        avis.setAvatar(avisDetails.getAvatar());
+        avis.setNote(avisDetails.getNote());
+        avis.setCommentaire(avisDetails.getCommentaire());
+        avis.setDate(avisDetails.getDate());
+
+        return avisRepository.save(avis);
+    }
+
+    @Override
+    public void deleteAvis(Long id) {
+        Avis avis = getAvisById(id);
+        avisRepository.delete(avis);
+    }
+}

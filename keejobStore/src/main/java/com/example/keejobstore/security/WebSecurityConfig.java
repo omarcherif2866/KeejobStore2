@@ -48,6 +48,8 @@ public class WebSecurityConfig  {
             "/images/**",
             "/cv-request",
             "/cv-request/**",
+            "/centres-formation/**",
+            "/avis/**"
     };
 
 

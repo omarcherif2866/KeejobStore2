@@ -39,6 +39,17 @@ public class ImageController {
         }
     }
 
+    @GetMapping("/iconsFormation")
+    public ResponseEntity<?> getAvailableIconsFormation() {
+        try {
+            List<String> icons = cloudinaryService.listIconsFromFolder("iconFormations");
+            return ResponseEntity.ok(icons);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la récupération des icônes: " + e.getMessage());
+        }
+    }
+
 
 
 }
