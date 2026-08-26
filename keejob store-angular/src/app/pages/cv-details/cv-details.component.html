@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="!loading && cvs.length === 0" class="no-data">
-    <p>Aucune CVs disponible</p>
+    <p>Aucun CV disponible</p>
   </div>
 
   <div *ngFor="let cv of cvs; let i = index" [attr.data-id]="cv.id">

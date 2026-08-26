@@ -8,7 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Keejob Store';
+  title = 'MarketJob';
   showTopBar = true;
   showFooter = true;
 isRouteLoading = false;

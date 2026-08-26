@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { Title } from '@angular/platform-browser'
 import { Router } from '@angular/router';
 import { Formateur } from 'src/app/models/formateur';
 import { FormateurService } from 'src/app/services/formateur.service';
@@ -206,8 +205,7 @@ coursPopulaires = [
 ];
 
 
-  constructor(private title: Title, private formateurservice: FormateurService, private router:Router) {
-    this.title.setTitle('Keejob Store')
+  constructor(private formateurservice: FormateurService, private router:Router) {
   }
 
 
