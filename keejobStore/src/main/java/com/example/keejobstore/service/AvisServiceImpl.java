@@ -52,7 +52,6 @@ public class AvisServiceImpl implements AvisService {
 
         avis.setNomAuteur(avisDetails.getNomAuteur());
         avis.setPoste(avisDetails.getPoste());
-        avis.setAvatar(avisDetails.getAvatar());
         avis.setNote(avisDetails.getNote());
         avis.setCommentaire(avisDetails.getCommentaire());
         avis.setDate(avisDetails.getDate());

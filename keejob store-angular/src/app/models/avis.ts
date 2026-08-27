@@ -4,7 +4,6 @@ export interface Avis {
   id?: number;
   nomAuteur: string;
   poste: string;
-  avatar: string;
   note: number;          // 1 à 5
   commentaire: string;
   date: string;           // format ISO "yyyy-MM-dd" (LocalDate côté Java)

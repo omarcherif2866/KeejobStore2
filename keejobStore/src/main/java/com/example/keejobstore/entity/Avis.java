@@ -21,7 +21,6 @@ public class Avis {
 
     private String nomAuteur;   // "Yassine K."
     private String poste;       // "Développeur Web"
-    private String avatar;
     private Integer note;       // 1 à 5
 
     @Column(length = 1000)

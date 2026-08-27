@@ -130,7 +130,7 @@
         <div class="avis-grid">
           <div class="avis-card" *ngFor="let a of avisApercu">
             <div class="avis-header">
-              <img [src]="a.avatar" [alt]="a.nomAuteur">
+              <div class="avis-avatar">{{ getInitiales(a.nomAuteur) }}</div>
               <div>
                 <strong>{{ a.nomAuteur }}</strong>
                 <p>{{ a.poste }}</p>
@@ -203,7 +203,7 @@
       <div class="avis-grid">
         <div class="avis-card" *ngFor="let a of avisList">
           <div class="avis-header">
-            <img [src]="a.avatar" [alt]="a.nomAuteur">
+            <div class="avis-avatar">{{ getInitiales(a.nomAuteur) }}</div>
             <div>
               <strong>{{ a.nomAuteur }}</strong>
               <p>{{ a.poste }}</p>

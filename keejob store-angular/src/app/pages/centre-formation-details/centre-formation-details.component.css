@@ -596,3 +596,17 @@ hr {
     grid-template-columns: 1fr;
   }
 }
+
+.avis-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #4a90d9; /* ou une couleur générée dynamiquement */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+  flex-shrink: 0;
+}

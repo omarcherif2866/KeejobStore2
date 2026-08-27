@@ -9,8 +9,8 @@ import { CentreFormation } from '../models/centre-formation';
 })
 export class CentreFormationService {
 
-  // private apiUrl = "http://localhost:9090/centres-formation";
-  private apiUrl = "/api/centres-formation";
+  private apiUrl = "http://localhost:9090/centres-formation";
+  // private apiUrl = "/api/centres-formation";
 
   constructor(private http: HttpClient) {}
 

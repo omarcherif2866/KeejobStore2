@@ -65,4 +65,26 @@ export class CentreFormationDetailsComponent implements OnInit {
   stars(note: number): number[] {
     return Array(Math.round(note)).fill(0);
   }
+
+getInitiales(nomAuteur: string): string {
+  if (!nomAuteur) return '';
+  const parties = nomAuteur.trim().split(' ').filter(p => p.length > 0);
+  if (parties.length === 0) return '';
+  if (parties.length === 1) return parties[0].charAt(0).toUpperCase();
+  
+  const premiere = parties[0].charAt(0).toUpperCase();
+  const derniere = parties[parties.length - 1].charAt(0).toUpperCase();
+  return premiere + derniere;
+}
+
+getCouleurAvatar(nomAuteur: string): string {
+  const couleurs = ['#4a90d9', '#e07a5f', '#81b29a', '#f2cc8f', '#9b5de5', '#3d5a80'];
+  let hash = 0;
+  for (let i = 0; i < nomAuteur.length; i++) {
+    hash = nomAuteur.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % couleurs.length;
+  return couleurs[index];
+}
+  
 }
