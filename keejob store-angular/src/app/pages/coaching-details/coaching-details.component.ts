@@ -178,4 +178,32 @@ submitForm(cvName: string) {
   }
 
 
+// Découpe un texte en 2 lignes équilibrées (par mots)
+splitInTwoLines(text: string): string[] {
+  if (!text) return ['', ''];
+
+  const words = text.trim().split(' ');
+  if (words.length === 1) return [text, '']; // un seul mot : pas de coupure possible
+
+  let bestSplit = 1;
+  let bestDiff = Infinity;
+
+  // Cherche le point de coupure qui équilibre le mieux la longueur des 2 lignes
+  for (let i = 1; i < words.length; i++) {
+    const line1 = words.slice(0, i).join(' ');
+    const line2 = words.slice(i).join(' ');
+    const diff = Math.abs(line1.length - line2.length);
+
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestSplit = i;
+    }
+  }
+
+  return [
+    words.slice(0, bestSplit).join(' '),
+    words.slice(bestSplit).join(' ')
+  ];
+}
+
 }

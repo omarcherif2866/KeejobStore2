@@ -296,14 +296,8 @@
             {{ formatCategory(category) }}
           </option>
         </select>
-        <small class="form-text">Choisissez le type de CV et/ou LM</small>
 
-        <!-- Aperçu de la catégorie sélectionnée -->
-        <div *ngIf="formData.categoryCoaching" class="selected-category-preview">
-          <span class="category-badge-large">
-            {{ formData.categoryCoaching }}
-          </span>
-        </div>
+
 
         <label>Image *</label>
         <input 
@@ -331,17 +325,19 @@
           <h4>📊 Section {{ sectionIndex + 1 }}</h4>
           
           <div class="section-card">
+          <div *ngIf="sectionIndex == 3">
             <label>Titre principal (Headline) *</label>
             <input type="text" 
-                   [(ngModel)]="section.headline" 
-                   placeholder="Ex: Compétences techniques"
-                   class="form-input">
+                  [(ngModel)]="section.headline" 
+                  placeholder="Ex: Compétences techniques"
+                  class="form-input">
 
             <label>Sous-titre</label>
             <input type="text" 
-                   [(ngModel)]="section.subtitle" 
-                   placeholder="Ex: Évaluation des compétences"
-                   class="form-input">
+                  [(ngModel)]="section.subtitle" 
+                  placeholder="Ex: Évaluation des compétences"
+                  class="form-input">
+          </div>
 
             <!-- Détails -->
             <div class="details-section">

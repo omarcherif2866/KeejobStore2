@@ -18,19 +18,23 @@
           <div class="hero-text">
             <span class="hero-badge-label">{{ cv.sections[0]?.headline || 'LETTRE DE MOTIVATION' }}</span>
 
-            <h1>{{ cv.name }}</h1>
+            <h1>
+              <span class="line1">{{ splitInTwoLines(cv.name)[0] }}</span><br>
+              <span class="line2">{{ splitInTwoLines(cv.name)[1] }}</span>
+            </h1>
 
             <p class="hero-desc">{{ cv.sections[0]?.subtitle }}</p>
 
             <div class="hero-actions">
-              <a href="#pricing-section" class="btn btn-primary">Commander maintenant</a>
+              <a href="#pricing-section" class="btn btn-primary">Découvrir nos packs</a>
               <!-- <a href="#expertise-section" class="btn btn-outline">En savoir plus</a> -->
+
             </div>
 
             <div class="hero-trust-row">
               <div class="trust-item" *ngFor="let detail of cv.sections[0]?.details">
                 <div class="trust-icon">
-                    <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre" style="width: 20px; height: 20px;">
+                    <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre" >
 
                 </div>
                 <div class="trust-text">
@@ -39,6 +43,23 @@
                 </div>
               </div>
             </div>
+            <div class="hero-mini-stats">
+              <div class="mini-stat">
+                <span class="mini-stat-number">500+</span>
+                <strong><span class="mini-stat-label">Coachings réalisés</span></strong>
+              </div>
+              <div class="mini-stat-divider"></div>
+              <div class="mini-stat">
+                <span class="mini-stat-number">98%</span>
+                <strong><span class="mini-stat-label">Taux de satisfaction</span></strong>
+              </div>
+              <div class="mini-stat-divider"></div>
+              <div class="mini-stat">
+                <span class="mini-stat-number">15j</span>
+                <strong><span class="mini-stat-label">Délai moyen d'embauche</span></strong>
+              </div>
+            </div>
+
           </div>
 
 <div class="hero-visual">
