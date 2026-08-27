@@ -8,8 +8,8 @@ import { Avis } from '../models/avis';
 })
 export class AvisService {
 
-  private apiUrl = "http://localhost:9090/avis";
-    // private apiUrl = "/api/avis";
+  // private apiUrl = "http://localhost:9090/avis";
+    private apiUrl = "/api/avis";
 
   constructor(private http: HttpClient) {}
 
