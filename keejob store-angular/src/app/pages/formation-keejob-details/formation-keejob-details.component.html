@@ -1,140 +1,318 @@
-<body>
-    <section id="section-hero" class="hero-section">
-        <div class="container hero-container">
-            <div class="hero-left">
-                <div class="hero-brand">
-                <img [src]="sanitizeImage(formation.Logo)" 
-                    [alt]="formation.Title" 
-                    class="brand-icon">
-                    <h2 class="brand-name">{{ formation.Title }}</h2>
-                </div>
-                <div class="hero-rating">
-                    <img src="../../assets/89_2735.svg" alt="4.7 stars rating">
-                    <span class="rating-score">4.7</span>
-                    <p class="rating-reviews">Basé sur 17 avis</p>
-                </div>
-                <p class="hero-description">
-                    {{ formation.Description }}                
-                </p>
-            </div>
-            <div class="hero-right">
-                <div class="hero-image-wrapper">
-                <img [src]="sanitizeImage(formation.Image)" 
-                    [alt]="formation.Title" 
-                    class="profile-image">
-                </div>                
-            </div>
-        </div>
-    </section>    
-
-<section id="platforms" class="platforms-section">
-  <div class="container">
-    <div class="platforms-wrapper">
-      <div class="platforms-bg-wave">
-        <div style="position: relative; width: 100%; height: 100%;">
-          <img src="../../assets/I87_881_0_1266.svg" alt="background wave" style="position: absolute; top: 0; left: 0;">
-          <img src="../../assets/I87_881_0_1252.svg" alt="background wave" style="position: absolute; top: 46.93px; left: 46.4px;">
-          <img src="../../assets/I87_881_0_1269.svg" alt="background wave" style="position: absolute; top: 93.87px; left: 92.81px;">
-          <img src="../../assets/I87_881_0_1255.svg" alt="background wave" style="position: absolute; top: 140.81px; left: 139.21px;">
-          <img src="../../assets/I87_881_0_1272.svg" alt="background wave" style="position: absolute; top: 187.74px; left: 191.41px;">
-          <img src="../../assets/I87_881_0_1259.svg" alt="background wave" style="position: absolute; top: 234.68px; left: 243.62px;">
-          <img src="../../assets/I87_881_0_1262.svg" alt="background wave" style="position: absolute; top: 281.62px; left: 289.02px;">
-          <img src="../../assets/I87_881_0_1263.svg" alt="background wave" style="position: absolute; top: 328.58px; left: 336.43px;">
-        </div>
-      </div>
-      <div class="platforms-content">
-        <h2 class="platforms-title">
-          <span class="font-bold">Je me renseigne </span>
-          <span class="font-regular"> pour trouver la bonne </span>formation<span class="font-regular"> en fonction de mon projet (04)</span> 
-        </h2>
-        <div class="carousel-container">
-        <button class="carousel-btn prev" (click)="scrollLeftSous()">
-            ‹
-        </button>
-
-        <div class="carousel" #carouselSousContainer>
-            <div *ngFor="let sf of visibleSousFormations" class="platform-card">
-            <div class="platform-header">
-                <div class="platform-logo-wrapper" style="background-color: #e0e7ff;">
-                <img [src]="sanitizeImage(sf.logo)" alt="logo" class="platform-logo">
-                </div>
-                <h3 class="platform-name"> Formation en <br> {{ sf.title }}</h3>
-            </div>
-
-            <p class="platform-description">
-                {{ sf.description }}
-            </p>
-
-            <a [routerLink]="['/sousFormationKeejob', sf.id]" class="btn btn-primary">
-                En savoir plus
-            </a>
-            </div>
-        </div>
-
-        <button class="carousel-btn next" (click)="scrollRightSous()">
-            ›
-        </button>
-        </div>
-
-        <div class="play-btn2" (click)="goToSousFormations()">
-          <div class="play-icon2">▶</div>
-          <span class="play-icon-text2">Voir plus</span>
-        </div>
-
-      </div>
-      <div class="floating-info-box">
-        <div class="info-icon"><img src="../../assets/I87_902_0_1117.svg" alt="Star icon"></div>
-        <div class="info-text">
-          <span class="info-number">1000+</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>    
-
-<section id="section-partners" class="partners-section">
-    <div class="container">
-        <h2 class="partners-title">Ils nous font confiance</h2>
-        <p class="partners-subtitle">
-            Il serait long et fastidieux de présenter la liste exhaustive de nos clients. Mais voici quelques exemples de collaborations qui illustrent une partie de notre savoir-faire. <strong>Alors pourquoi pas vous !</strong>
-        </p>
-<div class="carousel-container">
-
-  <button class="carousel-btn prev" (click)="scrollLeftPartners()">
-    ‹
-  </button>
-
-  <div class="carousel" #partnersCarousel>
-    <div *ngFor="let partenaire of visiblePartners" class="partner-logo-card shadow">
-      <img [src]="sanitizeImage(partenaire.image)" [alt]="partenaire.name + ' logo'">
-    </div>
-  </div>
-
-  <button class="carousel-btn next" (click)="scrollRightPartners()">
-    ›
-  </button>
-  
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
 </div>
 
-        
-        <img src="../../assets/89_2666.svg" class="bg-ellipse ellipse3" alt="">
-        
-        <div class="testimonial-card">
-            <h2 class="testimonial-heading">Ce que nos client disent de nous</h2>
-            <div class="testimonial-content">
-                <div class="testimonial-image-container">
-                    <img src="../../assets/6a2ece96f84ed87bce0c2acb704722d0cec2f699.png" alt="Olivier Kunz's company logo">
-                </div>
-                <div class="testimonial-text">
-                    <blockquote>"Les outils de Central Test nous aident non seulement à la prise de décision, mais aussi pour affiner le plan d'onboarding des candidats recrutés, et ainsi maximiser les chances de succès à la fois du collaborateur et de l'entreprise."</blockquote>
-                </div>
-            </div>
+<ng-container *ngIf="!loading && formation as f">
+
+  <!-- ===================== FIL D'ARIANE ===================== -->
+  <div class="breadcrumb">
+    <a routerLink="/">Accueil</a> ›
+    <a routerLink="/plateformes">Plateformes</a> ›
+    <a [routerLink]="['/plateforme', f.plateforme?.id]">{{ f.plateforme?.nom }}</a> ›
+    <span>{{ f.titre }}</span>
+  </div>
+
+  <div class="details-layout">
+
+    <!-- ===================== COLONNE GAUCHE ===================== -->
+    <div class="details-main">
+
+      <!-- Bloc vidéo + infos principales -->
+      <div class="hero-card">
+        <div class="video-thumb" [style.background-image]="'url(' + sanitizeImage(f.image) + ')'">
+          <div class="video-thumb-overlay">
+            <button class="play-btn-circle" *ngIf="f.lienBandeAnnonce" (click)="openVideo()">▶</button>
+          </div>
+          <a *ngIf="f.lienBandeAnnonce" [href]="f.lienBandeAnnonce" target="_blank" class="btn-trailer">
+            🎬 Voir la bande-annonce
+          </a>
         </div>
+
+        <div class="hero-info">
+          <div class="hero-info-top">
+            <div>
+              <h1 class="formation-title">{{ f.titre }}</h1>
+              <span class="badge-bestseller" *ngIf="f.badge">{{ f.badge }}</span>
+            </div>
+            <button class="heart-btn">♡</button>
+          </div>
+
+          <p class="formation-desc">{{ f.descriptionCourte }}</p>
+
+          <div class="formation-rating-row">
+            <span class="stars">★</span>
+            <span class="rating-score">{{ f.note }}</span>
+            <span class="rating-reviews">({{ f.nombreAvis | number }} avis)</span>
+            <span class="dot-sep">•</span>
+            <span class="apprenants">👤 {{ f.nombreApprenants }} apprenants</span>
+          </div>
+
+          <div class="formation-quick-meta">
+            <span *ngIf="f.niveau">📊 {{ f.niveau }}</span>
+            <span *ngIf="f.duree">🕐 {{ f.duree }}</span>
+            <span *ngIf="f.langue">🌐 {{ f.langue }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs-nav">
+        <button class="tab-btn" [class.active]="activeTab === 'presentation'" (click)="setTab('presentation')">Présentation</button>
+        <button class="tab-btn" [class.active]="activeTab === 'contenu'" (click)="setTab('contenu')">Contenu</button>
+        <button class="tab-btn" [class.active]="activeTab === 'avis'" (click)="setTab('avis')">Avis</button>
+        <button class="tab-btn" [class.active]="activeTab === 'infos'" (click)="setTab('infos')">Informations pratiques</button>
+      </div>
+
+      <!-- ===================== TAB : PRÉSENTATION ===================== -->
+      <div class="tab-content" *ngIf="activeTab === 'presentation'">
+
+        <div class="content-block">
+          <h2>À propos de cette formation</h2>
+          <p class="a-propos-text">{{ f.apropos }}</p>
+        </div>
+
+        <div class="avantages-grid" *ngIf="f.avantages?.length">
+          <div class="avantage-item" *ngFor="let av of f.avantages">
+            <img *ngIf="av.icone" [src]="sanitizeImage(av.icone)" [alt]="av.titre" class="avantage-icon">
+            <span *ngIf="!av.icone" class="avantage-icon-fallback">✓</span>
+            <span>{{ av.titre }}</span>
+          </div>
+        </div>
+
+        <div class="content-block" *ngIf="f.competencesAcquises?.length">
+          <h2>Compétences que vous allez acquérir</h2>
+          <div class="skills-grid">
+            <div class="skill-item" *ngFor="let skill of f.competencesAcquises">
+              <span class="check-icon">✓</span> {{ skill }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===================== TAB : CONTENU ===================== -->
+      <div class="tab-content" *ngIf="activeTab === 'contenu'">
+        <div class="content-block">
+          <h2>Contenu de la formation</h2>
+          <p class="empty-tab-msg" *ngIf="!f.lienFormation">Le détail du programme n'est pas encore disponible.</p>
+          <a *ngIf="f.lienFormation" [href]="f.lienFormation" target="_blank" class="btn-primary-link">
+            Voir le programme complet ↗
+          </a>
+        </div>
+      </div>
+
+      <!-- ===================== TAB : AVIS ===================== -->
+      <div class="tab-content" *ngIf="activeTab === 'avis'">
+        <div class="content-block">
+          <h2>Avis des apprenants ({{ totalAvis }})</h2>
+
+          <div class="avis-item" *ngFor="let avis of avisList">
+            <div class="avis-header">
+              <strong>{{ avis.nomAuteur }}</strong>
+              <span class="avis-poste">{{ avis.poste }}</span>
+              <span class="avis-stars">
+                <span *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= avis.note">★</span>
+              </span>
+            </div>
+            <p class="avis-comment">{{ avis.commentaire }}</p>
+            <span class="avis-date">{{ avis.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <p class="empty-tab-msg" *ngIf="avisList.length === 0">Aucun avis pour le moment.</p>
+        </div>
+      </div>
+
+      <!-- ===================== TAB : INFORMATIONS PRATIQUES ===================== -->
+      <div class="tab-content" *ngIf="activeTab === 'infos'">
+        <div class="content-block">
+          <h2>Informations pratiques</h2>
+          <div class="infos-list">
+            <div class="infos-item"><span class="infos-label">Niveau</span><span>{{ f.niveau }}</span></div>
+            <div class="infos-item"><span class="infos-label">Durée totale</span><span>{{ f.duree }}</span></div>
+            <div class="infos-item"><span class="infos-label">Dernière mise à jour</span><span>{{ f.derniereMiseAJour }}</span></div>
+            <div class="infos-item"><span class="infos-label">Langue</span><span>{{ f.langue }}</span></div>
+            <div class="infos-item"><span class="infos-label">Sous-titres</span><span>{{ f.sousTitres }}</span></div>
+            <div class="infos-item"><span class="infos-label">Accès</span><span>{{ f.acces }}</span></div>
+            <div class="infos-item"><span class="infos-label">Certificat</span><span>{{ f.certificatInclus ? 'Certificat de réussite' : 'Non inclus' }}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== PUBLIC CIBLE (toujours visible sous les tabs, comme dans la capture) ===================== -->
+      <!-- <div class="content-block" *ngIf="f.publicCible?.length && activeTab === 'presentation'">
+        <h2>Cette formation est faite pour vous si vous êtes :</h2>
+        <div class="public-cible-list">
+          <div class="public-cible-item" *ngFor="let p of f.publicCible">
+            <span class="check-icon">✓</span> {{ p }}
+          </div>
+        </div>
+      </div> -->
+
+      <!-- ===================== AUTRES FORMATIONS SUR CETTE PLATEFORME ===================== -->
+      <div class="other-formations-section" *ngIf="otherFormations.length > 0">
+        <div class="other-formations-header">
+          <h2>Autres formations disponibles sur {{ f.plateforme?.nom }}</h2>
+          <a [routerLink]="['/formations/plateforme', f.plateforme?.id]" class="see-all-link">Voir toutes</a>
+        </div>
+
+        <div class="other-formations-carousel">
+          <div class="other-formations-track" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+            <div class="other-formations-slide" *ngFor="let slide of [].constructor(slidesCount); let si = index">
+              <div class="other-formation-card" *ngFor="let of of otherFormations.slice(si*4, si*4+4)" [routerLink]="['/formation', of.id]">
+                <div class="other-formation-image" [style.background-image]="'url(' + sanitizeImage(of.image) + ')'"></div>
+                <h4>{{ of.titre }}</h4>
+                <div class="other-formation-rating">
+                  <span class="stars">★</span> {{ of.note }} ({{ of.nombreAvis | number }} avis)
+                </div>
+                <div class="other-formation-meta">
+                  {{ of.duree }} <span *ngIf="of.niveau">• {{ of.niveau }}</span>
+                </div>
+                <div class="other-formation-price">
+                  <strong>{{ of.prix }} €</strong>
+                  <span class="price-original" *ngIf="of.prixOriginal">{{ of.prixOriginal }} €</span>
+                  <span class="price-reduction" *ngIf="of.reduction">-{{ of.reduction }}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-dots" *ngIf="slidesCount > 1">
+          <span *ngFor="let s of [].constructor(slidesCount); let i = index"
+                class="dot" [class.active]="i === currentSlide" (click)="goToSlide(i)"></span>
+        </div>
+      </div>
+
     </div>
-</section>
 
+    <!-- ===================== COLONNE DROITE (SIDEBAR) ===================== -->
+    <div class="details-sidebar">
 
+      <!-- Carte plateforme + prix -->
+      <div class="sidebar-card">
+        <div class="sidebar-platform-row">
+          <div class="sidebar-platform-logo">
+            <img [src]="sanitizeImage(f.plateforme?.logo)" [alt]="f.plateforme?.nom">
+          </div>
+          <strong>{{ f.plateforme?.nom }}</strong>
+        </div>
 
-</body>
+        <div class="sidebar-price-row">
+          <span class="price-current">{{ f.prix }} €</span>
+          <span class="price-original" *ngIf="hasDiscount">{{ f.prixOriginal }} €</span>
+          <span class="price-badge" *ngIf="f.reduction">-{{ f.reduction }} %</span>
+        </div>
 
+        <div class="sidebar-features">
+          <span *ngIf="f.accesVie">Accès à vie</span>
+          <span *ngIf="f.accesVie && f.certificatInclus" class="dot-sep">•</span>
+          <span *ngIf="f.certificatInclus">Certificat inclus</span>
+        </div>
 
+        <a [href]="f.lienFormation" target="_blank" class="btn-access">
+          Accéder à la formation ↗
+        </a>
+
+        <button class="btn-favorite">♡ Ajouter aux favoris</button>
+
+        <div class="sidebar-guarantee" *ngIf="f.garantieRemboursement">
+          🛡️ {{ f.garantieRemboursement }}
+        </div>
+      </div>
+
+      <!-- Informations pratiques -->
+      <div class="sidebar-card">
+        <h3>Informations pratiques</h3>
+        <div class="sidebar-infos-list">
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">📊</span>
+            <div><span class="infos-label">Niveau</span><span class="infos-value">{{ f.niveau }}</span></div>
+          </div>
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">🕐</span>
+            <div><span class="infos-label">Durée totale</span><span class="infos-value">{{ f.duree }}</span></div>
+          </div>
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">📅</span>
+            <div><span class="infos-label">Dernière mise à jour</span><span class="infos-value">{{ f.derniereMiseAJour }}</span></div>
+          </div>
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">🌐</span>
+            <div><span class="infos-label">Langue</span><span class="infos-value">{{ f.langue }}</span></div>
+          </div>
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">💬</span>
+            <div><span class="infos-label">Sous-titres</span><span class="infos-value">{{ f.sousTitres }}</span></div>
+          </div>
+          <div class="sidebar-infos-item">
+            <span class="infos-icon">💻</span>
+            <div><span class="infos-label">Accès</span><span class="infos-value">{{ f.acces }}</span></div>
+          </div>
+          <div class="sidebar-infos-item" *ngIf="f.certificatInclus">
+            <span class="infos-icon check-green">✓</span>
+            <div><span class="infos-label">Certificat</span><span class="infos-value">Certificat de réussite</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avis des apprenants -->
+      <div class="sidebar-card" *ngIf="totalAvis > 0">
+        <h3>Avis des apprenants</h3>
+        <div class="sidebar-rating-summary">
+          <span class="big-score">{{ averageNote }}</span>
+          <div>
+            <div class="sidebar-stars">★★★★★</div>
+            <span class="sidebar-total-avis">{{ totalAvis | number }} avis</span>
+          </div>
+        </div>
+
+        <div class="rating-bars" *ngIf="avisList.length > 0">
+          <div class="rating-bar-row" *ngFor="let s of [5,4,3,2,1]">
+            <span class="bar-label">{{ s }} étoiles</span>
+            <div class="bar-track">
+              <div class="bar-fill" [style.width.%]="getStarPercentage(s)"></div>
+            </div>
+            <span class="bar-percent">{{ getStarPercentage(s) }} %</span>
+          </div>
+        </div>
+
+        <button class="btn-see-all-avis" (click)="setTab('avis')">Voir tous les avis</button>
+      </div>
+
+      <!-- Public cible -->
+      <div class="sidebar-card" *ngIf="f.publicCible?.length">
+        <h3>Cette formation est faite pour vous si vous êtes :</h3>
+        <div class="sidebar-public-list">
+          <div class="sidebar-public-item" *ngFor="let p of f.publicCible">
+            <span class="check-icon">✓</span> {{ p }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Partage -->
+      <div class="sidebar-card">
+        <h3>Partager cette formation</h3>
+        <div class="share-buttons">
+          <button class="share-btn" (click)="copyLink()">🔗</button>
+          <button class="share-btn fb" (click)="shareOn('facebook')">f</button>
+          <button class="share-btn li" (click)="shareOn('linkedin')">in</button>
+          <button class="share-btn tw" (click)="shareOn('twitter')">𝕏</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== CTA AIDE ===================== -->
+  <section class="help-cta">
+    <div class="help-cta-left">
+      <span class="help-icon">🎧</span>
+      <div>
+        <strong>Besoin d'aide ou de conseil ?</strong>
+        <p>Notre équipe est là pour vous accompagner.</p>
+      </div>
+    </div>
+    <a routerLink="/contact" class="btn-contact">💬 Contactez-nous</a>
+  </section>
+
+</ng-container>

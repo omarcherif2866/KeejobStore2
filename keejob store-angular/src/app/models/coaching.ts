@@ -1,4 +1,3 @@
-import { Partenaire } from "./partenaire";
 
 
 export interface Details {

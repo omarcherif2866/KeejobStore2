@@ -85,12 +85,12 @@ public class EvaluationServiceImp implements EvaluationService{
         }
 
         // 🔹 Mise à jour des partenaires
-        if (newData.getEvaluationPartenaires() != null) {
-            // Supprimer les anciennes relations
-            existingEvaluation.getEvaluationPartenaires().clear();
-            // Ajouter les nouvelles
-            existingEvaluation.setEvaluationPartenaires(newData.getEvaluationPartenaires());
-        }
+//        if (newData.getEvaluationPartenaires() != null) {
+//            // Supprimer les anciennes relations
+//            existingEvaluation.getEvaluationPartenaires().clear();
+//            // Ajouter les nouvelles
+//            existingEvaluation.setEvaluationPartenaires(newData.getEvaluationPartenaires());
+//        }
 
         // 🔹 Mise à jour des catalogues
         if (newData.getEvaluationCatalogues() != null) {

@@ -1,7 +1,6 @@
 // import { EvaluationDescription } from "./evaluation-description";
 
 import { EvaluationCatalogue } from "./evaluation-catalogue";
-import { Partenaire } from "./partenaire";
 
 // export class Evaluation {
 //     private id : any
@@ -120,7 +119,6 @@ export class Evaluation {
   private image: string | null;
   private logo: string | null;
   private sections: EvaluationSection[];
-  private evaluationPartenaires: Partenaire[] = [];
   private evaluationCatalogues: EvaluationCatalogue[] = [];
   private evaluationCategory: EvaluationCategory;
   
@@ -132,9 +130,7 @@ export class Evaluation {
     this.image = data.image ?? null;
     this.logo = data.logo ?? null;
     this.sections = Array.isArray(data.sections) ? data.sections : [];
-    this.evaluationPartenaires = Array.isArray(data.evaluationPartenaires) 
-      ? data.evaluationPartenaires 
-      : [];
+
     this.evaluationCatalogues = Array.isArray(data.evaluationCatalogues)
       ? data.evaluationCatalogues.map((cat: any) => {
           const catalogue = new EvaluationCatalogue(cat.title || '', cat.image || '');
@@ -192,12 +188,6 @@ export class Evaluation {
     this.sections = value;
   }
 
-  public get Partenaires(): Partenaire[] {
-    return this.evaluationPartenaires;
-  }
-  public set Partenaires(evaluationPartenaires: Partenaire[]) {
-    this.evaluationPartenaires = evaluationPartenaires;
-  }
 
   public get Catalogues(): EvaluationCatalogue[] {
     return this.evaluationCatalogues;

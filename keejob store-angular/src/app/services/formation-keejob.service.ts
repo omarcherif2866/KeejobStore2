@@ -13,81 +13,56 @@ export class FormationKeejobService {
   private apiUrl = "/api/formationKeejob";
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) {}
 
-getFormationKeejobById(id: any): Observable<FormationKeejob> {
-  return this.http.get<FormationKeejob>(`${this.apiUrl}/${id}`).pipe(
-    tap(data => console.log('FormationKeejob reçu:', data)), // debug
-    catchError((error: any) => {
-      console.error('Erreur lors de la récupération du FormationKeejob:', error);
-      return throwError(error);
-    })
-  );
-}
-
-
-// FormationKeejob.service.ts
-getFormationKeejob(): Observable<FormationKeejob[]> {
-  return this.http.get<any[]>(`${this.apiUrl}/allFormationKeejobs`).pipe(
-      // tap(data => console.log('Données reçuess:', data)), // ✅ Debug
-      catchError((error: any) => {
-        console.error('Erreur:', error);
-        return throwError(error);
-      })
-    );
-
-    
-}
-
-
-
-
-addFormationKeejob(data: FormData): Observable<FormationKeejob> {
-  // Pas besoin de spécifier Content-Type, le navigateur le fera automatiquement pour FormData
-  return this.http.post<FormationKeejob>(`${this.apiUrl}`, data)
-    .pipe(
-      catchError((error: any) => {
-        console.error('Erreur lors de l\'ajout du FormationKeejob:', error);
-        return throwError('Une erreur s\'est produite lors de l\'ajout du FormationKeejob. Veuillez réessayer.');
-      })
-    );
-}
-
-  putFormationKeejob(id: string, formData: any): Observable<FormationKeejob> {
-  return this.http.put<FormationKeejob | HttpErrorResponse>(`${this.apiUrl}/${id}`, formData)
-    .pipe(
-      map((response: any) => {
-        // Vérifier si la réponse est une instance de HttpErrorResponse
-        if (response instanceof HttpErrorResponse) {
-          // Si c'est une erreur HTTP, propager l'erreur
-          throw response;
-        } else {
-          // Sinon, retourner la réponse comme une instance d'Activite
-          return response as FormationKeejob;
-        }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        // Traiter les erreurs HTTP ici
-        console.error('Erreur lors de la mise à jour du FormationKeejob:', error);
-        // Retourner une erreur observable
-        return throwError('Une erreur s\'est FormationKeejobe lors de la mise à jour du FormationKeejob. Veuillez réessayer.');
-      })
-    );
-}
-
-
-  deleteFormationKeejob(id:any):Observable<FormationKeejob>{
-    return this.http.delete<FormationKeejob>(`${this.apiUrl}/${id}`)
-
+  getAll(): Observable<FormationKeejob[]> {
+    return this.http.get<FormationKeejob[]>(this.apiUrl);
   }
 
+  getById(id: number): Observable<FormationKeejob> {
+    return this.http.get<FormationKeejob>(`${this.apiUrl}/${id}`);
+  }
 
-  getByCategory(category: FormationCategory): Observable<FormationKeejob[]> {
+  // ✅ Création avec image (multipart)
+  create(formation: FormationKeejob, plateformeId: number, image?: File): Observable<FormationKeejob> {
+    const formData = new FormData();
+    formData.append('formation', new Blob([JSON.stringify(formation)], { type: 'application/json' }));
+    if (image) {
+      formData.append('image', image);
+    }
+    return this.http.post<FormationKeejob>(`${this.apiUrl}/plateforme/${plateformeId}`, formData);
+  }
+
+  // ✅ Mise à jour avec image (multipart)
+  update(id: number, formation: FormationKeejob, image?: File): Observable<FormationKeejob> {
+    const formData = new FormData();
+    formData.append('formation', new Blob([JSON.stringify(formation)], { type: 'application/json' }));
+    if (image) {
+      formData.append('image', image);
+    }
+    return this.http.put<FormationKeejob>(`${this.apiUrl}/${id}`, formData);
+  }
+
+  // ✅ Upload d'une icône seule (pour "avantages")
+  uploadIcon(icon: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('icon', icon);
+    return this.http.post(`${this.apiUrl}/upload-icon`, formData, { responseType: 'text' });
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getByPlateforme(plateformeId: number): Observable<FormationKeejob[]> {
+    return this.http.get<FormationKeejob[]>(`${this.apiUrl}/plateforme/${plateformeId}`);
+  }
+
+  search(q: string): Observable<FormationKeejob[]> {
+    return this.http.get<FormationKeejob[]>(`${this.apiUrl}/search`, { params: { q } });
+  }
+
+  getByCategory(category: string): Observable<FormationKeejob[]> {
     return this.http.get<FormationKeejob[]>(`${this.apiUrl}/by-category/${category}`);
   }
-
-
 }
-
-
-

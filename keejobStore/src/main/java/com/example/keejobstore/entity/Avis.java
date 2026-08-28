@@ -32,4 +32,10 @@ public class Avis {
     @JoinColumn(name = "centre_id")
     @JsonIgnore
     private CentreFormation centre;
+
+    @ManyToOne
+    @JoinColumn(name = "formation_id")
+    @JsonIgnore
+    private FormationKeejob formation;
+
 }

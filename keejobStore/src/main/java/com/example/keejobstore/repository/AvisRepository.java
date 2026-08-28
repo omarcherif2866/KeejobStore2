@@ -8,4 +8,7 @@ import java.util.List;
 public interface AvisRepository extends JpaRepository<Avis, Long> {
 
     List<Avis> findByCentreId(Long centreId);
+
+    List<Avis> findByFormationId(Long formationId);
+
 }

@@ -100,6 +100,10 @@ addEvaluation(data: FormData): Observable<Evaluation> {
   return this.http.get<string[]>(`${this.apiUrlImage}/iconsFormation`);
 }
 
+  getAvailableplatformeImage(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.apiUrlImage}/platformeImage`);
+}
+
   getAvailablePriceIcons(): Observable<string[]> {
   return this.http.get<string[]>(`${this.apiUrlImage}/price_icons`);
 }

@@ -8,11 +8,13 @@ import com.example.keejobstore.entity.FormationKeejob;
 import java.util.List;
 
 public interface FormationKeejobService {
-    FormationKeejob addFormationKeejob(FormationKeejob FormationKeejobs);
-    void deleteFormationKeejobEntityById(Long id);
-    FormationKeejob getFormationKeejobById(Long id);
-    public List<FormationKeejob> getAllFormationKeejobs();
-    FormationKeejob updateFormationKeejob(Long id, FormationKeejob FormationKeejob);
+    List<FormationKeejob> getAll();
+    FormationKeejob getById(Long id);
+    FormationKeejob create(FormationKeejob formation, Long plateformeId);
+    FormationKeejob update(Long id, FormationKeejob formation);
+    void delete(Long id);
+    List<FormationKeejob> getByPlateforme(Long plateformeId);
+    List<FormationKeejob> search(String q);
     List<FormationKeejob> findByCategoryFormationKeejob(CategoryFormationKeejob category);
 
 }

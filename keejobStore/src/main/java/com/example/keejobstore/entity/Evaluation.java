@@ -37,13 +37,13 @@ public class Evaluation {
     @Enumerated(EnumType.STRING)
     private CategoryEvaluation evaluationCategory ;
 
-    @ManyToMany
-    @JoinTable(
-            name = "evaluation_partenaire",
-            joinColumns = @JoinColumn(name = "evaluation_id"),
-            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
-    )
-    private List<Partenaire> evaluationPartenaires = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "evaluation_partenaire",
+//            joinColumns = @JoinColumn(name = "evaluation_id"),
+//            inverseJoinColumns = @JoinColumn(name = "partenaire_id")
+//    )
+//   private List<Partenaire> evaluationPartenaires = new ArrayList<>();
 
     @OneToMany(mappedBy = "evaluation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<EvaluationCatalogue> evaluationCatalogues = new ArrayList<>();

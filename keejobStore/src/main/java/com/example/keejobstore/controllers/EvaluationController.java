@@ -2,7 +2,6 @@ package com.example.keejobstore.controllers;
 
 import com.example.keejobstore.entity.*;
 import com.example.keejobstore.repository.EvaluationRepository;
-import com.example.keejobstore.repository.PartenaireRepository;
 import com.example.keejobstore.service.CloudinaryService;
 import com.example.keejobstore.service.EvaluationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.type.TypeReference;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +23,6 @@ import java.util.Map;
 public class EvaluationController {
     private final EvaluationService evaluationService;
     private final CloudinaryService cloudinaryService;
-    private final PartenaireRepository partenaireRepository;
     private final EvaluationRepository evaluationRepository;
 
 
@@ -37,7 +34,6 @@ public class EvaluationController {
             @RequestParam("evaluationCategory") String evaluationCategoryStr,
             @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam(value = "logo", required = false) MultipartFile logo,
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "catalogueTitles", required = false) List<String> catalogueTitles,
             @RequestParam(value = "catalogueImages", required = false) List<MultipartFile> catalogueImages,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles) {
@@ -143,11 +139,7 @@ public class EvaluationController {
                 evaluation.setLogo(logoUrl);
             }
 
-            // Gestion des partenaires
-            if (partenairesIds != null && !partenairesIds.isEmpty()) {
-                List<Partenaire> partenaires = partenaireRepository.findAllById(partenairesIds);
-                evaluation.setEvaluationPartenaires(partenaires);
-            }
+
 
             // Gestion des catalogues
             if (catalogueTitles != null && !catalogueTitles.isEmpty()) {
@@ -207,7 +199,7 @@ public class EvaluationController {
             @RequestParam("evaluationCategory") String evaluationCategoryStr,
             @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam(value = "logo", required = false) MultipartFile logo,
-            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
             @RequestParam(value = "catalogueTitles", required = false) List<String> catalogueTitles,
             @RequestParam(value = "catalogueImages", required = false) List<MultipartFile> catalogueImages,
             @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles) {
@@ -269,29 +261,22 @@ public class EvaluationController {
             }
 
             // ✅ CORRECTION : Gérer les partenaires AVANT de sauvegarder
-            if (partenairesIds != null && !partenairesIds.isEmpty()) {
-                System.out.println("📋 Updating partenaires with IDs: " + partenairesIds);
-
-                // 1. Vider complètement la collection
-                evaluation.getEvaluationPartenaires().clear();
-
-                // ⚠️ IMPORTANT : Flush pour persister le clear dans la DB
-                evaluationRepository.saveAndFlush(evaluation);
-
-                // 2. Récupérer les nouveaux partenaires
-                List<Partenaire> nouveauxPartenaires = partenaireRepository.findAllById(partenairesIds);
-                System.out.println("✅ Found " + nouveauxPartenaires.size() + " partenaires");
-
-                // 3. Ajouter les nouveaux partenaires un par un
-                for (Partenaire partenaire : nouveauxPartenaires) {
-                    evaluation.getEvaluationPartenaires().add(partenaire);
-                }
-
-                System.out.println("✅ Total partenaires in evaluation: " + evaluation.getEvaluationPartenaires().size());
-            } else {
-                System.out.println("⚠️ No partenaires provided, clearing existing ones");
-                evaluation.getEvaluationPartenaires().clear();
-            }
+//            if (partenairesIds != null && !partenairesIds.isEmpty()) {
+//                System.out.println("📋 Updating partenaires with IDs: " + partenairesIds);
+//
+//                // 1. Vider complètement la collection
+////                evaluation.getEvaluationPartenaires().clear();
+//
+//                // ⚠️ IMPORTANT : Flush pour persister le clear dans la DB
+//                evaluationRepository.saveAndFlush(evaluation);
+//
+//
+//
+//                System.out.println("✅ Total partenaires in evaluation: " + evaluation.getEvaluationPartenaires().size());
+//            } else {
+//                System.out.println("⚠️ No partenaires provided, clearing existing ones");
+//                evaluation.getEvaluationPartenaires().clear();
+//            }
 
             // Gestion des catalogues
             if (catalogueTitles != null && !catalogueTitles.isEmpty()) {
@@ -318,7 +303,7 @@ public class EvaluationController {
             Evaluation saved = evaluationRepository.saveAndFlush(evaluation);
 
             // Vérification après sauvegarde
-            System.out.println("🔍 Partenaires après save: " + saved.getEvaluationPartenaires().size());
+//            System.out.println("🔍 Partenaires après save: " + saved.getEvaluationPartenaires().size());
 
             return ResponseEntity.ok(saved);
 

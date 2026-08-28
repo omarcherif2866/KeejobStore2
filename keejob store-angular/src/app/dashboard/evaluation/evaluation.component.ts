@@ -3,10 +3,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Evaluation, EvaluationSection, Category, EvaluationCategory, Details } from 'src/app/models/evaluation';
 import { EvaluationCatalogue } from 'src/app/models/evaluation-catalogue';
-import { Partenaire } from 'src/app/models/partenaire';
 import { AuthService } from 'src/app/services/auth.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
-import { PartenaireService } from 'src/app/services/partenaire.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -46,9 +44,7 @@ export class EvaluationComponent implements OnInit {
   availableCategories = Object.values(Category);
   customCategories: string[] = [];
   
-  // Partenaires
-  allPartenaires: Partenaire[] = [];
-  selectedPartenaires: Partenaire[] = [];
+
   
   // Catalogues
   catalogues: Array<{title: string, image: File | null, imagePreview: string | null}> = [];
@@ -59,7 +55,6 @@ export class EvaluationComponent implements OnInit {
   
   constructor(
     private evaluationservice: EvaluationService, 
-    private partenaireService: PartenaireService,
     private authService: AuthService,
     private router: Router,
       private sanitizer: DomSanitizer  // ✅ AJOUTER CECI
@@ -68,40 +63,11 @@ export class EvaluationComponent implements OnInit {
 
   ngOnInit() {
     this.fetchEvaluations();
-    this.fetchPartenaires();
     this.fetchAvailableIcons(); // ← AJOUTER CECI
 
   }
 
-  fetchPartenaires() {
-    this.loading = true;
-    console.log('📡 Récupération des partenaires...');
-    
-    this.partenaireService.getPartenaire().subscribe(
-      (response: any[]) => {
-        console.log('✅ Réponse partenaires:', response);
-        
-        this.allPartenaires = response.map(p => new Partenaire(
-          p.id,
-          p.title,
-          p.description,
-          p.image
-        ));
-        
-        this.loading = false;
-      },
-      (error) => {
-        console.error('❌ Erreur lors du chargement des partenaires:', error);
-        this.loading = false;
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur lors du chargement des partenaires',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    );
-  }
+
 
   private initializeSections() {
     this.sections = [
@@ -163,7 +129,6 @@ export class EvaluationComponent implements OnInit {
     };
     this.selectedImage = null;
     this.initializeSections();
-    this.selectedPartenaires = [];
     this.catalogues = [];
     this.currentModalStep = 1;
     this.showModal = true;
@@ -205,7 +170,6 @@ handleEdit(evaluation: Evaluation) {
     this.initializeSections();
   }
   
-  this.selectedPartenaires = evaluation.Partenaires ? [...evaluation.Partenaires] : [];
   
   if (evaluation.Catalogues && evaluation.Catalogues.length > 0) {
     this.catalogues = evaluation.Catalogues.map(cat => ({
@@ -234,7 +198,6 @@ handleEdit(evaluation: Evaluation) {
     this.selectedImage = null;
     this.editId = null;
     this.sections = [];
-    this.selectedPartenaires = [];
     this.catalogues = [];
     this.currentModalStep = 1;
   }
@@ -336,19 +299,7 @@ addDetailToSection(sectionIndex: number) {
     return [...this.availableCategories, ...this.customCategories];
   }
 
-  // Gestion des partenaires
-  togglePartenaireSelection(partenaire: Partenaire) {
-    const index = this.selectedPartenaires.findIndex(p => p.Id === partenaire.Id);
-    if (index > -1) {
-      this.selectedPartenaires.splice(index, 1);
-    } else {
-      this.selectedPartenaires.push(partenaire);
-    }
-  }
 
-  isPartenaireSelected(partenaire: Partenaire): boolean {
-    return this.selectedPartenaires.some(p => p.Id === partenaire.Id);
-  }
 
   // Gestion des catalogues
   addCatalogue() {
@@ -490,10 +441,7 @@ handleSubmit() {
       }
     });
 
-    // Partenaires sécurisés
-    (this.selectedPartenaires || []).forEach(p => {
-      if (p?.Id != null) formData.append('partenairesIds', p.Id.toString());
-    });
+
 
     // Catalogues sécurisés
     (this.catalogues || []).forEach(cat => {
@@ -517,7 +465,6 @@ handleSubmit() {
           image: response.image,
           logo: response.logo,
           sections: response.sections || [],
-          evaluationPartenaires: response.evaluationPartenaires || [],
           evaluationCatalogues: response.evaluationCatalogues || [],
           evaluationCategory: response.evaluationCategory || null
         });
@@ -640,13 +587,6 @@ handleSubmit() {
     return url;
   }
 
-// Modifications dans le component TypeScript
-
-// Dans la méthode handleSubmit(), remplacer la condition finale:
-// Ligne: if (this.currentModalStep === 5)
-// Par: if (this.currentModalStep === 7)
-
-// 1. Modifier la progression pour inclure 7 steps au lieu de 5
   nextModalStep() {
     if (this.currentModalStep === 1) {
       if (!this.formData.name || !this.formData.description || !this.formData.evaluationCategory) {
@@ -680,8 +620,8 @@ handleSubmit() {
 
   }
   
-  // Step 7: Validation des catalogues
-  if (this.currentModalStep === 7) {
+  // Step 6: Validation des catalogues
+  if (this.currentModalStep === 6) {
     const incompleteCatalogues = this.catalogues.filter(cat => 
       !cat.title || (!cat.image && !cat.imagePreview)
     );
@@ -698,7 +638,7 @@ handleSubmit() {
     }
   }
 
-  if (this.currentModalStep < 7) {
+  if (this.currentModalStep < 6) {
     this.currentModalStep++;
   }
   }
@@ -821,13 +761,13 @@ fetchAvailableIcons() {
     });
   }
 
-  // ✅ NOUVELLE MÉTHODE: Sélectionner une icône depuis la galerie
+  // ✅ Sélectionner une icône depuis la galerie
   selectIconFromGallery(iconUrl: string, detail: Details) {
     detail.icon = iconUrl;
     console.log('✅ Icône sélectionnée:', iconUrl);
   }
 
-  // ✅ NOUVELLE MÉTHODE: Vérifier si une icône est déjà sélectionnée
+  // ✅ Vérifier si une icône est déjà sélectionnée
   isIconSelected(iconUrl: string, detail: Details): boolean {
     return detail.icon === iconUrl;
   }

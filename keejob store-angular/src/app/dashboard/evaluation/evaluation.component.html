@@ -49,12 +49,6 @@
         </svg>
           <span>Mes services</span>
         </a>       
-        <a href="partenaire">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-        </svg>
-          <span>Partenaires</span>
-        </a> 
         <a href="formationKeejob">
           <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -248,30 +242,22 @@
       </div>
 
   <div class="step-line" [class.completed]="currentModalStep > 5"></div>
+
+  <!-- Step 6: Catalogues -->
   <div class="step" [class.active]="currentModalStep === 6" [class.completed]="currentModalStep > 6">
     <div class="step-circle" (click)="goToModalStep(6)">
       <span *ngIf="currentModalStep > 6">✓</span>
       <span *ngIf="currentModalStep <= 6">6</span>
     </div>
-    <div class="step-label">Partenaires</div>
-  </div>
-  
-  <!-- Step 7: Catalogues -->
-  <div class="step-line" [class.completed]="currentModalStep > 6"></div>
-  <div class="step" [class.active]="currentModalStep === 7" [class.completed]="currentModalStep > 7">
-    <div class="step-circle" (click)="goToModalStep(7)">
-      <span *ngIf="currentModalStep > 7">✓</span>
-      <span *ngIf="currentModalStep <= 7">7</span>
-    </div>
     <div class="step-label">Catalogues</div>
   </div>
 </div>
 
-<!-- Progress Indicator - Mettre à jour pour 7 steps -->
+<!-- Progress Indicator -->
 <div class="progress-indicator">
-  <div class="progress-text">Étape {{ currentModalStep }} sur 7</div>
+  <div class="progress-text">Étape {{ currentModalStep }} sur 6</div>
   <div class="progress-bar">
-    <div class="progress-fill" [style.width.%]="(currentModalStep / 7) * 100"></div>
+    <div class="progress-fill" [style.width.%]="(currentModalStep / 6) * 100"></div>
   </div>
 </div>      
 
@@ -489,20 +475,11 @@
           <div class="details-section">
             <div class="details-header">
               <h5>Détails de la section</h5>
-              <!-- <button type="button" (click)="addDetailToSection(1)" class="btn btn-sm btn-blue">
-                + Ajouter un détail
-              </button> -->
             </div>
 
             <div *ngFor="let detail of sections[1].details; let i = index" class="detail-card">
               <div class="detail-header">
                 <span class="detail-number">Détail #{{ i + 1 }}</span>
-                <!-- <button type="button" 
-                        (click)="removeDetailFromSection(1, i)" 
-                        class="btn-icon btn-danger"
-                        title="Supprimer ce détail">
-                  🗑️
-                </button> -->
               </div>
 
               <label>Titre *</label>
@@ -615,20 +592,11 @@
           <div class="details-section">
             <div class="details-header">
               <h5>Détails de la section</h5>
-              <!-- <button type="button" (click)="addDetailToSection(2)" class="btn btn-sm btn-blue">
-                + Ajouter un détail
-              </button> -->
             </div>
 
             <div *ngFor="let detail of sections[2].details; let i = index" class="detail-card">
               <div class="detail-header">
                 <span class="detail-number">Détail #{{ i + 1 }}</span>
-                <!-- <button type="button" 
-                        (click)="removeDetailFromSection(2, i)" 
-                        class="btn-icon btn-danger"
-                        title="Supprimer ce détail">
-                  🗑️
-                </button> -->
               </div>
 
               <label>Titre *</label>
@@ -720,8 +688,7 @@
         </div>
       </div>
 
-      <!-- STEP 5: Section 4 -->
-<!-- STEP 5: Section 4 avec Category -->
+      <!-- STEP 5: Section 4 avec Category -->
 <div *ngIf="currentModalStep === 5" class="step-content">
   <h4>✨ Section 4</h4>
   
@@ -742,20 +709,11 @@
     <div class="details-section">
       <div class="details-header">
         <h5>Détails de la section</h5>
-        <!-- <button type="button" (click)="addDetailToSection(3)" class="btn btn-sm btn-blue">
-          + Ajouter un détail
-        </button> -->
       </div>
 
       <div *ngFor="let detail of sections[3].details; let i = index" class="detail-card">
         <div class="detail-header">
           <span class="detail-number">Détail #{{ i + 1 }}</span>
-          <!-- <button type="button" 
-                  (click)="removeDetailFromSection(3, i)" 
-                  class="btn-icon btn-danger"
-                  title="Supprimer ce détail">
-            🗑️
-          </button> -->
         </div>
 
         <label>Titre *</label>
@@ -825,7 +783,7 @@
 
         </div>
 
-        <!-- NOUVEAU: Champ Category -->
+        <!-- Champ Category -->
         <label>Catégorie </label>
         <div class="category-selector">
           <select [(ngModel)]="detail.category" class="form-input">
@@ -888,60 +846,8 @@
 </div>
 
 
+<!-- STEP 6: Catalogues -->
 <div *ngIf="currentModalStep === 6" class="step-content">
-  <h4>🤝 Partenaires</h4>
-  
-  <div class="partners-section">
-    <div class="section-header">
-      <p class="section-description">
-        Sélectionnez les partenaires associés à cette évaluation
-      </p>
-    </div>
-
-    <!-- Liste des partenaires disponibles -->
-    <div class="partners-grid">
-      <div *ngFor="let partenaire of allPartenaires" 
-          class="partner-card"
-          [class.selected]="isPartenaireSelected(partenaire)"
-          (click)="togglePartenaireSelection(partenaire)">
-        
-        <input type="checkbox" 
-              [checked]="isPartenaireSelected(partenaire)">
-        
-        <div class="partner-image">
-          <img [src]="sanitizeImage(partenaire.image)" [alt]="partenaire.name">
-        </div>
-        
-        <div class="partner-info">
-          <h5>{{ partenaire.name }}</h5>
-        </div>
-      </div>
-      <div *ngIf="allPartenaires.length === 0" class="no-partners">
-        <p>Aucun partenaire disponible</p>
-      </div>
-    </div>
-
-    <!-- Résumé des partenaires sélectionnés -->
-    <div *ngIf="selectedPartenaires.length > 0" class="selected-partners-summary">
-      <h5>✓ Partenaires sélectionnés ({{ selectedPartenaires.length }})</h5>
-      <div class="selected-chips">
-        <span *ngFor="let p of selectedPartenaires" class="partner-chip">
-          {{ p.Name }}
-          <button type="button" 
-                  (click)="togglePartenaireSelection(p)" 
-                  class="chip-remove">×</button>
-        </span>
-      </div>
-    </div>
-    
-    <div *ngIf="selectedPartenaires.length === 0" class="info-box">
-      <p>ℹ️ Aucun partenaire sélectionné. Vous pouvez continuer sans sélectionner de partenaires.</p>
-    </div>
-  </div>
-</div>
-
-
-<div *ngIf="currentModalStep === 7" class="step-content">
   <h4>📚 Catalogues</h4>
   
   <div class="catalogues-section">
@@ -949,9 +855,6 @@
       <p class="section-description">
         Ajoutez des catalogues associés à cette évaluation (brochures, documents...)
       </p>
-      <!-- <button type="button" (click)="addCatalogue()" class="btn btn-blue">
-        + Ajouter un catalogue
-      </button> -->
     </div>
 
     <!-- Liste des catalogues -->
@@ -959,12 +862,6 @@
       <div *ngFor="let catalogue of catalogues; let i = index" class="catalogue-card">
         <div class="catalogue-header">
           <span class="catalogue-number">Catalogue #{{ i + 1 }}</span>
-          <!-- <button type="button" 
-                  (click)="removeCatalogue(i)" 
-                  class="btn-icon btn-danger"
-                  title="Supprimer ce catalogue">
-            🗑️
-          </button> -->
         </div>
         
         <div class="catalogue-body">
@@ -1033,9 +930,6 @@
              sections[2].details.length + sections[3].details.length }}
         </div>
         <div class="summary-item">
-          <strong>Partenaires:</strong> {{ selectedPartenaires.length }}
-        </div>
-        <div class="summary-item">
           <strong>Catalogues:</strong> {{ catalogues.length }}
         </div>
       </div>
@@ -1056,12 +950,12 @@
   </div>
   <div class="actions-right">
     <button (click)="closeModal()" class="btn btn-gray">Annuler</button>
-    <button *ngIf="currentModalStep < 7" 
+    <button *ngIf="currentModalStep < 6" 
             (click)="nextModalStep()" 
             class="btn btn-blue">
       Suivant →
     </button>
-    <button *ngIf="currentModalStep === 7" 
+    <button *ngIf="currentModalStep === 6" 
             (click)="handleSubmit()" 
             class="btn btn-success">
       {{modalMode === 'add' ? '✓ Créer l\'évaluation' : '✓ Enregistrer les modifications'}}
@@ -1070,4 +964,3 @@
 </div>
   </div>
 </div>
-

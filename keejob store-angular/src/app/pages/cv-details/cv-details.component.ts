@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Cv } from 'src/app/models/cv';
 import { CvService } from 'src/app/services/cv.service';
-import { PartenaireService } from 'src/app/services/partenaire.service';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 import { CvRequestService } from 'src/app/services/cv-request.service';
@@ -25,7 +24,7 @@ formData = {
 selectedFile: File | null = null;
 sending = false;
   constructor(
-    private cvService: CvService, private partenaireService: PartenaireService,  private route: ActivatedRoute,private cvRequestService: CvRequestService) { }
+    private cvService: CvService,  private route: ActivatedRoute,private cvRequestService: CvRequestService) { }
 
 
   ngOnInit(): void {

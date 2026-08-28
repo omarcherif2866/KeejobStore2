@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Cv, CVCategory, CvSection, Details, PriceSection } from 'src/app/models/cv';
-import { Partenaire } from 'src/app/models/partenaire';
 import { AuthService } from 'src/app/services/auth.service';
 import { CvService } from 'src/app/services/cv.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
-import { PartenaireService } from 'src/app/services/partenaire.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -43,9 +41,7 @@ export class CvComponent implements OnInit {
   // NOUVEAU : Gestion des PriceSections
   priceSections: PriceSection[] = [];
   
-  // Partenaires
-  // allPartenaires: Partenaire[] = [];
-  // selectedPartenaires: Partenaire[] = [];
+
   availableIcons: string[] = [];
   availablePriceIcons: string[] = []; // ✅ NOUVEAU
   loadingIcons = false;
@@ -54,7 +50,6 @@ export class CvComponent implements OnInit {
   constructor(
     private cvservice: CvService, 
     private evaluationservice: EvaluationService, 
-    private partenaireService: PartenaireService,
     private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer  // ✅ AJOUTER CECI
@@ -63,41 +58,12 @@ export class CvComponent implements OnInit {
 
   ngOnInit() {
     this.fetchcvs();
-    // this.fetchPartenaires();
     this.fetchAvailableIcons(); // ← AJOUTER CECI
     this.fetchAvailablePriceIcons(); // ✅ NOUVEAU
 
   }
 
-  // fetchPartenaires() {
-  //   this.loading = true;
-  //   console.log('📡 Récupération des partenaires...');
-    
-  //   this.partenaireService.getPartenaire().subscribe(
-  //     (response: any[]) => {
-  //       console.log('✅ Réponse partenaires:', response);
-        
-  //       this.allPartenaires = response.map(p => new Partenaire(
-  //         p.id,
-  //         p.title,
-  //         p.description,
-  //         p.image
-  //       ));
-        
-  //       this.loading = false;
-  //     },
-  //     (error) => {
-  //       console.error('❌ Erreur lors du chargement des partenaires:', error);
-  //       this.loading = false;
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Erreur lors du chargement des partenaires',
-  //         showConfirmButton: false,
-  //         timer: 1500
-  //       });
-  //     }
-  //   );
-  // }
+
 
 private initializeSections() {
   // 3 sections : Section 1, Section 2, Section 3 (ex-Section 5)
@@ -173,7 +139,6 @@ private initializeSections() {
     this.selectedImage = null;
     this.initializeSections();
     this.initializePriceSections(); // NOUVEAU
-    // this.selectedPartenaires = [];
     this.currentModalStep = 1;
     this.showModal = true;
   }
@@ -237,14 +202,12 @@ handleEdit(cv: Cv) {
       name: '',
       description: '',
       image: '',
-      // logo: '',
       categoryCV: null  // NOUVEAU
     };
     this.selectedImage = null;
     this.editId = null;
     this.sections = [];
     this.priceSections = []; // NOUVEAU
-    // this.selectedPartenaires = [];
     this.currentModalStep = 1;
   }
 
@@ -372,19 +335,6 @@ addDetailToSection(sectionIndex: number) {
     }
   }
 
-  // togglePartenaireSelection(partenaire: Partenaire) {
-  //   const index = this.selectedPartenaires.findIndex(p => p.Id === partenaire.Id);
-  //   if (index > -1) {
-  //     this.selectedPartenaires.splice(index, 1);
-  //   } else {
-  //     this.selectedPartenaires.push(partenaire);
-  //   }
-  // }
-
-  // isPartenaireSelected(partenaire: Partenaire): boolean {
-  //   return this.selectedPartenaires.some(p => p.Id === partenaire.Id);
-  // }
-
 handleSubmit() {
   if (!this.formData.name) {
     Swal.fire({
@@ -505,10 +455,6 @@ handleSubmit() {
     }
   });
 
-  // Partenaires
-  // (this.selectedPartenaires || []).forEach(p => {
-  //   if (p?.Id != null) formData.append('partenairesIds', p.Id.toString());
-  // });
 
   const request$ = this.modalMode === 'add' 
     ? this.cvservice.addCv(formData) 
@@ -527,7 +473,6 @@ handleSubmit() {
         categoryCV: response.categoryCV || null,
         sections: response.sections || [],
         priceSection: response.priceSections || [],
-        evaluationPartenaires: response.cvPartenaires || []
       });
 
       if (this.modalMode === 'add') {

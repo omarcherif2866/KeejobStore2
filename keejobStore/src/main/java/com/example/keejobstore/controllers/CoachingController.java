@@ -2,7 +2,6 @@ package com.example.keejobstore.controllers;
 
 import com.example.keejobstore.entity.*;
 import com.example.keejobstore.repository.CoachingRepository;
-import com.example.keejobstore.repository.PartenaireRepository;
 import com.example.keejobstore.service.CloudinaryService;
 import com.example.keejobstore.service.CoachingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +24,7 @@ public class CoachingController {
 
     private final CoachingService coachingService;
     private final CloudinaryService cloudinaryService;
-    private final PartenaireRepository partenaireRepository;
+//    private final PartenaireRepository partenaireRepository;
     private final CoachingRepository coachingRepository;
 
 

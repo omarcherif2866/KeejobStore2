@@ -17,4 +17,8 @@ public interface AvisService {
     Avis updateAvis(Long id, Avis avis);
 
     void deleteAvis(Long id);
+
+    List<Avis> getAvisByFormationId(Long formationId);
+
+    Avis createAvisForFormation(Long formationId, Avis avis);
 }

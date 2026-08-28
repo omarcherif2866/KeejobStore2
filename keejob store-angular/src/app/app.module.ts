@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
-import { CentreFormationDetailsComponent } from './pages/centre-formation-details/centre-formation-details.component';
 
 
 
@@ -34,20 +33,14 @@ const routes = [
       (m) => m.CentralTestModule
     ),
 },
-{
-  path: 'e-learning',
-  loadChildren: () =>
-    import('./pages/e-learning/e-learning.module').then(
-      (m) => m.ELearningModule
-    ),
-},
-{
-  path: 'formation',
-  loadChildren: () =>
-    import('./pages/formation/formation.module').then(
-      (m) => m.FormationModule
-    ),
-},
+
+// {
+//   path: 'formation',
+//   loadChildren: () =>
+//     import('./pages/formation/formation.module').then(
+//       (m) => m.FormationModule
+//     ),
+// },
 {
   path: 'certifications',
   loadChildren: () =>
@@ -115,13 +108,7 @@ const routes = [
       (m) => m.CentreFormationModule
     ),
 },
-{
-  path: 'formation_partenaire',
-  loadChildren: () =>
-    import('./pages/formation-partner/formation-partner.module').then(
-      (m) => m.FormationPartnerModule
-    ),
-},
+
 {
   path: 'register',
   loadChildren: () =>
@@ -185,13 +172,7 @@ const routes = [
       (m) => m.ServiceFormateurModule
     ),
 },
-{
-  path: 'partenaire',
-  loadChildren: () =>
-    import('./dashboard/partenaire/partenaire.module').then(
-      (m) => m.PartenaireModule
-    ),
-},
+
 {
   path: 'formationKeejob',
   loadChildren: () =>
@@ -241,13 +222,7 @@ const routes = [
       (m) => m.CoachingDetailsModule
     ),
 },
-{
-  path: 'allFormation',
-  loadChildren: () =>
-    import('./pages/all-formation-keejob/all-formation-keejob.module').then(
-      (m) => m.AllFormationKeejobModule
-    ),
-},
+
 {
   path: 'allCv',
   loadChildren: () =>
@@ -269,20 +244,7 @@ const routes = [
       (m) => m.FormationKeejobDetailsModule
     ),
 },
-{
-  path: 'sousFormationKeejob',
-  loadChildren: () =>
-    import('./pages/sous-formation-keejob/sous-formation-keejob.module').then(
-      (m) => m.SousFormationKeejobModule
-    ),
-},
-{
-  path: 'sousFormationKeejob/:id',
-  loadChildren: () =>
-    import('./pages/sous-formation-keejob-details/sous-formation-keejob-details.module').then(
-      (m) => m.SousFormationKeejobDetailsModule
-    ),
-},
+
 {
   path: 'profil',
   loadChildren: () =>

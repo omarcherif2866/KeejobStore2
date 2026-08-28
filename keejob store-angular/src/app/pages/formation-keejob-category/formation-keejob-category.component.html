@@ -1,74 +1,223 @@
-<section class="expertise-section">
+<!-- ===================== HERO ===================== -->
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-left">
+      <span class="hero-badge">✓ Annuaire certifié</span>
+      <h1 class="hero-title">Choisissez votre formation   <span class="highlight" [style.color]="categoryColor">{{ categoryLabel }}</span></h1>
+      <p class="hero-subtitle">
+        Accédez aux meilleures formations {{ categoryLabel }} en ligne selon vos besoins
+        sur les plateformes les plus reconnues.
+      </p>
 
-  <!-- Fil d'ariane -->
-  <div class="breadcrumb">
-    <a routerLink="/">🏠 Accueil</a> ›
-    <a routerLink="/formation">Formations</a> ›
-    <span>{{ categoryDisplay }}</span>
-  </div>
-
-  <!-- État de chargement -->
-  <div class="loading-state" *ngIf="loading">
-    <div class="spinner"></div>
-  </div>
-
-  <!-- CAS 1 : il y a des données -->
-  <div class="platforms-cards-container" *ngIf="!loading && formations.length > 0">
-    <div *ngFor="let ev of formations" class="platform-card">
-
-      <div class="platform-header">
-        <div class="platform-logo-wrapper">
-          <img [src]="sanitizeImage(ev.logo)" alt="logo" class="platform-logo">
+      <div class="hero-search">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Que souhaitez-vous apprendre ?" [(ngModel)]="searchQuery">
         </div>
-        <h3 class="platform-name">{{ ev.title }}</h3>
+        <div class="search-divider"></div>
+        <div class="search-select-wrapper">
+          <span>Toutes les catégories</span>
+          <span class="chevron">⌄</span>
+        </div>
+        <button class="btn-search" (click)="onSearch()">🔍 Rechercher</button>
       </div>
 
-      <p class="platform-description">{{ ev.description }}</p>
-
-      <div class="platform-rating">
-        <img src="../../assets/87_913.svg" alt="4.7 stars rating">
-        <span class="rating-score">4.7</span>
-        <span class="rating-reviews">Basé sur 17 avis</span>
+      <div class="hero-features">
+        <div class="hero-feature">
+          <span class="feature-icon icon-blue">🛡️</span>
+          <div><strong>Sélectionnées avec soin</strong><span>Les meilleures plateformes</span></div>
+        </div>
+        <div class="hero-feature">
+          <span class="feature-icon icon-orange">🎓</span>
+          <div><strong>Contenus de qualité</strong><span>Formations à jour</span></div>
+        </div>
+        <div class="hero-feature">
+          <span class="feature-icon icon-yellow">⭐</span>
+          <div><strong>Apprentissage flexible</strong><span>Apprenez à votre rythme</span></div>
+        </div>
+        <div class="hero-feature">
+          <span class="feature-icon icon-pink">🎧</span>
+          <div><strong>Support apprenant</strong><span>Nous vous accompagnons</span></div>
+        </div>
       </div>
+    </div>
 
-      <a [routerLink]="['/formation', ev.id]" class="btn btn-primary">
-        En savoir plus
-      </a>
+    <div class="hero-right">
+      <div class="hero-image-card">
+        <img [src]="categoryImage" alt="{{ categoryLabel }}" class="hero-image">
+        <div class="hero-float-badge-top">
+          <span class="star-icon">⭐</span>
+          <div><strong>{{ platforms.length }} références</strong><span>de plateformes</span></div>
+        </div>
+        <div class="hero-float-badge-bottom">
+          <span class="shield-icon">🛡️</span>
+          <div><strong>Formations certifiées</strong><span>Qualité garantie</span></div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- CAS 2 : aucune donnée -->
-  <div class="empty-state" *ngIf="!loading && formations.length === 0">
-    <div class="empty-state-content">
-
-      <div class="empty-state-illustration">
-        <img src="../../assets/emptyData/empty-search-illustration.svg" alt="Aucun résultat">
-      </div>
-
-      <div class="empty-state-text">
-        <h2>Aucune formation {{ categoryLabel }} disponible pour le moment</h2>
-        <p>
-          Nous n'avons actuellement aucune formation {{ categoryLabel }} correspondant à votre recherche.
-          Mais ne vous inquiétez pas, de nouvelles formations seront bientôt disponibles !
-        </p>
-
-        <div class="empty-state-notify">
-          <div class="notify-icon">🔔</div>
-          <span>Soyez le premier informé dès qu'une nouvelle formation est disponible.</span>
-        </div>
-
-        <p class="empty-state-alternatives-label">En attendant, découvrez nos autres formations.</p>
-
-        <div class="empty-state-alternatives">
-          <a *ngFor="let cat of otherCategories; let i = index"
-             [routerLink]="['/formation/category', cat.key]"
-             [class]="i === 0 ? 'btn btn-primary' : 'btn btn-outline'">
-            {{ cat.icon }} {{ cat.label }}
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
 </section>
+
+<!-- ===================== LOADER ===================== -->
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<ng-container *ngIf="!loading">
+
+  <!-- ===================== TOUTES LES PLATEFORMES ===================== -->
+  <section class="platforms-section" *ngIf="platforms.length > 0">
+    <div class="section-header">
+      <h2>Toutes les plateformes</h2>
+      <div class="section-controls">
+        <div class="control-select">Trier par popularité <span class="chevron">⌄</span></div>
+        <div class="control-filter">⚙️ Filtres</div>
+      </div>
+    </div>
+
+    <div class="platforms-grid">
+      <div
+        *ngFor="let platform of platforms"
+        class="platform-card"
+        [class.active]="selectedPlatform?.id === platform.id"
+        (click)="selectPlatform(platform)">
+
+        <div class="platform-card-header">
+          <div class="platform-logo-wrapper">
+            <img [src]="sanitizeImage(platform.logo)" [alt]="platform.nom" class="platform-logo">
+          </div>
+          <h3 class="platform-card-name">{{ platform.nom }}</h3>
+        </div>
+
+        <div class="platform-card-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-score">{{ platform.note }}</span>
+          <span class="rating-reviews">({{ platform.nombreAvis }} avis)</span>
+        </div>
+
+        <p class="platform-card-desc">{{ platform.description }}</p>
+
+        <div class="platform-tags" *ngIf="platform.categories?.length">
+          <span class="tag" *ngFor="let tag of platform.categories.slice(0,3)">{{ tag }}</span>
+        </div>
+
+        <a class="platform-link" (click)="selectPlatform(platform); $event.stopPropagation()">
+          Voir les formations <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BLOC AFFICHÉ UNIQUEMENT APRÈS CLIC SUR UNE PLATEFORME ===================== -->
+  <ng-container *ngIf="selectedPlatform as p">
+
+    <!-- Breadcrumb + détail plateforme -->
+    <section class="platform-detail-section">
+      <div class="detail-breadcrumb">
+        <a (click)="resetPlatform()">Accueil</a> › <span>{{ p.nom }}</span>
+      </div>
+
+      <div class="platform-detail-card">
+        <div class="platform-detail-left">
+          <div class="detail-logo-wrapper">
+            <img [src]="sanitizeImage(p.logo)" [alt]="p.nom" class="detail-logo">
+          </div>
+          <div class="detail-info">
+            <div class="detail-name-row">
+              <h2>{{ p.nom }}</h2>
+              <span class="badge-populaire" *ngIf="p.populaire">Populaire</span>
+            </div>
+            <div class="detail-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-score">{{ p.note }}</span>
+              <span class="rating-reviews">({{ p.nombreAvis }} avis)</span>
+              <span class="dot-sep">•</span>
+              <span class="apprenants">👤 {{ p.nombreApprenants }} apprenants</span>
+            </div>
+            <p class="detail-desc">{{ p.description }}</p>
+            <div class="platform-tags" *ngIf="p.categories?.length">
+              <span class="tag" *ngFor="let tag of p.categories">{{ tag }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="platform-detail-right" *ngIf="p.imageIllustration">
+          <img [src]="sanitizeImage(p.imageIllustration)" alt="illustration" class="detail-illustration">
+        </div>
+      </div>
+    </section>
+
+    <!-- Formations de cette plateforme (une seule fois) -->
+    <section class="formations-section">
+      <div class="section-header">
+        <h2>Formations disponibles sur {{ p.nom }}</h2>
+        <div class="section-controls">
+          <div class="control-select">Trier par pertinence <span class="chevron">⌄</span></div>
+          <div class="control-filter">⚙️ Filtres</div>
+        </div>
+      </div>
+
+      <div class="formations-table" *ngIf="displayedFormations.length > 0; else noFormationsBlock">
+<div class="formation-row" 
+     *ngFor="let formation of displayedFormations"
+     [routerLink]="['/formation', formation.id]"
+     style="cursor: pointer;">
+  <div class="formation-icon">
+    <img [src]="sanitizeImage(formation.image)" [alt]="formation.titre">
+  </div>
+
+  <div class="formation-info">
+    <h4>{{ formation.titre }}</h4>
+    <p>{{ formation.descriptionCourte }}</p>
+  </div>
+
+  <div class="formation-meta">
+    <span class="meta-label">Niveau</span>
+    <span class="meta-value">{{ formation.niveau || 'Tous niveaux' }}</span>
+  </div>
+
+  <div class="formation-meta">
+    <span class="meta-label">Durée</span>
+    <span class="meta-value">{{ formation.duree }}</span>
+  </div>
+
+  <div class="formation-meta">
+    <span class="meta-label">Avis</span>
+    <span class="meta-value">⭐ {{ formation.note }} ({{ formation.nombreAvis }})</span>
+  </div>
+
+  <button class="heart-icon" (click)="toggleFavorite(formation, $event)">♡</button>
+</div>
+      </div>
+
+      <ng-template #noFormationsBlock>
+        <div class="formations-table">
+          <div class="no-formations">
+            Aucune formation {{ categoryLabel }} disponible pour {{ p.nom }} pour le moment.
+          </div>
+        </div>
+      </ng-template>
+
+      <div class="see-all-wrapper">
+        <a *ngIf="displayedFormations.length > 0" class="btn-see-all" [routerLink]="['/formations/plateforme', p.id]">
+          Voir toutes les formations sur {{ p.nom }} <span class="arrow">→</span>
+        </a>
+        <button class="btn-reset-link" (click)="resetPlatform()">← Voir toutes les plateformes</button>
+      </div>
+    </section>
+
+  </ng-container>
+
+  <!-- ===================== CTA AIDE ===================== -->
+  <section class="help-cta">
+    <div class="help-cta-left">
+      <span class="help-icon">🎧</span>
+      <div>
+        <strong>Besoin d'aide ou de conseil ?</strong>
+        <p>Notre équipe est là pour vous accompagner.</p>
+      </div>
+    </div>
+    <a routerLink="/contact" class="btn-contact">💬 Contactez-nous</a>
+  </section>
+
+</ng-container>

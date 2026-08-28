@@ -36,4 +36,12 @@ export class AvisService {
   deleteAvis(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+    getAvisByFormation(formationId: number): Observable<Avis[]> {
+    return this.http.get<Avis[]>(`${this.apiUrl}/formation/${formationId}`);
+  }
+
+createAvisForFormation(formationId: number, avis: Avis): Observable<Avis> {
+  return this.http.post<Avis>(`${this.apiUrl}/formation/${formationId}`, avis);
+}
 }

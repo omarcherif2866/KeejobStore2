@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Avis } from 'src/app/models/avis';
 import { FormationKeejob } from 'src/app/models/formation-keejob';
-import { SousFormationKeejob } from 'src/app/models/sous-formation-keejob';
+import { AvisService } from 'src/app/services/avis.service';
 import { FormationKeejobService } from 'src/app/services/formation-keejob.service';
-import { SousFormationKeejobService } from 'src/app/services/sous-formation-keejob.service';
+type Tab = 'presentation' | 'contenu' | 'avis' | 'infos';
 
 @Component({
   selector: 'app-formation-keejob-details',
@@ -11,123 +12,160 @@ import { SousFormationKeejobService } from 'src/app/services/sous-formation-keej
   styleUrls: ['./formation-keejob-details.component.css']
 })
 export class FormationKeejobDetailsComponent implements OnInit {
-  @ViewChild('partnersCarousel', { static: false }) partnersCarousel!: ElementRef;
-  @ViewChild('carouselSousContainer', { static: false }) 
-  carouselSousContainer!: ElementRef;
-  formation: FormationKeejob | undefined;
-  sousFormations: SousFormationKeejob[]
-  visibleSousFormations: SousFormationKeejob[] = [];
-  allPartners: any[] = [];
-  visiblePartners: any[] = [];
-currentIndexSous = 0;  // index de la première sous-formation affichée
-  currentIndexPartners = 0;
 
-  constructor(private formationService : FormationKeejobService, private route: ActivatedRoute, 
-    private sousFormationService: SousFormationKeejobService, private router: Router) { }
+
+  formation: FormationKeejob | null = null;
+  otherFormations: FormationKeejob[] = [];
+  avisList: Avis[] = [];
+
+  loading = true;
+  activeTab: Tab = 'presentation';
+
+  // Pour le carousel "Autres formations"
+  currentSlide = 0;
+  slidesCount = 0;
+
+  constructor(
+    private route: ActivatedRoute,
+    private formationService: FormationKeejobService,
+    private avisService: AvisService
+  ) {}
 
   ngOnInit(): void {
-    const formationId = this.route.snapshot.params['id'];
-    this.getFormationDetails(formationId);
-  }
-
-  getFormationDetails(formationId: string): void {
-    this.formationService.getFormationKeejobById(formationId).subscribe((data: any) => {
-      this.formation = new FormationKeejob(
-        data.id,
-        data.title,
-        data.description,
-        data.image,
-        data.logo,
-        data.partenaires,
-        data.sousFormations,
-        data.categoryFormationKeejob,
-      );
-
-      // --- PARTENAIRES ---
-      this.allPartners = data.partenaires || [];
-      this.currentIndexPartners = 0;
-      this.updateVisiblePartners();
-
-      // --- SOUS-FORMATIONS ---
-      this.sousFormationService.getSousFormationKeejobByFormationKeejob(Number(formationId))
-        .subscribe((sousFormations: any[]) => {
-          this.sousFormations = sousFormations || [];
-          this.currentIndexSous = 0;
-          this.updateVisibleSousFormations();
-        });
-
-      console.log("Formation :", this.formation);
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.loadFormation(+id);
+      }
     });
   }
 
-  // ----- SOUS-FORMATIONS -----
-  updateVisibleSousFormations() {
-    const total = this.sousFormations.length;
-    this.visibleSousFormations = [];
-    for (let i = 0; i < 3; i++) {
-      const index = (this.currentIndexSous + i) % total;
-      if (total > 0) this.visibleSousFormations.push(this.sousFormations[index]);
+  loadFormation(id: number): void {
+    this.loading = true;
+
+    this.formationService.getById(id).subscribe({
+      next: (data) => {
+        this.formation = data;
+        this.loading = false;
+
+        if (data.plateforme?.id) {
+          this.loadOtherFormations(data.plateforme.id, id);
+        }
+        this.loadAvis(id);
+        console.log('Formation chargée:', data);
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement de la formation:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  loadOtherFormations(plateformeId: number, currentId: number): void {
+    this.formationService.getByPlateforme(plateformeId).subscribe({
+      next: (data) => {
+        this.otherFormations = data.filter(f => f.id !== currentId);
+        this.slidesCount = Math.ceil(this.otherFormations.length / 4);
+      },
+      error: (err) => console.error('Erreur autres formations:', err)
+    });
+  }
+
+  loadAvis(formationId: number): void {
+    this.avisService.getAvisByFormation(formationId).subscribe({
+      next: (data) => this.avisList = data,
+      error: (err) => console.error('Erreur avis:', err)
+    });
+  }
+
+  setTab(tab: Tab): void {
+    this.activeTab = tab;
+  }
+
+  // ===================== CALCULS AVIS =====================
+
+  get averageNote(): number {
+    if (!this.formation?.note) return 0;
+    return this.formation.note;
+  }
+
+  get totalAvis(): number {
+    return this.formation?.nombreAvis || this.avisList.length;
+  }
+
+  getStarPercentage(star: number): number {
+    if (this.avisList.length === 0) return 0;
+    const count = this.avisList.filter(a => a.note === star).length;
+    return Math.round((count / this.avisList.length) * 100);
+  }
+
+  getStarCountForBar(star: number): number {
+    return this.avisList.filter(a => a.note === star).length;
+  }
+
+  // ===================== PRIX =====================
+
+  get hasDiscount(): boolean {
+    return !!this.formation?.prixOriginal && this.formation.prixOriginal > (this.formation?.prix || 0);
+  }
+
+  // ===================== CAROUSEL =====================
+
+  nextSlide(): void {
+    if (this.currentSlide < this.slidesCount - 1) this.currentSlide++;
+  }
+
+  prevSlide(): void {
+    if (this.currentSlide > 0) this.currentSlide--;
+  }
+
+  goToSlide(i: number): void {
+    this.currentSlide = i;
+  }
+
+  // ===================== PARTAGE =====================
+
+  shareOn(network: 'facebook' | 'linkedin' | 'twitter'): void {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(this.formation?.titre || '');
+    let shareUrl = '';
+
+    switch (network) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+        break;
     }
+    window.open(shareUrl, '_blank', 'width=600,height=400');
   }
 
-  updateVisiblePartners() {
-    const total = this.allPartners.length;
-    this.visiblePartners = [];
-    for (let i = 0; i < 4; i++) { // 4 visibles
-      const index = (this.currentIndexPartners + i) % total;
-      if (total > 0) this.visiblePartners.push(this.allPartners[index]);
+  copyLink(): void {
+    navigator.clipboard.writeText(window.location.href);
+  }
+
+  // ===================== UTILS =====================
+
+  sanitizeImage(url: string | undefined): string {
+    if (!url) return '';
+    if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
+      const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
+      return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
     }
+    return url;
   }
 
-  sanitizeImage(url: string): string {
-  if (!url) return '';
-
-  // Cas où l'URL est en double
-  if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
-    const parts = url.split("https://res.cloudinary.com/daxkymr4t/image/upload/");
-    return "https://res.cloudinary.com/daxkymr4t/image/upload/" + parts[parts.length - 1];
+  openVideo(): void {
+  // TODO: implémenter l'ouverture de la vidéo (modal, nouvelle fenêtre, etc.)
+  if (this.formation?.lienBandeAnnonce) {
+    window.open(this.formation.lienBandeAnnonce, '_blank');
   }
-
-  return url;
 }
 
-getCardClass(index: number): string {
-  const classes = ['card-ref', 'card-pub', 'card-social', 'card-content'];
-  return classes[index % 4]; // répète les 4 classes pour chaque ligne
-}
-
-
-  scrollRightSous() {
-    this.currentIndexSous = (this.currentIndexSous + 1) % this.sousFormations.length;
-    this.updateVisibleSousFormations();
-  }
-
-  scrollLeftSous() {
-    this.currentIndexSous =
-      (this.currentIndexSous - 1 + this.sousFormations.length) % this.sousFormations.length;
-    this.updateVisibleSousFormations();
-  }
-
-
-  scrollRightPartners() {
-    this.currentIndexPartners = (this.currentIndexPartners + 1) % this.allPartners.length;
-    this.updateVisiblePartners();
-  }
-
-  scrollLeftPartners() {
-    this.currentIndexPartners =
-      (this.currentIndexPartners - 1 + this.allPartners.length) % this.allPartners.length;
-    this.updateVisiblePartners();
-  }
-
-goToSousFormations() {
-  const formationId = this.route.snapshot.params['id'];
-  console.log("ID envoyé =", formationId); // 🔥 TEST
-
-  this.router.navigate(['/sousFormationKeejob'], {
-    queryParams: { formationId }
-  });
-}
 
 
 }

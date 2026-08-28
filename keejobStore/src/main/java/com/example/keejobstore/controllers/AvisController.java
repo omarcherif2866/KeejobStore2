@@ -50,4 +50,16 @@ public class AvisController {
         avisService.deleteAvis(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/formation/{formationId}")
+    public ResponseEntity<List<Avis>> getAvisByFormation(@PathVariable Long formationId) {
+        return ResponseEntity.ok(avisService.getAvisByFormationId(formationId));
+    }
+
+    @PostMapping("/formation/{formationId}")
+    public ResponseEntity<Avis> createAvisForFormation(@PathVariable Long formationId, @RequestBody Avis avis) {
+        Avis created = avisService.createAvisForFormation(formationId, avis);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
 }

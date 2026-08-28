@@ -2,24 +2,25 @@ package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.Avis;
 import com.example.keejobstore.entity.CentreFormation;
+import com.example.keejobstore.entity.FormationKeejob;
 import com.example.keejobstore.repository.AvisRepository;
 import com.example.keejobstore.repository.CentreFormationRepository;
-import com.example.keejobstore.service.AvisService;
+import com.example.keejobstore.repository.FormationKeejobRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class AvisServiceImpl implements AvisService {
 
     private final AvisRepository avisRepository;
     private final CentreFormationRepository centreFormationRepository;
+    private final FormationKeejobRepository formationKeejobRepository;
 
-    public AvisServiceImpl(AvisRepository avisRepository, CentreFormationRepository centreFormationRepository) {
-        this.avisRepository = avisRepository;
-        this.centreFormationRepository = centreFormationRepository;
-    }
 
     @Override
     public List<Avis> getAllAvis() {
@@ -63,5 +64,22 @@ public class AvisServiceImpl implements AvisService {
     public void deleteAvis(Long id) {
         Avis avis = getAvisById(id);
         avisRepository.delete(avis);
+    }
+
+    // AvisServiceImp.java (exemple)
+    @Override
+    public List<Avis> getAvisByFormationId(Long formationId) {
+        return avisRepository.findByFormationId(formationId);
+    }
+
+    @Override
+    public Avis createAvisForFormation(Long formationId, Avis avis) {
+        FormationKeejob formation = formationKeejobRepository.findById(formationId)
+                .orElseThrow(() -> new RuntimeException("Formation non trouvée avec l'id : " + formationId));
+
+        avis.setFormation(formation);
+        avis.setDate(LocalDate.now()); // si vous voulez fixer la date côté serveur
+
+        return avisRepository.save(avis);
     }
 }

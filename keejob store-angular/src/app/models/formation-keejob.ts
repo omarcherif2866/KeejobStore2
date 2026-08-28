@@ -1,110 +1,61 @@
-import { Partenaire } from "./partenaire";
-import { SousFormationKeejob } from "./sous-formation-keejob";
+import { Plateforme } from "./platforme";
+
 
 
 export enum FormationCategory {
   Formations_langues = 'Formations_langues',
   Formations_office = 'Formations_office',
   Formations_Design = 'Formations_Design',
+  Formations_Digital = 'Formations_Digital',
 
 }
 
 
-export class FormationKeejob {
-    private id : any
-    private title: string;
-    private description: string;
-    private partenaires: Partenaire[] = [];
-    private image: string;
-    private logo: string | null;
-    private sousFormations: SousFormationKeejob[] = []
-    private categoryFormationKeejob: FormationCategory;
-  
-    constructor(
-      id: any,
-      title: string,
-      description: string,
-      image: string,
-      logo: string,
-      partenaires: Partenaire[] = [],
-      sousFormations: SousFormationKeejob[] = [],
-      categoryFormationKeejob: FormationCategory
 
-    ) {
-      this.id = id;
-      this.title = title;
-      this.description = description;
-      this.image = image;
-      this.logo = logo;
-      this.partenaires = partenaires;
-      this.sousFormations = sousFormations;
-      this.categoryFormationKeejob = categoryFormationKeejob;
+export interface Avantage {
+  icone: string;   // URL Cloudinary
+  titre: string;
+}
 
-    }
+export interface FormationKeejob {
+  id?: number;
 
-  
-    public get Id(): any {
-      return this.id;
-    }
+  titre: string;
+  badge: string;
+  image: string;                  // URL Cloudinary
+  lienBandeAnnonce: string;
+  lienFormation: string;
 
-  
-  
-    public get Description(): string {
-      return this.description;
-    }
-  
-    public set Description(description: string) {
-      this.description = description;
-    }
+  descriptionCourte: string;      // max 500 caractères
+  aPropos: string;                // max 2000 caractères
 
-    
-    public get Title(): string {
-      return this.title;
-    }
-  
-    public set Title(title: string) {
-      this.title = title;
-    }
+  note: number;
+  nombreAvis: number;
+  nombreApprenants: string;
 
-    
-  public get Partenaires(): Partenaire[] {
-    return this.partenaires;
-  }
-  public set Partenaires(partenaires: Partenaire[]) {
-    this.partenaires = partenaires;
-  }
+  niveau: string;
+  duree: string;
+  langue: string;
+  sousTitres: string;
+  acces: string;
+  derniereMiseAJour: string;
 
-    public get SousFormationKeejob(): SousFormationKeejob[] {
-    return this.sousFormations;
-  }
-  public set SousFormationKeejob(sousFormations: SousFormationKeejob[]) {
-    this.sousFormations = sousFormations;
-  }
+  prix: number;
+  prixOriginal: number;
+  reduction: number;
 
+  accesVie: boolean;
+  certificatInclus: boolean;
+  garantieRemboursement: string;
 
-         public get Image(): string {
-      return this.image;
-    }
-  
-    public set Image(image: string) {
-      this.image = image;
-    } 
+  categoryFormationKeejob: FormationCategory;
 
-    public get Logo(): string | null {
-    return this.logo;
-  }
-  public set Logo(value: string | null) {
-    this.logo = value;
-  }
+  avantages: Avantage[];
+  competencesAcquises: string[];
+  publicCible: string[];
 
+  plateforme?: Plateforme | { id: number };
 
-      public get Category(): FormationCategory {
-        return this.categoryFormationKeejob;
-      }
-    
-      public set Category(categoryFormationKeejob: FormationCategory) {
-        this.categoryFormationKeejob = categoryFormationKeejob;
-      }
-
-  }
-
+  // avis est marqué @JsonIgnore côté back → généralement non exposé
+  // avis?: Avis[];
+}

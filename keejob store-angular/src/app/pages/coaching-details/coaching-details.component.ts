@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Coaching } from 'src/app/models/coaching';
-import { Partenaire } from 'src/app/models/partenaire';
 import { CoachingService } from 'src/app/services/coaching.service';
 import { CvRequestService } from 'src/app/services/cv-request.service';
-import { PartenaireService } from 'src/app/services/partenaire.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,7 +17,6 @@ export class CoachingDetailsComponent implements OnInit {
   coachingId!: number;
   loading = false;
   coachings: Coaching[] = [];
-  partenaires: Partenaire[] = [];
   currentIndexPartners = 0;
   visiblePartners: any[] = [];
   formData = {
@@ -54,13 +51,10 @@ fetchCoachingById(id: number) {
       this.coachings = [new Coaching(response)];
 
       // ⬇️ AJOUTE CETTE LIGNE POUR LE CARROUSEL
-      this.partenaires = response.coachingPartenaires || [];
 
       // ⬇️ MET À JOUR POUR AFFICHER LES 4 PREMIERS
-      this.updateVisiblePartners();
 
       this.loading = false;
-      console.log("Partenaires reçus :", this.partenaires);
     },
     error: (error) => {
       console.error('Erreur chargement Coaching:', error);
@@ -94,30 +88,6 @@ getColorClass(i: number): string {
 }
 
 
-updateVisiblePartners() {
-  const total = this.partenaires.length;
-  this.visiblePartners = [];
-
-  if (total === 0) return;
-
-  for (let i = 0; i < Math.min(4, total); i++) {
-    const index = (this.currentIndexPartners + i) % total;
-    this.visiblePartners.push(this.partenaires[index]);
-  }
-}
-
-
-  scrollRightPartners() {
-    this.currentIndexPartners = (this.currentIndexPartners + 1) % this.partenaires.length;
-    this.updateVisiblePartners();
-
-  }
-
-  scrollLeftPartners() {
-    this.currentIndexPartners =
-      (this.currentIndexPartners - 1 + this.partenaires.length) % this.partenaires.length;
-    this.updateVisiblePartners();
-  }
 getBadgeClass(i: number): string {
   const badges = ['badge-blue', 'badge-green', 'badge-orange'];
   return badges[i % 3];

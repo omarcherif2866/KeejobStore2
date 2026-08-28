@@ -2,7 +2,6 @@ package com.example.keejobstore.controllers;
 
 import com.example.keejobstore.entity.*;
 import com.example.keejobstore.repository.CVRepository;
-import com.example.keejobstore.repository.PartenaireRepository;
 import com.example.keejobstore.service.CVService;
 import com.example.keejobstore.service.CloudinaryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -24,7 +22,6 @@ import java.util.Map;
 public class CVController {
     private final CVService cvService;
     private final CloudinaryService cloudinaryService;
-    private final PartenaireRepository partenaireRepository;
     private final CVRepository cVRepository;
 
     @PostMapping

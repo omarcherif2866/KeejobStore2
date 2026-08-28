@@ -18,34 +18,33 @@ export class FormationComponent implements OnInit {
     constructor(private formationService: FormationKeejobService,private router:Router) {}
   
     ngOnInit(): void {
-      this.fetchFormation()
+      // this.fetchFormation()
     }
 
-  fetchFormation() {
-    this.loading = true;
+  // fetchFormation() {
+  //   this.loading = true;
 
-    this.formationService.getFormationKeejob().subscribe(
-      (response: any[]) => {
-        this.formations = response.map(f => new FormationKeejob(
-          f.id,
-          f.title,
-          f.description,
-          f.image,
-          f.logo,
-          f.categoryFormationKeejob,
-          f.partenaires,
-          f.sousFormations
-        ));
+  //   this.formationService.getFormationKeejob().subscribe(
+  //     (response: any[]) => {
+  //       this.formations = response.map(f => new FormationKeejob(
+  //         f.id,
+  //         f.title,
+  //         f.description,
+  //         f.image,
+  //         f.logo,
+  //         f.categoryFormationKeejob,
 
-        this.updateVisibleFormations();
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Erreur :', error);
-        this.loading = false;
-      }
-    );
-  }
+  //       ));
+
+  //       this.updateVisibleFormations();
+  //       this.loading = false;
+  //     },
+  //     (error) => {
+  //       console.error('Erreur :', error);
+  //       this.loading = false;
+  //     }
+  //   );
+  // }
     
     sanitizeImage(url: string): string {
       if (!url) return '';
