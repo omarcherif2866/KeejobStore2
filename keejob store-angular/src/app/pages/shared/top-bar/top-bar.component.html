@@ -76,9 +76,9 @@
             Certifications <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'certifications'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'certifications'">
-            <li><a href="tests_psychometriques">Desktop</a></li>
-            <li><a href="tests_competences">Graphique</a></li>
-            <li><a href="tests_competences">Code</a></li>
+            <li><a [routerLink]="['/certification/category', 'Marketing_Digital']">Marketing digital</a></li>
+            <li><a [routerLink]="['/certification/category', 'Entrepreneuriat']">Entrepreneuriat</a></li>
+            <li><a [routerLink]="['/certification/category', 'Langues']">Langues</a></li>
           </ul>
         </li>
 

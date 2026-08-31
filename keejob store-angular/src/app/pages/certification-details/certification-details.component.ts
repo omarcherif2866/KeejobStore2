@@ -1,33 +1,33 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Avis } from 'src/app/models/avis';
-import { FormationKeejob } from 'src/app/models/formation-keejob';
+import { Certification } from 'src/app/models/certification';
 import { AvisService } from 'src/app/services/avis.service';
-import { FormationKeejobService } from 'src/app/services/formation-keejob.service';
-type Tab = 'presentation' | 'contenu' | 'avis' | 'infos';
+import { CertificationService } from 'src/app/services/certification.service';
+
+type Tab = 'presentation' | 'avis' | 'infos';
 
 @Component({
-  selector: 'app-formation-keejob-details',
-  templateUrl: './formation-keejob-details.component.html',
-  styleUrls: ['./formation-keejob-details.component.css']
+  selector: 'app-certification-details',
+  templateUrl: './certification-details.component.html',
+  styleUrls: ['./certification-details.component.css']
 })
-export class FormationKeejobDetailsComponent implements OnInit {
+export class CertificationDetailsComponent implements OnInit {
 
-
-  formation: FormationKeejob | null = null;
-  otherFormations: FormationKeejob[] = [];
+  certification: Certification | null = null;
+  otherCertifications: Certification[] = [];
   avisList: Avis[] = [];
 
   loading = true;
   activeTab: Tab = 'presentation';
 
-  // Pour le carousel "Autres formations"
+  // Pour le carousel "Autres certifications"
   currentSlide = 0;
   slidesCount = 0;
 
   constructor(
     private route: ActivatedRoute,
-    private formationService: FormationKeejobService,
+    private certificationService: CertificationService,
     private avisService: AvisService
   ) {}
 
@@ -35,44 +35,44 @@ export class FormationKeejobDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        this.loadFormation(+id);
+        this.loadCertification(+id);
       }
     });
   }
 
-  loadFormation(id: number): void {
+  loadCertification(id: number): void {
     this.loading = true;
 
-    this.formationService.getById(id).subscribe({
+    this.certificationService.getById(id).subscribe({
       next: (data) => {
-        this.formation = data;
+        this.certification = data;
         this.loading = false;
 
         if (data.plateforme?.id) {
-          this.loadOtherFormations(data.plateforme.id, id);
+          this.loadOtherCertifications(data.plateforme.id, id);
         }
         this.loadAvis(id);
-        console.log('Formation chargée:', data);
+        console.log('Certification chargée:', data);
       },
       error: (err) => {
-        console.error('Erreur lors du chargement de la formation:', err);
+        console.error('Erreur lors du chargement de la certification:', err);
         this.loading = false;
       }
     });
   }
 
-  loadOtherFormations(plateformeId: number, currentId: number): void {
-    this.formationService.getByPlateforme(plateformeId).subscribe({
+  loadOtherCertifications(plateformeId: number, currentId: number): void {
+    this.certificationService.getByPlateforme(plateformeId).subscribe({
       next: (data) => {
-        this.otherFormations = data.filter(f => f.id !== currentId);
-        this.slidesCount = Math.ceil(this.otherFormations.length / 4);
+        this.otherCertifications = data.filter(c => c.id !== currentId);
+        this.slidesCount = Math.ceil(this.otherCertifications.length / 4);
       },
-      error: (err) => console.error('Erreur autres formations:', err)
+      error: (err) => console.error('Erreur autres certifications:', err)
     });
   }
 
-  loadAvis(formationId: number): void {
-    this.avisService.getAvisByFormation(formationId).subscribe({
+  loadAvis(certificationId: number): void {
+    this.avisService.getAvisByCertification(certificationId).subscribe({
       next: (data) => this.avisList = data,
       error: (err) => console.error('Erreur avis:', err)
     });
@@ -81,8 +81,6 @@ export class FormationKeejobDetailsComponent implements OnInit {
   setTab(tab: Tab): void {
     this.activeTab = tab;
   }
-
-  // ===================== CALCULS AVIS =====================
 
 // ===================== CALCULS AVIS =====================
 
@@ -137,7 +135,7 @@ getCouleurAvatar(nomAuteur: string): string {
   // ===================== PRIX =====================
 
   get hasDiscount(): boolean {
-    return !!this.formation?.prixOriginal && this.formation.prixOriginal > (this.formation?.prix || 0);
+    return !!this.certification?.prixOriginal && this.certification.prixOriginal > (this.certification?.prix || 0);
   }
 
   // ===================== CAROUSEL =====================
@@ -158,7 +156,7 @@ getCouleurAvatar(nomAuteur: string): string {
 
   shareOn(network: 'facebook' | 'linkedin' | 'twitter'): void {
     const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(this.formation?.titre || '');
+    const text = encodeURIComponent(this.certification?.titre || '');
     let shareUrl = '';
 
     switch (network) {
@@ -189,14 +187,4 @@ getCouleurAvatar(nomAuteur: string): string {
     }
     return url;
   }
-
-//   openVideo(): void {
-//   // TODO: implémenter l'ouverture de la vidéo (modal, nouvelle fenêtre, etc.)
-//   if (this.formation?.lienBandeAnnonce) {
-//     window.open(this.formation.lienBandeAnnonce, '_blank');
-//   }
-// }
-
-
-
 }

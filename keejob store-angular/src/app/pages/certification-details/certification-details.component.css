@@ -15,7 +15,6 @@ body { font-family: 'Poppins', sans-serif; }
   --text-muted: #6b7280;
 }
 
-
 .loading-state { display: flex; justify-content: center; padding: 100px 0; }
 .spinner {
   width: 44px; height: 44px;

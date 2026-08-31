@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-import { FormationCategory, FormationKeejob } from 'src/app/models/formation-keejob';
-import { FormationKeejobService } from 'src/app/services/formation-keejob.service';
+import { CategoryCertification, Certification } from 'src/app/models/certification';
+import { CertificationService } from 'src/app/services/certification.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { PlateformeService } from 'src/app/services/platforme.service';
 // ⚠️ Adaptez le chemin/nom si votre service de plateformes est différent
+import { PlateformeService } from 'src/app/services/platforme.service';
 
 @Component({
-  selector: 'app-formation-keejob',
-  templateUrl: './formation-keejob.component.html',
-  styleUrls: ['./formation-keejob.component.css']
+  selector: 'app-certification',
+  templateUrl: './certification.component.html',
+  styleUrls: ['./certification.component.css']
 })
-export class FormationKeejobComponent implements OnInit {
+export class CertificationComponent implements OnInit {
   sidebarOpen = true;
-  formations: FormationKeejob[] = [];
+  certifications: Certification[] = [];
   loading = false;
 
   currentPage = 1;
@@ -27,8 +27,8 @@ export class FormationKeejobComponent implements OnInit {
   currentModalStep = 1;
   totalSteps = 5;
 
-  formationCategoryEnum = FormationCategory;
-  availableCategories = Object.values(FormationCategory);
+  categoryEnum = CategoryCertification;
+  availableCategories = Object.values(CategoryCertification);
 
   // ⚠️ typé "any" car le modèle Plateforme n'a pas été fourni : adaptez les champs utilisés (nom, id, ...)
   plateformes: any[] = [];
@@ -38,10 +38,10 @@ export class FormationKeejobComponent implements OnInit {
   editId: number | null = null;
   selectedImage: File | null = null;
 
-  formData: FormationKeejob = this.getEmptyFormation();
+  formData: Certification = this.getEmptyCertification();
 
   constructor(
-    private formationService: FormationKeejobService,
+    private certificationService: CertificationService,
     private plateformeService: PlateformeService,
     private authService: AuthService,
     private router: Router,
@@ -49,51 +49,53 @@ export class FormationKeejobComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchFormations();
+    this.fetchCertifications();
     this.fetchPlateformes();
   }
 
-  private getEmptyFormation(): FormationKeejob {
+  private getEmptyCertification(): Certification {
     return {
       titre: '',
       badge: '',
       image: '',
-      lienFormation: '',
+      organismeEmetteur: '',
+      lienCertification: '',
       descriptionCourte: '',
       aPropos: '',
       // note: 0,
       // nombreAvis: 0,
-      nombreApprenants: '',
+      nombreCertifies: '',
       niveau: '',
-      duree: '',
+      dureeExamen: '',
+      dureeValidite: '',
       langue: '',
-      sousTitres: '',
-      acces: '',
+      modaliteExamen: '',
       derniereMiseAJour: '',
       prix: 0,
       prixOriginal: 0,
       reduction: 0,
-      accesVie: false,
-      certificatInclus: false,
+      scoreMinimum: 0,
+      tauxReussite: 0,
+      diplomeInclus: false,
       garantieRemboursement: '',
-      categoryFormationKeejob: FormationCategory.Formations_langues,
+      categoryCertification: undefined,
       avantages: [],
-      competencesAcquises: [],
+      competencesValidees: [],
       publicCible: []
     };
   }
 
   // ===================== LISTE =====================
 
-  fetchFormations() {
+  fetchCertifications() {
     this.loading = true;
-    this.formationService.getAll().subscribe({
-      next: (data: FormationKeejob[]) => {
-        this.formations = [...data].sort((a, b) => (a.id || 0) - (b.id || 0));
+    this.certificationService.getAll().subscribe({
+      next: (data: Certification[]) => {
+        this.certifications = [...data].sort((a, b) => (a.id || 0) - (b.id || 0));
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des formations:', error);
+        console.error('Erreur lors du chargement des certifications:', error);
         this.loading = false;
         Swal.fire({
           icon: 'error',
@@ -137,14 +139,14 @@ export class FormationKeejobComponent implements OnInit {
     return p ? this.getPlateformeName(p) : `Plateforme #${id}`;
   }
 
-  get currentItems(): FormationKeejob[] {
+  get currentItems(): Certification[] {
     const indexOfLastItem = this.currentPage * this.itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - this.itemsPerPage;
-    return this.formations.slice(indexOfFirstItem, indexOfLastItem);
+    return this.certifications.slice(indexOfFirstItem, indexOfLastItem);
   }
 
   get totalPages(): number {
-    return Math.ceil(this.formations.length / this.itemsPerPage);
+    return Math.ceil(this.certifications.length / this.itemsPerPage);
   }
 
   get pagesArray(): number[] {
@@ -175,7 +177,7 @@ export class FormationKeejobComponent implements OnInit {
 
   handleAdd() {
     this.modalMode = 'add';
-    this.formData = this.getEmptyFormation();
+    this.formData = this.getEmptyCertification();
     this.selectedImage = null;
     this.selectedPlateformeId = null;
     this.editId = null;
@@ -184,21 +186,21 @@ export class FormationKeejobComponent implements OnInit {
     this.updatePrix();
   }
 
-  handleEdit(formation: FormationKeejob) {
+  handleEdit(certification: Certification) {
     this.modalMode = 'edit';
 
     this.formData = {
-      ...this.getEmptyFormation(),
-      ...formation,
-      avantages: formation.avantages ? formation.avantages.map(a => ({ ...a })) : [],
-      competencesAcquises: formation.competencesAcquises ? [...formation.competencesAcquises] : [],
-      publicCible: formation.publicCible ? [...formation.publicCible] : []
+      ...this.getEmptyCertification(),
+      ...certification,
+      avantages: certification.avantages ? certification.avantages.map(a => ({ ...a })) : [],
+      competencesValidees: certification.competencesValidees ? [...certification.competencesValidees] : [],
+      publicCible: certification.publicCible ? [...certification.publicCible] : []
     };
 
-    this.editId = formation.id ?? null;
+    this.editId = certification.id ?? null;
     this.selectedImage = null;
 
-    const plateformeVal: any = formation.plateforme;
+    const plateformeVal: any = certification.plateforme;
     this.selectedPlateformeId = plateformeVal?.id ?? null;
 
     this.currentModalStep = 1;
@@ -208,7 +210,7 @@ export class FormationKeejobComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
-    this.formData = this.getEmptyFormation();
+    this.formData = this.getEmptyCertification();
     this.selectedImage = null;
     this.selectedPlateformeId = null;
     this.editId = null;
@@ -227,12 +229,12 @@ export class FormationKeejobComponent implements OnInit {
       cancelButtonText: 'Annuler'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.formationService.delete(id).subscribe({
+        this.certificationService.delete(id).subscribe({
           next: () => {
-            this.formations = this.formations.filter(item => item.id !== id);
+            this.certifications = this.certifications.filter(item => item.id !== id);
             Swal.fire({
               title: 'Supprimé!',
-              text: 'Formation supprimée avec succès',
+              text: 'Certification supprimée avec succès',
               icon: 'success',
               timer: 1500,
               showConfirmButton: false
@@ -348,7 +350,7 @@ export class FormationKeejobComponent implements OnInit {
     this.selectedImage = file;
   }
 
-  sanitizeImage(url: string | null): string {
+  sanitizeImage(url: string | null | undefined): string {
     if (!url) return '';
 
     if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
@@ -362,6 +364,7 @@ export class FormationKeejobComponent implements OnInit {
   // ===================== AVANTAGES =====================
 
   addAvantage() {
+    this.formData.avantages = this.formData.avantages || [];
     this.formData.avantages.push({ titre: '' });
   }
 
@@ -377,31 +380,33 @@ export class FormationKeejobComponent implements OnInit {
       cancelButtonText: 'Annuler'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.formData.avantages.splice(index, 1);
+        this.formData.avantages?.splice(index, 1);
       }
     });
   }
 
   countCompletedAvantages(): number {
-    return this.formData.avantages.filter(a => a.titre && a.titre.trim() !== '').length;
+    return (this.formData.avantages || []).filter(a => a.titre && a.titre.trim() !== '').length;
   }
 
   // ===================== COMPÉTENCES / PUBLIC CIBLE =====================
 
   addCompetence() {
-    this.formData.competencesAcquises.push('');
+    this.formData.competencesValidees = this.formData.competencesValidees || [];
+    this.formData.competencesValidees.push('');
   }
 
   removeCompetence(index: number) {
-    this.formData.competencesAcquises.splice(index, 1);
+    this.formData.competencesValidees?.splice(index, 1);
   }
 
   addPublicCible() {
+    this.formData.publicCible = this.formData.publicCible || [];
     this.formData.publicCible.push('');
   }
 
   removePublicCible(index: number) {
-    this.formData.publicCible.splice(index, 1);
+    this.formData.publicCible?.splice(index, 1);
   }
 
   // ===================== SUBMIT =====================
@@ -445,30 +450,31 @@ export class FormationKeejobComponent implements OnInit {
 
     this.updatePrix();
 
-    const payload: FormationKeejob = {
+    const payload: Certification = {
       ...this.formData,
-      competencesAcquises: (this.formData.competencesAcquises || []).filter(c => c && c.trim() !== ''),
+      competencesValidees: (this.formData.competencesValidees || []).filter(c => c && c.trim() !== ''),
       publicCible: (this.formData.publicCible || []).filter(p => p && p.trim() !== ''),
       avantages: (this.formData.avantages || []).filter(a => a.titre && a.titre.trim() !== '')
     };
 
     // Le backend reçoit la plateforme via l'URL (create) ou déjà associée (update)
     delete (payload as any).plateforme;
+    delete (payload as any).avis;
 
     const request$ = this.modalMode === 'add'
-      ? this.formationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
-      : this.formationService.update(this.editId as number, payload, this.selectedImage || undefined);
+      ? this.certificationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
+      : this.certificationService.update(this.editId as number, payload, this.selectedImage || undefined);
 
     request$.subscribe({
       next: () => {
         this.closeModal();
         Swal.fire({
           title: 'Succès!',
-          text: this.modalMode === 'add' ? 'Formation ajoutée avec succès' : 'Formation modifiée avec succès',
+          text: this.modalMode === 'add' ? 'Certification ajoutée avec succès' : 'Certification modifiée avec succès',
           icon: 'success',
           timer: 1500,
           showConfirmButton: false
-        }).then(() => this.fetchFormations());
+        }).then(() => this.fetchCertifications());
       },
       error: (error) => {
         console.error('Erreur lors de la soumission:', error);
@@ -483,7 +489,8 @@ export class FormationKeejobComponent implements OnInit {
     });
   }
 
-  formatCategory(category: string): string {
+  formatCategory(category: string | undefined): string {
+    if (!category) return 'Non renseignée';
     return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
 }

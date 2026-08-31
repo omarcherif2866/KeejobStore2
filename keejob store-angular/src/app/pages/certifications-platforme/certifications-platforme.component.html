@@ -1,0 +1,69 @@
+<!-- ===================== LOADER ===================== -->
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<ng-container *ngIf="!loading">
+
+  <section class="Certifications-section">
+    <div class="section-header">
+      <h2>Certifications  <ng-container *ngIf="plateforme"> de {{ plateforme.nom }}</ng-container></h2>
+      <span class="Certifications-count" *ngIf="allCertifications.length">
+        {{ allCertifications.length }} Certification{{ allCertifications.length > 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <!-- ===================== GRILLE 4 PAR LIGNE ===================== -->
+    <div class="Certifications-grid" *ngIf="!errorMessage && paginatedCertifications.length > 0; else emptyOrError">
+      <div class="Certification-card"
+           *ngFor="let Certification of paginatedCertifications"
+           [routerLink]="['/certification', Certification.id]">
+
+        <div class="Certification-card-image">
+          <img [src]="sanitizeImage(Certification.image)" [alt]="Certification.titre">
+          <button class="heart-icon" (click)="toggleFavorite(Certification, $event)">♡</button>
+        </div>
+
+        <div class="Certification-card-body">
+          <h4>{{ Certification.titre }}</h4>
+          <p>{{ Certification.descriptionCourte }}</p>
+
+          <div class="Certification-card-meta">
+            <span class="meta-pill">{{ Certification.niveau || 'Tous niveaux' }}</span>
+            <span class="meta-pill">{{ Certification.duree }}</span>
+          </div>
+
+          <div class="Certification-card-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-score">{{ Certification.note }}</span>
+            <span class="rating-reviews">({{ Certification.nombreAvis }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyOrError>
+      <div class="no-Certifications-wrapper">
+        <div class="no-Certifications" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="no-Certifications" *ngIf="!errorMessage">
+          Aucune Certification disponible pour le moment.
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- ===================== PAGINATION ===================== -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="page-btn nav-btn" [disabled]="currentPage === 1" (click)="previousPage()">‹ Précédent</button>
+
+      <button *ngFor="let page of pagesArray"
+              class="page-btn"
+              [class.active]="page === currentPage"
+              (click)="goToPage(page)">
+        {{ page }}
+      </button>
+
+      <button class="page-btn nav-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Suivant ›</button>
+    </div>
+  </section>
+
+</ng-container>

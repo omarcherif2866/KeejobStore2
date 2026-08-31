@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { CertificationsPlatformeComponent } from './pages/certifications-platforme/certifications-platforme.component';
 
 
 
@@ -41,13 +42,7 @@ const routes = [
 //       (m) => m.FormationModule
 //     ),
 // },
-{
-  path: 'certifications',
-  loadChildren: () =>
-    import('./pages/certifications/certifications.module').then(
-      (m) => m.CertificationsModule
-    ),
-},
+
 
 {
   path: 'evenements/:id',
@@ -181,6 +176,27 @@ const routes = [
     ),
 },
 {
+  path: 'formations/plateforme/:id',
+  loadChildren: () =>
+    import('./pages/formations-platforme/formations-platforme.module').then(
+      (m) => m.FormationsPlatformeModule
+    ),
+},
+{
+  path: 'certifications/plateforme/:id',
+  loadChildren: () =>
+    import('./pages/certifications-platforme/certifications-platforme.module').then(
+      (m) => m.CertificationsPlatformeModule
+    ),
+},
+{
+  path: 'certifications',
+  loadChildren: () =>
+    import('./dashboard/certification/certification.module').then(
+      (m) => m.CertificationModule
+    ),
+},
+{
   path: 'formateur',
   loadChildren: () =>
     import('./pages/all-formateur/all-formateur.module').then(
@@ -242,6 +258,14 @@ const routes = [
   loadChildren: () =>
     import('./pages/formation-keejob-details/formation-keejob-details.module').then(
       (m) => m.FormationKeejobDetailsModule
+    ),
+},
+
+{
+  path: 'certification/:id',
+  loadChildren: () =>
+    import('./pages/certification-details/certification-details.module').then(
+      (m) => m.CertificationDetailsModule
     ),
 },
 
@@ -312,6 +336,15 @@ const routes = [
       (m) => m.FormationKeejobCategoryModule
     ),
 },
+
+{
+  path: 'certification/category/:category',
+  loadChildren: () =>
+    import('./pages/certification-category/certification-category.module').then(
+      (m) => m.CertificationCategoryModule
+    ),
+},
+
   {
     path: '**',
     loadChildren: () =>

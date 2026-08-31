@@ -2,14 +2,14 @@
   <div class="spinner"></div>
 </div>
 
-<ng-container *ngIf="!loading && formation as f">
+<ng-container *ngIf="!loading && certification as c">
 
   <!-- ===================== FIL D'ARIANE ===================== -->
   <div class="breadcrumb">
     <a routerLink="/">Accueil</a> ›
     <a routerLink="/plateformes">Plateformes</a> ›
-    <a [routerLink]="['/plateforme', f.plateforme?.id]">{{ f.plateforme?.nom }}</a> ›
-    <span>{{ f.titre }}</span>
+    <a [routerLink]="['/plateforme', c.plateforme?.id]">{{ c.plateforme?.nom }}</a> ›
+    <span>{{ c.titre }}</span>
   </div>
 
   <div class="details-layout">
@@ -17,34 +17,35 @@
     <!-- ===================== COLONNE GAUCHE ===================== -->
     <div class="details-main">
 
-      <!-- Bloc vidéo + infos principales -->
+      <!-- Bloc image + infos principales -->
       <div class="hero-card">
-        <div class="video-thumb" [style.background-image]="'url(' + sanitizeImage(f.image) + ')'">
+        <div class="video-thumb" [style.background-image]="'url(' + sanitizeImage(c.image) + ')'">
         </div>
 
         <div class="hero-info">
           <div class="hero-info-top">
             <div>
-              <h1 class="formation-title">{{ f.titre }}</h1>
-              <span class="badge-bestseller" *ngIf="f.badge">{{ f.badge }}</span>
+              <h1 class="formation-title">{{ c.titre }}</h1>
+              <span class="badge-bestseller" *ngIf="c.badge">{{ c.badge }}</span>
             </div>
             <button class="heart-btn">♡</button>
           </div>
 
-          <p class="formation-desc">{{ f.descriptionCourte }}</p>
+          <p class="formation-desc">{{ c.descriptionCourte }}</p>
 
           <div class="formation-rating-row">
             <span class="stars">★</span>
-            <span class="rating-score">{{ f.note }}</span>
-            <span class="rating-reviews">({{ f.nombreAvis | number }} avis)</span>
+            <span class="rating-score">{{ c.note }}</span>
+            <span class="rating-reviews">({{ c.nombreAvis | number }} avis)</span>
             <span class="dot-sep">•</span>
-            <span class="apprenants">👤 {{ f.nombreApprenants }} apprenants</span>
+            <span class="apprenants">👤 {{ c.nombreCertifies }} certifiés</span>
           </div>
 
           <div class="formation-quick-meta">
-            <span *ngIf="f.niveau">📊 {{ f.niveau }}</span>
-            <span *ngIf="f.duree">🕐 {{ f.duree }}</span>
-            <span *ngIf="f.langue">🌐 {{ f.langue }}</span>
+            <span *ngIf="c.organismeEmetteur">🏢 {{ c.organismeEmetteur }}</span>
+            <span *ngIf="c.niveau">📊 {{ c.niveau }}</span>
+            <span *ngIf="c.dureeExamen">🕐 {{ c.dureeExamen }}</span>
+            <span *ngIf="c.langue">🌐 {{ c.langue }}</span>
           </div>
         </div>
       </div>
@@ -52,7 +53,6 @@
       <!-- Tabs -->
       <div class="tabs-nav">
         <button class="tab-btn" [class.active]="activeTab === 'presentation'" (click)="setTab('presentation')">Présentation</button>
-        <button class="tab-btn" [class.active]="activeTab === 'contenu'" (click)="setTab('contenu')">Contenu</button>
         <button class="tab-btn" [class.active]="activeTab === 'avis'" (click)="setTab('avis')">Avis</button>
         <button class="tab-btn" [class.active]="activeTab === 'infos'" (click)="setTab('infos')">Informations pratiques</button>
       </div>
@@ -61,27 +61,26 @@
       <div class="tab-content" *ngIf="activeTab === 'presentation'">
 
         <div class="content-block">
-          <h2>À propos de cette formation</h2>
-          <p class="a-propos-text">{{ f.apropos }}</p>
+          <h2>À propos de cette certification</h2>
+          <p class="a-propos-text">{{ c.apropos }}</p>
         </div>
 
-        <div class="avantages-grid" *ngIf="f.avantages?.length">
-          <div class="avantage-item" *ngFor="let av of f.avantages">
+        <div class="avantages-grid" *ngIf="c.avantages?.length">
+          <div class="avantage-item" *ngFor="let av of c.avantages">
             <img *ngIf="av.icone" [src]="sanitizeImage(av.icone)" [alt]="av.titre" class="avantage-icon">
             <span *ngIf="!av.icone" class="avantage-icon-fallback">✓</span>
             <span>{{ av.titre }}</span>
           </div>
         </div>
 
-        <div class="content-block" *ngIf="f.competencesAcquises?.length">
-          <h2>Compétences que vous allez acquérir</h2>
+        <div class="content-block" *ngIf="c.competencesValidees?.length">
+          <h2>Compétences validées par cette certification</h2>
           <div class="skills-grid">
-            <div class="skill-item" *ngFor="let skill of f.competencesAcquises">
+            <div class="skill-item" *ngFor="let skill of c.competencesValidees">
               <span class="check-icon">✓</span> {{ skill }}
             </div>
           </div>
         </div>
-        
       <div class="card" *ngIf="totalAvis > 0">
         <div class="card-header">
           <h2>Avis des apprenants</h2>
@@ -106,17 +105,6 @@
         </div>
       </div>
       
-      </div>
-
-      <!-- ===================== TAB : CONTENU ===================== -->
-      <div class="tab-content" *ngIf="activeTab === 'contenu'">
-        <div class="content-block">
-          <h2>Contenu de la formation</h2>
-          <p class="empty-tab-msg" *ngIf="!f.lienFormation">Le détail du programme n'est pas encore disponible.</p>
-          <a *ngIf="f.lienFormation" [href]="f.lienFormation" target="_blank" class="btn-primary-link">
-            Voir le programme complet ↗
-          </a>
-        </div>
       </div>
 
       <!-- ===================== TAB : AVIS ===================== -->
@@ -147,50 +135,43 @@
         <div class="content-block">
           <h2>Informations pratiques</h2>
           <div class="infos-list">
-            <div class="infos-item"><span class="infos-label">Niveau</span><span>{{ f.niveau }}</span></div>
-            <div class="infos-item"><span class="infos-label">Durée totale</span><span>{{ f.duree }}</span></div>
-            <div class="infos-item"><span class="infos-label">Dernière mise à jour</span><span>{{ f.derniereMiseAJour }}</span></div>
-            <div class="infos-item"><span class="infos-label">Langue</span><span>{{ f.langue }}</span></div>
-            <div class="infos-item"><span class="infos-label">Sous-titres</span><span>{{ f.sousTitres }}</span></div>
-            <div class="infos-item"><span class="infos-label">Accès</span><span>{{ f.acces }}</span></div>
-            <div class="infos-item"><span class="infos-label">Certificat</span><span>{{ f.certificatInclus ? 'Certificat de réussite' : 'Non inclus' }}</span></div>
+            <div class="infos-item"><span class="infos-label">Organisme</span><span>{{ c.organismeEmetteur }}</span></div>
+            <div class="infos-item"><span class="infos-label">Niveau</span><span>{{ c.niveau }}</span></div>
+            <div class="infos-item"><span class="infos-label">Durée de l'examen</span><span>{{ c.dureeExamen }}</span></div>
+            <div class="infos-item"><span class="infos-label">Validité</span><span>{{ c.dureeValidite }}</span></div>
+            <div class="infos-item"><span class="infos-label">Dernière mise à jour</span><span>{{ c.derniereMiseAJour }}</span></div>
+            <div class="infos-item"><span class="infos-label">Langue</span><span>{{ c.langue }}</span></div>
+            <div class="infos-item"><span class="infos-label">Modalité d'examen</span><span>{{ c.modaliteExamen }}</span></div>
+            <div class="infos-item" *ngIf="c.scoreMinimum"><span class="infos-label">Score minimum requis</span><span>{{ c.scoreMinimum }} %</span></div>
+            <div class="infos-item" *ngIf="c.tauxReussite"><span class="infos-label">Taux de réussite</span><span>{{ c.tauxReussite }} %</span></div>
+            <div class="infos-item"><span class="infos-label">Diplôme</span><span>{{ c.diplomeInclus ? 'Diplôme inclus' : 'Non inclus' }}</span></div>
           </div>
         </div>
       </div>
 
-      <!-- ===================== PUBLIC CIBLE (toujours visible sous les tabs, comme dans la capture) ===================== -->
-      <!-- <div class="content-block" *ngIf="f.publicCible?.length && activeTab === 'presentation'">
-        <h2>Cette formation est faite pour vous si vous êtes :</h2>
-        <div class="public-cible-list">
-          <div class="public-cible-item" *ngFor="let p of f.publicCible">
-            <span class="check-icon">✓</span> {{ p }}
-          </div>
-        </div>
-      </div> -->
-
-      <!-- ===================== AUTRES FORMATIONS SUR CETTE PLATEFORME ===================== -->
-      <div class="other-formations-section" *ngIf="otherFormations.length > 0">
+      <!-- ===================== AUTRES CERTIFICATIONS SUR CETTE PLATEFORME ===================== -->
+      <div class="other-formations-section" *ngIf="otherCertifications.length > 0">
         <div class="other-formations-header">
-          <h2>Autres formations disponibles sur {{ f.plateforme?.nom }}</h2>
-          <a [routerLink]="['/formations/plateforme', f.plateforme?.id]" class="see-all-link">Voir toutes</a>
+          <h2>Autres certifications disponibles sur {{ c.plateforme?.nom }}</h2>
+          <a [routerLink]="['/certifications/plateforme', c.plateforme?.id]" class="see-all-link">Voir toutes</a>
         </div>
 
         <div class="other-formations-carousel">
           <div class="other-formations-track" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
             <div class="other-formations-slide" *ngFor="let slide of [].constructor(slidesCount); let si = index">
-              <div class="other-formation-card" *ngFor="let of of otherFormations.slice(si*4, si*4+4)" [routerLink]="['/formation', of.id]">
-                <div class="other-formation-image" [style.background-image]="'url(' + sanitizeImage(of.image) + ')'"></div>
-                <h4>{{ of.titre }}</h4>
+              <div class="other-formation-card" *ngFor="let oc of otherCertifications.slice(si*4, si*4+4)" [routerLink]="['/certification', oc.id]">
+                <div class="other-formation-image" [style.background-image]="'url(' + sanitizeImage(oc.image) + ')'"></div>
+                <h4>{{ oc.titre }}</h4>
                 <div class="other-formation-rating">
-                  <span class="stars">★</span> {{ of.note }} ({{ of.nombreAvis | number }} avis)
+                  <span class="stars">★</span> {{ oc.note }} ({{ oc.nombreAvis | number }} avis)
                 </div>
                 <div class="other-formation-meta">
-                  {{ of.duree }} <span *ngIf="of.niveau">• {{ of.niveau }}</span>
+                  {{ oc.dureeExamen }} <span *ngIf="oc.niveau">• {{ oc.niveau }}</span>
                 </div>
                 <div class="other-formation-price">
-                  <strong>{{ of.prix }} DNT</strong>
-                  <span class="price-original" *ngIf="of.prixOriginal">{{ of.prixOriginal }} DNT</span>
-                  <span class="price-reduction" *ngIf="of.reduction">-{{ of.reduction }}%</span>
+                  <strong>{{ oc.prix }} DNT</strong>
+                  <span class="price-original" *ngIf="oc.prixOriginal">{{ oc.prixOriginal }} DNT</span>
+                  <span class="price-reduction" *ngIf="oc.reduction">-{{ oc.reduction }}%</span>
                 </div>
               </div>
             </div>
@@ -212,31 +193,31 @@
       <div class="sidebar-card">
         <div class="sidebar-platform-row">
           <div class="sidebar-platform-logo">
-            <img [src]="sanitizeImage(f.plateforme?.logo)" [alt]="f.plateforme?.nom">
+            <img [src]="sanitizeImage(c.plateforme?.logo)" [alt]="c.plateforme?.nom">
           </div>
-          <strong>{{ f.plateforme?.nom }}</strong>
+          <strong>{{ c.plateforme?.nom }}</strong>
         </div>
 
         <div class="sidebar-price-row">
-          <span class="price-current">{{ f.prix }} DNT</span>
-          <span class="price-original" *ngIf="hasDiscount">{{ f.prixOriginal }} DNT</span>
-          <span class="price-badge" *ngIf="f.reduction">-{{ f.reduction }} %</span>
+          <span class="price-current">{{ c.prix }} DNT</span>
+          <span class="price-original" *ngIf="hasDiscount">{{ c.prixOriginal }} DNT</span>
+          <span class="price-badge" *ngIf="c.reduction">-{{ c.reduction }} %</span>
         </div>
 
         <div class="sidebar-features">
-          <span *ngIf="f.accesVie">Accès à vie</span>
-          <span *ngIf="f.accesVie && f.certificatInclus" class="dot-sep">•</span>
-          <span *ngIf="f.certificatInclus">Certificat inclus</span>
+          <span *ngIf="c.dureeValidite">Validité : {{ c.dureeValidite }}</span>
+          <span *ngIf="c.dureeValidite && c.diplomeInclus" class="dot-sep">•</span>
+          <span *ngIf="c.diplomeInclus">Diplôme inclus</span>
         </div>
 
-        <a [href]="f.lienFormation" target="_blank" class="btn-access">
-          Accéder à la formation ↗
+        <a [href]="c.lienCertification" target="_blank" class="btn-access">
+          Passer la certification ↗
         </a>
 
         <button class="btn-favorite">♡ Ajouter aux favoris</button>
 
-        <div class="sidebar-guarantee" *ngIf="f.garantieRemboursement">
-          🛡️ {{ f.garantieRemboursement }}
+        <div class="sidebar-guarantee" *ngIf="c.garantieRemboursement">
+          🛡️ {{ c.garantieRemboursement }}
         </div>
       </div>
 
@@ -244,40 +225,40 @@
       <div class="sidebar-card">
         <h3>Informations pratiques</h3>
         <div class="sidebar-infos-list">
+          <div class="sidebar-infos-item" *ngIf="c.organismeEmetteur">
+            <span class="infos-icon">🏢</span>
+            <div><span class="infos-label">Organisme</span><span class="infos-value">{{ c.organismeEmetteur }}</span></div>
+          </div>
           <div class="sidebar-infos-item">
             <span class="infos-icon">📊</span>
-            <div><span class="infos-label">Niveau</span><span class="infos-value">{{ f.niveau }}</span></div>
+            <div><span class="infos-label">Niveau</span><span class="infos-value">{{ c.niveau }}</span></div>
           </div>
           <div class="sidebar-infos-item">
             <span class="infos-icon">🕐</span>
-            <div><span class="infos-label">Durée totale</span><span class="infos-value">{{ f.duree }}</span></div>
+            <div><span class="infos-label">Durée de l'examen</span><span class="infos-value">{{ c.dureeExamen }}</span></div>
           </div>
           <div class="sidebar-infos-item">
             <span class="infos-icon">📅</span>
-            <div><span class="infos-label">Dernière mise à jour</span><span class="infos-value">{{ f.derniereMiseAJour }}</span></div>
+            <div><span class="infos-label">Dernière mise à jour</span><span class="infos-value">{{ c.derniereMiseAJour }}</span></div>
           </div>
           <div class="sidebar-infos-item">
             <span class="infos-icon">🌐</span>
-            <div><span class="infos-label">Langue</span><span class="infos-value">{{ f.langue }}</span></div>
-          </div>
-          <div class="sidebar-infos-item">
-            <span class="infos-icon">💬</span>
-            <div><span class="infos-label">Sous-titres</span><span class="infos-value">{{ f.sousTitres }}</span></div>
+            <div><span class="infos-label">Langue</span><span class="infos-value">{{ c.langue }}</span></div>
           </div>
           <div class="sidebar-infos-item">
             <span class="infos-icon">💻</span>
-            <div><span class="infos-label">Accès</span><span class="infos-value">{{ f.acces }}</span></div>
+            <div><span class="infos-label">Modalité d'examen</span><span class="infos-value">{{ c.modaliteExamen }}</span></div>
           </div>
-          <div class="sidebar-infos-item" *ngIf="f.certificatInclus">
+          <div class="sidebar-infos-item" *ngIf="c.diplomeInclus">
             <span class="infos-icon check-green">✓</span>
-            <div><span class="infos-label">Certificat</span><span class="infos-value">Certificat de réussite</span></div>
+            <div><span class="infos-label">Diplôme</span><span class="infos-value">Diplôme inclus</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Avis des apprenants -->
+      <!-- Avis des candidats -->
       <div class="sidebar-card" *ngIf="totalAvis > 0">
-        <h3>Avis des apprenants</h3>
+        <h3>Avis des candidats</h3>
         <div class="sidebar-rating-summary">
           <span class="big-score">{{ averageNote }}</span>
           <div>
@@ -300,10 +281,10 @@
       </div>
 
       <!-- Public cible -->
-      <div class="sidebar-card" *ngIf="f.publicCible?.length">
-        <h3>Cette formation est faite pour vous si vous êtes :</h3>
+      <div class="sidebar-card" *ngIf="c.publicCible?.length">
+        <h3>Cette certification est faite pour vous si vous êtes :</h3>
         <div class="sidebar-public-list">
-          <div class="sidebar-public-item" *ngFor="let p of f.publicCible">
+          <div class="sidebar-public-item" *ngFor="let p of c.publicCible">
             <span class="check-icon">✓</span> {{ p }}
           </div>
         </div>
@@ -311,7 +292,7 @@
 
       <!-- Partage -->
       <div class="sidebar-card">
-        <h3>Partager cette formation</h3>
+        <h3>Partager cette certification</h3>
         <div class="share-buttons">
           <button class="share-btn" (click)="copyLink()">🔗</button>
           <button class="share-btn fb" (click)="shareOn('facebook')">f</button>

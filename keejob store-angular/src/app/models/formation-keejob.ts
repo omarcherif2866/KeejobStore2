@@ -13,7 +13,6 @@ export enum FormationCategory {
 
 
 export interface Avantage {
-  icone: string;   // URL Cloudinary
   titre: string;
 }
 
@@ -23,14 +22,13 @@ export interface FormationKeejob {
   titre: string;
   badge: string;
   image: string;                  // URL Cloudinary
-  lienBandeAnnonce: string;
   lienFormation: string;
 
   descriptionCourte: string;      // max 500 caractères
   aPropos: string;                // max 2000 caractères
 
-  note: number;
-  nombreAvis: number;
+  // note: number;
+  // nombreAvis: number;
   nombreApprenants: string;
 
   niveau: string;

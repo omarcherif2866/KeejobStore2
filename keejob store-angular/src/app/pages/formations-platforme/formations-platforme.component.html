@@ -1,0 +1,69 @@
+<!-- ===================== LOADER ===================== -->
+<div class="loading-state" *ngIf="loading">
+  <div class="spinner"></div>
+</div>
+
+<ng-container *ngIf="!loading">
+
+  <section class="formations-section">
+    <div class="section-header">
+      <h2>Formations    <ng-container *ngIf="plateforme"> de {{ plateforme.nom }}</ng-container></h2>
+      <span class="formations-count" *ngIf="allFormations.length">
+        {{ allFormations.length }} formation{{ allFormations.length > 1 ? 's' : '' }}
+      </span>
+    </div>
+
+    <!-- ===================== GRILLE 4 PAR LIGNE ===================== -->
+    <div class="formations-grid" *ngIf="!errorMessage && paginatedFormations.length > 0; else emptyOrError">
+      <div class="formation-card"
+           *ngFor="let formation of paginatedFormations"
+           [routerLink]="['/formation', formation.id]">
+
+        <div class="formation-card-image">
+          <img [src]="sanitizeImage(formation.image)" [alt]="formation.titre">
+          <button class="heart-icon" (click)="toggleFavorite(formation, $event)">♡</button>
+        </div>
+
+        <div class="formation-card-body">
+          <h4>{{ formation.titre }}</h4>
+          <p>{{ formation.descriptionCourte }}</p>
+
+          <div class="formation-card-meta">
+            <span class="meta-pill">{{ formation.niveau || 'Tous niveaux' }}</span>
+            <span class="meta-pill">{{ formation.duree }}</span>
+          </div>
+
+          <div class="formation-card-rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-score">{{ formation.note }}</span>
+            <span class="rating-reviews">({{ formation.nombreAvis }})</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyOrError>
+      <div class="no-formations-wrapper">
+        <div class="no-formations" *ngIf="errorMessage">{{ errorMessage }}</div>
+        <div class="no-formations" *ngIf="!errorMessage">
+          Aucune formation disponible pour le moment.
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- ===================== PAGINATION ===================== -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button class="page-btn nav-btn" [disabled]="currentPage === 1" (click)="previousPage()">‹ Précédent</button>
+
+      <button *ngFor="let page of pagesArray"
+              class="page-btn"
+              [class.active]="page === currentPage"
+              (click)="goToPage(page)">
+        {{ page }}
+      </button>
+
+      <button class="page-btn nav-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">Suivant ›</button>
+    </div>
+  </section>
+
+</ng-container>

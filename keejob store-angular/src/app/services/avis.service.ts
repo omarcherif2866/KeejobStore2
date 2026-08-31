@@ -44,4 +44,11 @@ export class AvisService {
 createAvisForFormation(formationId: number, avis: Avis): Observable<Avis> {
   return this.http.post<Avis>(`${this.apiUrl}/formation/${formationId}`, avis);
 }
+    getAvisByCertification(certificationId: number): Observable<Avis[]> {
+    return this.http.get<Avis[]>(`${this.apiUrl}/certification/${certificationId}`);
+  }
+
+createAvisForCertification(certificationId: number, avis: Avis): Observable<Avis> {
+  return this.http.post<Avis>(`${this.apiUrl}/certification/${certificationId}`, avis);
+}
 }

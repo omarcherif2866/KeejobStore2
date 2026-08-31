@@ -87,4 +87,15 @@ getCouleurAvatar(nomAuteur: string): string {
   return couleurs[index];
 }
   
+get averageNote(): number {
+  if (!this.avisList || this.avisList.length === 0) return 0;
+  const sum = this.avisList.reduce((total, a) => total + (a.note || 0), 0);
+  return Math.round((sum / this.avisList.length) * 10) / 10;
+}
+
+get totalAvis(): number {
+  return this.avisList.length;
+}
+
+
 }
