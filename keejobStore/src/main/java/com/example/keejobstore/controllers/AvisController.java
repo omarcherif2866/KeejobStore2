@@ -62,4 +62,15 @@ public class AvisController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
+    @PostMapping("/certification/{certificationId}")
+    public ResponseEntity<Avis> createAvisForCertification(@PathVariable Long certificationId, @RequestBody Avis avis) {
+        Avis created = avisService.createAvisCertification(certificationId, avis);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @GetMapping("/certification/{certificationId}")
+    public ResponseEntity<List<Avis>> getAvisByCertification(@PathVariable Long certificationId) {
+        return ResponseEntity.ok(avisService.getAvisByCertificationId(certificationId));
+    }
+
 }

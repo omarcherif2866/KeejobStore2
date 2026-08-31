@@ -2,9 +2,11 @@ package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.Avis;
 import com.example.keejobstore.entity.CentreFormation;
+import com.example.keejobstore.entity.Certification;
 import com.example.keejobstore.entity.FormationKeejob;
 import com.example.keejobstore.repository.AvisRepository;
 import com.example.keejobstore.repository.CentreFormationRepository;
+import com.example.keejobstore.repository.CertificationRepository;
 import com.example.keejobstore.repository.FormationKeejobRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class AvisServiceImpl implements AvisService {
     private final AvisRepository avisRepository;
     private final CentreFormationRepository centreFormationRepository;
     private final FormationKeejobRepository formationKeejobRepository;
+    private final CertificationRepository certificationRepository ;
 
 
     @Override
@@ -78,6 +81,22 @@ public class AvisServiceImpl implements AvisService {
                 .orElseThrow(() -> new RuntimeException("Formation non trouvée avec l'id : " + formationId));
 
         avis.setFormation(formation);
+        avis.setDate(LocalDate.now()); // si vous voulez fixer la date côté serveur
+
+        return avisRepository.save(avis);
+    }
+
+    @Override
+    public List<Avis> getAvisByCertificationId(Long certificationId) {
+        return avisRepository.findByCertificationId(certificationId);
+    }
+
+    @Override
+    public Avis createAvisCertification(Long certificationId, Avis avis) {
+        Certification  certification  = certificationRepository.findById(certificationId)
+                .orElseThrow(() -> new RuntimeException("Formation non trouvée avec l'id : " + certificationId));
+
+        avis.setCertification(certification);
         avis.setDate(LocalDate.now()); // si vous voulez fixer la date côté serveur
 
         return avisRepository.save(avis);

@@ -2,6 +2,7 @@ package com.example.keejobstore.entity;
 
 
 import com.example.keejobstore.converter.EvaluationSectionListConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -47,4 +48,12 @@ public class Evaluation {
 
     @OneToMany(mappedBy = "evaluation", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<EvaluationCatalogue> evaluationCatalogues = new ArrayList<>();
+
+    @OneToMany(mappedBy = "evaluation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Avis> avis = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "plateforme_id")
+    private Plateforme plateforme;
 }

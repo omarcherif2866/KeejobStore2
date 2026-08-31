@@ -16,5 +16,4 @@ public interface FormationKeejobRepository extends JpaRepository<FormationKeejob
     @Query("SELECT f FROM FormationKeejob f WHERE LOWER(f.titre) LIKE LOWER(CONCAT('%', :q, '%'))")
     List<FormationKeejob> searchByTitre(String q);
 
-    List<FormationKeejob> findByPlateformeIdOrderByNoteDesc(Long plateformeId);
 }

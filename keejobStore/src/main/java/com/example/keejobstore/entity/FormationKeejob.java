@@ -26,7 +26,7 @@ public class FormationKeejob {
     private String titre;
     private String badge;
     private String image;                  // URL Cloudinary
-    private String lienBandeAnnonce;
+    //private String lienBandeAnnonce;
     private String lienFormation;
 
     @Column(length = 500)
@@ -35,8 +35,7 @@ public class FormationKeejob {
     @Column(length = 2000)
     private String aPropos;
 
-    private Double note;
-    private Integer nombreAvis;
+
     private String nombreApprenants;
 
     private String niveau;
@@ -83,7 +82,6 @@ public class FormationKeejob {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Avantage {
-        private String icone;   // URL Cloudinary
         private String titre;
     }
 }

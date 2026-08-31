@@ -21,4 +21,8 @@ public interface AvisService {
     List<Avis> getAvisByFormationId(Long formationId);
 
     Avis createAvisForFormation(Long formationId, Avis avis);
+
+    List<Avis> getAvisByCertificationId(Long certificationId);
+
+    Avis createAvisCertification(Long certificationId, Avis avis);
 }

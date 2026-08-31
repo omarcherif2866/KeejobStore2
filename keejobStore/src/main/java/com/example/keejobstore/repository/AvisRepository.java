@@ -11,4 +11,7 @@ public interface AvisRepository extends JpaRepository<Avis, Long> {
 
     List<Avis> findByFormationId(Long formationId);
 
+    List<Avis> findByCertificationId(Long certificationId);
+
+
 }

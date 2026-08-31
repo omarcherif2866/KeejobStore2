@@ -13,8 +13,8 @@ public interface FormationKeejobService {
     FormationKeejob create(FormationKeejob formation, Long plateformeId);
     FormationKeejob update(Long id, FormationKeejob formation);
     void delete(Long id);
-    List<FormationKeejob> getByPlateforme(Long plateformeId);
     List<FormationKeejob> search(String q);
     List<FormationKeejob> findByCategoryFormationKeejob(CategoryFormationKeejob category);
+    List<FormationKeejob> getFormationsByPlateforme(Long plateformeId);
 
 }

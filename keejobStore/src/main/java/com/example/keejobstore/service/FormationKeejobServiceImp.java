@@ -75,12 +75,12 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
     private void applyFields(FormationKeejob existing, FormationKeejob formation) {
         existing.setTitre(formation.getTitre());
         existing.setBadge(formation.getBadge());
-        existing.setLienBandeAnnonce(formation.getLienBandeAnnonce());
+//        existing.setLienBandeAnnonce(formation.getLienBandeAnnonce());
         existing.setLienFormation(formation.getLienFormation());
         existing.setDescriptionCourte(formation.getDescriptionCourte());
         existing.setAPropos(formation.getAPropos());
-        existing.setNote(formation.getNote());
-        existing.setNombreAvis(formation.getNombreAvis());
+//        existing.setNote(formation.getNote());
+//        existing.setNombreAvis(formation.getNombreAvis());
         existing.setNombreApprenants(formation.getNombreApprenants());
         existing.setNiveau(formation.getNiveau());
         existing.setDuree(formation.getDuree());
@@ -106,8 +106,8 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
     }
 
     @Override
-    public List<FormationKeejob> getByPlateforme(Long plateformeId) {
-        return formationRepository.findByPlateformeIdOrderByNoteDesc(plateformeId);
+    public List<FormationKeejob> getFormationsByPlateforme(Long plateformeId) {
+        return formationRepository.findByPlateformeId(plateformeId);
     }
 
     @Override

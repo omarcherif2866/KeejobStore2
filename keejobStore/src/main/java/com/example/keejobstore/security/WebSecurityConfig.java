@@ -39,10 +39,7 @@ public class WebSecurityConfig  {
             "/evaluation/**",
             "/serviceEvaluation/**",
             "/formationsFormateur/**",
-            "/partenaire/**",
             "/formationKeejob/**",
-            "/sousFormationKeejob/**",
-            "/logiciel/**",
             "/cv/**",
             "/coaching/**",
             "/images/**",
@@ -50,7 +47,8 @@ public class WebSecurityConfig  {
             "/cv-request/**",
             "/centres-formation/**",
             "/avis/**",
-            "/plateformes/**"
+            "/plateformes/**",
+            "/certification/**"
     };
 
 

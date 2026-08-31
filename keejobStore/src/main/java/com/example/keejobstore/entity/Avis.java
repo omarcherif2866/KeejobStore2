@@ -38,4 +38,14 @@ public class Avis {
     @JsonIgnore
     private FormationKeejob formation;
 
+    @ManyToOne
+    @JoinColumn(name = "evaluation_id")
+    @JsonIgnore
+    private Evaluation evaluation;
+
+    @ManyToOne
+    @JoinColumn(name = "certification_id")
+    @JsonIgnore
+    private Certification certification;
+
 }
