@@ -149,8 +149,8 @@ body {
    déborder au-dessus de la section. */
 .hero-form-trigger {
   position: absolute;
-  top: 20px;   /* ⬅️ était -24px, on descend le formulaire */
-  right: 16px;
+  top: 60px;
+  right: -80px;   /* ou -40px, ajuste selon le rendu souhaité */
   z-index: 3;
 }
 
@@ -164,7 +164,7 @@ body {
   /* Flotte naturellement dans .hero-form-trigger, déjà positionné
      en haut à droite : plus besoin de bottom/right/absolute ici. */
   position: static;
-  width: 300px;
+  width: 400px;
   max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
@@ -700,7 +700,8 @@ section {
   font-weight: 800;
   color: #46457f;
 }
-
+[data-id="1"] .hero-text h1 .line1 { color: #46457f; }
+[data-id="1"] .hero-text h1 .line2 { color: #46457f; }
 /* ===== ID = 2 (vert foncé) ===== */
 [data-id="2"] .hero-badge-label {
   display: inline-block;
@@ -766,6 +767,9 @@ section {
   font-weight: 800;
   color: #1B5E20;
 }
+
+[data-id="2"] .hero-text h1 .line1 { color: #1B5E20; }
+[data-id="2"] .hero-text h1 .line2 { color: #1B5E20; }
 /* ===== ID = 3 (bleu) ===== */
 [data-id="3"] .hero-badge-label {
   display: inline-block;
@@ -832,6 +836,8 @@ section {
   font-weight: 800;
   color: #2563EB;
 }
+[data-id="3"] .hero-text h1 .line1 { color: #2563EB; }
+[data-id="3"] .hero-text h1 .line2 { color: #2563EB; }
 
 .hero-mini-stats {
   display: flex;
