@@ -21,7 +21,7 @@ formData = {
   email: '',
   whatsapp: ''
 };
-selectedFile: File | null = null;
+selectedFiles: File[] = [];
 sending = false;
   constructor(
     private cvService: CvService,  private route: ActivatedRoute,private cvRequestService: CvRequestService) { }
@@ -95,7 +95,7 @@ getIconColor(i: number): string {
 onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
-    this.selectedFile = input.files[0];
+    this.selectedFiles = Array.from(input.files);
   }
 }
 
@@ -116,8 +116,8 @@ submitForm(cvName: string) {
       fullname: this.formData.fullname,
       email: this.formData.email,
       whatsapp: this.formData.whatsapp,
-      cvFile: this.selectedFile,
-      serviceName: cvName        // ← récupéré automatiquement depuis cv.name
+      cvFiles: this.selectedFiles,   // ⬅️ renommé + tableau
+      serviceName: cvName
     }).subscribe({
       next: () => {
         this.sending = false;
@@ -133,7 +133,7 @@ submitForm(cvName: string) {
 
   private resetForm() {
     this.formData = { fullname: '', email: '', whatsapp: '' };
-    this.selectedFile = null;
+    this.selectedFiles = [];
   }
 
   splitInTwoLines(text: string): string[] {

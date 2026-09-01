@@ -20,17 +20,23 @@ export class CvRequestService {
   private apiUrl = "/api/cv-request";
   constructor(private http: HttpClient) {}
 
-  sendCvRequest(data: CvRequestPayload): Observable<any> {
-    const formData = new FormData();
-    formData.append('fullname', data.fullname);
-    formData.append('email', data.email);
-    formData.append('whatsapp', data.whatsapp);
-    formData.append('serviceName', data.serviceName);  // ← ajout
+sendCvRequest(data: {
+  fullname: string;
+  email: string;
+  whatsapp: string;
+  cvFiles: File[];
+  serviceName: string;
+}) {
+  const formData = new FormData();
+  formData.append('fullname', data.fullname);
+  formData.append('email', data.email);
+  formData.append('whatsapp', data.whatsapp);
+  formData.append('serviceName', data.serviceName);
 
-    if (data.cvFile) {
-      formData.append('cvFile', data.cvFile);
-    }
+  data.cvFiles.forEach(file => {
+    formData.append('cvFiles', file);   // même nom répété = tableau côté backend
+  });
 
-    return this.http.post(this.apiUrl, formData);
-  }
+  return this.http.post(`${this.apiUrl}/cv-request`, formData);
+}
 }

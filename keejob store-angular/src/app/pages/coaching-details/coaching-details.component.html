@@ -99,18 +99,19 @@
           <input type="tel" name="whatsapp" [(ngModel)]="formData.whatsapp" placeholder="WhatsApp" required>
         </div>
 
-        <label class="form-group file-group" for="cvFile">
-          <span class="form-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-          </span>
-          <span class="file-text">
-            Télécharger votre CV<br><small>(PDF, DOC ou DOCX)</small>
-          </span>
-          <span class="upload-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
-          <input type="file" id="cvFile" name="cvFile" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" hidden>
-        </label>
+<label class="form-group file-group" for="cvFile">
+  <span class="form-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+  </span>
+  <span class="file-text">
+    {{ selectedFiles.length > 0 ? selectedFiles.length + ' fichier(s) sélectionné(s)' : 'Télécharger vos documents' }}
+    <br><small>(PDF, DOC ou DOCX)</small>
+  </span>
+  <span class="upload-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </span>
+  <input type="file" id="cvFile" name="cvFile" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" multiple hidden>
+</label>
 
         <button type="submit" class="btn-submit" [disabled]="sending">
           {{ sending ? 'Envoi...' : 'Envoyer ma demande' }}
