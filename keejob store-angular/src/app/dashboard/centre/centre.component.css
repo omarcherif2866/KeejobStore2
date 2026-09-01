@@ -20,7 +20,18 @@
   font-weight: 600;
   color: #333;
 }
+.step-content label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
 
+.step-content label:first-of-type {
+  margin-top: 0;
+}
 .form-group input[type="checkbox"] {
   width: 18px;
   height: 18px;

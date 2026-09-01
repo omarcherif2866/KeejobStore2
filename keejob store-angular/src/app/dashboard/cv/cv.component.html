@@ -49,12 +49,7 @@
         </svg>
           <span>Mes services</span>
         </a>       
-        <a href="partenaire">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-        </svg>
-          <span>Partenaires</span>
-        </a> 
+ 
         <a href="formationKeejob">
           <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -312,29 +307,28 @@
           <h4>📊 Section {{ sectionIndex + 1 }}</h4>
 
           <div class="section-card">
-            <ng-container *ngIf="sectionIndex !== 1">
-              <label>Titre principal (Headline) *</label>
-              <input type="text"
-                    [(ngModel)]="section.headline"
-                    placeholder="Ex: Compétences techniques"
-                    class="form-input">
+          <ng-container *ngIf="sectionIndex !== 1">
+            <label>Titre principal (Headline) *</label>
+            <input type="text"
+                  [(ngModel)]="section.headline"
+                  placeholder="Ex: Compétences techniques"
+                  class="form-input">
 
-              <label>Sous-titre</label>
-              <input type="text"
-                    [(ngModel)]="section.subtitle"
-                    placeholder="Ex: Évaluation des compétences"
-                    class="form-input">
-            </ng-container>
+            <label *ngIf="sectionIndex !== 0">Sous-titre</label>
+            <input type="text"
+                  *ngIf="sectionIndex !== 0"
+                  [(ngModel)]="section.subtitle"
+                  placeholder="Ex: Évaluation des compétences"
+                  class="form-input">
+          </ng-container>
 
             <!-- Détails -->
             <div class="details-section">
-              <div class="details-header">
-                <h5>Détails de la section</h5>
-              </div>
+
 
               <div *ngFor="let detail of section.details; let i = index" class="detail-card">
                 <div class="detail-header">
-                  <span class="detail-number">Détail #{{ i + 1 }}</span>
+                  <span class="detail-number carac-number">Détail #{{ i + 1 }}</span>
                 </div>
 
                 <label>Titre *</label>

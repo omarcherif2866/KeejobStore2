@@ -90,13 +90,23 @@ body {
 }
 
 .trust-icon {
-  margin-top: 0;
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  background-color: #5958A0;   /* couleur par défaut */
 }
+
+[data-id="1"] .trust-icon { background-color: #5958A0; }
+[data-id="2"] .trust-icon { background-color: #1B5E20; }
+[data-id="3"] .trust-icon { background-color: #2563EB; }
 
 .trust-icon img {
   width: 40px;
@@ -130,7 +140,16 @@ body {
   position: relative;
   width: 100%;
   max-width: 100%;
-  aspect-ratio: 4 / 3.2;   /* fixe le ratio, indépendant du texte à côté */
+  aspect-ratio: 4 / 3.2;
+}
+
+.hero-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.65);   /* ⬅️ ajuste l'opacité du voile blanc */
+  border-radius: 24px 220px 24px 24px;
+  z-index: 1;
 }
 
 
@@ -138,10 +157,11 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;      /* recadre l'image pour remplir le cadre sans le déformer */
+  object-fit: cover;
   object-position: center 30%;
   border-radius: 24px 220px 24px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
+  opacity: 0.15;   /* ⬅️ ajustable, 0.1 à 0.25 selon le rendu voulu */
 }
 
 /* Le formulaire est désormais toujours visible : plus de survol.
@@ -161,8 +181,6 @@ body {
 }
 
 .hero-form-card {
-  /* Flotte naturellement dans .hero-form-trigger, déjà positionné
-     en haut à droite : plus besoin de bottom/right/absolute ici. */
   position: static;
   width: 400px;
   max-width: 88vw;
@@ -171,20 +189,49 @@ body {
   padding: 26px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
   z-index: 2;
-
-  /* Toujours affiché : on retire les états cachés + la transition liée au hover */
+  border: 2px solid transparent;   /* ⬅️ base, surchargée par data-id */
   opacity: 1;
   visibility: visible;
   transform: none;
   pointer-events: auto;
 }
 
-.hero-form-card h3 {
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.form-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: #5958A0;   /* couleur par défaut, surchargée par data-id */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.form-header-text h3 {
   font-size: 18px;
   font-weight: 700;
   color: #1e2749;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
+
+.form-header-text .form-subtitle {
+  margin-bottom: 0;   /* on retire la marge de la version précédente, gérée par .form-header */
+}
+/* ID = 1 */
+[data-id="1"] .form-header-icon { background-color: #5958A0; }
+
+/* ID = 2 */
+[data-id="2"] .form-header-icon { background-color: #1B5E20; }
+
+/* ID = 3 */
+[data-id="3"] .form-header-icon { background-color: #2563EB; }
 
 .form-subtitle {
   font-size: 13px;
@@ -702,6 +749,8 @@ section {
 }
 [data-id="1"] .hero-text h1 .line1 { color: #46457f; }
 [data-id="1"] .hero-text h1 .line2 { color: #46457f; }
+[data-id="1"] .hero-form-card { border-color: #5958A0; }
+
 /* ===== ID = 2 (vert foncé) ===== */
 [data-id="2"] .hero-badge-label {
   display: inline-block;
@@ -770,6 +819,8 @@ section {
 
 [data-id="2"] .hero-text h1 .line1 { color: #1B5E20; }
 [data-id="2"] .hero-text h1 .line2 { color: #1B5E20; }
+[data-id="2"] .hero-form-card { border-color: #1B5E20; }
+
 /* ===== ID = 3 (bleu) ===== */
 [data-id="3"] .hero-badge-label {
   display: inline-block;
@@ -838,7 +889,7 @@ section {
 }
 [data-id="3"] .hero-text h1 .line1 { color: #2563EB; }
 [data-id="3"] .hero-text h1 .line2 { color: #2563EB; }
-
+[data-id="3"] .hero-form-card { border-color: #2563EB; }
 .hero-mini-stats {
   display: flex;
   align-items: center;

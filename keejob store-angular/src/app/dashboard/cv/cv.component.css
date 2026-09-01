@@ -14,6 +14,37 @@
   overflow: hidden;
   transition: width 0.3s;
 }
+.step-content label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.step-content label:first-of-type {
+  margin-top: 0;
+}
+
+.detail-number {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.carac-number {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.detail-header {
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
 
 .sidebar.open {
   width: 250px;
