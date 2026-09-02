@@ -166,35 +166,35 @@
       <div class="container">
         <h2 class="section-title">{{ cv.sections[3]?.headline || 'Nos packs' }}</h2>
 
-        <div class="pricing-cards">
-          <div class="pricing-container">
-            <div class="pricing-card" *ngFor="let ps of cv.priceSections; let i = index" [ngClass]="getColorClass(i)">
+<div class="pricing-cards">
+  <div class="pricing-container" [ngClass]="'packs-' + (cv.priceSections.length <= 4 ? cv.priceSections.length : 'wrap')">
+    <div class="pricing-card" *ngFor="let ps of cv.priceSections; let i = index" [ngClass]="getColorClass(i)">
 
-              <div class="card-header">
-                <span class="pack-badge" [ngClass]="getBadgeClass(i)">{{ ps.title }}</span>
-                <div class="price">{{ ps.price }} DNT</div>
-                <p class="included">{{ ps.subtitle }}</p>
-              </div>
+      <div class="card-header">
+        <span class="pack-badge" [ngClass]="getBadgeClass(i)">{{ ps.title }}</span>
+        <div class="price">{{ ps.price }} DNT</div>
+        <p class="included">{{ ps.subtitle }}</p>
+      </div>
 
-              <div class="card-body">
-                <ul class="feature-list">
-                  <li *ngFor="let detail of ps.details">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="11" [attr.fill]="getIconColor(i)"/>
-                      <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5"/>
-                    </svg>
-                    {{ detail.titre }}
-                  </li>
-                </ul>
-              </div>
+      <div class="card-body">
+        <ul class="feature-list">
+          <li *ngFor="let detail of ps.details">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="11" [attr.fill]="getIconColor(i)"/>
+              <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5"/>
+            </svg>
+            {{ detail.titre }}
+          </li>
+        </ul>
+      </div>
 
-              <div class="card-footer">
-                <a href="#" class="btn btn-choose" [ngClass]="getBtnClass(i)">Choisir ce pack</a>
-              </div>
+      <div class="card-footer">
+        <a href="#" class="btn btn-choose" [ngClass]="getBtnClass(i)">Choisir ce pack</a>
+      </div>
 
-            </div>
-          </div>
-        </div>
+    </div>
+  </div>
+</div>
       </div>
     </section>
 

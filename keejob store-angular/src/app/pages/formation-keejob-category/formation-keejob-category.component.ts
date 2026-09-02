@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { FormationKeejob } from 'src/app/models/formation-keejob';
 import { Plateforme } from 'src/app/models/platforme';
 import { EvaluationService } from 'src/app/services/evaluation.service';
@@ -73,29 +74,36 @@ private categoryVisuals: { [key: string]: { color: string; image: string } } = {
   }
 
  
-  loadData(): void {
-    this.loading = true;
+loadData(): void {
+  this.loading = true;
 
-    // On charge en parallèle : toutes les plateformes + les formations de la catégorie
-    this.plateformeService.getAll().subscribe({
-      next: (platforms) => {
-        this.platforms = platforms;
-      },
-      error: (err) => console.error('Erreur plateformes:', err)
-    });
+  forkJoin({
+    platforms: this.plateformeService.getAll(),
+    formations: this.formationService.getByCategory(this.category)
+  }).subscribe({
+    next: ({ platforms, formations }) => {
+      this.allFormations = formations;
 
-    this.formationService.getByCategory(this.category).subscribe({
-      next: (data) => {
-        this.allFormations = data;
-        this.loading = false;
-        console.log('Formations chargées pour la catégorie', this.category, ':', data);
-      },
-      error: (err) => {
-        console.error('Erreur formations:', err);
-        this.loading = false;
-      }
-    });
-  }
+      // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
+      const plateformeIdsAvecFormations = new Set(
+        formations
+          .map(f => (f.plateforme as Plateforme)?.id)
+          .filter((id): id is number => id !== undefined && id !== null)
+      );
+
+      // Ne garde que les plateformes présentes dans cet ensemble
+      this.platforms = platforms.filter(p => plateformeIdsAvecFormations.has(p.id!));
+
+      this.loading = false;
+      console.log('Formations chargées pour la catégorie', this.category, ':', formations);
+      console.log('Plateformes filtrées:', this.platforms);
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des données:', err);
+      this.loading = false;
+    }
+  });
+}
 
   // Clic sur une plateforme → filtre les formations de la catégorie appartenant à cette plateforme
   selectPlatform(platform: Plateforme): void {

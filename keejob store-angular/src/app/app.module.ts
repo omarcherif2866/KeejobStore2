@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
-import { CertificationsPlatformeComponent } from './pages/certifications-platforme/certifications-platforme.component';
 
 
 
@@ -144,6 +143,13 @@ const routes = [
   loadChildren: () =>
     import('./dashboard/cv/cv.module').then(
       (m) => m.CvModule
+    ),
+},
+{
+  path: 'platforme',
+  loadChildren: () =>
+    import('./dashboard/platforme/platforme.module').then(
+      (m) => m.PlatformeModule
     ),
 },
 {

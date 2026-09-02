@@ -11,7 +11,7 @@ export interface Plateforme {
   description: string;
 
   siteWeb: string;
-  imageIllustration: string;      // URL Cloudinary — grande image page détail
+  // imageIllustration: string;      
 
   categories: string[];
 

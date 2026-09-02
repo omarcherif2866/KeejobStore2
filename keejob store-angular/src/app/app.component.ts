@@ -25,12 +25,14 @@ isLoading = true;
           || event.url.includes('/serviceFormateur')||   event.url.match(/\/partenaire(\/|$)/) || event.url.includes('/formationKeejob')|| event.url === '/cv'
           || event.url === '/coaching' || event.url.includes('/profil') || event.url.includes('/forgot-password') || event.url.includes('/verify-code') 
           || event.url.includes('/reset-password') || event.url.includes('/login') || event.url.includes('/register') || event.url === '/centre' || event.url === '/certifications'
+          || event.url === '/platforme'
         );
         this.showFooter = !(
           event.url.includes('/actualites') || event.url.includes('/formateurs')|| event.url.includes('/evaluations')|| event.url.includes('/formationFormateur')
           || event.url.includes('/serviceFormateur')||   event.url.match(/\/partenaire(\/|$)/) || event.url.includes('/formationKeejob')|| event.url === '/cv'
           || event.url === '/coaching' || event.url.includes('/profil') || event.url.includes('/forgot-password') || event.url.includes('/verify-code') 
           || event.url.includes('/reset-password') || event.url.includes('/login') || event.url.includes('/register') || event.url === '/centre' || event.url === '/certifications'
+          || event.url === '/platforme'
         );
       }
     });

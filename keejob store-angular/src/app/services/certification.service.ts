@@ -7,8 +7,8 @@ import { Certification, CategoryCertification } from '../models/certification';
   providedIn: 'root'
 })
 export class CertificationService {
-  private apiUrl = "http://localhost:9090/certification";
-  // private apiUrl = "/api/certification";
+  // private apiUrl = "http://localhost:9090/certification";
+  private apiUrl = "/api/certification";
 
   constructor(private http: HttpClient) {}
 
