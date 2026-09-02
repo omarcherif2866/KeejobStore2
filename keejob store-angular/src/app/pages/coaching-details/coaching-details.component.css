@@ -170,7 +170,7 @@ body {
 .hero-form-trigger {
   position: absolute;
   top: 30px;
-  right: 0px;   /* ou -40px, ajuste selon le rendu souhaité */
+  right: 110px;   /* ou -40px, ajuste selon le rendu souhaité */
   z-index: 3;
 }
 
@@ -182,7 +182,7 @@ body {
 
 .hero-form-card {
   position: static;
-  width: 450px;
+  width: 480px;
   max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
