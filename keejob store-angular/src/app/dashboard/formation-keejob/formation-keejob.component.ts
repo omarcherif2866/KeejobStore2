@@ -455,10 +455,9 @@ export class FormationKeejobComponent implements OnInit {
     // Le backend reçoit la plateforme via l'URL (create) ou déjà associée (update)
     delete (payload as any).plateforme;
 
-    const request$ = this.modalMode === 'add'
-      ? this.formationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
-      : this.formationService.update(this.editId as number, payload, this.selectedImage || undefined);
-
+const request$ = this.modalMode === 'add'
+  ? this.formationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
+  : this.formationService.update(this.editId as number, payload, this.selectedPlateformeId as number, this.selectedImage || undefined);
     request$.subscribe({
       next: () => {
         this.closeModal();

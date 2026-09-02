@@ -34,14 +34,14 @@ export class FormationKeejobService {
   }
 
   // ✅ Mise à jour avec image (multipart)
-  update(id: number, formation: FormationKeejob, image?: File): Observable<FormationKeejob> {
-    const formData = new FormData();
-    formData.append('formation', new Blob([JSON.stringify(formation)], { type: 'application/json' }));
-    if (image) {
-      formData.append('image', image);
-    }
-    return this.http.put<FormationKeejob>(`${this.apiUrl}/${id}`, formData);
+update(id: number, formation: FormationKeejob, plateformeId: number, image?: File): Observable<FormationKeejob> {
+  const formData = new FormData();
+  formData.append('formation', new Blob([JSON.stringify(formation)], { type: 'application/json' }));
+  if (image) {
+    formData.append('image', image);
   }
+  return this.http.put<FormationKeejob>(`${this.apiUrl}/${id}/plateforme/${plateformeId}`, formData);
+}
 
   // ✅ Upload d'une icône seule (pour "avantages")
   uploadIcon(icon: File): Observable<string> {
