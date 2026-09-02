@@ -9,7 +9,7 @@ import { CvRequestService } from 'src/app/services/cv-request.service';
 @Component({
   selector: 'app-cv-details',
   templateUrl: './cv-details.component.html',
-  styleUrls: ['../coaching-details/coaching-details.component.css']
+  styleUrls: ['./cv-details.component.css']
 })
 export class CvDetailsComponent implements OnInit {
   cvId!: number;
