@@ -347,5 +347,10 @@ export class PlatformeComponent implements OnInit {
       }
     });
   }
+
+trackByIndex(index: number): number {
+  return index;
+}
+
 }
  

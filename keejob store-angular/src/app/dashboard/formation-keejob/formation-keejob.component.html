@@ -422,7 +422,7 @@
             <h5>Compétences acquises</h5>
           </div>
 
-          <div *ngFor="let competence of formData.competencesAcquises; let i = index" class="dynamic-list-item">
+          <div *ngFor="let competence of formData.competencesAcquises; let i = index; trackBy: trackByIndex" class="dynamic-list-item">
             <input type="text" [(ngModel)]="formData.competencesAcquises[i]" placeholder="Ex: Maîtriser Angular" class="form-input">
             <button type="button" (click)="removeCompetence(i)" class="btn-icon-sm btn-danger" title="Supprimer">
               ✕
@@ -443,7 +443,7 @@
             <h5>Public cible</h5>
           </div>
 
-          <div *ngFor="let public of formData.publicCible; let i = index" class="dynamic-list-item">
+          <div *ngFor="let public of formData.publicCible; let i = index; trackBy: trackByIndex" class="dynamic-list-item">
             <input type="text" [(ngModel)]="formData.publicCible[i]" placeholder="Ex: Développeurs débutants" class="form-input">
             <button type="button" (click)="removePublicCible(i)" class="btn-icon-sm btn-danger" title="Supprimer">
               ✕

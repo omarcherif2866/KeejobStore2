@@ -458,7 +458,7 @@ export class FormationKeejobComponent implements OnInit {
 const request$ = this.modalMode === 'add'
   ? this.formationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
   : this.formationService.update(this.editId as number, payload, this.selectedPlateformeId as number, this.selectedImage || undefined);
-  
+
     request$.subscribe({
       next: () => {
         this.closeModal();
@@ -486,4 +486,9 @@ const request$ = this.modalMode === 'add'
   formatCategory(category: string): string {
     return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
+
+  trackByIndex(index: number): number {
+  return index;
+}
+
 }

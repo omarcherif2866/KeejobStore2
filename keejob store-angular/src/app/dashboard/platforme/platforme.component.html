@@ -285,7 +285,7 @@
             <h5>Domaines</h5>
           </div>
 
-          <div *ngFor="let categorie of formData.categories; let i = index" class="dynamic-list-item">
+          <div *ngFor="let categorie of formData.categories; let i = index; trackBy: trackByIndex" class="dynamic-list-item">
             <input type="text" [(ngModel)]="formData.categories![i]" placeholder='Ex: "Marketing", "Développement", "Design", "Business", "Finance"...' class="form-input">
             <button type="button" (click)="removeCategorie(i)" class="btn-icon-sm btn-danger" title="Supprimer">
               ✕
