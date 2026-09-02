@@ -1,4 +1,4 @@
-package com.example.keejobstore.service.impl;
+package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.Plateforme;
 import com.example.keejobstore.repository.PlateformeRepository;
@@ -49,9 +49,9 @@ public class PlateformeServiceImpl implements PlateformeService {
         if (logo != null && !logo.isEmpty()) {
             plateforme.setLogo(cloudinaryService.uploadImage(logo));
         }
-        if (imageIllustration != null && !imageIllustration.isEmpty()) {
-            plateforme.setImageIllustration(cloudinaryService.uploadImage(imageIllustration));
-        }
+//        if (imageIllustration != null && !imageIllustration.isEmpty()) {
+//            plateforme.setImageIllustration(cloudinaryService.uploadImage(imageIllustration));
+//        }
         return plateformeRepository.save(plateforme);
     }
 
@@ -73,9 +73,9 @@ public class PlateformeServiceImpl implements PlateformeService {
         }
         // sinon on garde existing.getLogo() tel quel (pas de nouveau fichier choisi)
 
-        if (imageIllustration != null && !imageIllustration.isEmpty()) {
-            existing.setImageIllustration(cloudinaryService.uploadImage(imageIllustration));
-        }
+//        if (imageIllustration != null && !imageIllustration.isEmpty()) {
+//            existing.setImageIllustration(cloudinaryService.uploadImage(imageIllustration));
+//        }
 
         return plateformeRepository.save(existing);
     }

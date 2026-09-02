@@ -47,22 +47,34 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
     }
 
     @Override
-    public FormationKeejob update(Long id, FormationKeejob formation) {
+    public FormationKeejob update(Long id, FormationKeejob formation, Long plateformeId) {
         FormationKeejob existing = getById(id);
         applyFields(existing, formation);
+
+        if (plateformeId != null) {
+            Plateforme plateforme = plateformeRepository.findById(plateformeId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
+            existing.setPlateforme(plateforme);
+        }
+
         return formationRepository.save(existing);
     }
 
-    // ✅ NOUVELLE MÉTHODE : mise à jour avec upload d'image sur Cloudinary
-    public FormationKeejob updateWithImage(Long id, FormationKeejob formation, MultipartFile image) throws IOException {
+    // updateWithImage doit aussi accepter et appliquer plateformeId
+    public FormationKeejob updateWithImage(Long id, FormationKeejob formation, Long plateformeId, MultipartFile image) throws IOException {
         FormationKeejob existing = getById(id);
         applyFields(existing, formation);
+
+        if (plateformeId != null) {
+            Plateforme plateforme = plateformeRepository.findById(plateformeId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
+            existing.setPlateforme(plateforme);
+        }
 
         if (image != null && !image.isEmpty()) {
             String imageUrl = cloudinaryService.uploadImage(image);
             existing.setImage(imageUrl);
         }
-        // sinon on garde existing.getImage() déjà présent, on ne l'écrase pas avec formation.getImage() (souvent vide côté front si pas de nouveau fichier choisi)
 
         return formationRepository.save(existing);
     }

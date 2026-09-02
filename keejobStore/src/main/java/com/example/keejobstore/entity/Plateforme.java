@@ -33,7 +33,7 @@ public class Plateforme {
     private String description;
 
     private String siteWeb;
-    private String imageIllustration;      // URL Cloudinary — grande image page détail
+//    private String imageIllustration;
 
     @Convert(converter = CategoriesPlateformeConverter.class)
     @Column(columnDefinition = "JSON")

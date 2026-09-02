@@ -48,9 +48,10 @@ public class FormationKeejobController {
     public ResponseEntity<?> update(
             @PathVariable Long id,
             @RequestPart("formation") FormationKeejob formation,
+            @RequestParam("plateformeId") Long plateformeId,
             @RequestPart(value = "image", required = false) MultipartFile image) {
         try {
-            FormationKeejob updated = formationServiceImp.updateWithImage(id, formation, image);
+            FormationKeejob updated = formationServiceImp.updateWithImage(id, formation, plateformeId, image);
             return ResponseEntity.ok(updated);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Erreur lors de l'upload de l'image : " + e.getMessage());

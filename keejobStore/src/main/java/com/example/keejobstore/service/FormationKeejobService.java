@@ -11,7 +11,7 @@ public interface FormationKeejobService {
     List<FormationKeejob> getAll();
     FormationKeejob getById(Long id);
     FormationKeejob create(FormationKeejob formation, Long plateformeId);
-    FormationKeejob update(Long id, FormationKeejob formation);
+    FormationKeejob update(Long id, FormationKeejob formation, Long plateformeId);
     void delete(Long id);
     List<FormationKeejob> search(String q);
     List<FormationKeejob> findByCategoryFormationKeejob(CategoryFormationKeejob category);
