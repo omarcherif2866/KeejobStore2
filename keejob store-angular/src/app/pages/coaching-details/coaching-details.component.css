@@ -132,15 +132,15 @@ body {
   height: auto;
   display: block;
   justify-self: start;
-  width: 110%;                     /* ⬅️ dépasse sa colonne vers la droite, ajuste ce % */
-  transform: translateX(-110px);   /* garde ton décalage actuel vers la gauche */
+  width: 140%;                     /* était 110% → augmenté pour élargir vers la droite */
+  transform: translateX(-250px);   /* inchangé */
 }
 
 .hero-image-wrap {
   position: relative;
   width: 100%;
   max-width: 100%;
-  aspect-ratio: 4 / 3.2;
+  height: 510px;         /* remplace aspect-ratio: 4 / 3.2 */
 }
 
 .hero-image-wrap::after {
@@ -148,7 +148,7 @@ body {
   position: absolute;
   inset: 0;
   background-color: rgba(255, 255, 255, 0.65);   /* ⬅️ ajuste l'opacité du voile blanc */
-  border-radius: 24px 220px 24px 24px;
+  border-radius: 24px 24px 24px 24px;
   z-index: 1;
 }
 
@@ -159,9 +159,9 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  border-radius: 24px 220px 24px 24px;
+  border-radius: 24px 24px 24px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
-  opacity: 0.15;   /* ⬅️ ajustable, 0.1 à 0.25 selon le rendu voulu */
+  opacity: 0.40;   /* ⬅️ ajustable, 0.1 à 0.25 selon le rendu voulu */
 }
 
 /* Le formulaire est désormais toujours visible : plus de survol.
@@ -169,8 +169,8 @@ body {
    déborder au-dessus de la section. */
 .hero-form-trigger {
   position: absolute;
-  top: 60px;
-  right: -80px;   /* ou -40px, ajuste selon le rendu souhaité */
+  top: 30px;
+  right: 0px;   /* ou -40px, ajuste selon le rendu souhaité */
   z-index: 3;
 }
 
@@ -182,7 +182,7 @@ body {
 
 .hero-form-card {
   position: static;
-  width: 400px;
+  width: 450px;
   max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
