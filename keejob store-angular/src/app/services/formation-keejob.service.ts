@@ -33,14 +33,15 @@ export class FormationKeejobService {
     return this.http.post<FormationKeejob>(`${this.apiUrl}/plateforme/${plateformeId}`, formData);
   }
 
-  // ✅ Mise à jour avec image (multipart)
+// ✅ Mise à jour avec image (multipart)
 update(id: number, formation: FormationKeejob, plateformeId: number, image?: File): Observable<FormationKeejob> {
   const formData = new FormData();
   formData.append('formation', new Blob([JSON.stringify(formation)], { type: 'application/json' }));
+  formData.append('plateformeId', plateformeId.toString());
   if (image) {
     formData.append('image', image);
   }
-  return this.http.put<FormationKeejob>(`${this.apiUrl}/${id}/plateforme/${plateformeId}`, formData);
+  return this.http.put<FormationKeejob>(`${this.apiUrl}/${id}`, formData);
 }
 
   // ✅ Upload d'une icône seule (pour "avantages")
