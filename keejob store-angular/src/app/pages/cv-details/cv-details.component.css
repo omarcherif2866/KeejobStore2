@@ -211,30 +211,7 @@ body {
   pointer-events: auto;
 }
 
-@media (min-width: 1150px) {
-.hero-form-trigger {
-  position: absolute;
-  top: 30px;
-  right: 90px;   
-  z-index: 3;
-}
-.hero-form-card {
-  position: static;
-  width: 600px;
-  max-width: 88vw;
-  background: 
-#ffffff;
-  border-radius: 20px;
-  padding: 26px 24px;
-  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
-  z-index: 2;
-  border: 2px solid transparent;   
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  pointer-events: auto;
-}
-}
+
 
 /* grand écran
 .hero-form-trigger {
