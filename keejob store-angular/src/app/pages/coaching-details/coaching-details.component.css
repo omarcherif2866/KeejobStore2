@@ -16,6 +16,19 @@ body {
   padding: 0 40px;
 }
 
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1680px;
+    padding: 0 60px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1800px;
+  }
+}
+
 /* ===== HERO ===== */
 .hero-section {
   padding: 60px 0 20px;
@@ -132,8 +145,8 @@ body {
   height: auto;
   display: block;
   justify-self: start;
-  width: 140%;                     /* était 110% → augmenté pour élargir vers la droite */
-  transform: translateX(-250px);   /* inchangé */
+  width: 150%;                     /* était 110% → augmenté pour élargir vers la droite */
+  transform: translateX(-360px);   /* inchangé */
 }
 
 .hero-image-wrap {
@@ -170,7 +183,7 @@ body {
 .hero-form-trigger {
   position: absolute;
   top: 30px;
-  right: 110px;   /* ou -40px, ajuste selon le rendu souhaité */
+  right: 90px;   /* ou -40px, ajuste selon le rendu souhaité */
   z-index: 3;
 }
 
@@ -182,7 +195,7 @@ body {
 
 .hero-form-card {
   position: static;
-  width: 480px;
+  width: 600px;
   max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
