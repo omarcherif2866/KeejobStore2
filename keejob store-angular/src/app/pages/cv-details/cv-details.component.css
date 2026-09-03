@@ -179,9 +179,7 @@ body {
   opacity: 0.40;
 }
 
-/* Le formulaire est désormais toujours visible : plus de survol.
-   Ancré en haut à droite de l'image (et non en bas), pour ne pas
-   déborder au-dessus de la section. */
+
 
 
 /* Le bouton déclencheur n'a plus de rôle puisque le formulaire est
@@ -189,10 +187,18 @@ body {
 .btn-request-trigger {
   display: none;
 }
+/* petit écran */
+/* petit écran (base, s'applique par défaut, ≤ ~1150px) */
+.hero-form-trigger {
+  position: absolute;
+  top: 30px;
+  right: 110px;
+  z-index: 3;
+}
 
 .hero-form-card {
   position: static;
-  width: clamp(480px, 40vw, 600px);
+  width: 480px;
   max-width: 88vw;
   background: #ffffff;
   border-radius: 20px;
@@ -206,15 +212,20 @@ body {
   pointer-events: auto;
 }
 
-.hero-form-trigger {
-  position: absolute;
-  top: 30px;
-  right: clamp(90px, 8vw, 110px);
-  z-index: 3;
+/* grand écran (≥ 1150px) */
+@media (min-width: 1150px) {
+  .hero-form-trigger {
+    right: 90px;
+  }
+
+  .hero-form-card {
+    width: 600px;
+  }
 }
 
 
-/* .hero-form-trigger {
+/* grand écran
+.hero-form-trigger {
   position: absolute;
   top: 30px;
   right: 90px;   
