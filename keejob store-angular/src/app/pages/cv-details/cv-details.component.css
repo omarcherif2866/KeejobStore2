@@ -21,12 +21,14 @@ body {
     max-width: 1680px;
     padding: 0 60px;
   }
+  
 }
 
 @media (min-width: 1920px) {
   .container {
     max-width: 1800px;
   }
+  
 }
 
 /* ===== HERO ===== */
@@ -36,10 +38,11 @@ body {
 
 .hero-content {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 1.1fr 0.9fr;   /* ⬅️ inverse le ratio précédent, image plus petite que le texte */
   gap: 12px;
   align-items: stretch;
 }
+
 
 .hero-text h1 {
   font-family: 'Poppins', sans-serif;
@@ -87,8 +90,8 @@ body {
   display: flex;
   gap: 32px;
   flex-wrap: nowrap;
-  justify-content: space-between;
-  max-width: 480px;
+  justify-content: space-between;   /* répartit les 3 blocs sur toute la largeur */
+  max-width: 480px;                  /* limite pour ne pas trop les écarter sur grand écran */
 }
 
 .trust-item {
@@ -98,7 +101,7 @@ body {
   text-align: center;
   gap: 12px;
   flex: 0 1 auto;
-  max-width: 150px;
+  max-width: 150px;   /* légèrement réduit pour matcher les proportions de ta capture */
 }
 
 .trust-icon {
@@ -113,7 +116,7 @@ body {
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
-  background-color: #5958A0;
+  background-color: #5958A0;   /* couleur par défaut */
 }
 
 [data-id="1"] .trust-icon { background-color: #5958A0; }
@@ -144,77 +147,118 @@ body {
   height: auto;
   display: block;
   justify-self: start;
-  width: 150%;
-  transform: translateX(-360px);
+  width: 150%;                     /* était 110% → augmenté pour élargir vers la droite */
+  transform: translateX(-360px);   /* inchangé */
 }
 
 .hero-image-wrap {
   position: relative;
   width: 100%;
   max-width: 100%;
-  height: 510px;
+  height: 510px;         /* remplace aspect-ratio: 4 / 3.2 */
 }
 
 .hero-image-wrap::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-color: rgba(255, 255, 255, 0.65);
+  background-color: rgba(255, 255, 255, 0.65);   /* ⬅️ ajuste l'opacité du voile blanc */
   border-radius: 24px 24px 24px 24px;
   z-index: 1;
 }
+
 
 .hero-image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 0%;
+  object-position: center 0%;   /* était center 30% → montre le haut de l'image */
   border-radius: 24px 24px 24px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.12);
   opacity: 0.40;
 }
+
+
+
 
 /* Le bouton déclencheur n'a plus de rôle puisque le formulaire est
    affiché en permanence : on le masque complètement. */
 .btn-request-trigger {
   display: none;
 }
-
-/* petit écran (base, < 1150px) */
+/* petit écran */
 .hero-form-trigger {
   position: absolute;
   top: 30px;
-  right: 110px;
+  right: 110px;   /* ou -40px, ajuste selon le rendu souhaité */
   z-index: 3;
 }
-
 .hero-form-card {
   position: static;
   width: 480px;
   max-width: 88vw;
-  background: #ffffff;
+  background: 
+#ffffff;
   border-radius: 20px;
   padding: 26px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
   z-index: 2;
-  border: 2px solid transparent;
+  border: 2px solid transparent;   /* ⬅️ base, surchargée par data-id */
   opacity: 1;
   visibility: visible;
   transform: none;
   pointer-events: auto;
 }
 
-/* grand écran (≥ 1150px) */
 @media (min-width: 1150px) {
-  .hero-form-trigger {
-    right: 90px;
-  }
-
-  .hero-form-card {
-    width: 600px;
-  }
+.hero-form-trigger {
+  position: absolute;
+  top: 30px;
+  right: 90px;   
+  z-index: 3;
 }
+.hero-form-card {
+  position: static;
+  width: 600px;
+  max-width: 88vw;
+  background: 
+#ffffff;
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+  z-index: 2;
+  border: 2px solid transparent;   
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+}
+
+/* grand écran
+.hero-form-trigger {
+  position: absolute;
+  top: 30px;
+  right: 90px;   
+  z-index: 3;
+}
+.hero-form-card {
+  position: static;
+  width: 600px;
+  max-width: 88vw;
+  background: 
+#ffffff;
+  border-radius: 20px;
+  padding: 26px 24px;
+  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+  z-index: 2;
+  border: 2px solid transparent;   
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+} */
 
 .form-header {
   display: flex;
@@ -227,7 +271,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background-color: #5958A0;
+  background-color: #5958A0;   /* couleur par défaut, surchargée par data-id */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -242,11 +286,15 @@ body {
 }
 
 .form-header-text .form-subtitle {
-  margin-bottom: 0;
+  margin-bottom: 0;   /* on retire la marge de la version précédente, gérée par .form-header */
 }
-
+/* ID = 1 */
 [data-id="1"] .form-header-icon { background-color: #5958A0; }
+
+/* ID = 2 */
 [data-id="2"] .form-header-icon { background-color: #1B5E20; }
+
+/* ID = 3 */
 [data-id="3"] .form-header-icon { background-color: #2563EB; }
 
 .form-subtitle {
@@ -335,17 +383,6 @@ body {
   min-width: max-content;
 }
 
-/* ===== FIX chevauchement hero-visual (992px – 1150px) =====
-   Le décalage desktop translateX(-360px) est trop grand pour cette
-   plage : on le neutralise ici, dans une media query dédiée, séparée
-   du bloc mobile ci-dessous pour ne pas toucher à l'empilement mobile
-   complet. Placé APRÈS la définition de base pour prendre le dessus. */
-@media (max-width: 1150px) {
-  .hero-visual {
-    transform: none;
-  }
-}
-
 @media (max-width: 992px) {
   .hero-content {
     gap: 0px;
@@ -364,7 +401,7 @@ body {
   .hero-visual {
     height: auto;
     min-height: auto;
-    transform: none;
+    transform: none;   /* annule le décalage sur petits écrans, comme avant */
   }
 
   .hero-image-wrap {
@@ -695,7 +732,7 @@ body {
 
 @media (max-width: 640px) {
   .container {
-    padding: 0 20px;
+    padding: 0 20px; /* revient à un padding plus serré sur mobile */
   }
 
   .pricing-container .pricing-card {
