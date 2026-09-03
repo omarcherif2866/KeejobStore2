@@ -188,28 +188,77 @@ body {
   display: none;
 }
 /* petit écran */
-.hero-form-trigger {
-  position: absolute;
-  top: 30px;
-  right: 110px;   /* ou -40px, ajuste selon le rendu souhaité */
-  z-index: 3;
+/* ===== Petit écran desktop (~15", jusqu'à 1440px) ===== */
+
+
+
+@media (min-width: 1024px) and (max-width: 1440px) {
+.hero-visual {
+  position: relative;
+  height: auto;
+  display: block;
+  justify-self: start;
+  width: 140%;                     /* était 110% → augmenté pour élargir vers la droite */
+  transform: translateX(-260px);   /* inchangé */
 }
-.hero-form-card {
-  position: static;
-  width: 480px;
-  max-width: 88vw;
-  background: 
-#ffffff;
-  border-radius: 20px;
-  padding: 26px 24px;
-  box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
-  z-index: 2;
-  border: 2px solid transparent;   /* ⬅️ base, surchargée par data-id */
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  pointer-events: auto;
+  .hero-form-trigger {
+    position: absolute;
+    top: 30px;
+    right: 110px; /* ajuste selon le rendu souhaité */
+    z-index: 3;
+  }
+
+  .hero-form-card {
+    position: static;
+    width: 480px;
+    max-width: 88vw;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+    z-index: 2;
+    border: 2px solid transparent; /* base, surchargée par data-id */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
 }
+
+/* ===== Grand écran desktop (~17" et plus, à partir de 1441px) ===== */
+@media (min-width: 1441px) {
+.hero-visual {
+  position: relative;
+  height: auto;
+  display: block;
+  justify-self: start;
+  width: 150%;                     /* était 110% → augmenté pour élargir vers la droite */
+  transform: translateX(-360px);   /* inchangé */
+}
+  .hero-form-trigger {
+    position: absolute;
+    top: 30px;
+    right: 90px;
+    z-index: 3;
+  }
+
+  .hero-form-card {
+    position: static;
+    width: 600px;
+    max-width: 88vw;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+    z-index: 2;
+    border: 2px solid transparent;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
 
 
 
