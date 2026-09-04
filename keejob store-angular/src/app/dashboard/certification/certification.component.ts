@@ -461,9 +461,9 @@ export class CertificationComponent implements OnInit {
     delete (payload as any).plateforme;
     delete (payload as any).avis;
 
-    const request$ = this.modalMode === 'add'
-      ? this.certificationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
-      : this.certificationService.update(this.editId as number, payload, this.selectedImage || undefined);
+const request$ = this.modalMode === 'add'
+  ? this.certificationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
+  : this.certificationService.update(this.editId as number, payload, this.selectedPlateformeId as number, this.selectedImage || undefined);
 
     request$.subscribe({
       next: () => {

@@ -48,9 +48,10 @@ public class CertificationController {
     public ResponseEntity<?> update(
             @PathVariable Long id,
             @RequestPart("certification") Certification certification,
+            @RequestParam("plateformeId") Long plateformeId,
             @RequestPart(value = "image", required = false) MultipartFile image) {
         try {
-            Certification updated = certificationServiceImp.updateWithImage(id, certification, image);
+            Certification updated = certificationServiceImp.updateWithImage(id, certification,plateformeId, image);
             return ResponseEntity.ok(updated);
         } catch (IOException e) {
             return ResponseEntity.status(500).body("Erreur lors de l'upload de l'image : " + e.getMessage());

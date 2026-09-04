@@ -31,14 +31,15 @@ export class CertificationService {
   }
 
   // ✅ Mise à jour avec image (multipart)
-  update(id: number, certification: Certification, image?: File): Observable<Certification> {
-    const formData = new FormData();
-    formData.append('certification', new Blob([JSON.stringify(certification)], { type: 'application/json' }));
-    if (image) {
-      formData.append('image', image);
-    }
-    return this.http.put<Certification>(`${this.apiUrl}/${id}`, formData);
+update(id: number, certification: Certification, plateformeId: number, image?: File): Observable<Certification> {
+  const formData = new FormData();
+  formData.append('certification', new Blob([JSON.stringify(certification)], { type: 'application/json' }));
+  formData.append('plateformeId', plateformeId.toString());
+  if (image) {
+    formData.append('image', image);
   }
+  return this.http.put<Certification>(`${this.apiUrl}/${id}`, formData);
+}
 
   // ✅ Upload d'une icône seule (pour "avantages")
   uploadIcon(icon: File): Observable<string> {

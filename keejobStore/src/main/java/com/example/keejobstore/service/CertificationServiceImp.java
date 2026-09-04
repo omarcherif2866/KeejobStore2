@@ -46,19 +46,33 @@ public class CertificationServiceImp implements CertificationService {
     }
 
     @Override
-    public Certification update(Long id, Certification certification) {
+    public Certification update(Long id, Certification certification, Long plateformeId) {
         Certification existing = getById(id);
         applyFields(existing, certification);
+
+        if (plateformeId != null) {
+            Plateforme plateforme = plateformeRepository.findById(plateformeId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
+            existing.setPlateforme(plateforme);
+        }
+
         return certificationRepository.save(existing);
     }
 
-    // ✅ Mise à jour avec upload d'image sur Cloudinary
-    public Certification updateWithImage(Long id, Certification certification, MultipartFile image) throws IOException {
+    // updateWithImage doit aussi accepter et appliquer plateformeId
+    public Certification updateWithImage(Long id, Certification certification, Long plateformeId, MultipartFile image) throws IOException {
         Certification existing = getById(id);
         applyFields(existing, certification);
 
+        if (plateformeId != null) {
+            Plateforme plateforme = plateformeRepository.findById(plateformeId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
+            existing.setPlateforme(plateforme);
+        }
+
         if (image != null && !image.isEmpty()) {
-            existing.setImage(cloudinaryService.uploadImage(image));
+            String imageUrl = cloudinaryService.uploadImage(image);
+            existing.setImage(imageUrl);
         }
 
         return certificationRepository.save(existing);

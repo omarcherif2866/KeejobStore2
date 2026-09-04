@@ -10,7 +10,7 @@ public interface CertificationService {
     List<Certification> getAll();
     Certification getById(Long id);
     Certification create(Certification certification, Long plateformeId);
-    Certification update(Long id, Certification certification);
+    Certification update(Long id, Certification certification, Long plateformeId);
     void delete(Long id);
     List<Certification> search(String q);
     List<Certification> findByCategoryCertification(CategoryCertification category);
