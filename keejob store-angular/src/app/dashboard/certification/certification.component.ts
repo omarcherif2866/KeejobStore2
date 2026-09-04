@@ -61,7 +61,7 @@ export class CertificationComponent implements OnInit {
       organismeEmetteur: '',
       lienCertification: '',
       descriptionCourte: '',
-      aPropos: '',
+      apropos: '',
       // note: 0,
       // nombreAvis: 0,
       nombreCertifies: '',

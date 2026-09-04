@@ -21,7 +21,7 @@ export interface Certification {
   lienCertification?: string;
 
   descriptionCourte?: string;
-  aPropos?: string;
+  apropos?: string;
 
   // note?: number;
   // nombreAvis?: number;
