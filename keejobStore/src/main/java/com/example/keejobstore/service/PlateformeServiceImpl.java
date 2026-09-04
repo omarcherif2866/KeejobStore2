@@ -69,7 +69,7 @@ public class PlateformeServiceImpl implements PlateformeService {
         existing.setCategories(plateforme.getCategories());
 
         if (logo != null && !logo.isEmpty()) {
-            existing.setLogo(cloudinaryService.uploadImage(logo));
+            existing.setLogo(cloudinaryService.uploadImagePlatforme(logo));
         }
         // sinon on garde existing.getLogo() tel quel (pas de nouveau fichier choisi)
 
