@@ -25,6 +25,7 @@ export class FormationKeejobCategoryComponent implements OnInit {
   selectedPlatform: Plateforme | null = null;
 
   loading = true;
+carouselStartIndex = 0;
 
   private categoryLabels: { [key: string]: string } = {
     'Formations_langues': 'Langues',
@@ -177,5 +178,31 @@ get categoryImage(): string {
 toggleFavorite(formation: any, event: Event): void {
   event.stopPropagation(); // empêche le clic de aussi déclencher le routerLink de la ligne
   // logique d'ajout/retrait des favoris ici
+}
+
+get showPlatformsCarousel(): boolean {
+  return this.platforms.length > 4;
+}
+
+get visiblePlatforms(): Plateforme[] {
+  if (this.platforms.length <= 4) {
+    return this.platforms;
+  }
+  const result: Plateforme[] = [];
+  const n = this.platforms.length;
+  for (let i = 0; i < 4; i++) {
+    result.push(this.platforms[(this.carouselStartIndex + i) % n]);
+  }
+  return result;
+}
+
+nextPlatformsPage(): void {
+  const n = this.platforms.length;
+  this.carouselStartIndex = (this.carouselStartIndex - 1 + n) % n;
+}
+
+previousPlatformsPage(): void {
+  const n = this.platforms.length;
+  this.carouselStartIndex = (this.carouselStartIndex + 1) % n;
 }
 }

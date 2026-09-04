@@ -264,14 +264,39 @@ body {
   cursor: pointer;
   font-weight: 500;
   height: 38px;
+  min-width: 120px;
   font-size: clamp(10px, 0.75vw, 13px);
   white-space: nowrap;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
 }
 .btn-primary i { font-size: 13px; }
-.btn-primary:hover { background-color: #22c55e; }
+.btn-primary:hover { background-color: #055522; }
+
+.btn-outline {
+  background-color: transparent;
+  color: #5958A0;
+  padding: clamp(6px, 0.6vw, 8px) clamp(10px, 1.2vw, 20px);
+  border-radius: 24px;
+  border: 1.5px solid #5958A0;
+  cursor: pointer;
+  font-weight: 500;
+  height: 38px;
+  min-width: 120px;
+  font-size: clamp(10px, 0.75vw, 13px);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-outline i { font-size: 13px; }
+.btn-outline:hover {
+  background-color: #5958A0;
+  color: white;
+}
 
 .btn-cancel {
   background-color: #e05a6e;

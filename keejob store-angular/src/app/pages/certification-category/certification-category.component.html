@@ -66,47 +66,53 @@
 <ng-container *ngIf="!loading">
 
   <!-- ===================== TOUTES LES PLATEFORMES ===================== -->
-  <section class="platforms-section" *ngIf="platforms.length > 0">
-    <div class="section-header">
-      <h2>Toutes les plateformes</h2>
-      <div class="section-controls">
-        <div class="control-select">Trier par popularité <span class="chevron">⌄</span></div>
-        <div class="control-filter">⚙️ Filtres</div>
+<section class="platforms-section" *ngIf="platforms.length > 0">
+  <div class="section-header">
+    <h2>Toutes les plateformes</h2>
+    <div class="section-controls">
+      <div class="control-select">Trier par popularité <span class="chevron">⌄</span></div>
+      <div class="control-filter">⚙️ Filtres</div>
+
+      <!-- Flèches du carrousel, uniquement si plus de 4 plateformes -->
+      <div class="carousel-arrows" *ngIf="showPlatformsCarousel">
+        <button class="carousel-arrow" (click)="previousPlatformsPage()" aria-label="Précédent">‹</button>
+        <button class="carousel-arrow" (click)="nextPlatformsPage()" aria-label="Suivant">›</button>
       </div>
     </div>
+  </div>
 
-    <div class="platforms-grid">
-      <div
-        *ngFor="let platform of platforms"
-        class="platform-card"
-        [class.active]="selectedPlatform?.id === platform.id"
-        (click)="selectPlatform(platform)">
+  <div class="platforms-grid">
+    <div
+      *ngFor="let platform of visiblePlatforms"
+      class="platform-card"
+      [class.active]="selectedPlatform?.id === platform.id"
+      (click)="selectPlatform(platform)">
 
-        <div class="platform-card-header">
-          <div class="platform-logo-wrapper">
-            <img [src]="sanitizeImage(platform.logo)" [alt]="platform.nom" class="platform-logo">
-          </div>
-          <h3 class="platform-card-name">{{ platform.nom }}</h3>
+      <div class="platform-card-header">
+        <div class="platform-logo-wrapper">
+          <img [src]="sanitizeImage(platform.logo)" [alt]="platform.nom" class="platform-logo">
         </div>
-
-        <div class="platform-card-rating">
-          <span class="stars">★★★★★</span>
-          <span class="rating-score">{{ platform.note }}</span>
-          <span class="rating-reviews">({{ platform.nombreAvis }} avis)</span>
-        </div>
-
-        <p class="platform-card-desc">{{ platform.description }}</p>
-
-        <div class="platform-tags" *ngIf="platform.categories?.length">
-          <span class="tag" *ngFor="let tag of platform.categories.slice(0,3)">{{ tag }}</span>
-        </div>
-
-        <a class="platform-link" (click)="selectPlatform(platform); $event.stopPropagation()">
-          Voir les certifications <span class="arrow">→</span>
-        </a>
+        <h3 class="platform-card-name">{{ platform.nom }}</h3>
       </div>
+
+      <div class="platform-card-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-score">{{ platform.note }}</span>
+        <span class="rating-reviews">({{ platform.nombreAvis }} avis)</span>
+      </div>
+
+      <p class="platform-card-desc">{{ platform.description }}</p>
+
+      <div class="platform-tags" *ngIf="platform.categories?.length">
+        <span class="tag" *ngFor="let tag of platform.categories.slice(0,3)">{{ tag }}</span>
+      </div>
+
+      <a class="platform-link" (click)="selectPlatform(platform); $event.stopPropagation()">
+        Voir les certifications <span class="arrow">→</span>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ===================== BLOC AFFICHÉ UNIQUEMENT APRÈS CLIC SUR UNE PLATEFORME ===================== -->
   <ng-container *ngIf="selectedPlatform as p">

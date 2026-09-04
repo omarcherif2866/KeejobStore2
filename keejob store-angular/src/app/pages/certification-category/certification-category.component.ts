@@ -6,6 +6,7 @@ import { EvaluationService } from 'src/app/services/evaluation.service';
 
 import { CertificationService } from 'src/app/services/certification.service';
 import { PlateformeService } from 'src/app/services/platforme.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-certification-category',
@@ -24,6 +25,7 @@ export class CertificationCategoryComponent implements OnInit {
   selectedPlatform: Plateforme | null = null;
 
   loading = true;
+carouselStartIndex = 0;
 
   private categoryLabels: { [key: string]: string } = {
     'Marketing_Digital': 'Marketing Digital',
@@ -67,29 +69,60 @@ export class CertificationCategoryComponent implements OnInit {
     });
   }
 
-  loadData(): void {
-    this.loading = true;
+loadData(): void {
+  this.loading = true;
 
-    // On charge en parallèle : toutes les plateformes + les certifications de la catégorie
-    this.plateformeService.getAll().subscribe({
-      next: (platforms) => {
-        this.platforms = platforms;
-      },
-      error: (err) => console.error('Erreur plateformes:', err)
-    });
+  forkJoin({
+    platforms: this.plateformeService.getAll(),
+    certifications: this.certificationService.getByCategory(this.category)
+  }).subscribe({
+    next: ({ platforms, certifications }) => {
+      this.allCertifications = certifications;
 
-    this.certificationService.getByCategory(this.category).subscribe({
-      next: (data) => {
-        this.allCertifications = data;
-        this.loading = false;
-        console.log('Certifications chargées pour la catégorie', this.category, ':', data);
-      },
-      error: (err) => {
-        console.error('Erreur certifications:', err);
-        this.loading = false;
-      }
-    });
-  }
+      // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
+      const plateformeIdsAvecCertifications = new Set(
+        certifications
+          .map(f => (f.plateforme as Plateforme)?.id)
+          .filter((id): id is number => id !== undefined && id !== null)
+      );
+
+      // Ne garde que les plateformes présentes dans cet ensemble
+      this.platforms = platforms.filter(p => plateformeIdsAvecCertifications.has(p.id!));
+
+      this.loading = false;
+      console.log('Certifications chargées pour la catégorie', this.category, ':', certifications);
+      console.log('Plateformes filtrées:', this.platforms);
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des données:', err);
+      this.loading = false;
+    }
+  });
+}
+  
+  // loadData(): void {
+  //   this.loading = true;
+
+  //   // On charge en parallèle : toutes les plateformes + les certifications de la catégorie
+  //   this.plateformeService.getAll().subscribe({
+  //     next: (platforms) => {
+  //       this.platforms = platforms;
+  //     },
+  //     error: (err) => console.error('Erreur plateformes:', err)
+  //   });
+
+  //   this.certificationService.getByCategory(this.category).subscribe({
+  //     next: (data) => {
+  //       this.allCertifications = data;
+  //       this.loading = false;
+  //       console.log('Certifications chargées pour la catégorie', this.category, ':', data);
+  //     },
+  //     error: (err) => {
+  //       console.error('Erreur certifications:', err);
+  //       this.loading = false;
+  //     }
+  //   });
+  // }
 
   // Clic sur une plateforme → filtre les certifications de la catégorie appartenant à cette plateforme
   selectPlatform(platform: Plateforme): void {
@@ -99,7 +132,7 @@ export class CertificationCategoryComponent implements OnInit {
     );
 
     setTimeout(() => {
-      document.querySelector('.formations-section')?.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.certifications-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 0);
   }
 
@@ -163,4 +196,30 @@ export class CertificationCategoryComponent implements OnInit {
     event.stopPropagation(); // empêche le clic de aussi déclencher le routerLink de la ligne
     // logique d'ajout/retrait des favoris ici
   }
+
+  get showPlatformsCarousel(): boolean {
+  return this.platforms.length > 4;
+}
+
+get visiblePlatforms(): Plateforme[] {
+  if (this.platforms.length <= 4) {
+    return this.platforms;
+  }
+  const result: Plateforme[] = [];
+  const n = this.platforms.length;
+  for (let i = 0; i < 4; i++) {
+    result.push(this.platforms[(this.carouselStartIndex + i) % n]);
+  }
+  return result;
+}
+
+nextPlatformsPage(): void {
+  const n = this.platforms.length;
+  this.carouselStartIndex = (this.carouselStartIndex - 1 + n) % n;
+}
+
+previousPlatformsPage(): void {
+  const n = this.platforms.length;
+  this.carouselStartIndex = (this.carouselStartIndex + 1) % n;
+}
 }

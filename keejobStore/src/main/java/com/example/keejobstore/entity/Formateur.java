@@ -35,7 +35,8 @@ public class Formateur {
     private String poste;
     private String image;
     private Integer discount;
-
+    private Boolean formationPresentiel;
+    private Boolean formationEnLigne;
     @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<ServiceFromateur> servicesFormateurs = new ArrayList<>();
     @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

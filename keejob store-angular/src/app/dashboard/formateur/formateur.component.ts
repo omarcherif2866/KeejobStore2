@@ -30,7 +30,11 @@ export class FormateurComponent implements OnInit {
     experience: '',
     poste: '',
     university: '',
-    image:''
+    image:'',
+    discount: null as number | null,   // ← ajouté
+    formationPresentiel: false,
+    formationEnLigne: false
+
   };
   
   editId: any = null;
@@ -43,42 +47,43 @@ export class FormateurComponent implements OnInit {
   }
 
   // Récupérer les actualités depuis le backend
-  fetchFormateurs() {
-    this.loading = true;
-    this.formateurservice.getFormateur().subscribe(
-      (response: any[]) => {
-        // Transformer chaque JSON en instance de Formateur
-        this.formateurs = response.map(f => new Formateur(
-          f.id,
-          f.phone,
-          f.description,
-          f.address,
-          f.email,
-          f.experience,
-          f.poste,
-          f.firstName,
-          f.lastName,
-          f.university,
-          f.image,
-          f.servicesFormateurs || [],
-          f.titleWhyList || []
-        ));
-        this.formateurs = this.formateurs; // si pagination ou filtrage
-        this.loading = false;
-        console.log('Données reçues: ', this.formateurs);
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des formateurs:', error);
-        this.loading = false;
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur lors du chargement des données',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    );
-  }
+fetchFormateurs() {
+  this.loading = true;
+  this.formateurservice.getFormateur().subscribe(
+    (response: any[]) => {
+      this.formateurs = response.map(f => new Formateur(
+        f.id,
+        f.phone,
+        f.description,
+        f.address,
+        f.email,
+        f.experience,
+        f.poste,
+        f.firstName,
+        f.lastName,
+        f.university,
+        f.image,
+        f.discount,                    // ← ajouté, remis à la bonne position
+        f.formationPresentiel ?? false,
+        f.formationEnLigne ?? false,
+        f.servicesFormateurs || [],
+        f.titleWhyList || []
+      ));
+      this.loading = false;
+      console.log('Données reçues: ', this.formateurs);
+    },
+    (error) => {
+      console.error('Erreur lors du chargement des formateurs:', error);
+      this.loading = false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors du chargement des données',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  );
+}
 
 
   // Pagination
@@ -114,8 +119,10 @@ handleAdd() {
     experience: '',
     poste: '',
     university: '',
-    image: ''
-
+    image: '',
+    discount: null,
+    formationPresentiel: false,
+    formationEnLigne: false
   };
   this.showModal = true;
 }
@@ -134,7 +141,11 @@ handleEdit(formateur: Formateur) {
     experience: formateur.Experience,
     poste: formateur.Poste,
     university: formateur.University,
-    image: formateur.Image
+    image: formateur.Image,
+    discount: formateur.Discount,
+    formationPresentiel: formateur.FormationPresentiel ?? false,
+    formationEnLigne: formateur.FormationEnLigne ?? false
+
   };
   this.editId = formateur.Id;
   this.showModal = true;
@@ -192,7 +203,11 @@ handleSubmit() {
   formData.append('experience', this.formData.experience);
   formData.append('description', this.formData.description);
   formData.append('poste', this.formData.poste);
-  
+  if (this.formData.discount !== null && this.formData.discount !== undefined) {
+    formData.append('discount', this.formData.discount.toString());
+  }  
+  formData.append('formationPresentiel', String(this.formData.formationPresentiel));
+  formData.append('formationEnLigne', String(this.formData.formationEnLigne));
   // Ajouter l'image si elle existe
   if (this.selectedImage) {
     formData.append('image', this.selectedImage, this.selectedImage.name);
@@ -213,7 +228,9 @@ handleSubmit() {
             response.LastName,
             response.University,
             response.Image, // Ajouter l'image
-            response.Discount // Ajouter le discount
+            response.Discount ,
+            response.FormationPresentiel,
+            response.FormationEnLigne
         );
 
         this.formateurs.push(newFormateur);
@@ -257,7 +274,9 @@ handleSubmit() {
             response.LastName,
             response.University,
             response.Image, // Ajouter l'image
-            response.Discount // Ajouter le discount
+            response.Discount,
+            response.FormationPresentiel,
+            response.FormationEnLigne
           );
         }
         this.showModal = false;

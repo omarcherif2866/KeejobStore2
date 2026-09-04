@@ -144,8 +144,9 @@
         <th>Université</th>
         <th>Experience</th>
         <th>Déscription</th>
-        <!-- <th>Services</th>       
-        <th>Pourquoi moi</th>       -->
+        <th>Promotions</th>       
+        <th>Présentiel</th>
+        <th>En ligne</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -164,8 +165,9 @@
         <td>{{formateur.university}}</td>
         <td>{{formateur.experience}}</td>
         <td>{{formateur.description}}</td>
-        <!-- <td>{{ getServicesTitles(formateur) }}</td>
-        <td>{{ getTitleWhy(formateur) }}</td> -->
+        <td>{{ formateur.discount ? formateur.discount + '%' : '—' }}</td>
+        <td>{{ formateur.FormationPresentiel ? 'Oui' : 'Non' }}</td>
+        <td>{{ formateur.FormationEnLigne ? 'Oui' : 'Non' }}</td>
 
         <td class="actions">
           <button (click)="handleEdit(formateur)" class="action-btn edit-btn" title="Modifier le formateur">
@@ -215,7 +217,7 @@
       <label>Téléphone</label>
       <input type="text" [(ngModel)]="formData.phone" placeholder="Entrez le téléphone">
 
-      <label>address</label>
+      <label>Address</label>
       <input type="text" [(ngModel)]="formData.address" placeholder="Entrez l'address">
 
       <label>Université</label>
@@ -229,6 +231,21 @@
 
       <label>Poste</label>
       <input type="text" [(ngModel)]="formData.poste" placeholder="Entrez le poste">
+
+      <label>Réduction (%)</label>  
+      <input type="number" [(ngModel)]="formData.discount" placeholder="Ex: 10" min="0" max="100">  
+
+<label>Formation en présentiel</label>
+<div class="toggle-group">
+  <button type="button" class="toggle-btn" [class.active]="formData.formationPresentiel === true" (click)="formData.formationPresentiel = true">Oui</button>
+  <button type="button" class="toggle-btn" [class.active]="formData.formationPresentiel === false" (click)="formData.formationPresentiel = false">Non</button>
+</div>
+
+<label>Formation en ligne</label>
+<div class="toggle-group">
+  <button type="button" class="toggle-btn" [class.active]="formData.formationEnLigne === true" (click)="formData.formationEnLigne = true">Oui</button>
+  <button type="button" class="toggle-btn" [class.active]="formData.formationEnLigne === false" (click)="formData.formationEnLigne = false">Non</button>
+</div>
 
         <label for="image">Photo du formateur</label>
         <input 

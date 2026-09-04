@@ -114,7 +114,7 @@
           </ul>
         </li>
 
-        <li class="dropdown">
+        <!-- <li class="dropdown">
           <a href="international" (click)="toggleDropdownMenu('international', $event)">
             International <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'international'"></i>
           </a>
@@ -122,7 +122,7 @@
             <li><a href="tests_psychometriques">S'informer</a></li>
             <li><a href="tests_competences">Préparer et valider mon projet</a></li>
           </ul>
-        </li>
+        </li> -->
 
       </ul>
 
@@ -152,10 +152,10 @@
             <button class="btn btn-cancel" (click)="logout()">Se déconnecter</button>
           </div>
           <ng-template #loggedOut>
-            <div class="button-group">
-              <button class="btn btn-primary" routerLink="/login">Se connecter</button>
-              <button class="btn btn-primary" routerLink="/register">S'inscrire</button>
-            </div>
+<div class="button-group">
+  <button class="btn btn-outline" routerLink="/login">Se connecter</button>
+  <button class="btn btn-primary" routerLink="/register">S'inscrire</button>
+</div>
           </ng-template>
         </div>
       </div>

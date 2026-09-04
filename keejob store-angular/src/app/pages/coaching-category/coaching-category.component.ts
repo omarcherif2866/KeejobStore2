@@ -45,6 +45,7 @@ export class CoachingCategoryComponent implements OnInit {
     });
   }
 
+  
   loadEvaluations(): void {
     this.loading = true;
 

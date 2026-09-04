@@ -411,12 +411,38 @@ a {
   border-radius: 4px;
 }
 
-.btn-add {
-  margin-top: 10px;
-  background: #3498db;
+.title-why-actions {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;   /* était 10px */
+}
+
+.btn-save-why {
+  background-color: #149443;
   color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
+    margin-left: 16px;
+
+}
+
+.btn-save-why:hover {
+  background-color: #045823;
+}
+
+.title-why-card {
+  margin-bottom: 12px;
+}
+
+.title-why-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.title-why-field {
+  flex: 1;
+}
+
+.title-why-row .btn-remove {
+  flex-shrink: 0;
+  margin-bottom: 16px; /* aligne verticalement avec le bas de l'input, compense la margin-bottom du modal-content-rectangle input */
 }

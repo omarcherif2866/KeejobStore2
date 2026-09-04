@@ -1272,9 +1272,8 @@ textarea.form-input {
   margin: 10px 0;
 }
 .icon-preview {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 10px;
+  display: block;        /* était inline-block → force le passage à la ligne */
+  margin-bottom: 12px;
 }
 
 .icon-thumbnail {
@@ -1303,7 +1302,8 @@ textarea.form-input {
   transition: background 0.2s;
 }
 .file-input-wrapper {
-  margin: 10px 0;
+  display: block;         /* redevient block, pas besoin d'inline-block ici */
+  margin: 0 0 10px;
 }
 
 .file-input {
@@ -1322,20 +1322,44 @@ textarea.form-input {
 .file-label {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
+  gap: 6px;
+  padding: 6px 14px;
   background: #2196F3;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .file-label:hover {
   background: #1976D2;
 }
 
+.file-icon {
+  font-size: 14px;
+}
+
+.step-content .file-label {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #2196F3;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+.step-content .file-label:hover {
+  background: #1976D2;
+}
 
 .inline-icon-gallery {
   margin-top: 15px;

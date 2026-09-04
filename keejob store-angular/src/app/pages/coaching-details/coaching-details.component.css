@@ -21,12 +21,14 @@ body {
     max-width: 1680px;
     padding: 0 60px;
   }
+  
 }
 
 @media (min-width: 1920px) {
   .container {
     max-width: 1800px;
   }
+  
 }
 
 /* ===== HERO ===== */
@@ -177,37 +179,111 @@ body {
   opacity: 0.40;
 }
 
-/* Le formulaire est désormais toujours visible : plus de survol.
-   Ancré en haut à droite de l'image (et non en bas), pour ne pas
-   déborder au-dessus de la section. */
-.hero-form-trigger {
-  position: absolute;
-  top: 30px;
-  right: 90px;   /* ou -40px, ajuste selon le rendu souhaité */
-  z-index: 3;
-}
+
+
 
 /* Le bouton déclencheur n'a plus de rôle puisque le formulaire est
    affiché en permanence : on le masque complètement. */
 .btn-request-trigger {
   display: none;
 }
+/* petit écran */
+/* ===== Petit écran desktop (~15", jusqu'à 1440px) ===== */
 
+
+
+/* ===== Petit écran desktop (~15", jusqu'à 1536px effectifs) ===== */
+@media (min-width: 1024px) and (max-width: 1600px) {
+  .hero-visual {
+    position: relative;
+    height: auto;
+    display: block;
+    justify-self: start;
+    width: 140%;
+    transform: translateX(-260px);
+  }
+  .hero-form-trigger {
+    position: absolute;
+    top: 30px;
+    right: 110px;
+    z-index: 3;
+  }
+  .hero-form-card {
+    position: static;
+    width: 480px;
+    max-width: 88vw;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+    z-index: 2;
+    border: 2px solid transparent;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+/* ===== Grand écran desktop (~17" et plus, à partir de 1601px) ===== */
+@media (min-width: 1601px) {
+  .hero-visual {
+    position: relative;
+    height: auto;
+    display: block;
+    justify-self: start;
+    width: 150%;
+    transform: translateX(-360px);
+  }
+  .hero-form-trigger {
+    position: absolute;
+    top: 30px;
+    right: 90px;
+    z-index: 3;
+  }
+  .hero-form-card {
+    position: static;
+    width: 600px;
+    max-width: 88vw;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 26px 24px;
+    box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
+    z-index: 2;
+    border: 2px solid transparent;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+
+
+
+/* grand écran
+.hero-form-trigger {
+  position: absolute;
+  top: 30px;
+  right: 90px;   
+  z-index: 3;
+}
 .hero-form-card {
   position: static;
   width: 600px;
   max-width: 88vw;
-  background: #ffffff;
+  background: 
+#ffffff;
   border-radius: 20px;
   padding: 26px 24px;
   box-shadow: 0 20px 45px rgba(30, 39, 73, 0.18);
   z-index: 2;
-  border: 2px solid transparent;   /* ⬅️ base, surchargée par data-id */
+  border: 2px solid transparent;   
   opacity: 1;
   visibility: visible;
   transform: none;
   pointer-events: auto;
-}
+} */
 
 .form-header {
   display: flex;

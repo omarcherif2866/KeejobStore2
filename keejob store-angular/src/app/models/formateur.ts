@@ -15,6 +15,8 @@ export class Formateur {
     private university: string;
     private image: string;
     private discount: any;
+    private formationPresentiel: boolean;
+    private formationEnLigne: boolean;
     private servicesFormateurs: ServiceFormateur[] = [];
     private titleWhyList: TitleWhy[] = [];
     private formationFormateurs: FormationFormateur[] = [];
@@ -31,6 +33,8 @@ export class Formateur {
       university: string,
       image: string,
       discount: any,
+      formationPresentiel: boolean = false,
+      formationEnLigne: boolean = false,
       servicesFormateurs: ServiceFormateur[] = [],
       titleWhyList: TitleWhy[] = [],
       formationFormateurs: FormationFormateur[] = []
@@ -49,6 +53,8 @@ export class Formateur {
       this.university = university;
       this.image = image;
       this.discount = discount;
+      this.formationPresentiel = formationPresentiel;
+      this.formationEnLigne = formationEnLigne;
     this.servicesFormateurs = servicesFormateurs;
     this.titleWhyList = titleWhyList;
     this.formationFormateurs = formationFormateurs;
@@ -157,5 +163,17 @@ export class Formateur {
     public set Image(image: string) {
       this.image = image;
     } 
+    public get FormationPresentiel(): boolean {
+      return this.formationPresentiel;
+    }
+    public set FormationPresentiel(formationPresentiel: boolean) {
+      this.formationPresentiel = formationPresentiel;
+    }
 
+    public get FormationEnLigne(): boolean {
+      return this.formationEnLigne;
+    }
+    public set FormationEnLigne(formationEnLigne: boolean) {
+      this.formationEnLigne = formationEnLigne;
+    }
   }

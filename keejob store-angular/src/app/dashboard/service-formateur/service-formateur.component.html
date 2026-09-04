@@ -199,18 +199,24 @@
       <!-- POURQUOI MOI -->
       <h4>Pourquoi Moi ?</h4>
 
-      <div *ngFor="let why of listTitleWhy; let i = index">
-        <label>Titre</label>
-        <input type="text" [(ngModel)]="why.Title" [ngModelOptions]="{standalone:true}">
+      <div *ngFor="let why of listTitleWhy; let i = index" class="title-why-card">
+        <div class="title-why-row">
+          <div class="title-why-field">
+            <label>Titre</label>
+            <input type="text" [(ngModel)]="why.Title" [ngModelOptions]="{standalone:true}">
+          </div>
+          <button class="btn-remove" (click)="removeTitleWhy(i)" title="Supprimer">✕</button>
+        </div>
 
         <label>Description</label>
         <textarea [(ngModel)]="why.Description" [ngModelOptions]="{standalone:true}"></textarea>
-        <button class="btn-remove" (click)="removeTitleWhy(i)">X</button>
         <hr>
       </div>
 
-      <button class="btn-add" type="button" (click)="addTitleWhy()">+ Ajouter Pourquoi Moi</button> <br>
-      <button class="btn-add" type="button" (click)="saveTitleWhy($event)">💾 Enregistrer TitleWhy</button>
+<div class="details-header title-why-actions">
+  <button class="btn btn-sm btn-blue" type="button" (click)="addTitleWhy()">+ Ajouter Pourquoi Moi</button>
+  <button *ngIf="listTitleWhy.length > 0" class="btn btn-sm btn-save-why" type="button" (click)="saveTitleWhy($event)">💾 Enregistrer TitleWhy</button>
+</div>
 
       <hr>
 

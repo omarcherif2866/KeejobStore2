@@ -35,7 +35,9 @@ public class FormateurController {
             @RequestParam("lastName") String lastName,
             @RequestParam("university") String university,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("discount") Integer discount) {
+            @RequestParam("discount") Integer discount,
+            @RequestParam(value = "formationPresentiel", required = false, defaultValue = "false") Boolean formationPresentiel,
+            @RequestParam(value = "formationEnLigne", required = false, defaultValue = "false") Boolean formationEnLigne) {
         try {
             // Validation
             if (address == null || address.isEmpty() || description == null || description.isEmpty() ||
@@ -57,7 +59,8 @@ public class FormateurController {
             formateur.setLastName(lastName);
             formateur.setUniversity(university);
             formateur.setDiscount(discount);
-
+            formateur.setFormationPresentiel(formationPresentiel);
+            formateur.setFormationEnLigne(formationEnLigne);
             // Upload de l'image vers Cloudinary
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
@@ -108,8 +111,9 @@ public class FormateurController {
             @RequestParam("poste") String poste,
             @RequestParam("university") String university,
             @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("discount") Integer discount) {
-
+            @RequestParam("discount") Integer discount,
+            @RequestParam(value = "formationPresentiel", required = false, defaultValue = "false") Boolean formationPresentiel,
+            @RequestParam(value = "formationEnLigne", required = false, defaultValue = "false") Boolean formationEnLigne) {
         try {
             Formateur existing = formateurService.getFormateurById(id);
             if (existing == null) {
@@ -127,7 +131,8 @@ public class FormateurController {
             existing.setPoste(poste);
             existing.setUniversity(university);
             existing.setDiscount(discount);
-
+            existing.setFormationPresentiel(formationPresentiel);
+            existing.setFormationEnLigne(formationEnLigne);
             // Si image présente
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
