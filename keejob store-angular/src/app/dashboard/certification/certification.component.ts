@@ -493,4 +493,8 @@ export class CertificationComponent implements OnInit {
     if (!category) return 'Non renseignée';
     return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
   }
+
+    trackByIndex(index: number): number {
+  return index;
+}
 }

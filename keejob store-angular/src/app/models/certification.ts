@@ -4,7 +4,7 @@ import { Plateforme } from './platforme';
 export enum CategoryCertification {
   Marketing_Digital = 'Marketing_Digital',
   Entrepreneuriat = 'Entrepreneuriat',
-  Langues = 'Langues'
+  AI = 'AI'
 }
 
 export interface CertificationAvantage {
