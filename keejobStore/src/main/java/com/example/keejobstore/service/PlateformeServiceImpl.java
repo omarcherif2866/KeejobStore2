@@ -47,7 +47,7 @@ public class PlateformeServiceImpl implements PlateformeService {
     @Override
     public Plateforme createWithImages(Plateforme plateforme, MultipartFile logo, MultipartFile imageIllustration) throws IOException {
         if (logo != null && !logo.isEmpty()) {
-            plateforme.setLogo(cloudinaryService.uploadImage(logo));
+            plateforme.setLogo(cloudinaryService.uploadImagePlatforme(logo));
         }
 //        if (imageIllustration != null && !imageIllustration.isEmpty()) {
 //            plateforme.setImageIllustration(cloudinaryService.uploadImage(imageIllustration));

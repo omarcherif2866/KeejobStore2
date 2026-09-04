@@ -29,6 +29,16 @@ public class CloudinaryService {
         return uploadResult.get("secure_url").toString();
     }
 
+    public String uploadImagePlatforme(MultipartFile file) throws IOException {
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "platforme",
+                        "resource_type", "image"
+                )
+        );
+        return uploadResult.get("secure_url").toString();
+    }
+
     public String uploadIcon(MultipartFile file, String folder) throws IOException {
         Map<String, Object> uploadParams = new HashMap<>();
         uploadParams.put("folder", folder);
