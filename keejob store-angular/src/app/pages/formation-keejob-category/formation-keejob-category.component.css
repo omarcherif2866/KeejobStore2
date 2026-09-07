@@ -265,13 +265,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .rating-score { font-weight: 700; color: #1e2749; }
 .rating-reviews { color: #9ca3af; }
 
-.platform-card-desc {
-  font-size: 13px;
-  color: #919ca2;
-  line-height: 1.6;
-  margin-bottom: 14px;
-  flex-grow: 1;
-}
+
 
 .platform-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .tag {
@@ -549,10 +543,17 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 }
 
 .platform-card-desc {
+  font-size: 13px;
+  color: #919ca2;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  flex-grow: 1;
+  min-height: 0;           /* ← corrige le bug flex + line-clamp */
+  max-height: 42px;         /* ← filet de sécurité : 13px × 1.6 × 2 lignes ≈ 42px */
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-clamp: 2; /* pour les navigateurs qui supportent la version standard */
   overflow: hidden;
   text-overflow: ellipsis;
 }

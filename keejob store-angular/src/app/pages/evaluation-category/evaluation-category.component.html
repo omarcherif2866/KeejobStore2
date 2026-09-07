@@ -1,64 +1,115 @@
+<!-- evaluation-category.component.html -->
 <section class="expertise-section">
 
-  <!-- Fil d'ariane -->
-<div class="breadcrumb">
-  <a routerLink="/">🏠 Accueil</a> ›
-  <a routerLink="/evaluation">Évaluation</a> ›
-  <span>{{ categoryDisplay }}</span>
-</div>
+  <!-- ===================== BREADCRUMB ===================== -->
+  <div class="breadcrumb">
+    <a routerLink="/">🏠 Accueil</a> ›
+    <a routerLink="/evaluation">Évaluation</a> ›
+    <span>{{ categoryDisplay }}</span>
+  </div>
 
-  <!-- État de chargement -->
+  <!-- ===================== HERO (style keejob) ===================== -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-left">
+        <span class="hero-badge">✓ Partenaire certifié Central Test</span>
+        <h1 class="hero-title">
+          <img [src]="centralTestLogo" alt="Central Test" class="hero-title-logo">
+          Optimisez le potentiel humain avec notre outil
+          <span class="highlight">Central Test</span>
+        </h1>
+        <p class="hero-subtitle">{{ heroSubtitle }}</p>
+
+        <div class="hero-features">
+          <div class="hero-feature" *ngFor="let f of heroFeatures">
+            <span class="feature-icon" [ngClass]="f.iconClass">{{ f.icon }}</span>
+            <div>
+              <strong>{{ f.title }}</strong>
+              <span>{{ f.subtitle }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <img [src]="heroImage" alt="Central Test" class="hero-image">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOLUTION D'ÉVALUATION ===================== -->
+  <section class="info-block">
+    <div class="info-block-header">
+      <span class="info-number">1</span>
+      <h2>Solution d'évaluation</h2>
+    </div>
+    <p class="info-block-lead">Évaluez vos futurs recrutés ou vos collaborateurs</p>
+    <p class="info-block-text" *ngFor="let p of solutionParagraphs">{{ p }}</p>
+  </section>
+
+  <!-- ===================== VOS BÉNÉFICES ===================== -->
+  <section class="info-block info-block-alt">
+    <div class="info-block-header">
+      <span class="info-number">2</span>
+      <h2>Vos bénéfices</h2>
+    </div>
+    <p class="info-block-lead">Évaluez vos futurs recrutés ou vos collaborateurs</p>
+    <ul class="benefits-list">
+      <li *ngFor="let b of benefits">{{ b }}</li>
+    </ul>
+  </section>
+
+  <!-- ===================== EXEMPLE DE RAPPORT ===================== -->
+  <section class="info-block">
+    <div class="info-block-header">
+      <span class="info-number">11</span>
+      <h2>Exemple d'un rapport</h2>
+    </div>
+    <p class="info-block-text">{{ reportExampleText }}</p>
+  </section>
+
+  <!-- ===================== LOADER ===================== -->
   <div class="loading-state" *ngIf="loading">
     <div class="spinner"></div>
   </div>
 
-  <!-- CAS 1 : il y a des données -->
-  <div class="platforms-cards-container" *ngIf="!loading && evaluations.length > 0">
-    <div *ngFor="let ev of evaluations" class="platform-card">
+  <!-- ===================== CAS 1 : des évaluations existent ===================== -->
+  <div class="container evaluation-list" *ngIf="!loading && evaluations.length > 0">
+    <h1 class="section-title">{{ categoryDisplay }}</h1>
 
-      <div class="platform-header">
-        <div class="platform-logo-wrapper">
-          <img [src]="sanitizeImage(ev.image)" alt="logo" class="platform-logo">
+    <div class="evaluation-grid">
+      <a class="evaluation-card"
+         *ngFor="let ev of evaluations"
+         [routerLink]="['/evaluation', ev.id]">
+        <div class="evaluation-card-img-wrap">
+          <img [src]="sanitizeImage(ev.image)" [alt]="ev.name" class="evaluation-card-img">
         </div>
-        <h3 class="platform-name">{{ ev.name }}</h3>
-      </div>
-
-      <p class="platform-description">{{ ev.description }}</p>
-
-      <div class="platform-rating">
-        <img src="../../assets/87_913.svg" alt="4.7 stars rating">
-        <span class="rating-score">4.7</span>
-        <span class="rating-reviews">Basé sur 17 avis</span>
-      </div>
-
-      <a [routerLink]="['/evaluation', ev.id]" class="btn btn-primary">
-        En savoir plus
+        <div class="evaluation-card-body">
+          <h3>{{ ev.name }}</h3>
+          <p>{{ ev.description }}</p>
+          <span class="btn btn-primary">Voir le test</span>
+        </div>
       </a>
     </div>
   </div>
 
-  <!-- CAS 2 : aucune donnée -->
+  <!-- ===================== CAS 2 : aucune donnée ===================== -->
   <div class="empty-state" *ngIf="!loading && evaluations.length === 0">
     <div class="empty-state-content">
-
       <div class="empty-state-illustration">
         <img src="../../assets/emptyData/empty-search-illustration.svg" alt="Aucun résultat">
       </div>
-
       <div class="empty-state-text">
         <h2>Aucune évaluation {{ categoryLabel }} disponible pour le moment</h2>
         <p>
           Nous n'avons actuellement aucune évaluation {{ categoryLabel }} correspondant à votre recherche.
           Mais ne vous inquiétez pas, de nouvelles évaluations seront bientôt disponibles !
         </p>
-
         <div class="empty-state-notify">
           <div class="notify-icon">🔔</div>
           <span>Soyez le premier informé dès qu'une nouvelle évaluation est disponible.</span>
         </div>
-
         <p class="empty-state-alternatives-label">En attendant, découvrez nos autres évaluations.</p>
-
         <div class="empty-state-alternatives">
           <a *ngFor="let cat of otherCategories; let i = index"
              [routerLink]="['/evaluation/category', cat.key]"
@@ -67,8 +118,53 @@
           </a>
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- ===================== NOS RÉFÉRENCES ===================== -->
+  <section class="references-block">
+    <h2 class="references-title">Nos références</h2>
+    <div class="references-carousel-wrap">
+      <div class="references-track">
+        <div class="reference-logo-item" *ngFor="let ref of allReferences">
+          <img [src]="ref.logo" [alt]="ref.name" class="reference-logo-img">
+        </div>
+        <!-- duplication pour un défilement en boucle continue -->
+        <div class="reference-logo-item" *ngFor="let ref of allReferences" aria-hidden="true">
+          <img [src]="ref.logo" [alt]="ref.name" class="reference-logo-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACTS ===================== -->
+<section class="contacts-block">
+    <p class="contacts-lead">
+      Nos experts vous accompagnent dans le choix, la sélection et l'interprétation des évaluations
+      répondant à vos besoins en recrutement et en mobilité interne.
+    </p>
+    <div class="contacts-grid">
+      <div class="contact-card" *ngFor="let c of contacts">
+        <img [src]="c.photo" [alt]="c.name" class="contact-photo">
+        <h4>{{ c.name }}</h4>
+        <p class="contact-role">{{ c.role }}</p>
+        <p class="contact-phone">📞 {{ c.phone }}</p>
+        <p class="contact-email">✉️ {{ c.email }}</p>
+      </div>
+    </div>
+    <p class="contacts-address">📍 {{ address }}</p>
+  </section>
+ 
+  <!-- ===================== CTA AIDE ===================== -->
+  <section class="help-cta">
+    <div class="help-cta-left">
+      <span class="help-icon">🎧</span>
+      <div>
+        <strong>Besoin d'aide ou de conseil ?</strong>
+        <p>Notre équipe est là pour vous accompagner.</p>
+      </div>
+    </div>
+    <a routerLink="/contact" class="btn-contact">💬 Contactez-nous</a>
+  </section>
+ 
 </section>

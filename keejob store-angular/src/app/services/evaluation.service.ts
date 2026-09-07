@@ -19,8 +19,9 @@ export class EvaluationService {
   constructor(private http: HttpClient, private router: Router) { }
 
 getEvaluationById(id: any): Observable<Evaluation> {
-  return this.http.get<Evaluation>(`${this.apiUrl}/${id}`).pipe(
-    tap(data => console.log('Evaluation reçu:', data)), // debug
+  return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+    map(item => new Evaluation(item)),
+    tap(data => console.log('Evaluation reçu:', data)),
     catchError((error: any) => {
       console.error('Erreur lors de la récupération du Evaluation:', error);
       return throwError(error);

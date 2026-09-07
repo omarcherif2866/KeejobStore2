@@ -54,8 +54,8 @@
             Evaluation <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'evaluation'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'evaluation'">
-            <li><a [routerLink]="['/evaluation/category', 'Les_tests_psychometriques']">Les tests psychométriques</a></li>
-            <li><a [routerLink]="['/evaluation/category', 'Les_tests_de_competences']">Les tests de compétences</a></li>
+            <li><a [routerLink]="['/evaluation/category', 'Les_tests_psychometriques']" (click)="closeMenu()">Les tests psychométriques</a></li>
+            <li><a [routerLink]="['/evaluation/category', 'Les_tests_de_competences']" (click)="closeMenu()">Les tests de compétences</a></li>
           </ul>
         </li>
 
@@ -64,10 +64,10 @@
             Formations <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'formation'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'formation'">
-            <li><a [routerLink]="['/formation/category', 'Formations_langues']">Formations Langues</a></li>
-            <li><a [routerLink]="['/formation/category', 'Formations_office']">Formation office</a></li>
-            <li><a [routerLink]="['/formation/category', 'Formations_Design']">Formation design</a></li>
-            <li><a [routerLink]="['/formation/category', 'Formations_Digital']">Formation digital</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_langues']" (click)="closeMenu()">Formations Langues</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_office']" (click)="closeMenu()">Formation office</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_Design']" (click)="closeMenu()">Formation design</a></li>
+            <li><a [routerLink]="['/formation/category', 'Formations_Digital']" (click)="closeMenu()">Formation digital</a></li>
           </ul>
         </li>
 
@@ -76,9 +76,9 @@
             Certifications <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'certifications'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'certifications'">
-            <li><a [routerLink]="['/certification/category', 'Marketing_Digital']">Marketing digital</a></li>
-            <li><a [routerLink]="['/certification/category', 'Entrepreneuriat']">Entrepreneuriat</a></li>
-            <li><a [routerLink]="['/certification/category', 'AI']">AI</a></li>
+            <li><a [routerLink]="['/certification/category', 'Marketing_Digital']" (click)="closeMenu()">Marketing digital</a></li>
+            <li><a [routerLink]="['/certification/category', 'Entrepreneuriat']" (click)="closeMenu()">Entrepreneuriat</a></li>
+            <li><a [routerLink]="['/certification/category', 'AI']" (click)="closeMenu()">AI</a></li>
           </ul>
         </li>
 
@@ -87,9 +87,9 @@
             Coaching Emploi <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'coaching'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'coaching'">
-            <li><a [routerLink]="['/coachingDetails', 1]">En Ligne</a></li>
-            <li><a [routerLink]="['/coachingDetails', 3]">Presentiel</a></li>
-            <li><a [routerLink]="['/coachingDetails', 2]">Simulation d'entretien</a></li>
+            <li><a [routerLink]="['/coachingDetails', 1]" (click)="closeMenu()">En Ligne</a></li>
+            <li><a [routerLink]="['/coachingDetails', 3]" (click)="closeMenu()">Presentiel</a></li>
+            <li><a [routerLink]="['/coachingDetails', 2]" (click)="closeMenu()">Simulation d'entretien</a></li>
           </ul>
         </li>
 
@@ -98,9 +98,9 @@
             CV et LM <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'cv'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'cv'">
-            <li><a [routerLink]="['/cv', 1]">Correction et rédaction de CV</a></li>
-            <li><a [routerLink]="['/cv', 2]">Correction et rédaction de LM</a></li>
-            <li><a [routerLink]="['/cv', 3]">Traduction de CV et LM</a></li>
+            <li><a [routerLink]="['/cv', 1]" (click)="closeMenu()">Correction et rédaction de CV</a></li>
+            <li><a [routerLink]="['/cv', 2]" (click)="closeMenu()">Correction et rédaction de LM</a></li>
+            <li><a [routerLink]="['/cv', 3]" (click)="closeMenu()">Traduction de CV et LM</a></li>
           </ul>
         </li>
 
@@ -109,8 +109,8 @@
             Partenaires <i class="fas fa-chevron-down dropdown-arrow" [class.rotated]="activeDropdown === 'partenaires'"></i>
           </a>
           <ul class="cool-menu" [class.open-sub]="activeDropdown === 'partenaires'">
-            <li><a href="centre_formation">Centre de formations</a></li>
-            <li><a href="formateur">Formatuers</a></li>
+            <li><a href="centre_formation" (click)="closeMenu()">Centre de formations</a></li>
+            <li><a href="formateur" (click)="closeMenu()">Formatuers</a></li>
           </ul>
         </li>
 

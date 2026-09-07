@@ -36,6 +36,7 @@ public class WebSecurityConfig  {
             "/formateur/**",
             "/serviceFormateur/**",
             "/titleWhy/**",
+            "/evaluationCatalogue/**",
             "/evaluation/**",
             "/serviceEvaluation/**",
             "/formationsFormateur/**",

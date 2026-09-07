@@ -14,14 +14,14 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/evaluationDescription")
+@RequestMapping("/evaluationCatalogue")
 @RequiredArgsConstructor
 public class EvaluationDescriptionController {
     private final EvaluationCatalogueService evaluationCategoryService;
     private final CloudinaryService cloudinaryService;
 
     @GetMapping("/byEvaluation/{evaluationId}")
-    public List<EvaluationCatalogue> getEvaluationDescriptionByEvaluation(@PathVariable Long evaluationId) {
+    public List<EvaluationCatalogue> getEvaluationCatalogueByEvaluation(@PathVariable Long evaluationId) {
         return evaluationCategoryService.getEvaluationCatalogueByEvaluation(evaluationId);
     }
 

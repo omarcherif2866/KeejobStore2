@@ -45,10 +45,6 @@ public class Plateforme {
 
     @OneToMany(mappedBy = "plateforme", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Evaluation> evaluations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "plateforme", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<Certification> certifications = new ArrayList<>();
 
 }

@@ -36,7 +36,10 @@ public class EvaluationController {
             @RequestParam(value = "logo", required = false) MultipartFile logo,
             @RequestParam(value = "catalogueTitles", required = false) List<String> catalogueTitles,
             @RequestParam(value = "catalogueImages", required = false) List<MultipartFile> catalogueImages,
-            @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles) {
+            @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
+            @RequestParam("priceSections") String priceSectionsJson,
+            @RequestParam(value = "catalogueExistingImages", required = false) List<String> catalogueExistingImages
+            ) {
 
         try {
             // Validation
@@ -46,6 +49,12 @@ public class EvaluationController {
 
             // Convert JSON → List<EvaluationSection>
             ObjectMapper mapper = new ObjectMapper();
+
+            List<PriceSection> priceSections = mapper.readValue(
+                    priceSectionsJson,
+                    new TypeReference<List<PriceSection>>(){}
+            );
+
             List<EvaluationSection> sections =
                     mapper.readValue(sectionsJson, new TypeReference<List<EvaluationSection>>() {});
 
@@ -126,7 +135,33 @@ public class EvaluationController {
             evaluation.setDescription(description);
             evaluation.setSections(sections);
             evaluation.setEvaluationCategory(category);
+            evaluation.setPriceSections(priceSections);
+            if (catalogueTitles != null && !catalogueTitles.isEmpty()) {
+                List<EvaluationCatalogue> catalogues = new ArrayList<>();
+                for (int i = 0; i < catalogueTitles.size(); i++) {
+                    EvaluationCatalogue catalogue = new EvaluationCatalogue();
+                    catalogue.setTitle(catalogueTitles.get(i));
 
+                    String uploadedUrl = null;
+                    if (catalogueImages != null && i < catalogueImages.size()
+                            && catalogueImages.get(i) != null && !catalogueImages.get(i).isEmpty()) {
+                        uploadedUrl = cloudinaryService.uploadImage(catalogueImages.get(i));
+                    }
+
+                    if (uploadedUrl != null) {
+                        catalogue.setImage(uploadedUrl);
+                    } else if (catalogueExistingImages != null && i < catalogueExistingImages.size()
+                            && catalogueExistingImages.get(i) != null && !catalogueExistingImages.get(i).isBlank()) {
+                        // On garde l'image existante si aucun nouveau fichier n'a été envoyé
+                        catalogue.setImage(catalogueExistingImages.get(i));
+                    }
+
+                    catalogue.setEvaluation(evaluation);
+                    catalogues.add(catalogue);
+                }
+                // addEvaluation → evaluation.setEvaluationCatalogues(catalogues);
+                // updateEvaluation → evaluation.getEvaluationCatalogues().clear(); evaluation.getEvaluationCatalogues().addAll(catalogues);
+            }
             // Upload image principale
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
@@ -199,10 +234,12 @@ public class EvaluationController {
             @RequestParam("evaluationCategory") String evaluationCategoryStr,
             @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam(value = "logo", required = false) MultipartFile logo,
-//            @RequestParam(value = "partenairesIds", required = false) List<Long> partenairesIds,
+            @RequestParam(value = "catalogueExistingImages", required = false) List<String> catalogueExistingImages,
             @RequestParam(value = "catalogueTitles", required = false) List<String> catalogueTitles,
             @RequestParam(value = "catalogueImages", required = false) List<MultipartFile> catalogueImages,
-            @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles) {
+            @RequestParam(value = "iconFiles", required = false) List<MultipartFile> iconFiles,
+            @RequestParam(value = "priceSections", required = false) String priceSectionsJson
+            ) {
 
         try {
             Evaluation evaluation = evaluationService.getEvaluationById(id);
@@ -212,6 +249,12 @@ public class EvaluationController {
 
             evaluation.setName(name);
             evaluation.setDescription(description);
+            if (priceSectionsJson != null && !priceSectionsJson.isEmpty()) {
+                ObjectMapper priceMapper = new ObjectMapper();
+                List<PriceSection> priceSections =
+                        priceMapper.readValue(priceSectionsJson, new TypeReference<List<PriceSection>>() {});
+            evaluation.setPriceSections(priceSections);
+            }
 
             CategoryEvaluation category;
             try {
@@ -260,23 +303,32 @@ public class EvaluationController {
                 evaluation.setLogo(logoUrl);
             }
 
-            // ✅ CORRECTION : Gérer les partenaires AVANT de sauvegarder
-//            if (partenairesIds != null && !partenairesIds.isEmpty()) {
-//                System.out.println("📋 Updating partenaires with IDs: " + partenairesIds);
-//
-//                // 1. Vider complètement la collection
-////                evaluation.getEvaluationPartenaires().clear();
-//
-//                // ⚠️ IMPORTANT : Flush pour persister le clear dans la DB
-//                evaluationRepository.saveAndFlush(evaluation);
-//
-//
-//
-//                System.out.println("✅ Total partenaires in evaluation: " + evaluation.getEvaluationPartenaires().size());
-//            } else {
-//                System.out.println("⚠️ No partenaires provided, clearing existing ones");
-//                evaluation.getEvaluationPartenaires().clear();
-//            }
+            if (catalogueTitles != null && !catalogueTitles.isEmpty()) {
+                List<EvaluationCatalogue> catalogues = new ArrayList<>();
+                for (int i = 0; i < catalogueTitles.size(); i++) {
+                    EvaluationCatalogue catalogue = new EvaluationCatalogue();
+                    catalogue.setTitle(catalogueTitles.get(i));
+
+                    String uploadedUrl = null;
+                    if (catalogueImages != null && i < catalogueImages.size()
+                            && catalogueImages.get(i) != null && !catalogueImages.get(i).isEmpty()) {
+                        uploadedUrl = cloudinaryService.uploadImage(catalogueImages.get(i));
+                    }
+
+                    if (uploadedUrl != null) {
+                        catalogue.setImage(uploadedUrl);
+                    } else if (catalogueExistingImages != null && i < catalogueExistingImages.size()
+                            && catalogueExistingImages.get(i) != null && !catalogueExistingImages.get(i).isBlank()) {
+                        // On garde l'image existante si aucun nouveau fichier n'a été envoyé
+                        catalogue.setImage(catalogueExistingImages.get(i));
+                    }
+
+                    catalogue.setEvaluation(evaluation);
+                    catalogues.add(catalogue);
+                }
+                // addEvaluation → evaluation.setEvaluationCatalogues(catalogues);
+                // updateEvaluation → evaluation.getEvaluationCatalogues().clear(); evaluation.getEvaluationCatalogues().addAll(catalogues);
+            }
 
             // Gestion des catalogues
             if (catalogueTitles != null && !catalogueTitles.isEmpty()) {

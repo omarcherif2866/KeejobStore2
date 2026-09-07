@@ -81,4 +81,10 @@ toggleDropdownMenu(name: string, event: Event) {
         this.router.navigate(['/']);
       }
 
+
+closeMenu() {
+  this.menuOpen = false;
+  this.activeDropdown = null;
+}
+
 }

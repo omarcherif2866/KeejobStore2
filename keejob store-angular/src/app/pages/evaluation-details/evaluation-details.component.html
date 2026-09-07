@@ -1,0 +1,257 @@
+<!-- evaluation-details.component.html -->
+<section class="expertise-section">
+
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading && ev" [attr.data-id]="1">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <span class="hero-badge-label">{{ ev.Sections?.[0]?.headline || ev.Category }}</span>
+
+            <h1>
+              <span class="line1">{{ splitInTwoLines(ev.Name)[0] }}</span><br>
+              <span class="line2">{{ splitInTwoLines(ev.Name)[1] }}</span>
+            </h1>
+
+            <p class="hero-desc">{{ ev.Sections?.[0]?.subtitle || ev.Description }}</p>
+
+            <div class="hero-actions">
+              <a href="#pricing-section" class="btn btn-primary">Demander ce test</a>
+            </div>
+
+            <div class="hero-trust-row" *ngIf="ev.Sections?.[0]?.details?.length">
+              <div class="trust-item" *ngFor="let detail of ev.Sections[0].details">
+                <div class="trust-icon"
+                     [style.-webkit-mask-image]="'url(' + sanitizeImage(detail.icon) + ')'"
+                     [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
+                </div>
+                <div class="trust-text">
+                  <strong>{{ detail.titre }}</strong>
+                  <span>{{ detail.description }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-image-wrap">
+              <img [src]="sanitizeImage(ev.Image)" [alt]="ev.Name + ' visuel'" class="hero-image">
+            </div>
+
+            <div class="hero-form-trigger">
+              <div class="hero-form-card">
+                <div class="form-header">
+                  <div class="form-header-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <path d="M12 8v4l3 3"></path>
+                    </svg>
+                  </div>
+                  <div class="form-header-text">
+                    <h3>Intéressé par {{ ev.Name }} ?</h3>
+                    <p class="form-subtitle">Réponse sous 2h</p>
+                  </div>
+                </div>
+
+                <form (ngSubmit)="submitForm()" #evalForm="ngForm">
+                  <div class="form-group">
+                    <span class="form-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                    </span>
+                    <input type="text" name="fullname" [(ngModel)]="formData.fullname" placeholder="Votre nom" required>
+                  </div>
+
+                  <div class="form-group">
+                    <span class="form-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                    </span>
+                    <input type="email" name="email" [(ngModel)]="formData.email" placeholder="Votre email" required>
+                  </div>
+
+                  <div class="form-group">
+                    <span class="form-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </span>
+                    <input type="tel" name="whatsapp" [(ngModel)]="formData.whatsapp" placeholder="WhatsApp" required>
+                  </div>
+
+                  <label class="form-group file-group" for="evalFile">
+                    <span class="form-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                    </span>
+                    <span class="file-text">
+                      {{ selectedFiles.length > 0 ? selectedFiles.length + ' fichier(s) sélectionné(s)' : 'Joindre un document (facultatif)' }}
+                      <br><small>(PDF, DOC ou DOCX)</small>
+                    </span>
+                    <span class="upload-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    </span>
+                    <input type="file" id="evalFile" name="evalFile" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" multiple hidden>
+                  </label>
+
+                  <button type="submit" class="btn-submit" [disabled]="sending">
+                    {{ sending ? 'Envoi...' : 'Demander ce test' }}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>
+                  </button>
+                </form>
+
+                <p class="form-note">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Vos données sont 100% confidentielles.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EXPERTISE ===== -->
+    <section id="expertise-section" *ngIf="ev.Sections?.[1]?.details?.length">
+      <div class="container">
+        <h2 class="section-title expertise-title" *ngIf="ev.Sections[1].headline">{{ ev.Sections[1].headline }}</h2>
+        <div class="expertise-box">
+          <div class="expertise-item" *ngFor="let detail of ev.Sections[1].details">
+            <div class="expertise-icon">
+              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+            </div>
+            <h3>{{ detail.titre }}</h3>
+            <p>{{ detail.description }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== CATALOGUE / FICHE DESCRIPTIVE ===== -->
+<!-- ===== CATALOGUE / FICHE DESCRIPTIVE ===== -->
+<section id="catalogue-section" *ngIf="ev.Catalogues?.length">
+  <div class="container">
+    <h2 class="section-title">Fiche de {{ ev.Name }}</h2>
+
+    <div class="catalogue-banner" *ngFor="let cat of ev.Catalogues">
+      <div class="catalogue-thumb-wrap" (click)="openZoom(cat.image)">
+        <img [src]="sanitizeImage(cat.image)" [alt]="cat.title" class="catalogue-thumb">
+        <div class="catalogue-overlay">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="catalogue-content">
+        <span class="catalogue-title">{{ cat.title }}</span>
+        <p class="catalogue-desc">
+          Consultez la fiche descriptive complète de {{ ev.Name }} : objectifs,
+          points forts, dimensions évaluées et présentation du rapport.
+        </p>
+      </div>
+
+      <button type="button" class="btn btn-primary catalogue-cta" (click)="openZoom(cat.image)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/>
+        </svg>
+        Voir la fiche
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ZOOM ===== -->
+<div class="lightbox-overlay" *ngIf="zoomedImage" (click)="closeZoom()">
+  <button type="button" class="lightbox-close" (click)="closeZoom()">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+      <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+    </svg>
+  </button>
+  <img [src]="zoomedImage" class="lightbox-image" (click)="$event.stopPropagation()">
+</div>
+
+    <!-- ===== PRICING ===== -->
+    <section id="pricing-section" *ngIf="ev.PriceSection?.length">
+      <div class="container">
+        <h2 class="section-title">{{ ev.Sections?.[3]?.headline || 'Nos formules pour ce test' }}</h2>
+
+        <div class="pricing-container" [ngClass]="'packs-' + (ev.PriceSection.length <= 4 ? ev.PriceSection.length : 'wrap')">
+          <div class="pricing-card" *ngFor="let ps of ev.PriceSection; let j = index" [ngClass]="getColorClass(j)">
+            <div class="card-header">
+              <span class="pack-badge" [ngClass]="getBadgeClass(j)">{{ ps.title }}</span>
+              <div class="price">{{ ps.price }} DNT</div>
+              <p class="included">{{ ps.subtitle }}</p>
+            </div>
+
+            <div class="card-body">
+              <ul class="feature-list">
+                <li *ngFor="let detail of ps.details">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="11" [attr.fill]="getIconColor(j)"/>
+                    <path d="M7 12.5l3.5 3.5 6.5-7" stroke="white" stroke-width="2.5"/>
+                  </svg>
+                  {{ detail.titre }}
+                </li>
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <a href="#" class="btn btn-choose" [ngClass]="getBtnClass(j)">Choisir cette formule</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LANGUES ===== -->
+    <section id="languages-section" *ngIf="ev.Sections?.[2]?.details?.length">
+      <div class="container">
+        <h2 class="section-title">{{ ev.Sections[2].headline || 'Disponible en plusieurs langues' }}</h2>
+        <div class="languages-row">
+          <div class="lang-item" *ngFor="let detail of ev.Sections[2].details">
+            <div class="lang-flag">
+              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+            </div>
+            <span>{{ detail.titre }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT BANNER ===== -->
+    <section id="contact-banner">
+      <div class="container">
+        <div class="contact-box">
+          <div class="contact-left">
+            <div class="phone-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <strong>Une question sur {{ ev.Name }} ?</strong>
+              <span>Nos experts vous conseillent gratuitement.</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary">Contactez-nous</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CAS : évaluation introuvable -->
+  <div class="empty-state" *ngIf="!loading && notFound">
+    <div class="empty-state-content">
+      <div class="empty-state-text">
+        <h2>Évaluation introuvable</h2>
+        <p>Cette fiche n'existe plus ou a été déplacée.</p>
+        <a routerLink="/evaluation" class="btn btn-primary">Retour aux évaluations</a>
+      </div>
+    </div>
+  </div>
+
+</section>

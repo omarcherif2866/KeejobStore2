@@ -3,7 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #ffffff;
@@ -409,6 +412,18 @@ body {
 }
 
 @media (max-width: 992px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container,
+  .hero-content,
+  .hero-text {
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
   .hero-content {
     gap: 0px;
   }
@@ -423,32 +438,102 @@ body {
     margin-bottom: 20px;
   }
 
+  /* Les 4 stats tiennent sur une ligne, compressées */
+  .hero-mini-stats {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 12px 8px;
+    gap: 4px;
+  }
+
+  .mini-stat {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .mini-stat-number {
+    font-size: 15px;
+  }
+
+  .mini-stat-label {
+    font-size: 10px;
+    line-height: 1.2;
+    display: block;
+    white-space: normal;
+  }
+
+  .mini-stat-divider {
+    flex: 0 0 auto;
+    width: 1px;
+  }
+
+  /* Image d'abord, formulaire ensuite */
   .hero-visual {
+    display: flex;
+    flex-direction: column;
     height: auto;
     min-height: auto;
-    transform: none;   /* annule le décalage sur petits écrans, comme avant */
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+    transform: none;
+  }
+
+  .hero-form-trigger {
+    position: static;
+    order: 2;
   }
 
   .hero-image-wrap {
+    order: -1;
     height: auto;
     aspect-ratio: 4 / 3;
     border-radius: 24px;
+    width: 100%;
   }
 
   .hero-image-wrap::before {
     display: none;
   }
 
-  .hero-form-trigger {
-    position: static;
-  }
-
+  /* Carte du formulaire remontée : chevauche le bas de l'image */
   .hero-form-card {
     position: static;
     width: 100%;
     max-width: 400px;
-    margin: 20px auto 0;
-    box-shadow: 0 10px 30px rgba(30, 39, 73, 0.12);
+    margin: -120px auto 0;   /* ← remonte la carte sur l'image */
+    padding: 24px 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(30, 39, 73, 0.15);
+    box-sizing: border-box;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    border: 2px solid transparent;   /* ← ajouté : permet à border-color du data-id de s'afficher */
+
+  }
+
+  .hero-form-card .form-group {
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+
+  .hero-form-card input {
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .btn-submit {
+    margin-top: 4px;
   }
 }
 
