@@ -88,12 +88,12 @@ export class EvaluationCategoryComponent implements OnInit {
     { name: 'OneTech', logo: 'assets/logo/onetech.webp' }
   ];
 
-  contacts = [
-    { name: 'Selima BEN SALEM', role: 'Directrice Opérationnelle', phone: '(+216) 26 560 103', email: 'selima.bensalem@partnerrecruitment.tn', photo: 'assets/experts/selima-ben-salem.webp' },
-    { name: 'Wiem MATTOUSSI', role: 'Directrice relation client Keejob et chargée événementiel', phone: '(+216) 26 560 294', email: 'wiem.mattoussi@keejob.com', photo: 'assets/experts/wiem-mattoussi.webp' }
-  ];
+  // contacts = [
+  //   { name: 'Selima BEN SALEM', role: 'Directrice Opérationnelle', phone: '(+216) 26 560 103', email: 'selima.bensalem@partnerrecruitment.tn', photo: 'assets/experts/selima-ben-salem.webp' },
+  //   { name: 'Wiem MATTOUSSI', role: 'Directrice relation client Keejob et chargée événementiel', phone: '(+216) 26 560 294', email: 'wiem.mattoussi@keejob.com', photo: 'assets/experts/wiem-mattoussi.webp' }
+  // ];
 
-  address = '29 Rue Abou Tammam, Cité Jardins, 1002 Tunis, Tunisie';
+  // address = '29 Rue Abou Tammam, Cité Jardins, 1002 Tunis, Tunisie';
 
   // ===================== FIN CONTENU STATIQUE =====================
 
