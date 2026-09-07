@@ -5,7 +5,7 @@
     <div class="spinner"></div>
   </div>
 
-  <div *ngIf="!loading && ev" [attr.data-id]="1">
+  <div *ngIf="!loading && ev" [attr.data-category]="ev.Category">
 
     <!-- ===== HERO ===== -->
     <section class="hero-section">
@@ -14,9 +14,12 @@
           <div class="hero-text">
             <span class="hero-badge-label">{{ ev.Sections?.[0]?.headline || ev.Category }}</span>
 
-            <h1>
+            <!-- <h1>
               <span class="line1">{{ splitInTwoLines(ev.Name)[0] }}</span><br>
               <span class="line2">{{ splitInTwoLines(ev.Name)[1] }}</span>
+            </h1> -->
+                        <h1>
+              <span class="line1">{{ ev.Name}}</span><br>
             </h1>
 
             <p class="hero-desc">{{ ev.Sections?.[0]?.subtitle || ev.Description }}</p>
@@ -118,8 +121,9 @@
         <h2 class="section-title expertise-title" *ngIf="ev.Sections[1].headline">{{ ev.Sections[1].headline }}</h2>
         <div class="expertise-box">
           <div class="expertise-item" *ngFor="let detail of ev.Sections[1].details">
-            <div class="expertise-icon">
-              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+            <div class="expertise-icon"
+                [style.-webkit-mask-image]="'url(' + sanitizeImage(detail.icon) + ')'"
+                [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
             </div>
             <h3>{{ detail.titre }}</h3>
             <p>{{ detail.description }}</p>
