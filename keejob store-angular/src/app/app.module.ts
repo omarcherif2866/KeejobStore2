@@ -19,13 +19,13 @@ const routes = [
         (m) => m.HomePageModule
       ),
   },
-{
-  path: 'evaluation',
-  loadChildren: () =>
-    import('./pages/evaluation/evaluation.module').then(
-      (m) => m.EvaluationModule
-    ),
-},
+// {
+//   path: 'evaluation',
+//   loadChildren: () =>
+//     import('./pages/evaluation/evaluation.module').then(
+//       (m) => m.EvaluationModule
+//     ),
+// },
 {
   path: 'centralTest',
   loadChildren: () =>

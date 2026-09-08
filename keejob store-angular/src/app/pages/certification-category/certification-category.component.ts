@@ -30,26 +30,42 @@ carouselStartIndex = 0;
   private categoryLabels: { [key: string]: string } = {
     'Marketing_Digital': 'Marketing Digital',
     'Entrepreneuriat': 'Entrepreneuriat',
-    'Langues': 'Langues',
+    'AI': 'AI',
   };
   loadingIcons = false;
   availableIcons: string[] = [];
 
   // Config visuelle par catégorie : couleur du highlight + image hero
-  private categoryVisuals: { [key: string]: { color: string; image: string } } = {
-    'Marketing_Digital': {
-      color: '#4f5bd5',
-      image: '../../assets/certificationMarketingDigital.webp'
-    },
-    'Entrepreneuriat': {
-      color: '#f59e0b',
-      image: '../../assets/certif_entre.webp'
-    },
-    'Langues': {
-      color: '#22c55e',
-      image: '../../assets/certif_langue.webp'
-    },
-  };
+private categoryVisuals: {
+  [key: string]: { color: string; image: string; blobs: [string, string, string]; layout: string }
+} = {
+  'Marketing_Digital': {
+    color: '#257696',
+    image: '../../assets/1x/certif digital.png',
+    blobs: ['#a8d8e8', '#6bb8d4', '#3d8fb0'], // bleu ciel / turquoise doux
+    layout: 'blobs-split' // arcs séparés (un à gauche, deux à droite)
+  },
+  'Entrepreneuriat': {
+    color: '#c9b8d9',
+    image: '../../assets/1x/certif entre.png',
+  blobs: ['#c9b8d9', '#a68bc4', '#7d5fa3'], // lavande / violet doux
+    layout: 'blobs-left' // arcs à gauche
+  },
+  'AI': {
+    color: '#5a67b8',
+    image: '../../assets/1x/certif ai.png',
+    blobs: ['#b3c1e8', '#7d8fd1', '#5a67b8'], // bleu-violet
+    layout: 'blobs-scattered' // arcs dispersés / diagonale
+  }
+};
+
+get categoryBlobs(): [string, string, string] {
+  return this.categoryVisuals[this.category]?.blobs ?? ['#8a4aa8', '#ef6f5b', '#f2c14e'];
+}
+
+get categoryBlobLayout(): string {
+  return this.categoryVisuals[this.category]?.layout ?? 'blobs-right';
+}
 
   constructor(
     private route: ActivatedRoute,

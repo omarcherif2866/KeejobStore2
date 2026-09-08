@@ -1,9 +1,20 @@
 <!-- ===================== HERO ===================== -->
-<section class="hero-section">
+<section
+  class="hero-section"
+  [ngClass]="categoryBlobLayout"
+  [style.--blob-1]="categoryBlobs[0]"
+  [style.--blob-2]="categoryBlobs[1]"
+  [style.--blob-3]="categoryBlobs[2]">
+  <div class="hero-backdrop">
+    <div class="hero-blob hero-blob-purple"></div>
+    <div class="hero-blob hero-blob-coral"></div>
+    <div class="hero-blob hero-blob-gold"></div>
+  </div>
   <div class="hero-container">
     <div class="hero-left">
       <span class="hero-badge">✓ Annuaire certifié</span>
-      <h1 class="hero-title">Choisissez votre certification   <span class="highlight" [style.color]="categoryColor">{{ categoryLabel }}</span></h1>
+      <h1 class="hero-title">Choisissez votre certification   <br>  <span class="highlight highlight-outline" [style.color]="categoryColor">{{ categoryLabel }}</span>
+</h1>
       <p class="hero-subtitle">
         Accédez aux meilleures certifications {{ categoryLabel }} en ligne selon vos besoins
         sur les plateformes les plus reconnues.
