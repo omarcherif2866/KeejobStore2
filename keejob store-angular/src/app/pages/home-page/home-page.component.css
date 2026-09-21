@@ -3011,6 +3011,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+  margin-left: 28px;
 
     .arrow {
       color: #72B656;
@@ -3021,6 +3022,8 @@ body {
       transform: translateX(3px);
     }
   }
+
+  
 
   /* ---------- COLONNE DROITE : VISUEL ---------- */
   .certif-visual {
