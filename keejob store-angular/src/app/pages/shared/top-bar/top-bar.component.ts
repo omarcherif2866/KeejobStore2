@@ -17,12 +17,16 @@ searchActive = false;
 menuOpen = false;
 activeDropdown: string | null = null
 showUserMenu = false;
+currentUserId: number | null = null;
+
     constructor(private authService: AuthService,private router:Router, private cdr: ChangeDetectorRef
     ) { }
 
 
 
 ngOnInit(): void {
+    this.currentUserId = Number(localStorage.getItem('userId'));
+
   this.authService.isLoggedIn.subscribe(status => {
     this.isLoggedIn = status;
 

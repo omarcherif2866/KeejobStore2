@@ -144,7 +144,7 @@
                 <a routerLink="/cv" class="dropdown-item-custom">
                   <i class="fas fa-th-large"></i> Dashboard
                 </a>
-                <a routerLink="/profil" class="dropdown-item-custom">
+                <a *ngIf="currentUserId" [routerLink]="['/profil', currentUserId]" class="dropdown-item-custom">
                   <i class="fas fa-user"></i> Profil
                 </a>
               </div>
