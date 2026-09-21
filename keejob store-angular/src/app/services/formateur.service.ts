@@ -82,4 +82,7 @@ addFormateur(data: FormData): Observable<Formateur> {
     return this.http.delete<Formateur>(`${this.apiUrl}/${id}`)
 
   }
+
+
+  
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceFormateur } from 'src/app/models/service-formateur';
 import { TitleWhy } from 'src/app/models/title-why';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,6 @@ import Swal from 'sweetalert2';
 })
 export class ServiceFormateurComponent implements OnInit {
 
-
   sidebarOpen = true;
   services: ServiceFormateur[] = [];
   loading = false;
@@ -27,60 +26,97 @@ export class ServiceFormateurComponent implements OnInit {
     id: null,
     title: '',
     description: ''
-
   };
 
-
-formDataTitleWhy= {
+  formDataTitleWhy = {
     id: null,
     title: '',
     description: ''
-
   };
-listTitleWhy: TitleWhy[] = [];
-savedTitleWhy: TitleWhy[] = []; // liste des TitleWhy déjà enregistrés
+  listTitleWhy: TitleWhy[] = [];
+  savedTitleWhy: TitleWhy[] = [];
 
+  currentUserId: number | null = null;
+  formateurIdFromRoute: string | null = null;   // ← ajouté
 
-
-  
   editId: any = null;
   selectedImage: File | null = null;
+  isAdminOrSuper = false;
+  userRole: string = '';
+  isFormateur = false;
 
-  constructor(private ServiceFormateur: ServiceFormateurService, private authService: AuthService,private router:Router, private titleWhyService: TitleWhyService) {}
-
-  ngOnInit() {
-    this.fetchservices()
+  constructor(
+    private ServiceFormateur: ServiceFormateurService,
+    private authService: AuthService,
+    private router: Router,
+    private titleWhyService: TitleWhyService,
+    private route: ActivatedRoute   // ← ajouté
+  ) {
   }
 
-  // Récupérer les actualités depuis le backend
+  ngOnInit() {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
+  this.formateurIdFromRoute = this.route.snapshot.paramMap.get('id');   // ← ajouté
+    this.fetchservices();
+  }
+
+
+  // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
+  }
+
+
 fetchservices() {
   this.loading = true;
 
-  // Récupérer l'ID du formateur depuis le localStorage
-  const id = localStorage.getItem("userId");
-  if (!id) {
-    console.error("ID du formateur introuvable dans le localStorage !");
+  const onSuccess = (response: any[]) => {
+    this.services = response;
     this.loading = false;
+  };
+  const onError = (error: any) => {
+    console.error('Erreur lors du chargement des services', error);
+    this.loading = false;
+  };
+
+  // Formateur connecté → on passe par son user id
+  if (this.isFormateur) {
+    this.ServiceFormateur.getServicesByUser(this.currentUserId!).subscribe(onSuccess, onError);
     return;
   }
 
-  // Appel au service
-  this.ServiceFormateur.getServicesByFormateur(id).subscribe(
-    (response: any[]) => {
-      this.services = response; // stocker les services récupérées
-      console.log("services récupéréess :", this.services);
-      this.loading = false;
-    },
-    (error) => {
-      console.error("Erreur lors du chargement des services", error);
-      this.loading = false;
-    }
-  );
+  // Admin avec un id formateur dans l'URL
+  if (this.isAdminOrSuper && this.formateurIdFromRoute) {
+    this.ServiceFormateur.getServicesByFormateur(this.formateurIdFromRoute).subscribe(onSuccess, onError);
+    return;
+  }
+
+  // Admin sans id → tous les services
+  if (this.isAdminOrSuper) {
+    this.ServiceFormateur.getAll().subscribe(onSuccess, onError);
+    return;
+  }
+
+  this.loading = false;
 }
 
-
-
-  // Pagination
   get currentItems(): ServiceFormateur[] {
     const indexOfLastItem = this.currentPage * this.itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - this.itemsPerPage;
@@ -99,209 +135,143 @@ fetchservices() {
     this.currentPage = pageNumber;
   }
 
-// Ajouter un formateur
-handleAdd() {
-  this.modalMode = 'add';
-  this.formData = {
-    id: null,
-    title: '',
-    description: ''  // 👈 crée le premier textarea automatiquement
-  };
-  this.showModal = true;
-}
-
-
-addTitleWhy() {
-  const why = new TitleWhy('', ''); // constructeur obligatoire
-
-  why.Id = null;
-  why.Formateur = null;
-  // Title et Description sont déjà '' grâce au constructeur
-
-  this.listTitleWhy.push(why);
-}
-
-removeTitleWhy(index: number) {
-  this.listTitleWhy.splice(index, 1);
-}
-
-
-// Éditer un formateur
-handleEdit(services: any) {
-  console.log('Formation à éditer:', services);
-
-  this.modalMode = 'edit';
-
-  // Champs principaux
-  this.formData.id = services?.id || null;
-  this.formData.title = services?.title || '';
-  this.formData.description = services?.description || '';
-
-
-  // ID pour l'édition
-  this.editId = services?.id || null;
-
-  this.showModal = true;
-
-  console.log('FormData après init:', this.formData);
-}
-
-
-
-  // Supprimer une actualité
-  // handleDelete(id: any) {
-  //   if (confirm('Êtes-vous sûr de vouloir supprimer cette actualité ?')) {
-  //     this.ServiceFormateur.(id).subscribe(
-  //       () => {
-  //         this.formateurs = this.formateurs.filter(item => item.Id !== id);
-  //         Swal.fire({
-  //           title: 'Success!',
-  //           text: 'Actualité supprimée avec succès',
-  //           icon: 'success',
-  //           confirmButtonText: 'OK',
-  //           timer: 1500,
-  //         }).then(() => {
-  //           window.location.reload();
-  //         });         
-  //       },
-  //       (error) => {
-  //         Swal.fire({
-  //         icon: 'error',
-  //         title: 'Erreur lors de la suppression',
-  //         showConfirmButton: false,
-  //         timer: 1500
-  //       });          
-  //       }
-  //     );
-  //   }
-  // }
-
-  // Soumettre le formulaire
-
-handleSubmit() {
-  const id = localStorage.getItem("userId");
-  
-  console.log("User ID:", id); // Debug
-
-  const serviceData = {
-    title: this.formData.title,
-    description: this.formData.description,
-    formateur: { id: Number(id) }
-  };
-
-  console.log("Formation à envoyer:", serviceData); // Debug
-  console.log("Mode:", this.modalMode); // Debug
-
-  // ✅ Vérifier le mode (ajout ou modification)
-  if (this.modalMode === 'add') {
-    // MODE AJOUT
-    this.ServiceFormateur.add(serviceData).subscribe(
-      (res) => {
-        console.log('Formation ajoutée', res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Formation ajoutée',
-          showConfirmButton: false,
-          timer: 1500
-        });        
-        this.showModal = false;
-        this.fetchservices();
-      },
-      (err) => {
-        console.error('Erreur ajout', err);
-        console.error('Détails:', err.error);
-      }
-    );
-  } else if (this.modalMode === 'edit') {
-    // MODE MODIFICATION
-    this.ServiceFormateur.update(this.editId, serviceData).subscribe(
-      (res) => {
-        console.log('Formation modifiée', res);
-        Swal.fire({
-          icon: 'success',
-          title: 'Formation modifiée',
-          showConfirmButton: false,
-          timer: 1500
-        });           
-        this.showModal = false;
-        this.fetchservices();
-      },
-      (err) => {
-        console.error('Erreur modification', err);
-        console.error('Détails:', err.error);
-      }
-    );
-  }
-}
-
-
-saveTitleWhy(event?: Event) {
-  if (event) {
-    event.preventDefault(); // empêche le refresh si bouton submit
+  handleAdd() {
+    this.modalMode = 'add';
+    this.formData = {
+      id: null,
+      title: '',
+      description: ''
+    };
+    this.showModal = true;
   }
 
-  const formateurId = localStorage.getItem("userId");
+  addTitleWhy() {
+    const why = new TitleWhy('', '');
+    why.Id = null;
+    why.Formateur = null;
+    this.listTitleWhy.push(why);
+  }
 
-  this.listTitleWhy.forEach((why, index) => {
-    const payload = {
-      title: why.Title,
-      description: why.Description,
-      formateur: { id: Number(formateurId) }
+  removeTitleWhy(index: number) {
+    this.listTitleWhy.splice(index, 1);
+  }
+
+  handleEdit(services: any) {
+    console.log('Formation à éditer:', services);
+
+    this.modalMode = 'edit';
+    this.formData.id = services?.id || null;
+    this.formData.title = services?.title || '';
+    this.formData.description = services?.description || '';
+
+    this.editId = services?.id || null;
+    this.showModal = true;
+  }
+
+  handleSubmit() {
+    const id = this.formateurIdFromRoute || localStorage.getItem("userId");   // ← modifié
+
+    console.log("Formateur ID:", id);
+
+    const serviceData = {
+      title: this.formData.title,
+      description: this.formData.description,
+      formateur: { id: Number(id) }
     };
 
-    this.titleWhyService.add(payload).subscribe(
-      (res: any) => {
-        console.log(`TitleWhy #${index + 1} enregistré :`, res);
-        this.savedTitleWhy.push(res);
-      },
-      (err) => {
-        console.error(`Erreur enregistrement TitleWhy #${index + 1} :`, err);
-      }
-    );
-  });
+    console.log("Formation à envoyer:", serviceData);
+    console.log("Mode:", this.modalMode);
 
-  // Réinitialisation des inputs dynamiques
-  this.listTitleWhy = [];
+    if (this.modalMode === 'add') {
+      this.ServiceFormateur.add(serviceData).subscribe(
+        (res) => {
+          console.log('Formation ajoutée', res);
+          Swal.fire({
+            icon: 'success',
+            title: 'Formation ajoutée',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.showModal = false;
+          this.fetchservices();
+        },
+        (err) => {
+          console.error('Erreur ajout', err);
+          console.error('Détails:', err.error);
+        }
+      );
+    } else if (this.modalMode === 'edit') {
+      this.ServiceFormateur.update(this.editId, serviceData).subscribe(
+        (res) => {
+          console.log('Formation modifiée', res);
+          Swal.fire({
+            icon: 'success',
+            title: 'Formation modifiée',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.showModal = false;
+          this.fetchservices();
+        },
+        (err) => {
+          console.error('Erreur modification', err);
+          console.error('Détails:', err.error);
+        }
+      );
+    }
+  }
 
-  // Affichage Swal sans refresh
-  Swal.fire('Tous les TitleWhy ont été enregistrés !', '', 'success');
-}
+  saveTitleWhy(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
 
+    const formateurId = this.formateurIdFromRoute || localStorage.getItem("userId");   // ← modifié
 
+    this.listTitleWhy.forEach((why, index) => {
+      const payload = {
+        title: why.Title,
+        description: why.Description,
+        formateur: { id: Number(formateurId) }
+      };
 
+      this.titleWhyService.add(payload).subscribe(
+        (res: any) => {
+          console.log(`TitleWhy #${index + 1} enregistré :`, res);
+          this.savedTitleWhy.push(res);
+        },
+        (err) => {
+          console.error(`Erreur enregistrement TitleWhy #${index + 1} :`, err);
+        }
+      );
+    });
 
-
+    this.listTitleWhy = [];
+    Swal.fire('Tous les TitleWhy ont été enregistrés !', '', 'success');
+  }
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
-getServicesTitles(formateur: any): string {
-  if (!formateur.servicesFormateurs) return '';
-  return formateur.servicesFormateurs.map(s => s.title).join(', ');
-}
+  getServicesTitles(formateur: any): string {
+    if (!formateur.servicesFormateurs) return '';
+    return formateur.servicesFormateurs.map((s: any) => s.title).join(', ');
+  }
 
-getTitleWhy(formateur: any): string {
-  if (!formateur.titleWhy) return '';
-  return formateur.titleWhy.map(s => s.title).join(', ');
-}
+  getTitleWhy(formateur: any): string {
+    if (!formateur.titleWhy) return '';
+    return formateur.titleWhy.map((s: any) => s.title).join(', ');
+  }
 
-    logout(): void {
-        this.authService.logout();
-    
-        Swal.fire({
-          icon: 'error',
-          title: 'Vous êtes deconnecté',
-          showConfirmButton: false,
-          timer: 1500
-        }); 
-        
-
-        this.router.navigate(['/']);
-      }
-
-
-      
-
-
+  logout(): void {
+    this.authService.logout();
+    Swal.fire({
+      icon: 'error',
+      title: 'Vous êtes deconnecté',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    this.router.navigate(['/']);
+  }
 }

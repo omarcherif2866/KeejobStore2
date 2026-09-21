@@ -1,10 +1,13 @@
 package com.example.keejobstore.controllers;
 
 import com.example.keejobstore.dto.AuthResponseDTO;
+import com.example.keejobstore.dto.FormateurRegisterDTO;
 import com.example.keejobstore.dto.LoginDto;
 import com.example.keejobstore.dto.MessageResponse;
+import com.example.keejobstore.entity.Formateur;
 import com.example.keejobstore.entity.Role;
 import com.example.keejobstore.entity.User;
+import com.example.keejobstore.repository.FormateurRepository;
 import com.example.keejobstore.repository.UserRepository;
 import com.example.keejobstore.security.jwt.JwtProvider;
 import com.example.keejobstore.security.jwt.usersecurity.UserPrinciple;
@@ -33,6 +36,7 @@ import java.util.Map;
         private final PasswordEncoder passwordEncoder;
         private final JwtProvider jwtProvider;
         private final UserRepository userRepository;
+        private final FormateurRepository formateurRepository;
 
         private final UserService userService;
 
@@ -117,6 +121,52 @@ import java.util.Map;
             } catch (RuntimeException e) {
                 // If an exception occurs, it may mean that the user already exists
                 return ResponseEntity.badRequest().body(new MessageResponse("Failed to register user: " + e.getMessage()));
+            }
+        }
+
+        @PostMapping("/register-formateur")
+        public ResponseEntity<?> registerFormateur(@RequestBody FormateurRegisterDTO dto) {
+            try {
+                if (userRepository.existsByEmail(dto.getEmail())) {
+                    return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already taken!"));
+                }
+
+                // Génère le username à partir de firstName + lastName
+                String generatedUsername = (dto.getFirstName() + dto.getLastName())
+                        .replaceAll("\\s+", "")
+                        .toLowerCase();
+
+                if (userRepository.existsByUsername(generatedUsername)) {
+                    generatedUsername = generatedUsername + System.currentTimeMillis();
+                }
+
+                // 1) Création du User avec le rôle FORMATEUR
+                User user = new User();
+                user.setUsername(generatedUsername);
+                user.setEmail(dto.getEmail());
+                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+                user.setRole(Role.FORMATEUR);
+                user.setBlocked(false);
+
+                User savedUser = userRepository.save(user);
+
+                // 2) Création du profil Formateur lié à ce User
+                Formateur formateur = new Formateur();
+                formateur.setUser(savedUser);
+                formateur.setEmail(dto.getEmail());
+                formateur.setFirstName(dto.getFirstName());
+                formateur.setLastName(dto.getLastName());
+
+                formateurRepository.save(formateur);
+
+                // 3) Génération du token
+                UserPrinciple userPrinciple = UserPrinciple.build(savedUser);
+                String token = jwtProvider.generateToken(userPrinciple);
+
+                return ResponseEntity.ok(new AuthResponseDTO(token, savedUser));
+
+            } catch (RuntimeException e) {
+                return ResponseEntity.badRequest().body(new MessageResponse("Failed to register formateur: " + e.getMessage()));
             }
         }
 

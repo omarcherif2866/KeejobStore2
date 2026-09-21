@@ -44,4 +44,8 @@ public class Formateur {
 
     @OneToMany(mappedBy = "formateur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<FormationFormateur> formationFormateurs = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", unique = true)
+    private User user;
 }

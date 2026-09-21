@@ -45,6 +45,8 @@ login() {
 
         } else if (role === 'SIMPLEU') {
           this.router.navigate(['/']); // Redirect to normal user profile with user ID
+        } else if (role === 'FORMATEUR') {
+          this.router.navigate(['/']); // Redirect to normal user profile with user ID
         }
 
         // Show success message

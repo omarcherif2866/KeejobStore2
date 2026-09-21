@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
         this.user = newUser;
         Swal.fire({
           icon: 'success',
-          title: 'Utilisateur ajouté avec succès',
+          title: 'Compte créé avec succès',
           showConfirmButton: false,
           timer: 1500
         });

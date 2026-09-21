@@ -48,6 +48,8 @@
   text-decoration: none;
   color: #d1d5db;
   transition: background 0.3s, color 0.3s;
+  cursor: pointer;
+
 }
 
 .sidebar nav a:hover {
@@ -249,3 +251,113 @@ header .sidebar-toggle {
         .hero-form-wrapper:last-child {
             animation-delay: 0.2s;
         }
+
+.hero-form .modal-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0 20px;
+}
+
+.hero-form .modal-body .span-2 {
+  grid-column: span 2;
+}
+
+.hero-form .modal-body .span-3 {
+  grid-column: span 3;
+}
+
+.hero-form .modal-body .full-width {
+  grid-column: 1 / -1;
+}
+
+.hero-form .button-container {
+  grid-column: 1 / -1;
+}
+
+.hero-form-wrapper {
+  overflow-x: hidden;
+}
+
+.form-group input,
+.form-group textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.hero-form .modal-body .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+}
+@media (max-width: 1200px) {
+  .hero-form .modal-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .hero-form .modal-body .span-2,
+  .hero-form .modal-body .span-3 {
+    grid-column: 1 / -1;   /* repasse en pleine largeur sur écran moyen */
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-form .modal-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.toggle-group {
+  display: flex;          /* était inline-flex */
+  border: 1.5px solid #d1d5db;
+  border-radius: 24px;
+  padding: 3px;
+  margin: 6px 0 16px;
+  gap: 3px;
+  width: fit-content;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  padding: 7px 22px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover:not(.active) {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.toggle-btn.active {
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.form-group textarea::placeholder {
+  color: #9ca3af;
+}

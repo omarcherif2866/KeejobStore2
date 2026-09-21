@@ -323,7 +323,7 @@
           <span class="arrow">→</span>
         </button>
 
-        <button class="btn-eval-secondary">
+        <button class="btn-eval-secondary" (click)="navigateToEvaluations()">
 <svg width="18" height="18" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 16v1h-17v-1h17zM2 10h2v5h1v-6h-4v6h1v-5zM7 7h2v8h1v-9h-4v9h1v-8zM12 3h2v12h1v-13h-4v13h1v-12z" fill="#000000"></path> </g></svg>
           Voir toutes les évaluations
           <span class="arrow">→</span>
@@ -799,7 +799,7 @@ Un accompagnement personnalisé à chaque étape de votre parcours.
       </div>
 
       <div class="coaching-buttons">
-        <button class="btn-coaching-primary">
+        <button class="btn-coaching-primary" (click)="navigateToCoaching()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -1009,9 +1009,9 @@ Obtenez des certifications reconnues pour valoriser votre expertise.
           <span class="arrow">→</span>
         </button>
 
-        <a href="/certifications" class="link-certif-secondary" >
+        <!-- <a href="/certifications" class="link-certif-secondary" >
           Voir toutes les certifications <span class="arrow">→</span>
-        </a>
+        </a> -->
       </div>
     </div>
 
@@ -1084,9 +1084,44 @@ Obtenez des certifications reconnues pour valoriser votre expertise.
       </div>
     </div>
 
-    <button class="btn-discover-experts">
-      Découvrir tous nos formateurs <span class="arrow">→</span>
-    </button>
+<div class="experts-cta-row">
+  <button class="btn-discover-experts" routerLink="/formateur">
+    Découvrir tous nos formateurs <span class="arrow">→</span>
+  </button>
+
+  <a href="#" class="link-certif-secondary" (click)="$event.preventDefault(); showFormateurModal = true">
+    Devenir formateur <span class="arrow">→</span>
+  </a>
+</div>
+
+<div class="formateur-modal-overlay" *ngIf="showFormateurModal" (click)="showFormateurModal = false">
+  <div class="formateur-modal" (click)="$event.stopPropagation()">
+    <button type="button" class="formateur-modal-close" (click)="showFormateurModal = false">&times;</button>
+    <h3>Devenir formateur</h3>
+    <p class="form-subtitle">Créez votre compte formateur pour rejoindre nos experts.</p>
+
+    <form [formGroup]="formateurForm" (ngSubmit)="submitFormateurForm()">
+      <div class="form-group">
+        <input type="text" formControlName="firstName" placeholder="Prénom" required>
+      </div>
+      <div class="form-group">
+        <input type="text" formControlName="lastName" placeholder="Nom" required>
+      </div>
+      <div class="form-group">
+        <input type="email" formControlName="email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" formControlName="password" placeholder="Mot de passe" required>
+      </div>
+
+      <p class="form-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+      <button type="submit" class="btn-submit" [disabled]="formateurForm.invalid || submitting">
+        {{ submitting ? 'Envoi...' : 'Créer mon compte formateur' }}
+      </button>
+    </form>
+  </div>
+</div>
   </div>
 </section>
 

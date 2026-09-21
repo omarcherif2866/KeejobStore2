@@ -39,6 +39,10 @@ export class CertificationComponent implements OnInit {
   selectedImage: File | null = null;
 
   formData: Certification = this.getEmptyCertification();
+  isAdminOrSuper = false;
+  userRole: string = '';
+  currentUserId: number | null = null;   // ← ajouté
+  isFormateur = false;
 
   constructor(
     private certificationService: CertificationService,
@@ -46,11 +50,35 @@ export class CertificationComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
     this.fetchCertifications();
     this.fetchPlateformes();
+  }
+  // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
   }
 
   private getEmptyCertification(): Certification {

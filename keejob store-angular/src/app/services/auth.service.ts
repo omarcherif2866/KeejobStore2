@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from '../models/user';
+import { FormateurRegisterDTO, User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -128,6 +128,11 @@ changePassword(id: number, data: any): Observable<any> {
   // Réinitialiser le mot de passe
   resetPassword(userId: string, newPassword: string): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}/reset`, { userId, newPassword });
+  }
+
+  addFormateur(formateur: FormateurRegisterDTO): Observable<any> {
+    console.log('Sending formateur to backend:', formateur);
+    return this.httpClient.post<any>(`${this.apiUrl}/register-formateur`, formateur);
   }
 
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common'
 
 import { HomePage } from './home-page.component'
 import { ComponentsModule } from 'src/app/components/components.module'
+import { ReactiveFormsModule } from '@angular/forms'
 
 const routes = [
   {
@@ -14,7 +15,7 @@ const routes = [
 
 @NgModule({
   declarations: [HomePage],
-  imports: [CommonModule, ComponentsModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, ReactiveFormsModule, ComponentsModule, RouterModule.forChild(routes)],
   exports: [HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

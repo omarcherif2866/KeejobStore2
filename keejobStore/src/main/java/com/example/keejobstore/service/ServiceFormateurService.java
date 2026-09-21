@@ -1,5 +1,6 @@
 package com.example.keejobstore.service;
 
+import com.example.keejobstore.entity.FormationFormateur;
 import com.example.keejobstore.entity.ServiceFromateur;
 
 import java.util.List;
@@ -13,6 +14,10 @@ public interface ServiceFormateurService {
     ServiceFromateur update(Long id, ServiceFromateur service); // Mettre à jour un service existant
 
     ServiceFromateur getById(Long id); // ✅ Ajoutez cette ligne
+
+    List<ServiceFromateur> getAll();
+
+    List<ServiceFromateur> getServiceFormateurByUser(Integer userId);
 
 }
 

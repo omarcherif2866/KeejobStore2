@@ -14,7 +14,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: '', component: ServiceFormateurComponent } // ← route par défaut du module
+      { path: '', component: ServiceFormateurComponent },      // sans id (Admin)
+       { path: ':id', component: ServiceFormateurComponent },   // avec id (Formateur)
     ])    
   ]
 })

@@ -47,19 +47,48 @@ export class EvaluationComponent implements OnInit {
   loadingIcons = false;
   loadingPriceIcons = false;
  catalogues: { title: string; image: File | string | null }[] = [];
+  isAdminOrSuper = false;
+  userRole: string = '';
+  currentUserId: number | null = null;   // ← ajouté
+    isFormateur = false;
 
   constructor(
     private evaluationService: EvaluationService,
     private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+  }
  
   ngOnInit() {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
     this.fetchEvaluations();
     this.fetchAvailableIcons();
     this.fetchAvailablePriceIcons();
   }
+
+    // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
+  }
+
  
   private initializeSections() {
     this.sections = [

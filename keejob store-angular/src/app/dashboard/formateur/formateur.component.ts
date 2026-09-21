@@ -18,6 +18,7 @@ export class FormateurComponent implements OnInit {
   itemsPerPage = 5;
   showModal = false;
   modalMode: 'add' | 'edit' = 'add';
+showPassword = false;
 
   formData = {
     id: null,
@@ -33,17 +34,47 @@ export class FormateurComponent implements OnInit {
     image:'',
     discount: null as number | null,   // ← ajouté
     formationPresentiel: false,
-    formationEnLigne: false
+    formationEnLigne: false,
+      password: ''            // ← ajouté
+
 
   };
   
   editId: any = null;
   selectedImage: File | null = null;
+  isAdminOrSuper = false;
+  userRole: string = '';
+  currentUserId: number | null = null;   // ← ajouté
+    isFormateur = false;
 
-  constructor(private formateurservice: FormateurService, private authService: AuthService,private router:Router) {}
+  constructor(private formateurservice: FormateurService, private authService: AuthService,private router:Router) {
+
+  }
 
   ngOnInit() {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
     this.fetchFormateurs();
+  }
+  // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
   }
 
   // Récupérer les actualités depuis le backend
@@ -122,7 +153,9 @@ handleAdd() {
     image: '',
     discount: null,
     formationPresentiel: false,
-    formationEnLigne: false
+    formationEnLigne: false,
+    password: ''
+
   };
   this.showModal = true;
 }
@@ -144,7 +177,9 @@ handleEdit(formateur: Formateur) {
     image: formateur.Image,
     discount: formateur.Discount,
     formationPresentiel: formateur.FormationPresentiel ?? false,
-    formationEnLigne: formateur.FormationEnLigne ?? false
+    formationEnLigne: formateur.FormationEnLigne ?? false,
+    password: ''
+
 
   };
   this.editId = formateur.Id;
@@ -182,6 +217,10 @@ handleEdit(formateur: Formateur) {
 
   // Soumettre le formulaire
 handleSubmit() {
+  if (this.modalMode === 'add' && this.formData.password && this.formData.password.length < 8) {
+  alert('Le mot de passe doit contenir au moins 8 caractères');
+  return;
+}
   // Vérification des champs obligatoires
   if (
     !this.formData.firstName || !this.formData.lastName || !this.formData.email ||
@@ -213,96 +252,68 @@ handleSubmit() {
     formData.append('image', this.selectedImage, this.selectedImage.name);
   }
 
-  if (this.modalMode === 'add') {
-    this.formateurservice.addFormateur(formData).subscribe(
-      (response) => {
-        const newFormateur = new Formateur(
-            response.Id,
-            response.Phone,
-            response.Description,
-            response.Address,
-            response.Email,
-            response.Experience,
-            response.Poste,
-            response.FirstName,
-            response.LastName,
-            response.University,
-            response.Image, // Ajouter l'image
-            response.Discount ,
-            response.FormationPresentiel,
-            response.FormationEnLigne
-        );
-
-        this.formateurs.push(newFormateur);
-        this.showModal = false;
-        this.selectedImage = null; // Réinitialiser
-
-        Swal.fire({
-          title: 'Success!',
-          text: 'Formateur ajouté avec succès',
-          icon: 'success',
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => {
-          window.location.reload();
-        });
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur lors de l\'ajout',
-          text: error,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    );
-  } else {
-    this.formateurservice.putFormateur(this.editId, formData).subscribe(
-      (response) => {
-        const index = this.formateurs.findIndex(item => item.Id === this.editId);
-        if (index !== -1) {
-          this.formateurs[index] = new Formateur(
-            response.Id,
-            response.Phone,
-            response.Description,
-            response.Address,
-            response.Email,
-            response.Experience,
-            response.Poste,
-            response.FirstName,
-            response.LastName,
-            response.University,
-            response.Image, // Ajouter l'image
-            response.Discount,
-            response.FormationPresentiel,
-            response.FormationEnLigne
-          );
-        }
-        this.showModal = false;
-        this.selectedImage = null; // Réinitialiser
-
-        Swal.fire({
-          title: 'Success!',
-          text: 'Formateur modifié avec succès',
-          icon: 'success',
-          timer: 1500,
-          showConfirmButton: false
-        }).then(() => {
-          window.location.reload();
-        });
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur lors de la modification',
-          text: error,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    );
+if (this.modalMode === 'add') {
+  if (this.formData.password) {
+    formData.append('password', this.formData.password);
   }
+  for (const pair of (formData as any).entries()) {
+    console.log(pair[0] + ': ' + pair[1]);
+  }
+  this.formateurservice.addFormateur(formData).subscribe(
+    (response: any) => {
+      this.showModal = false;
+      this.selectedImage = null;
+
+      const password = response.temporaryPassword;   // null si le user existait déjà
+      const email = response.formateur?.email;
+
+      const html = password
+        ? `Un compte a été créé pour <b>${email}</b>.<br><br>
+           Mot de passe du compte :<br>
+           <code style="font-size:1.2em; user-select:all">${password}</code><br><br>
+           <small>Ce mot de passe ne sera plus affiché. Communiquez-le au formateur.</small>`
+        : `Le formateur a été lié au compte existant <b>${email}</b>.`;
+
+      Swal.fire({
+        title: 'Formateur ajouté avec succès',
+        html,
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => this.fetchFormateurs());
+    },
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors de l\'ajout',
+        text: typeof error.error === 'string' ? error.error : (error.error?.message || 'Une erreur est survenue'),
+        confirmButtonText: 'OK'
+      });
+    }
+  );
+} else {
+  this.formateurservice.putFormateur(this.editId, formData).subscribe(
+    () => {
+      this.showModal = false;
+      this.selectedImage = null;
+
+      Swal.fire({
+        title: 'Success!',
+        text: 'Formateur modifié avec succès',
+        icon: 'success',
+        timer: 1500,
+        showConfirmButton: false
+      }).then(() => this.fetchFormateurs());
+    },
+    (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors de la modification',
+        text: typeof error.error === 'string' ? error.error : (error.error?.message || 'Une erreur est survenue'),
+        confirmButtonText: 'OK'
+      });
+    }
+  );
+}
 }
 
   toggleSidebar() {
@@ -378,5 +389,13 @@ sanitizeImage(url: string): string {
   return url;
 }
 
+
+generatePassword(length = 12) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%';
+  const values = new Uint32Array(length);
+  crypto.getRandomValues(values);
+  this.formData.password = Array.from(values, v => chars[v % chars.length]).join('');
+  this.showPassword = true;   // pour que l'admin voie ce qui a été généré
+}
 
 }

@@ -1,10 +1,16 @@
 export enum Role {
     SIMPLEU = "SIMPLEU",
     Admin = "Admin",
+    FORMATEUR = "FORMATEUR",
 
 }
 
-
+export interface FormateurRegisterDTO {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
 
 export class User {
     private id : any

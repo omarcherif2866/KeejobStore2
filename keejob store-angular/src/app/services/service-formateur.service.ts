@@ -34,4 +34,12 @@ export class ServiceFormateurService {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
+    getAll(): Observable<ServiceFormateur[]> {
+    return this.http.get<ServiceFormateur[]>(`${this.apiUrl}/all`);   // ← ajouté
+  }
+
+getServicesByUser(userId: number | string) {
+  return this.http.get<any[]>(`${this.apiUrl}/byUser/${userId}`);
+}
+
 }

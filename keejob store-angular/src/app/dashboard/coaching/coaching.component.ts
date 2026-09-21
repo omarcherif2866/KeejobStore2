@@ -48,6 +48,11 @@ export class CoachingComponent implements OnInit {
   availablePriceIcons: string[] = []; // ✅ NOUVEAU
   loadingIcons = false;
   loadingPriceIcons = false; // ✅ NOUVEAU
+    isAdminOrSuper = false;
+  userRole: string = '';
+  currentUserId: number | null = null;   // ← ajouté
+  isFormateur = false;
+
   constructor(
     private coachingservice: CoachingService, 
     private evaluationservice: EvaluationService, 
@@ -55,14 +60,38 @@ export class CoachingComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer  // ✅ AJOUTER CECI
 
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
     this.fetchCoachings();
     this.fetchAvailableIcons(); // ← AJOUTER CECI
     this.fetchAvailablePriceIcons(); // ✅ NOUVEAU
   }
 
+  // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
+  }
 
 
   private initializeSections() {

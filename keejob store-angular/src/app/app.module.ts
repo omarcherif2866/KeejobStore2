@@ -7,6 +7,9 @@ import { BrowserModule } from '@angular/platform-browser'
 import { SharedModule } from './pages/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { AdminGuard } from './guards/admin.guard'
+import { AdminOrFormateurGuardGuard } from './guards/admin-or-formateur-guard.guard'
+import { FormateurGuard } from './guards/formateur.guard'
 
 
 
@@ -123,6 +126,7 @@ const routes = [
     import('./dashboard/actualite/actualite.module').then(
       (m) => m.ActualiteModule
     ),
+    canActivate: [AdminGuard]
 },
 {
   path: 'formateurs',
@@ -130,6 +134,8 @@ const routes = [
     import('./dashboard/formateur/formateur.module').then(
       (m) => m.FormateurModule
     ),
+    canActivate: [AdminOrFormateurGuardGuard]
+
 },
 {
   path: 'evaluations',
@@ -137,6 +143,8 @@ const routes = [
     import('./dashboard/evaluation/evaluation.module').then(
       (m) => m.EvaluationModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'cv',
@@ -144,6 +152,8 @@ const routes = [
     import('./dashboard/cv/cv.module').then(
       (m) => m.CvModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'platforme',
@@ -151,6 +161,8 @@ const routes = [
     import('./dashboard/platforme/platforme.module').then(
       (m) => m.PlatformeModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'coaching',
@@ -158,6 +170,8 @@ const routes = [
     import('./dashboard/coaching/coaching.module').then(
       (m) => m.CoachingModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'formationFormateur',
@@ -165,6 +179,15 @@ const routes = [
     import('./dashboard/formation-formateur/formation-formateur.module').then(
       (m) => m.FormationFormateurModule
     ),
+  canActivate: [AdminOrFormateurGuardGuard],
+},
+{
+  path: 'formationFormateur/:id',
+  loadChildren: () =>
+    import('./dashboard/formation-formateur/formation-formateur.module').then(
+      (m) => m.FormationFormateurModule
+    ),
+  canActivate: [FormateurGuard],
 },
 {
   path: 'serviceFormateur',
@@ -172,6 +195,15 @@ const routes = [
     import('./dashboard/service-formateur/service-formateur.module').then(
       (m) => m.ServiceFormateurModule
     ),
+  canActivate: [AdminOrFormateurGuardGuard],
+},
+{
+  path: 'serviceFormateur/:id',
+  loadChildren: () =>
+    import('./dashboard/service-formateur/service-formateur.module').then(
+      (m) => m.ServiceFormateurModule
+    ),
+  canActivate: [FormateurGuard],
 },
 
 {
@@ -180,6 +212,8 @@ const routes = [
     import('./dashboard/formation-keejob/formation-keejob.module').then(
       (m) => m.FormationKeejobModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'formations/plateforme/:id',
@@ -276,7 +310,7 @@ const routes = [
 },
 
 {
-  path: 'profil',
+  path: 'profil/:id',
   loadChildren: () =>
     import('./dashboard/profil/profil.module').then(
       (m) => m.ProfilModule
@@ -288,6 +322,8 @@ const routes = [
     import('./dashboard/centre/centre.module').then(
       (m) => m.CentreModule
     ),
+    canActivate: [AdminGuard]
+
 },
 {
   path: 'forgot-password',

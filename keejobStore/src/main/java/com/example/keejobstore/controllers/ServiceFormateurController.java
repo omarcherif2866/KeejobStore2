@@ -1,5 +1,6 @@
 package com.example.keejobstore.controllers;
 
+import com.example.keejobstore.entity.FormationFormateur;
 import com.example.keejobstore.entity.ServiceFromateur;
 import com.example.keejobstore.service.ServiceFormateurService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,11 @@ import java.util.List;
 public class ServiceFormateurController {
 
     private final ServiceFormateurService serviceFormateurService;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ServiceFromateur>> getAll() {
+        return ResponseEntity.ok(serviceFormateurService.getAll());
+    }
 
     @GetMapping("/byFormateur/{formateurId}")
     public List<ServiceFromateur> getServiceFormateurByFormateur(@PathVariable Long formateurId) {
@@ -39,4 +45,10 @@ public class ServiceFormateurController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/byUser/{userId}")
+    public List<ServiceFromateur> getByUser(@PathVariable Integer userId) {
+        return serviceFormateurService.getServiceFormateurByUser(userId);
+    }
+
 }

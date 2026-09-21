@@ -30,11 +30,40 @@ export class ActualiteComponent implements OnInit {
   };
   
   editId: any = null;
+  isAdminOrSuper = false;
+  userRole: string = '';
+  currentUserId: number | null = null;   // ← ajouté
+  isFormateur = false;
 
-  constructor(private actualiteService: ActualiteService, private authService: AuthService,private router:Router) {}
+  constructor(private actualiteService: ActualiteService, private authService: AuthService,private router:Router) {
 
-  ngOnInit() {
-    this.fetchActualites();
+  }
+
+ngOnInit() {
+  this.currentUserId = Number(localStorage.getItem('userId'));
+
+  const role = (this.authService.getRoleFromToken() || '')
+    .trim()
+    .toUpperCase()
+    .replace('ROLE_', '');
+
+  this.userRole = role;
+  this.isFormateur = role === 'FORMATEUR';
+  this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
+
+  this.fetchActualites();
+}
+  // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
+  get formationLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/formationFormateur', this.currentUserId]
+      : ['/formationFormateur'];
+  }
+
+  get serviceLink(): any[] {
+    return this.isFormateur && this.currentUserId
+      ? ['/serviceFormateur', this.currentUserId]
+      : ['/serviceFormateur'];
   }
 
   // Récupérer les actualités depuis le backend

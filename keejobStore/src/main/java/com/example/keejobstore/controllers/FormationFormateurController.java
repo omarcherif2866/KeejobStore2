@@ -2,6 +2,7 @@ package com.example.keejobstore.controllers;
 
 import com.example.keejobstore.entity.Formateur;
 import com.example.keejobstore.entity.FormationFormateur;
+import com.example.keejobstore.entity.ServiceFromateur;
 import com.example.keejobstore.repository.FormateurRepository;
 import com.example.keejobstore.service.FormationFormateurService;
 import lombok.RequiredArgsConstructor;
@@ -104,5 +105,11 @@ public class FormationFormateurController {
 
         return ResponseEntity.ok(updated);
     }
+
+    @GetMapping("/byUser/{userId}")
+    public List<FormationFormateur> getByUser(@PathVariable Integer userId) {
+        return formationFormateurService.getFormationFormateurByUser(userId);
+    }
+
 }
 

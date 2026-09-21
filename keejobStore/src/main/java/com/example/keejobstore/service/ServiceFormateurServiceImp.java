@@ -19,6 +19,11 @@ public class ServiceFormateurServiceImp implements ServiceFormateurService {
     private final FormateurRepository formateurRepository;
 
     @Override
+    public List<ServiceFromateur> getAll() {
+        return serviceFormateurRepository.findAll();
+    }
+
+    @Override
     public List<ServiceFromateur> getServiceFormateurByFormateur(Long formateurId) {
         Optional<Formateur> formateurOpt = formateurRepository.findById(formateurId);
         if (formateurOpt.isPresent()) {
@@ -62,5 +67,12 @@ public class ServiceFormateurServiceImp implements ServiceFormateurService {
     public ServiceFromateur getById(Long id) {
         return serviceFormateurRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Formation non trouvée avec l'id: " + id));
+    }
+
+    @Override
+    public List<ServiceFromateur> getServiceFormateurByUser(Integer userId) {
+        Formateur formateur = formateurRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Formateur not found for user id: " + userId));
+        return serviceFormateurRepository.findByFormateurId(formateur.getId());
     }
 }

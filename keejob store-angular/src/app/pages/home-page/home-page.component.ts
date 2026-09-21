@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Formateur } from 'src/app/models/formateur';
+import { AuthService } from 'src/app/services/auth.service';
 import { FormateurService } from 'src/app/services/formateur.service';
 import Swal from 'sweetalert2';
 export interface Expert {
@@ -204,8 +206,17 @@ coursPopulaires = [
   }
 ];
 
-
-  constructor(private formateurservice: FormateurService, private router:Router) {
+  showFormateurModal = false;
+  submitting = false;
+  errorMessage = '';
+  formateurForm: FormGroup;
+  constructor(private formateurservice: FormateurService, private router:Router, private fb: FormBuilder,private authService: AuthService) {
+    this.formateurForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+    });
   }
 
 
@@ -269,8 +280,45 @@ goToSignUp() {
 }
 
 navigateToCertifications() {
-  this.router.navigate(['/certifications']);
+  this.router.navigate(['/certification/category/Marketing_Digital']);
 }
 
+navigateToEvaluations() {
+  this.router.navigate(['evaluation/category/Les_tests_psychometriques']);
+}
+
+navigateToCoaching() {
+  this.router.navigate(['/coachingDetails/1']);
+}
+
+navigateToFormateur() {
+  this.router.navigate(['/formateur']);
+}
+
+
+  submitFormateurForm(): void {
+    if (this.formateurForm.invalid) return;
+    this.submitting = true;
+    this.errorMessage = '';
+
+    this.authService.addFormateur(this.formateurForm.value).subscribe({
+      next: (res) => {
+        localStorage.setItem('userAuth', JSON.stringify(res));
+        this.submitting = false;
+        this.showFormateurModal = false;
+        Swal.fire({
+          icon: 'success',
+          title: 'Compte créé avec succès',
+          showConfirmButton: false,
+          timer: 1500
+        });        
+      this.router.navigate(['/profil', res.savedUser.id]);   // ← remplacé
+      },
+      error: (err) => {
+        this.errorMessage = err?.error?.message || 'Erreur lors de la création du compte';
+        this.submitting = false;
+      }
+    });
+  }
 
 }

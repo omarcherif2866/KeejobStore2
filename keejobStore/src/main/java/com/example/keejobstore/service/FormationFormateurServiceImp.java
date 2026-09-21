@@ -2,6 +2,7 @@ package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.Formateur;
 import com.example.keejobstore.entity.FormationFormateur;
+import com.example.keejobstore.entity.ServiceFromateur;
 import com.example.keejobstore.repository.FormateurRepository;
 import com.example.keejobstore.repository.FormationFormateurRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 public class FormationFormateurServiceImp implements FormationFormateurService {
     private final FormationFormateurRepository formationRepo;
     private final FormateurRepository formateurRepo;
+    private final FormateurRepository formateurRepository;
 
     @Override
     public List<FormationFormateur> getAll() {
@@ -39,6 +41,13 @@ public class FormationFormateurServiceImp implements FormationFormateurService {
     public FormationFormateur getById(Long id) {
         return formationRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Formation non trouvée avec l'id: " + id));
+    }
+
+    @Override
+    public List<FormationFormateur> getFormationFormateurByUser(Integer userId) {
+        Formateur formateur = formateurRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Formateur not found for user id: " + userId));
+        return formationRepo.findByFormateurId(formateur.getId());
     }
 
 }
