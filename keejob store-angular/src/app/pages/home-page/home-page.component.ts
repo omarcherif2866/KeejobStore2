@@ -275,20 +275,54 @@ sanitizeImage(url: string): string {
   this.searchActive = !this.searchActive;
 }
 
-goToSignUp() {
-  this.router.navigate(['/register']);
+goToContact() {
+  this.router.navigate(['/contact']);
 }
 
 navigateToCertifications() {
   this.router.navigate(['/certification/category/Marketing_Digital']);
 }
 
-navigateToEvaluations() {
+navigateToPsychometricTests() {
   this.router.navigate(['evaluation/category/Les_tests_psychometriques']);
 }
 
-navigateToCoaching() {
+navigateToCompetencyTests() {
+  this.router.navigate(['evaluation/category/Les_tests_de_competences']);
+}
+
+navigateToTranslation() {
+  this.router.navigate(['cv/3']);
+}
+
+navigateToCV() {
+  this.router.navigate(['cv/1']);
+}
+
+navigateToLM() {
+  this.router.navigate(['cv/2']);
+}
+
+navigateToCoachingEnLigne() {
   this.router.navigate(['/coachingDetails/1']);
+}
+
+navigateToCoachingPresentiel() {
+  this.router.navigate(['/coachingDetails/3']);
+}
+
+navigateToSimulationEntretien() {
+  this.router.navigate(['/coachingDetails/2']);
+}
+
+navigateToMarketing() {
+  this.router.navigate(['/certification/category/Marketing_Digital']);
+}
+navigateToEntre() {
+  this.router.navigate(['/certification/category/Entrepreneuriat']);
+}
+navigateToAI() {
+  this.router.navigate(['/certification/category/AI']);
 }
 
 navigateToFormateur() {

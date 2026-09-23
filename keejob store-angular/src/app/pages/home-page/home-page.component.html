@@ -10,11 +10,16 @@
   <p>Marketjob vous accompagne avec des solutions sur mesure pour développer vos compétences, valoriser votre profil et atteindre vos objectifs professionnels.</p>
 
   <div class="hero-actions">
-    <button class="btn-secondary" (click)="goToSignUp()">Découvrir nos services</button>
-    <a class="play-btn" href="https://www.youtube.com/@Keejob" target="_blank" rel="noopener noreferrer">
+    <button class="btn-secondary" (click)="goToContact()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22 6 12 13 2 6"></polyline>
+          </svg>
+      Contactez-nous</button>
+    <!-- <a class="play-btn" href="https://www.youtube.com/@Keejob" target="_blank" rel="noopener noreferrer">
       <div class="play-icon">▶</div>
       <span class="play-icon-text">Voir comment nous vous accompagnons</span>
-    </a>
+    </a> -->
   </div>
 
   <!-- Remis ici, juste sous les boutons -->
@@ -195,11 +200,11 @@
 </div>
 
 <!-- Champ email en pilule -->
-<div class="email-signup">
+<!-- <div class="email-signup">
   <span class="email-icon">✉</span>
   <input type="email" placeholder="Votre adresse e-mail">
   <button class="btn-green">Découvrir MarketJob</button>
-</div>
+</div> -->
 
 <!-- Texte du bas avec icône bouclier -->
 <!-- <h3 class="trust-text">
@@ -314,18 +319,15 @@
 
       <!-- Boutons -->
       <div class="eval-buttons">
-        <button class="btn-eval-primary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-          </svg>
-          Passer une évaluation
+        <button class="btn-eval-primary" (click)="navigateToPsychometricTests()">
+<svg width="18" height="18" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 16v1h-17v-1h17zM2 10h2v5h1v-6h-4v6h1v-5zM7 7h2v8h1v-9h-4v9h1v-8zM12 3h2v12h1v-13h-4v13h1v-12z" fill="#ffff"></path> </g></svg>
+          Les tests psychométriques
           <span class="arrow">→</span>
         </button>
 
-        <button class="btn-eval-secondary" (click)="navigateToEvaluations()">
+        <button class="btn-eval-secondary" (click)="navigateToCompetencyTests()">
 <svg width="18" height="18" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 16v1h-17v-1h17zM2 10h2v5h1v-6h-4v6h1v-5zM7 7h2v8h1v-9h-4v9h1v-8zM12 3h2v12h1v-13h-4v13h1v-12z" fill="#000000"></path> </g></svg>
-          Voir toutes les évaluations
+          Les tests de compétences
           <span class="arrow">→</span>
         </button>
       </div>
@@ -457,7 +459,7 @@
               <line x1="8" y1="17" x2="16" y2="17"></line>
             </svg>
           </div>
-          <strong>CV : <br>Curriculum vitae</strong>
+          <strong>Curriculum vitae</strong>
           <span>CV clair, moderne et adapté à votre profil.</span>
         </div>
 
@@ -490,27 +492,40 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <strong>Mise en <br> valeur</strong>
+          <strong>Mise en valeur</strong>
           <span>Valorisez vos compétences.</span>
         </div>
       </div>
 
       <div class="cv-buttons">
-        <button class="btn-eval-primary">
+        <button class="btn-eval-primary" (click)="navigateToCV()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
           </svg>
-          Créer / Améliorer mon CV
+          Curriculum Vitae
           <span class="arrow">→</span>
         </button>
 
-        <button class="btn-eval-secondary">
+        <button class="btn-eval-secondary" (click)="navigateToLM()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
           </svg>
-          Rédiger ma lettre de motivation
+          Lettre de motivation
+          <span class="arrow">→</span>
+        </button>
+
+        <button class="btn-eval-primary" (click)="navigateToTranslation()">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m5 8 6 6"></path>
+  <path d="m4 14 6-6 2-3"></path>
+  <path d="M2 5h12"></path>
+  <path d="M7 2h1"></path>
+  <path d="m22 22-5-10-5 10"></path>
+  <path d="M14 18h6"></path>
+</svg>
+          Traduction de CV et LM
           <span class="arrow">→</span>
         </button>
       </div>
@@ -719,12 +734,12 @@ l-74 38 56 59 c148 159 180 372 86 569 -60 126 -173 225 -303 265 -93 29 -226
       </div>
     </div>
 
-    <div class="stats-actions">
+    <!-- <div class="stats-actions">
       <button class="btn-stats-primary">
         Découvrir nos solutions <span class="arrow">→</span>
       </button>
       <a href="#" class="link-stats-secondary">En savoir plus <span class="chevron">›</span></a>
-    </div>
+    </div> -->
   </div>
 </section>
 
@@ -798,22 +813,38 @@ Un accompagnement personnalisé à chaque étape de votre parcours.
         </div>
       </div>
 
-      <div class="coaching-buttons">
-        <button class="btn-coaching-primary" (click)="navigateToCoaching()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-            <line x1="16" y1="2" x2="16" y2="6"></line>
-            <line x1="8" y1="2" x2="8" y2="6"></line>
-            <line x1="3" y1="10" x2="21" y2="10"></line>
-          </svg>
-          Réserver un coaching
-          <span class="arrow">→</span>
-        </button>
+<div class="coaching-buttons">
+  <!-- Coaching en ligne → icône vidéo -->
+  <button class="btn-coaching-primary" (click)="navigateToCoachingEnLigne()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m22 8-6 4 6 4V8Z"></path>
+      <rect x="2" y="6" width="14" height="12" rx="2" ry="2"></rect>
+    </svg>
+    Coaching en Ligne
+    <span class="arrow">→</span>
+  </button>
 
-        <a href="#" class="link-coaching-secondary">
-          En savoir plus <span class="arrow">→</span>
-        </a>
-      </div>
+  <!-- Coaching présentiel → icône localisation -->
+  <button class="btn-eval-secondary" (click)="navigateToCoachingPresentiel()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10a8 8 0 1 0-16 0c0 6 8 10 8 10z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    Coaching présentiel
+    <span class="arrow">→</span>
+  </button>
+
+  <!-- Simulation d'entretien → icône micro -->
+  <button class="btn-coaching-primary" (click)="navigateToSimulationEntretien()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+      <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+      <line x1="12" y1="19" x2="12" y2="22"></line>
+    </svg>
+    Simulation d'entretien
+    <span class="arrow">→</span>
+  </button>
+</div>
     </div>
 
     <!-- Colonne droite : visuel -->
@@ -999,15 +1030,55 @@ Obtenez des certifications reconnues pour valoriser votre expertise.
         </div>
       </div>
 
-      <div class="certif-buttons" >
-        <button class="btn-certif-primary" (click)="navigateToCertifications()">
+      <div class="coaching-buttons" >
+
+<button class="btn-coaching-primary" (click)="navigateToMarketing()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 11 18-5v12L3 14v-3z"></path>
+    <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+  </svg>
+  Marketing Digital
+  <span class="arrow">→</span>
+</button>
+
+<!-- Entrepreneuriat → icône fusée -->
+<button class="btn-eval-secondary" (click)="navigateToEntre()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+  </svg>
+  Entrepreneuriat
+  <span class="arrow">→</span>
+</button>
+
+<!-- Intelligence artificielle → icône puce/IA -->
+<button class="btn-coaching-primary" (click)="navigateToAI()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+    <rect x="9" y="9" width="6" height="6"></rect>
+    <line x1="9" y1="1" x2="9" y2="4"></line>
+    <line x1="15" y1="1" x2="15" y2="4"></line>
+    <line x1="9" y1="20" x2="9" y2="23"></line>
+    <line x1="15" y1="20" x2="15" y2="23"></line>
+    <line x1="20" y1="9" x2="23" y2="9"></line>
+    <line x1="20" y1="15" x2="23" y2="15"></line>
+    <line x1="1" y1="9" x2="4" y2="9"></line>
+    <line x1="1" y1="15" x2="4" y2="15"></line>
+  </svg>
+  Intelligence artificielle
+  <span class="arrow">→</span>
+</button>
+
+        <!-- <button class="btn-certif-primary" (click)="navigateToCertifications()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="8" r="6"></circle>
             <path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"></path>
           </svg>
           Découvrir nos certifications
           <span class="arrow">→</span>
-        </button>
+        </button> -->
 
         <!-- <a href="/certifications" class="link-certif-secondary" >
           Voir toutes les certifications <span class="arrow">→</span>
@@ -1196,19 +1267,19 @@ Des formations internationales pour développer vos compétences.
       </div>
 
       <div class="intl-buttons">
-        <button class="btn-intl-primary">
+        <button class="btn-intl-primary" (click)="goToContact()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="2" y1="12" x2="22" y2="12"></line>
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
           </svg>
-          Découvrir nos programmes internationaux
+          Contactez-nous
           <span class="arrow">→</span>
         </button>
 
-        <a href="#" class="link-intl-secondary">
+        <!-- <a href="#" class="link-intl-secondary">
           En savoir plus <span class="arrow">→</span>
-        </a>
+        </a> -->
       </div>
 
       <!-- Barre du bas avec 4 mini-features -->

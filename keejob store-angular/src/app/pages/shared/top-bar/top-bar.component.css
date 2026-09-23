@@ -77,7 +77,15 @@ body {
 .navbar {
   padding: 16px 0;
   background-color: #ffffff;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease, padding 0.3s ease;
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 10px 0;
 }
 
 /* IMPORTANT : le container du navbar n'est plus limité à 1200px,

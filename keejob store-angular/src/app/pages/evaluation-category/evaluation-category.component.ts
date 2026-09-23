@@ -31,7 +31,7 @@ export class EvaluationCategoryComponent implements OnInit {
 
   centralTestLogo = 'assets/logo/central-test-logo.webp';
   heroImage = 'assets/central-test-hero.webp';
-
+  competenceImage = 'assets/compentanceTest.webp';
   heroSubtitle =
     "Keejob, avec son partenaire français Central Test, met à votre disposition un service " +
     "d'évaluation et de tests pour vos futurs recrutés ou vos collaborateurs, en vue de programmes " +
@@ -153,4 +153,11 @@ export class EvaluationCategoryComponent implements OnInit {
     }
     return url;
   }
+
+get currentHeroImage(): string {
+  return this.category === EvaluationCategory.Les_tests_de_competences
+    ? this.competenceImage
+    : this.heroImage;
+}
+
 }

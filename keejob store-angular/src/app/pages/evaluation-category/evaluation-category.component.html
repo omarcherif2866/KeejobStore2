@@ -2,14 +2,14 @@
 <section class="expertise-section">
 
   <!-- ===================== BREADCRUMB ===================== -->
-  <div class="breadcrumb">
+  <!-- <div class="breadcrumb">
     <a routerLink="/">🏠 Accueil</a> ›
     <a routerLink="/evaluation">Évaluation</a> ›
     <span>{{ categoryDisplay }}</span>
-  </div>
+  </div> -->
 
   <!-- ===================== HERO (style keejob) ===================== -->
-  <section class="hero-section">
+  <section class="hero-section" [class.hero-section-competences]="category === 'Les_tests_de_competences'">
     <div class="hero-container">
       <div class="hero-left">
         <span class="hero-badge">✓ Partenaire certifié Central Test</span>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="hero-right">
-        <img [src]="heroImage" alt="Central Test" class="hero-image">
+        <img [src]="currentHeroImage" alt="Central Test" class="hero-image">
       </div>
     </div>
   </section>

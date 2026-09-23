@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,12 +18,16 @@ menuOpen = false;
 activeDropdown: string | null = null
 showUserMenu = false;
 currentUserId: number | null = null;
+  isScrolled = false;
 
     constructor(private authService: AuthService,private router:Router, private cdr: ChangeDetectorRef
     ) { }
 
 
-
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.scrollY > 10;
+  }
 ngOnInit(): void {
     this.currentUserId = Number(localStorage.getItem('userId'));
 

@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -13,8 +13,10 @@ export class AppComponent {
   showFooter = true;
 isRouteLoading = false;
 isLoading = true;
+  showScrollTop = false;
 
   constructor(private router: Router) {
+
 
     
     this.router.events.subscribe(event => {
@@ -43,5 +45,12 @@ ngOnInit() {
     this.isLoading = false;
   }, 1000); // ajuste la durée selon tes besoins
 }
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.showScrollTop = window.scrollY > 400; // apparaît après 400px de scroll
+  }
 
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

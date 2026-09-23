@@ -387,6 +387,14 @@ const routes = [
     ),
 },
 
+{
+  path: 'contact',
+  loadChildren: () =>
+    import('./pages/contact/contact.module').then(
+      (m) => m.ContactModule
+    ),
+},
+
   {
     path: '**',
     loadChildren: () =>

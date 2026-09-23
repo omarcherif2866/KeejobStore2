@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<nav class="navbar">
+<nav class="navbar" [class.scrolled]="isScrolled">
   <div class="container">
 
     <!-- Header mobile : logo + burger -->
@@ -112,6 +112,12 @@
             <li><a href="centre_formation" (click)="closeMenu()">Centre de formations</a></li>
             <li><a href="formateur" (click)="closeMenu()">Formateurs</a></li>
           </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="contact">
+            Contact
+          </a>
         </li>
 
         <!-- <li class="dropdown">
