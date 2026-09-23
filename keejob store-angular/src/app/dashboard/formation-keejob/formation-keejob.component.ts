@@ -87,7 +87,7 @@ export class FormationKeejobComponent implements OnInit {
       image: '',
       lienFormation: '',
       descriptionCourte: '',
-      aPropos: '',
+      apropos: '',
       // note: 0,
       // nombreAvis: 0,
       nombreApprenants: '',
@@ -118,6 +118,7 @@ export class FormationKeejobComponent implements OnInit {
       next: (data: FormationKeejob[]) => {
         this.formations = [...data].sort((a, b) => (a.id || 0) - (b.id || 0));
         this.loading = false;
+        console.log('Formations chargées:', this.formations);
       },
       error: (error) => {
         console.error('Erreur lors du chargement des formations:', error);

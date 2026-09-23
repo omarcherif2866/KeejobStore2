@@ -25,7 +25,7 @@ export interface FormationKeejob {
   lienFormation: string;
 
   descriptionCourte: string;      // max 500 caractères
-  aPropos: string;                // max 2000 caractères
+  apropos: string;                // max 2000 caractères
 
   // note: number;
   // nombreAvis: number;
