@@ -12,14 +12,12 @@
     <!-- Préconnexion aux domaines de polices : gagne du temps sur la 1re requête -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com" />
 
     <!--
       Préchargement de l'image LCP identifiée sur la page d'accueil
       (composant home, div.hero-images, 1re image "Team").
-      Le chemin est écrit en absolu depuis la racine (grâce à <base href="/">),
-      car le chemin relatif "../../../assets/..." du composant ne s'applique pas
-      ici dans le <head> global. Ajustez-le si votre dossier "assets" build
-      n'est pas exactement à la racine du site déployé.
+      Chemin absolu depuis la racine (grâce à <base href="/">).
     -->
     <link
       rel="preload"
@@ -27,8 +25,6 @@
       href="/assets/1x/Plan-de-travail-2-01.webp"
       fetchpriority="high"
     />
-    <!-- Rappel : renommez idéalement ce fichier sans espaces (plan-de-travail-2-01.webp) -->
-
 
     <style data-tag="reset-style-sheet">
       html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;  -webkit-font-smoothing: antialiased;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;  color: inherit;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}pre {  white-space: normal;}input {  padding: 2px 4px;}img {  display: block;}details {  display: block;  margin: 0;  padding: 0;}summary::-webkit-details-marker {  display: none;}[data-thq="accordion"] [data-thq="accordion-content"] {  max-height: 0;  overflow: hidden;  transition: max-height 0.3s ease-in-out;  padding: 0;}[data-thq="accordion"] details[data-thq="accordion-trigger"][open] + [data-thq="accordion-content"] {  max-height: 1000vh;}details[data-thq="accordion-trigger"][open] summary [data-thq="accordion-icon"] {  transform: rotate(180deg);}html { scroll-behavior: smooth  }
@@ -54,75 +50,148 @@
     </style>
 
     <!--
-      IMPORTANT : ci-dessous, UN SEUL lien par famille de police,
-      au lieu des dizaines de doublons du fichier original.
-      -> Ajustez les poids (wght) à ceux réellement utilisés dans votre CSS
-         pour réduire encore la taille téléchargée.
+      ===========================================================
+      POLICES ET CSS NON CRITIQUES — chargement asynchrone
+      ===========================================================
+      Pattern : rel="preload" as="style" télécharge le fichier
+      SANS bloquer le rendu. Quand le fichier est prêt (onload),
+      le script bascule rel="stylesheet" pour l'appliquer.
+      Le <noscript> garantit un fallback si JS est désactivé.
     -->
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,500;0,600;0,700&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700&display=swap" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
       data-tag="font"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,500;0,600;0,700&display=swap" />
+    </noscript>
 
     <!--
-      animate.css : ~74 Kio pour des animations souvent partiellement utilisées.
-      Gardez-le seulement si vous utilisez vraiment des classes animate__*.
-      Sinon, retirez cette ligne — sinon, chargez-le en différé (voir note en bas).
+      animate.css : ~74 Kio. Gardez-le seulement si vous utilisez
+      vraiment des classes animate__*, sinon supprimez ce bloc entier.
     -->
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://unpkg.com/animate.css@4.1.1/animate.css"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.css" />
+    </noscript>
+
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://unpkg.com/@teleporthq/teleport-custom-scripts/dist/style.css" />
+    </noscript>
   </head>
   <body>
 
