@@ -48,20 +48,20 @@ private categoryVisuals: {
   },
   'Formations_office': {
     color: '#f0b8d1',
-    image: '../../assets/1x/formation_office.png',
+    image: '../../assets/1x/formation_office.webp',
     blobs: ['#f0b8d1', '#e07fa8', '#b8578a'], // rose
     layout: 'blobs-left'
   },
   'Formations_Design': {
     color: '#7d5fa3',
-    image: '../../assets/1x/formation_design.png',
+    image: '../../assets/1x/formation_design.webp',
   blobs: ['#c9b8d9', '#a68bc4', '#7d5fa3'], // lavande / violet doux
 
     layout: 'blobs-scattered'
   },
   'Formations_Digital': {
     color: '#4f5bd5',
-    image: '../../assets/1x/formation_MD.png',
+    image: '../../assets/1x/formation_MD.webp',
     blobs: ['#b3c1e8', '#7d8fd1', '#5a67b8'], // bleu-violet
     layout: 'blobs-right'
   },

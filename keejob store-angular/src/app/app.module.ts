@@ -22,29 +22,6 @@ const routes = [
         (m) => m.HomePageModule
       ),
   },
-// {
-//   path: 'evaluation',
-//   loadChildren: () =>
-//     import('./pages/evaluation/evaluation.module').then(
-//       (m) => m.EvaluationModule
-//     ),
-// },
-{
-  path: 'centralTest',
-  loadChildren: () =>
-    import('./pages/central-test/central-test.module').then(
-      (m) => m.CentralTestModule
-    ),
-},
-
-// {
-//   path: 'formation',
-//   loadChildren: () =>
-//     import('./pages/formation/formation.module').then(
-//       (m) => m.FormationModule
-//     ),
-// },
-
 
 {
   path: 'evenements/:id',
@@ -62,42 +39,7 @@ const routes = [
     ),
 },
 
-{
-  path: 'marche_travails',
-  loadChildren: () =>
-    import('./pages/marche-travails/marche-travails.module').then(
-      (m) => m.MarcheTravailsModule
-    ),
-},
 
-{
-  path: 'cv_et_lettre_de_mottivation',
-  loadChildren: () =>
-    import('./pages/cv-lettre/cv-lettre.module').then(
-      (m) => m.CvLettreModule
-    ),
-},
-{
-  path: 'coaching_emploi',
-  loadChildren: () =>
-    import('./pages/coaching-emploi/coaching-emploi.module').then(
-      (m) => m.CoachingEmploiModule
-    ),
-},
-{
-  path: 'partenaires',
-  loadChildren: () =>
-    import('./pages/partenaires/partenaires.module').then(
-      (m) => m.PartenairesModule
-    ),
-},
-{
-  path: 'international',
-  loadChildren: () =>
-    import('./pages/international/international.module').then(
-      (m) => m.InternationalModule
-    ),
-},
 {
   path: 'centre_formation',
   loadChildren: () =>
@@ -280,20 +222,6 @@ const routes = [
 },
 
 {
-  path: 'allCv',
-  loadChildren: () =>
-    import('./pages/all-cv/all-cv.module').then(
-      (m) => m.AllCvModule
-    ),
-},
-{
-  path: 'allCoaching',
-  loadChildren: () =>
-    import('./pages/all-coaching/all-coaching.module').then(
-      (m) => m.AllCoachingModule
-    ),
-},
-{
   path: 'formation/:id',
   loadChildren: () =>
     import('./pages/formation-keejob-details/formation-keejob-details.module').then(
@@ -355,21 +283,9 @@ const routes = [
     ),
 },
 
-{
-  path: 'coaching_emploi/category/:category',
-  loadChildren: () =>
-    import('./pages/coaching-category/coaching-category.module').then(
-      (m) => m.CoachingCategoryModule
-    ),
-},
 
-{
-  path: 'cv_et_lettre_de_mottivation/category/:category',
-  loadChildren: () =>
-    import('./pages/cv-category/cv-category.module').then(
-      (m) => m.CvCategoryModule
-    ),
-},
+
+
 
 {
   path: 'formation/category/:category',
