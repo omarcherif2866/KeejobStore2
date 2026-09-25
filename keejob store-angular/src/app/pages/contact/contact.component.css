@@ -55,7 +55,7 @@
   padding: 60px;
   margin: 30px auto 40px;
   max-width: 1460px;
-  overflow: hidden; /* empêche design.png de déborder hors de la carte arrondie */
+  overflow: hidden; /* empêche design.webp de déborder hors de la carte arrondie */
 }
 
 .contact-form-section .container {
