@@ -1310,7 +1310,7 @@ section {
 }
 
 /* ---------- Titre : ligne 1 sombre, ligne 2 vert ---------- */
-[data-id="2"] .hero-text h1 { font-size: 46px; }
+[data-id="2"] .hero-text h1 { font-size: 41px; }
 [data-id="2"] .hero-text h1 .line1 { color: var(--c-dark); }
 [data-id="2"] .hero-text h1 .line2 { color: var(--c-accent); }
 
