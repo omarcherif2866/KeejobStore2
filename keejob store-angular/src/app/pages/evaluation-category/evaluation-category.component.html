@@ -9,33 +9,58 @@
   </div> -->
 
   <!-- ===================== HERO (style keejob) ===================== -->
-  <section class="hero-section" [class.hero-section-competences]="category === 'Les_tests_de_competences'">
-    <div class="hero-container">
-      <div class="hero-left">
-        <span class="hero-badge">✓ Partenaire certifié Central Test</span>
-        <h1 class="hero-title">
-          <img [src]="centralTestLogo" alt="Central Test" class="hero-title-logo">
-          Optimisez le potentiel humain avec notre outil
-          <span class="highlight">Central Test</span>
-        </h1>
-        <p class="hero-subtitle">{{ heroSubtitle }}</p>
+<section class="hero-section" [class.hero-section-competences]="category === 'Les_tests_de_competences'">
+<div class="hero-backdrop" aria-hidden="true">
+  <span class="hero-shape shape-1"></span>
+  <span class="hero-shape shape-2"></span>
+  <span class="hero-shape shape-3"></span>
+  <span class="hero-shape shape-4"></span>
 
-        <div class="hero-features">
-          <div class="hero-feature" *ngFor="let f of heroFeatures">
+  <!-- petits traits violets -->
+  <svg class="hero-dash dash-left" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M8 6l16 30" stroke="#6d5ce8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M2 26l26 14" stroke="#6d5ce8" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+  <svg class="hero-dash dash-right" width="60" height="60" viewBox="0 0 60 60" fill="none">
+    <path d="M40 4l-14 26" stroke="#6d5ce8" stroke-width="4" stroke-linecap="round"/>
+    <path d="M56 30L32 44" stroke="#6d5ce8" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+</div>
+
+  <div class="hero-container">
+    <div class="hero-left">
+      <span class="hero-badge">
+        <span class="badge-check">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+        </span>
+        Partenaire certifié Central Test
+      </span>
+
+      <img [src]="centralTestLogo" alt="Central Test" class="hero-title-logo">
+
+      <h1 class="hero-title">
+        Optimisez le potentiel humain avec notre outil
+        <span class="highlight">Central Test</span>
+      </h1>
+
+      <p class="hero-subtitle" *ngIf="heroSubtitle">{{ heroSubtitle }}</p>
+
+      <div class="hero-features">
+        <div class="hero-feature" *ngFor="let f of heroFeatures">
             <span class="feature-icon" [ngClass]="f.iconClass">{{ f.icon }}</span>
-            <div>
-              <strong>{{ f.title }}</strong>
-              <span>{{ f.subtitle }}</span>
-            </div>
+          <div>
+            <strong>{{ f.title }}</strong>
+            <span>{{ f.subtitle }}</span>
           </div>
         </div>
       </div>
-
-      <div class="hero-right">
-        <img [src]="currentHeroImage" alt="Central Test" class="hero-image">
-      </div>
     </div>
-  </section>
+
+    <div class="hero-right">
+      <img [src]="currentHeroImage" alt="Central Test" class="hero-image">
+    </div>
+  </div>
+</section>
 
   <!-- ===================== SOLUTION D'ÉVALUATION ===================== -->
   <!-- <section class="info-block">
@@ -74,24 +99,36 @@
   </div>
 
   <!-- ===================== CAS 1 : des évaluations existent ===================== -->
-  <div class="container evaluation-list" *ngIf="!loading && evaluations.length > 0">
-    <h1 class="section-title">{{ categoryDisplay }}</h1>
-
-    <div class="evaluation-grid">
-      <a class="evaluation-card"
-         *ngFor="let ev of evaluations"
-         [routerLink]="['/evaluation', ev.id]">
-        <div class="evaluation-card-img-wrap">
-          <img [src]="sanitizeImage(ev.image)" [alt]="ev.name" class="evaluation-card-img">
-        </div>
-        <div class="evaluation-card-body">
-          <h3>{{ ev.name }}</h3>
-          <p>{{ ev.description }}</p>
-          <span class="btn btn-primary">Voir le test</span>
-        </div>
-      </a>
-    </div>
+<div class="container evaluation-list" *ngIf="!loading && evaluations.length > 0">
+  <div class="list-header">
+    <h1 class="section-title">
+      {{ categoryDisplay.split(' ').slice(0, -1).join(' ') }}
+      <span class="highlight">{{ categoryDisplay.split(' ').slice(-1)[0] }}</span>
+    </h1>
+    <a class="btn-see-all" [routerLink]="['/evaluations']">Découvrir tous les tests →</a>
   </div>
+
+  <div class="evaluation-grid">
+    <a class="evaluation-card tone-{{ i % 4 }}"
+       *ngFor="let ev of evaluations; let i = index"
+       [routerLink]="['/evaluation', ev.id]">
+
+      <div class="evaluation-card-img-wrap">
+        <img [src]="sanitizeImage(ev.image)" [alt]="ev.name" class="evaluation-card-img">
+      </div>
+
+      <div class="evaluation-card-body">
+        <!-- <span class="card-icon">{{ ['💻','📊','📖','👥'][i % 4] }}</span> -->
+        <h3>{{ ev.name }}</h3>
+
+        <div class="evaluation-card-footer">
+          <span class="card-pill">Voir les tests →</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
 
   <!-- ===================== CAS 2 : aucune donnée ===================== -->
   <div class="empty-state" *ngIf="!loading && evaluations.length === 0">

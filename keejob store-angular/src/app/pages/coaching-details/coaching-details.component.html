@@ -40,15 +40,17 @@
             </div>
 
             <div class="hero-trust-row">
-              <div class="trust-item" *ngFor="let detail of cv.sections[0]?.details">
-                <div class="trust-icon" [style.-webkit-mask-image]="'url(' + sanitizeImage(detail.icon) + ')'" 
-                    [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
-                </div>
-                <div class="trust-text">
-                  <strong>{{ detail.titre }}</strong>
-                  <span>{{ detail.description }}</span>
-                </div>
-              </div>
+<div class="trust-item" *ngFor="let detail of cv.sections[0]?.details">
+  <div class="trust-icon-wrap">
+    <div class="trust-icon" [style.-webkit-mask-image]="'url(' + sanitizeImage(detail.icon) + ')'"
+         [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
+    </div>
+  </div>
+  <div class="trust-text">
+    <strong>{{ detail.titre }}</strong>
+    <span>{{ detail.description }}</span>
+  </div>
+</div>
             </div>
             <div class="hero-mini-stats">
               <div class="mini-stat">
@@ -96,7 +98,7 @@
           <p class="form-subtitle">Réponse sous 2h</p>
         </div>
       </div>
-      <p class="form-subtitle">Réponse sous 2h</p>
+      <!-- <p class="form-subtitle">Réponse sous 2h</p> -->
 
       <form (ngSubmit)="submitForm(cv.name)" #heroForm="ngForm">
         <div class="form-group">
@@ -161,7 +163,12 @@
         <div class="expertise-box">
           <div class="expertise-item" *ngFor="let detail of cv.sections[1]?.details">
             <div class="expertise-icon">
-              <img [src]="sanitizeImage(detail.icon)" [alt]="detail.titre">
+              <div class="expertise-icon-mask"
+                  role="img"
+                  [attr.aria-label]="detail.titre"
+                  [style.-webkit-mask-image]="'url(' + sanitizeImage(detail.icon) + ')'"
+                  [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
+              </div>
             </div>
             <h3>{{ detail.titre }}</h3>
             <p>{{ detail.description }}</p>

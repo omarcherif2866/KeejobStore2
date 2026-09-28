@@ -1,3 +1,5 @@
+/* ===== cv.css ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -100,33 +102,11 @@ body {
 
 .circle-8 { display:none; }
 .circle-9 { display:none; }
-/* ===== ID = 1 (violet) ===== */
-/* ===== ID = 1 (violet doux) ===== */
-[data-id="1"] .circle-2 { background: #8583b8; }
-[data-id="1"] .circle-3 { background: #b0aedb; }
-[data-id="1"] .circle-5 { background: #dedcf2; }
-[data-id="1"] .circle-6 { background: #c5c3e8; }
-[data-id="1"] .circle-7 { background: #b6b5e2; }
-[data-id="1"] .hero-section { background-color: #ede9f7; }
-[data-id="1"] .hero-backdrop { background-color: #ede9f7; }
 
-/* ===== ID = 2 (vert doux) ===== */
-[data-id="2"] .circle-2 { background: #7fa583; }
-[data-id="2"] .circle-3 { background: #a3c1a6; }
-[data-id="2"] .circle-5 { background: #d7ead9; }
-[data-id="2"] .circle-6 { background: #bcdcbf; }
-[data-id="2"] .circle-7 { background: #9dc4a0; }
-[data-id="2"] .hero-section { background-color: #e6f4ea; }
-[data-id="2"] .hero-backdrop { background-color: #e6f4ea; }
+
 
 /* ===== ID = 3 (bleu doux) ===== */
-[data-id="3"] .circle-2 { background: #7f96c4; }
-[data-id="3"] .circle-3 { background: #a9bce0; }
-[data-id="3"] .circle-5 { background: #dbe6fc; }
-[data-id="3"] .circle-6 { background: #c2d6fa; }
-[data-id="3"] .circle-7 { background: #b3c9f8; }
-[data-id="3"] .hero-section { background-color: #e8f0fe; }
-[data-id="3"] .hero-backdrop { background-color: #e8f0fe; }
+
 .hero-content {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;   /* ⬅️ inverse le ratio précédent, image plus petite que le texte */
@@ -210,9 +190,6 @@ body {
   background-color: #5958A0;   /* couleur par défaut */
 }
 
-[data-id="1"] .trust-icon { background-color: #5958A0; }
-[data-id="2"] .trust-icon { background-color: #1B5E20; }
-[data-id="3"] .trust-icon { background-color: #0c3fad; }
 
 .trust-icon img {
   width: 40px;
@@ -404,14 +381,10 @@ body {
 .form-header-text .form-subtitle {
   margin-bottom: 0;   /* on retire la marge de la version précédente, gérée par .form-header */
 }
-/* ID = 1 */
-[data-id="1"] .form-header-icon { background-color: #5958A0; }
 
-/* ID = 2 */
-[data-id="2"] .form-header-icon { background-color: #1B5E20; }
+
 
 /* ID = 3 */
-[data-id="3"] .form-header-icon { background-color: #0c3fad; }
 
 .form-subtitle {
   font-size: 13px;
@@ -627,7 +600,7 @@ body {
 
 /* ===== EXPERTISE (4 icônes en boîte grise) ===== */
 #expertise-section {
-  padding: 0 0 40px;
+  padding: 40px 0 40px;   /* 40px d'espace au-dessus de la boîte (avant : 0) */
 }
 
 #expertise2-section {
@@ -658,11 +631,24 @@ body {
   align-items: center;
   justify-content: center;
 }
-.expertise-icon img {
+
+.expertise-icon-mask {
   width: 40px;
   height: 40px;
-  object-fit: contain;
+  background-color: #5958A0;   /* couleur par défaut */
+
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-size: contain;
+          mask-repeat: no-repeat;
+          mask-position: center;
 }
+
+/* Couleur selon l'id */
+[data-id="1"] .expertise-icon-mask { background-color: #5b56a6; }
+[data-id="2"] .expertise-icon-mask { background-color: #2e7d32; }
+[data-id="3"] .expertise-icon-mask { background-color: #1d5be0; }
 
 .expertise-item h3 {
   font-size: 16px;
@@ -944,214 +930,231 @@ section {
   padding-bottom: 30px;
 }
 
-/* ===== ID = 1 (violet #5958A0) ===== */
+/* =========================================================
+   HERO - data-id="1"  (palette violette)
+   ========================================================= */
+[data-id="1"] {
+  --c-primary:   #4a4685;  /* boutons, icône du formulaire */
+  --c-accent:    #5b56a6;  /* ligne 2 du titre, chiffres */
+  --c-dark:      #1f1b4d;  /* ligne 1 du titre */
+  --c-badge:     #3f3a80;  /* texte du badge */
+  --c-soft:      #e3e0f5;  /* pastille des icônes */
+  --c-border:    #d3cfee;  /* bordure du formulaire */
+  --c-btn-1:     #46427e;
+  --c-btn-2:     #5a55a0;
+  --c-shadow:    70, 66, 130; /* rgb pour les ombres */
+}
+
+/* ---------- Fond ---------- */
+[data-id="1"] .hero-section,
+[data-id="1"] .hero-backdrop {
+  background: linear-gradient(135deg, #f2f0fb 0%, #ece9f8 55%, #e6e2f5 100%);
+}
+
+[data-id="1"] .hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-id="1"] .hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-id="1"] .hero-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Cercles décoratifs (vw = mêmes proportions que id 3) ---------- */
+[data-id="1"] .hero-circle,
+[data-id="1"] .hero-backdrop::before,
+[data-id="1"] .hero-backdrop::after {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  filter: none;
+  right: auto;
+  bottom: auto;
+}
+
+/* 1. Haut gauche : grand cercle clair */
+[data-id="1"] .circle-2 {
+  background: #dcd8f2;
+  width: 30vw; height: 30vw;
+  left: -16vw; top: -18vw;
+}
+
+/* 2. Haut gauche : cercle plus foncé dans le coin */
+[data-id="1"] .circle-7 {
+  background: #cbc6ea;
+  width: 13vw; height: 13vw;
+  left: -6vw; top: -6.5vw;
+}
+
+/* 3. Milieu : cercle derrière la photo */
+[data-id="1"] .circle-3 {
+  background: #c8c3e9;
+  width: 22vw; height: 22vw;
+  left: 59.8%; top: 1vw;
+}
+
+/* 4. Bas gauche : petit arc très clair */
+[data-id="1"] .circle-5 {
+  background: #e4e1f6;
+  width: 22vw; height: 22vw;
+  left: -14vw; bottom: -17vw;
+}
+
+/* 5. Droite : grand cercle très pâle derrière le formulaire */
+[data-id="1"] .hero-backdrop::before {
+  content: "";
+  background: #e1def4;
+  width: 29vw; height: 29vw;
+  left: 83%; top: -10.5vw;
+}
+
+/* 6. Bas droite : cercle plus foncé */
+[data-id="1"] .hero-backdrop::after {
+  content: "";
+  background: #c3bee8;
+  width: 11vw; height: 11vw;
+  left: 95%; bottom: -3vw;
+}
+
+/* ---------- Badge : pastille blanche avec point ---------- */
 [data-id="1"] .hero-badge-label {
-  display: inline-block;
-  color: #5958A0;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--c-badge);
   font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.06em;
-  background-color: #f0f0fb;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(var(--c-shadow), .08);
 }
-[data-id="1"] .hero-text h1 .highlight { color: #5958A0; }
-[data-id="1"] .btn-primary {
-  background-color: #5958A0;
-  color: white;
-}
-[data-id="1"] .btn-outline:hover { border-color: #5958A0; color: #5958A0; }
-[data-id="1"] .phone-icon {
-  width: 48px;
-  height: 48px;
-  background-color: #5958A0;
+[data-id="1"] .hero-badge-label::before {
+  content: "";
+  width: 8px; height: 8px;
   border-radius: 50%;
+  background: var(--c-accent);
+}
+
+/* ---------- Titre : ligne 1 sombre, ligne 2 violet ---------- */
+[data-id="1"] .hero-text h1 { font-size: 46px; }
+[data-id="1"] .hero-text h1 .line1 { color: var(--c-dark); }
+[data-id="1"] .hero-text h1 .line2 { color: var(--c-accent); }
+
+/* ---------- Description ---------- */
+[data-id="1"] .hero-desc { color: #55536f; }
+
+/* ---------- Bouton « Découvrir nos packs » masqué (supprimez cette ligne pour le garder) ---------- */
+[data-id="1"] .hero-actions { display: none; }
+
+/* ---------- Icônes de confiance dans une pastille claire ---------- */
+[data-id="1"] .trust-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--c-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
-[data-id="1"] .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e5e7eb;
-  border-top-color: #5958A0;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
+[data-id="1"] .trust-icon {
+  width: 28px; height: 28px;
+  background-color: var(--c-accent);
 }
-[data-id="1"] .btn-primary:hover { background-color: #46457f; }
+[data-id="1"] .trust-text strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- Carte de stats blanche ---------- */
+[data-id="1"] .hero-mini-stats {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(var(--c-shadow), .10);
+}
+[data-id="1"] .mini-stat-number { color: var(--c-accent); }
+[data-id="1"] .mini-stat strong { font-weight: 500; }
+
+/* ---------- Image : pleine couleur, fondue sur les 4 côtés ---------- */
+[data-id="1"] .hero-image-wrap {
+  width: 62%;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-id="1"] .hero-image-wrap::after { display: none; }
+[data-id="1"] .hero-image {
+  opacity: 1;
+  filter: none;
+  border-radius: 0;
+  box-shadow: none;
+  object-position: center top;
+
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+
+          mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+
+/* ---------- Formulaire ---------- */
+[data-id="1"] .hero-form-trigger { right: 40px; }
+[data-id="1"] .hero-form-card {
+  width: 480px;
+  border: 1.5px solid var(--c-border);
+  box-shadow: 0 18px 44px rgba(var(--c-shadow), .16);
+}
+[data-id="1"] .form-header-icon { background-color: var(--c-primary); }
+
+/* ---------- Bouton d'envoi ---------- */
 [data-id="1"] .btn-submit {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: #46457f;
-  color: white;
-  border: none;
   padding: 14px 0;
-  border-radius: 12px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background-color 0.2s;
+  background: linear-gradient(90deg, var(--c-btn-1), var(--c-btn-2));
+  box-shadow: 0 8px 18px rgba(var(--c-shadow), .30);
+}
+[data-id="1"] .btn-submit:disabled {
+  opacity: .6;
+  cursor: not-allowed;
 }
 
-[data-id="1"] .btn-submit:hover { background-color: #46457f; }
-[data-id="1"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-[data-id="1"] .btn-request-trigger { background-color: #5958A0; }
-[data-id="1"] .mini-stat-number {
-  font-size: 22px;
-  font-weight: 800;
-  color: #46457f;
+/* ---------- Responsive ---------- */
+@media (max-width: 992px) {
+  [data-id="1"] .circle-3,
+  [data-id="1"] .hero-backdrop::before,
+  [data-id="1"] .hero-backdrop::after { display: none; }
 }
-[data-id="1"] .hero-text h1 .line1 { color: #46457f; }
-[data-id="1"] .hero-text h1 .line2 { color: #46457f; }
-[data-id="1"] .hero-form-card { border-color: #5958A0; }
-
 /* ===== ID = 2 (vert foncé) ===== */
-[data-id="2"] .hero-badge-label {
-  display: inline-block;
-  color: #1B5E20;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  background-color: #e6f4ea;
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
-[data-id="2"] .hero-text h1 .highlight { color: #1B5E20; }
-[data-id="2"] .btn-primary {
-  background-color: #1B5E20;
-  color: white;
-}
-[data-id="2"] .btn-outline:hover { border-color: #1B5E20; color: #1B5E20; }
-[data-id="2"] .phone-icon {
-  width: 48px;
-  height: 48px;
-  background-color: #1B5E20;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-[data-id="2"] .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e5e7eb;
-  border-top-color: #1B5E20;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-[data-id="2"] .btn-primary:hover { background-color: #14401a; }
-[data-id="2"] .btn-submit {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #1B5E20;
-  color: white;
-  border: none;
-  padding: 14px 0;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background-color 0.2s;
-}
 
-[data-id="2"] .btn-submit:hover { background-color: #1B5E20; }
-[data-id="2"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-[data-id="2"] .btn-request-trigger { background-color: #1B5E20; }
-[data-id="2"] .mini-stat-number {
-  font-size: 22px;
-  font-weight: 800;
-  color: #1B5E20;
-}
 
-[data-id="2"] .hero-text h1 .line1 { color: #1B5E20; }
-[data-id="2"] .hero-text h1 .line2 { color: #1B5E20; }
-[data-id="2"] .hero-form-card { border-color: #1B5E20; }
-
-/* ===== ID = 3 (bleu) ===== */
-[data-id="3"] .hero-badge-label {
-  display: inline-block;
-  color: #0c3fad;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  background-color: #e8f0fe;
-  padding: 6px 14px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
-[data-id="3"] .hero-text h1 .highlight { color: #0c3fad; }
-[data-id="3"] .btn-primary {
-  background-color: #0c3fad;
-  color: white;
-}
-[data-id="3"] .btn-outline:hover { border-color: #0c3fad; color: #0c3fad; }
-[data-id="3"] .phone-icon {
-  width: 48px;
-  height: 48px;
-  background-color: #0c3fad;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-[data-id="3"] .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e5e7eb;
-  border-top-color: #0c3fad;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
-}
-[data-id="3"] .btn-primary:hover { background-color: #1d4ed8; }
-
-[data-id="3"] .btn-submit {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #0c3fad;
-  color: white;
-  border: none;
-  padding: 14px 0;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background-color 0.2s;
-}
-
-[data-id="3"] .btn-submit:hover { background-color: #0c3fad; }
-[data-id="3"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-[data-id="3"] .btn-request-trigger { background-color: #0c3fad; }
-[data-id="3"] .mini-stat-number {
-  font-size: 22px;
-  font-weight: 800;
-  color: #0c3fad;
-}
-[data-id="3"] .hero-text h1 .line1 { color: #0c3fad; }
-[data-id="3"] .hero-text h1 .line2 { color: #0c3fad; }
-[data-id="3"] .hero-form-card { border-color: #0c3fad; }
 .hero-mini-stats {
   display: flex;
   align-items: center;
@@ -1185,4 +1188,370 @@ section {
   width: 1px;
   height: 32px;
   background-color: #d1d5db;
+}
+
+/* =========================================================
+   HERO - data-id="2"  (palette verte)
+   ========================================================= */
+[data-id="2"] {
+  --c-primary:  #1B5E20;   /* icône du formulaire, boutons */
+  --c-accent:   #2e7d32;   /* ligne 2 du titre, chiffres, icônes */
+  --c-dark:     #10301a;   /* ligne 1 du titre */
+  --c-badge:    #1B5E20;   /* texte du badge */
+  --c-soft:     #dcefdf;   /* pastille des icônes */
+  --c-border:   #bfdcc4;   /* bordure du formulaire */
+  --c-btn-1:    #1B5E20;
+  --c-btn-2:    #2e7d32;
+  --c-shadow:   27, 94, 32; /* rgb pour les ombres */
+}
+
+/* ---------- Fond ---------- */
+[data-id="2"] .hero-section,
+[data-id="2"] .hero-backdrop {
+  background: linear-gradient(135deg, #f0f9f2 0%, #e6f4ea 55%, #dcefe0 100%);
+}
+
+[data-id="2"] .hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-id="2"] .hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+[data-id="2"] .hero-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Cercles décoratifs (vw = mêmes proportions que id 1 et 3) ---------- */
+[data-id="2"] .hero-circle,
+[data-id="2"] .hero-backdrop::before,
+[data-id="2"] .hero-backdrop::after {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  filter: none;
+  right: auto;
+  bottom: auto;
+}
+
+/* 1. Haut gauche : grand cercle clair */
+[data-id="2"] .circle-2 {
+  background: #d3e8d7;
+  width: 30vw; height: 30vw;
+  left: -16vw; top: -18vw;
+}
+
+/* 2. Haut gauche : cercle plus foncé dans le coin */
+[data-id="2"] .circle-7 {
+  background: #bfdcc4;
+  width: 13vw; height: 13vw;
+  left: -6vw; top: -6.5vw;
+}
+
+/* 3. Milieu : cercle derrière la photo (même position que id 1) */
+[data-id="2"] .circle-3 {
+  background: #bcdcbf;
+  width: 22vw; height: 22vw;
+  left: 59.8%; top: 1vw;
+}
+
+/* 4. Bas gauche : petit arc très clair */
+[data-id="2"] .circle-5 {
+  background: #dcefdf;
+  width: 22vw; height: 22vw;
+  left: -14vw; bottom: -17vw;
+}
+
+/* 5. Droite : grand cercle très pâle derrière le formulaire */
+[data-id="2"] .hero-backdrop::before {
+  content: "";
+  background: #d9ecdc;
+  width: 29vw; height: 29vw;
+  left: 83%; top: -10.5vw;
+}
+
+/* 6. Bas droite : cercle plus foncé */
+[data-id="2"] .hero-backdrop::after {
+  content: "";
+  background: #b5d8ba;
+  width: 11vw; height: 11vw;
+  left: 95%; bottom: -3vw;
+}
+
+/* ---------- Badge : pastille blanche avec point ---------- */
+[data-id="2"] .hero-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--c-badge);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(var(--c-shadow), .08);
+}
+[data-id="2"] .hero-badge-label::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent);
+}
+
+/* ---------- Titre : ligne 1 sombre, ligne 2 vert ---------- */
+[data-id="2"] .hero-text h1 { font-size: 46px; }
+[data-id="2"] .hero-text h1 .line1 { color: var(--c-dark); }
+[data-id="2"] .hero-text h1 .line2 { color: var(--c-accent); }
+
+/* ---------- Description ---------- */
+[data-id="2"] .hero-desc { color: #4f5f54; }
+
+/* ---------- Bouton « Découvrir nos packs » masqué (supprimez cette ligne pour le garder) ---------- */
+[data-id="2"] .hero-actions { display: none; }
+
+/* ---------- Icônes de confiance dans une pastille claire ---------- */
+[data-id="2"] .trust-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--c-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-id="2"] .trust-icon {
+  width: 28px; height: 28px;
+  background-color: var(--c-accent);
+}
+[data-id="2"] .trust-text strong {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---------- Carte de stats blanche ---------- */
+[data-id="2"] .hero-mini-stats {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(var(--c-shadow), .10);
+}
+[data-id="2"] .mini-stat-number { color: var(--c-accent); }
+[data-id="2"] .mini-stat strong { font-weight: 500; }
+
+/* ---------- Image : pleine couleur, fondue sur les 4 côtés ---------- */
+[data-id="2"] .hero-image-wrap {
+  width: 62%;
+  right: 38px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-id="2"] .hero-image-wrap::after { display: none; }
+[data-id="2"] .hero-image {
+  opacity: 1;
+  filter: none;
+  border-radius: 0;
+  box-shadow: none;
+  object-position: center top;
+
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+
+          mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+
+/* ---------- Formulaire ---------- */
+[data-id="2"] .hero-form-trigger { right: 10px; }
+[data-id="2"] .hero-form-card {
+  width: 480px;
+  border: 1.5px solid var(--c-border);
+  box-shadow: 0 18px 44px rgba(var(--c-shadow), .16);
+}
+[data-id="2"] .form-header-icon { background-color: var(--c-primary); }
+[data-id="2"] .form-group:focus-within { border-color: var(--c-accent); }
+[data-id="2"] .upload-icon { color: var(--c-accent); }
+
+/* ---------- Bouton d'envoi ---------- */
+[data-id="2"] .btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 0;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(90deg, var(--c-btn-1), var(--c-btn-2));
+  box-shadow: 0 8px 18px rgba(var(--c-shadow), .30);
+}
+[data-id="2"] .btn-submit:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* ---------- Tablette / mobile ---------- */
+@media (max-width: 992px) {
+  [data-id="2"] .circle-3,
+  [data-id="2"] .hero-backdrop::before,
+  [data-id="2"] .hero-backdrop::after { display: none; }
+
+  [data-id="2"] .hero-image-wrap { width: 100%; right: 0; }
+  [data-id="2"] .hero-image { -webkit-mask-image: none; mask-image: none; }
+  [data-id="2"] .hero-form-card { width: 100%; }
+}
+
+/* ===================== COACHING ID = 3 : style maquette ===================== */
+
+/* Fond et cercles plus doux */
+[data-id="3"] .hero-section,
+[data-id="3"] .hero-backdrop {
+  background: linear-gradient(135deg, #eef3ff 0%, #e7effe 55%, #dfe9fd 100%);
+}
+[data-id="3"] .circle-2 { background: #dbe5fb; }
+[data-id="3"] .circle-3 { background: #d3e0fb; }
+[data-id="3"] .circle-5 { background: #e2ebfd; }
+[data-id="3"] .circle-7 { background: #cfdcfa; }
+
+/* Badge : pastille blanche avec point bleu */
+[data-id="3"] .hero-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #0c3fad;
+  box-shadow: 0 2px 8px rgba(30, 60, 140, .08);
+}
+[data-id="3"] .hero-badge-label::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #1d5be0;
+}
+
+/* Titre : ligne 1 sombre, ligne 2 bleu vif */
+[data-id="3"] .hero-text h1 { font-size: 46px; }
+[data-id="3"] .hero-text h1 .line1 { color: #141a3c; }
+[data-id="3"] .hero-text h1 .line2 { color: #1d5be0; }
+
+/* Description (s'affiche si sections[0].subtitle est renseigné) */
+[data-id="3"] .hero-desc { color: #4b5570; }
+
+/* Bouton « Découvrir nos packs » : absent de la maquette (enlève cette ligne pour le garder) */
+[data-id="3"] .hero-actions { display: none; }
+
+/* Icônes de confiance dans un cercle bleu clair */
+[data-id="3"] .trust-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: #dbe8fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-id="3"] .trust-icon { width: 28px; height: 28px; background-color: #1d5be0; }
+[data-id="3"] .trust-text strong { font-size: 13px; font-weight: 600; }
+
+/* Carte de stats blanche */
+[data-id="3"] .hero-mini-stats {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(30, 60, 140, .10);
+}
+[data-id="3"] .mini-stat-number { color: #1d5be0; }
+[data-id="3"] .mini-stat strong { font-weight: 500; }
+
+/* Image : pleine couleur, fondue sur ses côtés, plus de voile */
+[data-id="3"] .hero-image-wrap { width: 62%; right: 38px; }
+[data-id="3"] .hero-image-wrap::after { display: none; }
+[data-id="3"] .hero-image {
+  opacity: 1;
+  border-radius: 0;
+  box-shadow: none;
+  object-position: center top;
+
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+
+          mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+
+/* Formulaire : plus étroit, bordure douce, bouton dégradé */
+[data-id="3"] .hero-form-trigger { right: 10px; }
+[data-id="3"] .hero-form-card {
+  width: 480px;
+  border: 1.5px solid #c7d8f8;
+  box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
+}
+[data-id="3"] .form-header-icon { background-color: #2563eb; }
+[data-id="3"] .btn-submit {
+  background: linear-gradient(90deg, #2b63e8, #3b76f0);
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(43, 99, 232, .30);
+}
+/* Badge : pastille complète */
+[data-id="3"] .hero-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #0c3fad;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(30, 60, 140, .08);
+}
+
+/* Bouton d'envoi : complet */
+[data-id="3"] .btn-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 0;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #2b63e8, #3b76f0);
+  box-shadow: 0 8px 18px rgba(43, 99, 232, .30);
+}
+[data-id="3"] .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+/* Mobile / tablette */
+@media (max-width: 992px) {
+  [data-id="3"] .hero-image-wrap { width: 100%; }
+  [data-id="3"] .hero-image { -webkit-mask-image: none; mask-image: none; }
+  [data-id="3"] .hero-form-card { width: 100%; }
 }

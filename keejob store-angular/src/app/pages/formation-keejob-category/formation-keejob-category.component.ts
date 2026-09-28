@@ -40,31 +40,30 @@ carouselStartIndex = 0;
 private categoryVisuals: {
   [key: string]: { color: string; image: string; blobs: [string, string, string]; layout: string }
 } = {
-  'Formations_langues': {
-    color: '#257696',
-    image: '../../assets/formationLangues.webp',
-    blobs: ['#a8d8e8', '#6bb8d4', '#3d8fb0'], // bleu ciel / turquoise doux
-    layout: 'blobs-split'
-  },
-  'Formations_office': {
-    color: '#f0b8d1',
-    image: '../../assets/1x/formation_office.webp',
-    blobs: ['#f0b8d1', '#e07fa8', '#b8578a'], // rose
-    layout: 'blobs-left'
-  },
-  'Formations_Design': {
-    color: '#7d5fa3',
-    image: '../../assets/1x/formation_design.webp',
-  blobs: ['#c9b8d9', '#a68bc4', '#7d5fa3'], // lavande / violet doux
-
-    layout: 'blobs-scattered'
-  },
-  'Formations_Digital': {
-    color: '#4f5bd5',
-    image: '../../assets/1x/formation_MD.webp',
-    blobs: ['#b3c1e8', '#7d8fd1', '#5a67b8'], // bleu-violet
-    layout: 'blobs-right'
-  },
+'Formations_langues': {
+  color: '#4b5bf0',
+  image: '../../assets/1x/langues.webp',
+  blobs: ['#e6f0fc', '#e9eefc', '#eaf3fb'],
+  layout: 'blobs-aqua'
+},
+'Formations_office': {
+  color: '#d6459b',
+  image: '../../assets/1x/formation Office.webp',
+  blobs: ['#fbe6f1', '#f7dcec', '#f1d3e8'],
+  layout: 'blobs-rose'
+},
+'Formations_Design': {
+  color: '#7c3aed',
+  image: '../../assets/1x/formation Design.webp',
+  blobs: ['#efe8fb', '#ebe3fa', '#e4d9f7'],
+  layout: 'blobs-airy'
+},
+'Formations_Digital': {
+  color: '#4f5bd5',
+  image: '../../assets/1x/formation Digital.webp',
+  blobs: ['#eceafb', '#e4e8fb', '#eef0fc'],
+  layout: 'blobs-sky'
+},
 };
 get categoryBlobs(): [string, string, string] {
   return this.categoryVisuals[this.category]?.blobs ?? ['#8a4aa8', '#ef6f5b', '#f2c14e'];

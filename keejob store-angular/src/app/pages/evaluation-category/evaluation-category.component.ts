@@ -30,8 +30,8 @@ export class EvaluationCategoryComponent implements OnInit {
   // ===================== CONTENU STATIQUE CENTRAL TEST (extrait du PPTX) =====================
 
   centralTestLogo = 'assets/logo/central-test-logo.webp';
-  heroImage = 'assets/central-test-hero.webp';
-  competenceImage = 'assets/compentanceTest.webp';
+  heroImage = 'assets/Les tests psychometriques.webp';
+  competenceImage = 'assets/Les tests de competences.webp';
   heroSubtitle =
     "Keejob, avec son partenaire français Central Test, met à votre disposition un service " +
     "d'évaluation et de tests pour vos futurs recrutés ou vos collaborateurs, en vue de programmes " +

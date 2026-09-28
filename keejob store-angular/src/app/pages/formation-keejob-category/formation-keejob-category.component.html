@@ -1,7 +1,7 @@
 <!-- ===================== HERO ===================== -->
 <section
   class="hero-section"
-  [ngClass]="categoryBlobLayout"
+  [ngClass]="[categoryBlobLayout, 'cat-' + category]"
   [style.--blob-1]="categoryBlobs[0]"
   [style.--blob-2]="categoryBlobs[1]"
   [style.--blob-3]="categoryBlobs[2]">
@@ -13,7 +13,7 @@
 
   <div class="hero-container">
     <div class="hero-left">
-      <span class="hero-badge">✓ Annuaire certifié</span>
+      <span class="hero-badge"><span class="check-dot">✓</span> Annuaire certifié</span>
 <h1 class="hero-title">
   Choisissez votre formation
   <span class="highlight highlight-outline" [style.color]="categoryColor">{{ categoryLabel }}</span>

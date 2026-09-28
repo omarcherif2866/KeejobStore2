@@ -1,7 +1,7 @@
 <!-- ===================== HERO ===================== -->
 <section
   class="hero-section"
-  [ngClass]="categoryBlobLayout"
+  [ngClass]="[categoryBlobLayout, 'cat-' + category]"
   [style.--blob-1]="categoryBlobs[0]"
   [style.--blob-2]="categoryBlobs[1]"
   [style.--blob-3]="categoryBlobs[2]">
@@ -12,8 +12,10 @@
   </div>
   <div class="hero-container">
     <div class="hero-left">
-      <span class="hero-badge">✓ Annuaire certifié</span>
-      <h1 class="hero-title">Choisissez votre certification   <br>  <span class="highlight highlight-outline" [style.color]="categoryColor">{{ categoryLabel }}</span>
+      <span class="hero-badge">
+        <span class="check-dot">✓</span> Annuaire certifié
+      </span>
+      <h1 class="hero-title">Choisissez votre certification   <br>  <span class="highlight highlight-outline highlight-underline" [style.color]="categoryColor">{{ categoryLabel }}</span>
 </h1>
       <p class="hero-subtitle">
         Accédez aux meilleures certifications {{ categoryLabel }} en ligne selon vos besoins
@@ -53,19 +55,25 @@
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="hero-image-card">
-        <img [src]="categoryImage" alt="{{ categoryLabel }}" class="hero-image">
-        <div class="hero-float-badge-top">
-          <span class="star-icon">⭐</span>
-          <div><strong>{{ platforms.length }} références</strong><span>de plateformes</span></div>
-        </div>
-        <div class="hero-float-badge-bottom">
-          <span class="shield-icon">🛡️</span>
-          <div><strong>Certifications reconnues</strong><span>Qualité garantie</span></div>
-        </div>
-      </div>
+<div class="hero-right">
+  <div class="hero-image-card">
+    <img [src]="categoryImage" alt="{{ categoryLabel }}" class="hero-image">
+
+    <div class="hero-float-badge-top">
+      <span class="badge-ico badge-ico-shield">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5b7cf0"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3z"/></svg>
+      </span>
+      <div><strong>Certifications reconnues</strong><span>Qualité garantie</span></div>
     </div>
+
+    <div class="hero-float-badge-bottom">
+      <span class="badge-ico">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#f5b301"><path d="m12 2 3 6.9 7.5.7-5.7 5 1.7 7.4L12 18l-6.5 4 1.7-7.4-5.7-5 7.5-.7z"/></svg>
+      </span>
+      <div><strong>{{ platforms.length }} références</strong><span>de plateformes</span></div>
+    </div>
+  </div>
+</div>
   </div>
 </section>
 

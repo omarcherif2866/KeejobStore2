@@ -11,7 +11,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-certification-category',
   templateUrl: './certification-category.component.html',
-  styleUrls: ['../formation-keejob-category/formation-keejob-category.component.css']
+  styleUrls: ['./certification-category.component.css']
 })
 export class CertificationCategoryComponent implements OnInit {
 
@@ -39,22 +39,22 @@ carouselStartIndex = 0;
 private categoryVisuals: {
   [key: string]: { color: string; image: string; blobs: [string, string, string]; layout: string }
 } = {
-  'Marketing_Digital': {
-    color: '#257696',
-    image: '../../assets/1x/certif digital.webp',
-    blobs: ['#a8d8e8', '#6bb8d4', '#3d8fb0'], // bleu ciel / turquoise doux
-    layout: 'blobs-split' // arcs séparés (un à gauche, deux à droite)
-  },
+'Marketing_Digital': {
+  color: '#4f5bd5',
+  image: '../../assets/1x/certification Marketing Digital.webp',
+  blobs: ['#ebe6fc', '#dde5fb', '#d0dbf7'],
+  layout: 'blobs-soft'
+},
   'Entrepreneuriat': {
     color: '#c9b8d9',
-    image: '../../assets/1x/certif entre.webp',
-  blobs: ['#c9b8d9', '#a68bc4', '#7d5fa3'], // lavande / violet doux
+    image: '../../assets/1x/Entrepreneuriat.webp',
+  blobs: ['#d9cff4', '#ddd4f5', '#cfc3f0'],
     layout: 'blobs-left' // arcs à gauche
   },
   'AI': {
     color: '#5a67b8',
-    image: '../../assets/1x/certif ai.webp',
-    blobs: ['#b3c1e8', '#7d8fd1', '#5a67b8'], // bleu-violet
+    image: '../../assets/1x/certification AI.webp',
+    blobs: ['#e3dffa', '#d8d2f8', '#cbc4f4'], // bleu-violet
     layout: 'blobs-scattered' // arcs dispersés / diagonale
   }
 };

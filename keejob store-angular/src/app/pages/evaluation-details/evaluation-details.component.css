@@ -1,3 +1,5 @@
+/* ===== evaluationDetails.css ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -859,80 +861,214 @@ section {
   padding-bottom: 30px;
 }
 
-/* ===== ID = 1 (violet #5958A0) ===== */
-/* ===== Category = Les_tests_psychometriques (violet #46457f) ===== */
-[data-category="Les_tests_psychometriques"] .hero-badge-label {
-  display: inline-block;
-  color: #46457f;
-  font-weight: 700;
+/* =========================================================
+   HERO evaluationDetails : même rendu que cv.css (coaching)
+   ========================================================= */
+
+/* ---------- Palettes par catégorie ---------- */
+[data-category="Les_tests_psychometriques"] {
+  --c-primary: #4a4685;
+  --c-accent:  #5b56a6;
+  --c-dark:    #1f1b4d;
+  --c-badge:   #3f3a80;
+  --c-soft:    #e3e0f5;
+  --c-border:  #d3cfee;
+  --c-btn-1:   #46427e;
+  --c-btn-2:   #5a55a0;
+  --c-shadow:  70, 66, 130;
+  --bg-1: #f2f0fb; --bg-2: #ece9f8; --bg-3: #e6e2f5;
+  --ci-2: #dcd8f2; --ci-3: #c8c3e9; --ci-5: #e4e1f6; --ci-7: #cbc6ea;
+  --ci-before: #e1def4; --ci-after: #c3bee8;
+}
+
+[data-category="Les_tests_de_competences"] {
+  --c-primary: #1B5E20;
+  --c-accent:  #2e7d32;
+  --c-dark:    #10301a;
+  --c-badge:   #1B5E20;
+  --c-soft:    #dcefdf;
+  --c-border:  #bfdcc4;
+  --c-btn-1:   #1B5E20;
+  --c-btn-2:   #2e7d32;
+  --c-shadow:  27, 94, 32;
+  --bg-1: #f0f9f2; --bg-2: #e6f4ea; --bg-3: #dcefe0;
+  --ci-2: #d3e8d7; --ci-3: #bcdcbf; --ci-5: #dcefdf; --ci-7: #bfdcc4;
+  --ci-before: #d9ecdc; --ci-after: #b5d8ba;
+}
+
+/* ---------- Structure du hero ---------- */
+[data-category] .hero-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+[data-category] .hero-section,
+[data-category] .hero-backdrop {
+  background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+}
+[data-category] .hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+[data-category] .hero-content {
+  position: relative;
+  z-index: 1;
+}
+[data-category] .hero-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Cercles décoratifs ---------- */
+[data-category] .hero-circle,
+[data-category] .hero-backdrop::before,
+[data-category] .hero-backdrop::after {
+  position: absolute;
+  border-radius: 50%;
+  border: none;
+}
+[data-category] .circle-2 { background: var(--ci-2); width: 30vw; height: 30vw; left: -16vw; top: -18vw; }
+[data-category] .circle-7 { background: var(--ci-7); width: 13vw; height: 13vw; left: -6vw;  top: -6.5vw; }
+[data-category] .circle-3 { background: var(--ci-3); width: 22vw; height: 22vw; left: 59.8%; top: 1vw; }
+[data-category] .circle-5 { background: var(--ci-5); width: 22vw; height: 22vw; left: -14vw; bottom: -17vw; }
+[data-category] .hero-backdrop::before {
+  content: "";
+  background: var(--ci-before);
+  width: 29vw; height: 29vw;
+  left: 83%; top: -10.5vw;
+}
+[data-category] .hero-backdrop::after {
+  content: "";
+  background: var(--ci-after);
+  width: 11vw; height: 11vw;
+  left: 95%; bottom: -3vw;
+}
+
+/* ---------- Badge ---------- */
+[data-category] .hero-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--c-badge);
   font-size: 12px;
+  font-weight: 700;
   letter-spacing: 0.06em;
-  background-color: #f0f0fb;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(var(--c-shadow), .08);
 }
-[data-category="Les_tests_psychometriques"] .hero-text h1 .highlight { color: #46457f; }
-[data-category="Les_tests_psychometriques"] .btn-primary {
-  background-color: #46457f;
-  color: white;
-}
-[data-category="Les_tests_psychometriques"] .btn-outline:hover { border-color: #46457f; color: #46457f; }
-[data-category="Les_tests_psychometriques"] .phone-icon {
-  width: 48px;
-  height: 48px;
-  background-color: #46457f;
+[data-category] .hero-badge-label::before {
+  content: "";
+  width: 8px; height: 8px;
   border-radius: 50%;
+  background: var(--c-accent);
+}
+
+/* ---------- Titre ---------- */
+[data-category] .hero-text h1 { font-size: 46px; }
+[data-category] .hero-text h1 .line1 { color: var(--c-dark); }
+[data-category] .hero-text h1 .line2 { color: var(--c-accent); }
+[data-category] .hero-desc { color: #55536f; }
+
+/* ---------- Icônes de confiance ---------- */
+[data-category] .trust-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--c-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
-[data-category="Les_tests_psychometriques"] .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e5e7eb;
-  border-top-color: #46457f;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-bottom: 16px;
+[data-category] .trust-icon {
+  width: 28px; height: 28px;
+  background-color: var(--c-accent);
 }
-[data-category="Les_tests_psychometriques"] .btn-primary:hover { background-color: #34335f; }
-[data-category="Les_tests_psychometriques"] .btn-submit {
+[data-category] .trust-text strong { font-size: 13px; font-weight: 600; }
+
+/* ---------- Carte de stats ---------- */
+[data-category] .hero-mini-stats {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 12px 32px rgba(var(--c-shadow), .10);
+}
+[data-category] .mini-stat-number { color: var(--c-accent); }
+[data-category] .mini-stat strong { font-weight: 500; }
+
+/* ---------- Image fondue sur les 4 côtés ---------- */
+[data-category] .hero-image-wrap {
+  width: 62%;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+[data-category] .hero-image-wrap::after { display: none; }
+[data-category] .hero-image {
+  opacity: 1;
+  filter: none;
+  border-radius: 0;
+  box-shadow: none;
+  object-position: center top;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+
+/* ---------- Formulaire ---------- */
+[data-category] .hero-form-trigger { right: 40px; }
+[data-category] .hero-form-card {
+  width: 480px;
+  border: 1.5px solid var(--c-border);
+  box-shadow: 0 18px 44px rgba(var(--c-shadow), .16);
+}
+[data-category] .form-header-icon { background-color: var(--c-primary); }
+[data-category] .form-group:focus-within { border-color: var(--c-accent); }
+[data-category] .upload-icon { color: var(--c-accent); }
+
+/* ---------- Bouton d'envoi (dégradé) ---------- */
+[data-category] .btn-submit {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background-color: #46457f;
-  color: white;
-  border: none;
   padding: 14px 0;
-  border-radius: 12px;
+  margin-top: 6px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  margin-top: 6px;
-  transition: background-color 0.2s;
+  background: linear-gradient(90deg, var(--c-btn-1), var(--c-btn-2));
+  box-shadow: 0 8px 18px rgba(var(--c-shadow), .30);
 }
-[data-category="Les_tests_psychometriques"] .btn-submit:hover { background-color: #34335f; }
-[data-category="Les_tests_psychometriques"] .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-[data-category="Les_tests_psychometriques"] .btn-request-trigger { background-color: #46457f; }
-[data-category="Les_tests_psychometriques"] .mini-stat-number {
-  font-size: 22px;
-  font-weight: 800;
-  color: #46457f;
-}
-[data-category="Les_tests_psychometriques"] .hero-text h1 .line1 { color: #46457f; }
-[data-category="Les_tests_psychometriques"] .hero-text h1 .line2 { color: #46457f; }
-[data-category="Les_tests_psychometriques"] .hero-form-card { border-color: #46457f; }
-[data-category="Les_tests_psychometriques"] .form-header-icon { background-color: #46457f; }
-[data-category="Les_tests_psychometriques"] .trust-icon { background-color: #46457f; }
-[data-category="Les_tests_psychometriques"] .contact-banner-icon,
-[data-category="Les_tests_psychometriques"] .btn-contact-banner { background-color: #46457f; }
-[data-category="Les_tests_psychometriques"] .expertise-icon { background-color: #46457f; }
+[data-category] .btn-submit:hover { background: linear-gradient(90deg, var(--c-btn-1), var(--c-btn-2)); }
+[data-category] .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
 
+/* ---------- Bouton « Demander ce test » masqué (comme cv) ---------- */
+/* [data-category] .hero-actions { display: none; }  ← décommentez pour le masquer */
+
+/* ---------- Tablette / mobile ---------- */
+@media (max-width: 992px) {
+  [data-category] .circle-3,
+  [data-category] .hero-backdrop::before,
+  [data-category] .hero-backdrop::after { display: none; }
+
+  [data-category] .hero-image-wrap { width: 100%; }
+  [data-category] .hero-image { -webkit-mask-image: none; mask-image: none; }
+  [data-category] .hero-form-card { width: 100%; }
+}
 
 /* ===== Category = Les_tests_de_competences (vert foncé #1B5E20) ===== */
 [data-category="Les_tests_de_competences"] .hero-badge-label {
