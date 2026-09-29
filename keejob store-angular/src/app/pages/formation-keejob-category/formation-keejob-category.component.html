@@ -36,25 +36,53 @@
         <button class="btn-search" (click)="onSearch()">Rechercher <span class="btn-arrow">→</span></button>
       </div>
 
-      <div class="hero-features">
-        <div class="hero-feature">
-          <span class="feature-icon icon-blue">🛡️</span>
-          <div><strong>Sélectionnées avec soin</strong><span>Les meilleures plateformes</span></div>
-        </div>
-        <div class="hero-feature">
-          <span class="feature-icon icon-orange">🎓</span>
-          <div><strong>Contenus de qualité</strong><span>Formations à jour</span></div>
-        </div>
-        <div class="hero-feature">
-          <span class="feature-icon icon-yellow">⭐</span>
-          <div><strong>Apprentissage flexible</strong><span>Apprenez à votre rythme</span></div>
-        </div>
-      </div>
+<div class="hero-features">
+  <div class="hero-feature">
+    <span class="feature-icon icon-blue">🛡️</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Sélectionnées avec soin')[0] }}<br>
+        {{ splitInTwoLines('Sélectionnées avec soin')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Les meilleures plateformes')[0] }}<br>
+        {{ splitInTwoLines('Les meilleures plateformes')[1] }}
+      </span>
+    </div>
+  </div>
+  <div class="hero-feature">
+    <span class="feature-icon icon-orange">🎓</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Contenus de qualité')[0] }}<br>
+        {{ splitInTwoLines('Contenus de qualité')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Formations à jour')[0] }}<br>
+        {{ splitInTwoLines('Formations à jour')[1] }}
+      </span>
+    </div>
+  </div>
+  <div class="hero-feature">
+    <span class="feature-icon icon-yellow">⭐</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Apprentissage flexible')[0] }}<br>
+        {{ splitInTwoLines('Apprentissage flexible')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Apprenez à votre rythme')[0] }}<br>
+        {{ splitInTwoLines('Apprenez à votre rythme')[1] }}
+      </span>
+    </div>
+  </div>
+</div>
     </div>
 
     <div class="hero-right">
       <div class="hero-image-card">
         <img [src]="categoryImage" alt="{{ categoryLabel }}" class="hero-image">
+        
         <div class="hero-float-badge-top">
           <span class="star-icon">⭐</span>
           <div><strong>{{ platforms.length }} références</strong><span>de plateformes</span></div>

@@ -179,24 +179,29 @@
 /* Features */
 .hero-features {
   display: flex;
-  flex-wrap: wrap;
-  gap: 28px 36px;
+  flex-wrap: nowrap;
+  gap: 20px;
 }
 .hero-feature {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex: 1 1 0;
   min-width: 0;
-  max-width: 200px;
+  max-width: none;
 }
+
 .hero-feature strong {
   display: block;
   font-size: 14px;
   font-weight: 700;
   color: #141a3c;
   margin-bottom: 2px;
+  white-space: normal;
 }
 .hero-feature span {
+  display: block;
+  width: 130px;           /* ⬅️ même largeur que .hero-feature strong */
   font-size: 12px;
   color: #6b7280;
   line-height: 1.4;
@@ -592,4 +597,48 @@
   .hero-title { font-size: 28px; }
   .evaluation-grid { grid-template-columns: 1fr; }
   .help-cta { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 420px) {
+  .hero-features { flex-wrap: wrap; }
+  .hero-feature { flex: 1 1 45%; }
+}
+@media (min-width: 901px) and (max-width: 1600px) {
+  .hero-section,
+  .hero-section-competences {
+    padding: 40px 3% 24px;
+  }
+
+  /* ⬇️ RÉPARTITION TEXTE / IMAGE : augmente la part de l'image (2e chiffre)
+     pour réduire l'espace vide et l'agrandir */
+  .hero-container {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+  }
+
+  /* ⬇️ TAILLE DU TITRE : contrôle sur combien de lignes il tient.
+     Baisse le 2e chiffre (38px) si ça repasse à 4 lignes,
+     monte-le si tu veux un texte plus gros sur 3 lignes */
+  .hero-title {
+    font-size: clamp(46px, 2.9vw, 48px);
+  }
+
+    .hero-title .highlight {
+    display: inline;
+  }
+
+  .hero-right {
+    align-items: center;
+  }
+
+  /* ⬇️ TAILLE DE L'IMAGE : monte ce pourcentage pour l'agrandir,
+     baisse-le pour la réduire. object-fit: contain garde ses proportions
+     (rien n'est coupé, contrairement à "cover") */
+  .hero-image {
+    height: auto;
+    width: 112%;
+    max-width: 112%;
+    object-fit: contain;
+    margin: 0 auto;
+  }
 }

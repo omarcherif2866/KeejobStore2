@@ -49,7 +49,10 @@
         <div class="hero-feature" *ngFor="let f of heroFeatures">
             <span class="feature-icon" [ngClass]="f.iconClass">{{ f.icon }}</span>
           <div>
-            <strong>{{ f.title }}</strong>
+            <strong>
+              {{ splitInTwoLines(f.title)[0] }}<br>
+              {{ splitInTwoLines(f.title)[1] }}
+            </strong>
             <span>{{ f.subtitle }}</span>
           </div>
         </div>

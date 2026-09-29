@@ -187,4 +187,7 @@ getCouleurAvatar(nomAuteur: string): string {
     }
     return url;
   }
+
+
+
 }

@@ -1114,11 +1114,11 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="1"] .hero-form-trigger { right: 40px; }
+[data-id="1"] .hero-form-trigger { right: -40px; }
 [data-id="1"] .hero-form-card {
-  width: 480px;
-  border: 1.5px solid var(--c-border);
-  box-shadow: 0 18px 44px rgba(var(--c-shadow), .16);
+  width: 420px;
+  border: 1.5px solid #c7d8f8;
+  box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
 [data-id="1"] .form-header-icon { background-color: var(--c-primary); }
 
@@ -1350,7 +1350,7 @@ section {
 /* ---------- Image : pleine couleur, fondue sur les 4 côtés ---------- */
 [data-id="2"] .hero-image-wrap {
   width: 62%;
-  right: 38px;
+  right: 15px;
   background: none;
   border-radius: 0;
   box-shadow: none;
@@ -1375,11 +1375,11 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="2"] .hero-form-trigger { right: 10px; }
+[data-id="2"] .hero-form-trigger { right: -40px; }
 [data-id="2"] .hero-form-card {
-  width: 480px;
-  border: 1.5px solid var(--c-border);
-  box-shadow: 0 18px 44px rgba(var(--c-shadow), .16);
+  width: 420px;
+  border: 1.5px solid #c7d8f8;
+  box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
 [data-id="2"] .form-header-icon { background-color: var(--c-primary); }
 [data-id="2"] .form-group:focus-within { border-color: var(--c-accent); }
@@ -1481,7 +1481,13 @@ section {
 [data-id="3"] .mini-stat strong { font-weight: 500; }
 
 /* Image : pleine couleur, fondue sur ses côtés, plus de voile */
-[data-id="3"] .hero-image-wrap { width: 62%; right: 38px; }
+[data-id="3"] .hero-image-wrap {   
+  width: 62%;
+  right: 15px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+}
 [data-id="3"] .hero-image-wrap::after { display: none; }
 [data-id="3"] .hero-image {
   opacity: 1;
@@ -1501,9 +1507,9 @@ section {
 }
 
 /* Formulaire : plus étroit, bordure douce, bouton dégradé */
-[data-id="3"] .hero-form-trigger { right: 10px; }
+[data-id="3"] .hero-form-trigger { right: -40px; }
 [data-id="3"] .hero-form-card {
-  width: 480px;
+  width: 420px;
   border: 1.5px solid #c7d8f8;
   box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
@@ -1555,3 +1561,7 @@ section {
   [data-id="3"] .hero-image { -webkit-mask-image: none; mask-image: none; }
   [data-id="3"] .hero-form-card { width: 100%; }
 }
+
+
+
+

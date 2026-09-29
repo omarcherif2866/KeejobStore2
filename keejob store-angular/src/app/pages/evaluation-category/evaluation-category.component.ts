@@ -159,5 +159,26 @@ get currentHeroImage(): string {
     ? this.competenceImage
     : this.heroImage;
 }
+splitInTwoLines(text: string): string[] {
+  if (!text) return ['', ''];
+  const words = text.trim().split(' ');
+  if (words.length === 1) return [text, ''];
+
+  let bestSplit = 1;
+  let bestDiff = Infinity;
+  for (let i = 1; i < words.length; i++) {
+    const line1 = words.slice(0, i).join(' ');
+    const line2 = words.slice(i).join(' ');
+    const diff = Math.abs(line1.length - line2.length);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestSplit = i;
+    }
+  }
+  return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')];
+}
+splitFeatureTitle(text: string): string[] {
+  return this.splitInTwoLines(text);
+}
 
 }

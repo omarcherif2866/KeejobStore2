@@ -35,24 +35,47 @@
         <button class="btn-search" (click)="onSearch()">🔍 Rechercher</button>
       </div>
 
-      <div class="hero-features">
-        <div class="hero-feature">
-          <span class="feature-icon icon-blue">🛡️</span>
-          <div><strong>Sélectionnées avec soin</strong><span>Les meilleures plateformes</span></div>
-        </div>
-        <div class="hero-feature">
-          <span class="feature-icon icon-orange">🎓</span>
-          <div><strong>Certifications reconnues</strong><span>Validées par l'industrie</span></div>
-        </div>
-        <div class="hero-feature">
-          <span class="feature-icon icon-yellow">⭐</span>
-          <div><strong>À votre rythme</strong><span>Préparation flexible</span></div>
-        </div>
-        <!-- <div class="hero-feature">
-          <span class="feature-icon icon-pink">🎧</span>
-          <div><strong>Support apprenant</strong><span>Nous vous accompagnons</span></div>
-        </div> -->
-      </div>
+<div class="hero-features">
+  <div class="hero-feature">
+    <span class="feature-icon icon-blue">🛡️</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Sélectionnées avec soin')[0] }}<br>
+        {{ splitInTwoLines('Sélectionnées avec soin')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Les meilleures plateformes')[0] }}<br>
+        {{ splitInTwoLines('Les meilleures plateformes')[1] }}
+      </span>
+    </div>
+  </div>
+  <div class="hero-feature">
+    <span class="feature-icon icon-orange">🎓</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Contenus de qualité')[0] }}<br>
+        {{ splitInTwoLines('Contenus de qualité')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Formations à jour')[0] }}<br>
+        {{ splitInTwoLines('Formations à jour')[1] }}
+      </span>
+    </div>
+  </div>
+  <div class="hero-feature">
+    <span class="feature-icon icon-yellow">⭐</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines('Apprentissage flexible')[0] }}<br>
+        {{ splitInTwoLines('Apprentissage flexible')[1] }}
+      </strong>
+      <span>
+        {{ splitInTwoLines('Apprenez à votre rythme')[0] }}<br>
+        {{ splitInTwoLines('Apprenez à votre rythme')[1] }}
+      </span>
+    </div>
+  </div>
+</div>
     </div>
 
 <div class="hero-right">
