@@ -3,27 +3,32 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { Coaching, CoachingCategory } from '../models/coaching';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoachingService {
-  // private apiUrl = "http://localhost:9090/coaching";
-  private apiUrl = "/api/coaching";
-
+  private apiUrl = "http://localhost:9090/coaching";
+  // private apiUrl = "/api/coaching";
+  private coachingCache = new Map<string, Observable<Coaching>>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
-getCoachingById(id: any): Observable<Coaching> {
-  return this.http.get<Coaching>(`${this.apiUrl}/${id}`).pipe(
-    tap(data => console.log('Coaching reçu:', data)), // debug
-    catchError((error: any) => {
-      console.error('Erreur lors de la récupération du Coaching:', error);
-      return throwError(error);
-    })
-  );
-}
+  getById(id: any): Observable<Coaching> {
+    if (!this.coachingCache.has(id)) {
+      const request$ = this.http.get<Coaching>(`${this.apiUrl}/${id}`).pipe(
+        catchError((error: any) => {
+          this.coachingCache.delete(id);
+          console.error('Erreur lors de la récupération du coaching:', error);
+          return throwError(error);
+        }),
+        shareReplay(1)
+      );
+      this.coachingCache.set(id, request$);
+    }
+    return this.coachingCache.get(id)!;
+  }
 
 
 // Coaching.service.ts

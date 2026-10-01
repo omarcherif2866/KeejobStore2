@@ -242,4 +242,8 @@ splitInTwoLines(text: string): string[] {
   return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')];
 }
 
+prefetchFormation(id: number): void {
+  this.formationService.getById(id).subscribe();
+}
+
 }

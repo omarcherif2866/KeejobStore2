@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Plateforme } from '../models/platforme';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class PlateformeService {
 
   // private apiUrl = "http://localhost:9090/plateformes";
   private apiUrl = "/api/plateformes";
+private plateformeCache = new Map<string, Observable<Plateforme>>();
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +19,20 @@ export class PlateformeService {
     return this.http.get<Plateforme[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Plateforme> {
-    return this.http.get<Plateforme>(`${this.apiUrl}/${id}`);
+getById(id: number): Observable<Plateforme> {
+  const key = id.toString();
+  if (!this.plateformeCache.has(key)) {
+    const request$ = this.http.get<Plateforme>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error: any) => {
+        this.plateformeCache.delete(key);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.plateformeCache.set(key, request$);
   }
+  return this.plateformeCache.get(key)!;
+}
 
   // ✅ Création avec logo + imageIllustration (multipart)
   create(plateforme: Plateforme, logo?: File, imageIllustration?: File): Observable<Plateforme> {

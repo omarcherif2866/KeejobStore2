@@ -181,4 +181,8 @@ splitFeatureTitle(text: string): string[] {
   return this.splitInTwoLines(text);
 }
 
+prefetchEvaluation(id: number): void {
+  this.evaluationService.getById(id).subscribe();
+}
+
 }

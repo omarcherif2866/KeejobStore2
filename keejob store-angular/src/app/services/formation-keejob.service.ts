@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { FormationCategory, FormationKeejob } from '../models/formation-keejob';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class FormationKeejobService {
   // private apiUrl = "http://localhost:9090/formationKeejob";
   private apiUrl = "/api/formationKeejob";
 
+private formationKeejobCache = new Map<string, Observable<FormationKeejob>>();
 
   constructor(private http: HttpClient) {}
 
@@ -19,9 +20,20 @@ export class FormationKeejobService {
     return this.http.get<FormationKeejob[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<FormationKeejob> {
-    return this.http.get<FormationKeejob>(`${this.apiUrl}/${id}`);
+getById(id: number): Observable<FormationKeejob> {
+  const key = id.toString();
+  if (!this.formationKeejobCache.has(key)) {
+    const request$ = this.http.get<FormationKeejob>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error: any) => {
+        this.formationKeejobCache.delete(key);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.formationKeejobCache.set(key, request$);
   }
+  return this.formationKeejobCache.get(key)!;
+}
 
   // ✅ Création avec image (multipart)
   create(formation: FormationKeejob, plateformeId: number, image?: File): Observable<FormationKeejob> {

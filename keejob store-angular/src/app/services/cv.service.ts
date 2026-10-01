@@ -2,28 +2,33 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { Cv, CVCategory } from '../models/cv';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CvService {
-  // private apiUrl = "http://localhost:9090/cv";
-  private apiUrl = "/api/cv";
+  private apiUrl = "http://localhost:9090/cv";
+  // private apiUrl = "/api/cv";
 
+  private cvCache = new Map<string, Observable<Cv>>();
 
   constructor(private http: HttpClient, private router: Router) { }
 
-getCvById(id: any): Observable<Cv> {
-  return this.http.get<Cv>(`${this.apiUrl}/${id}`).pipe(
-    tap(data => console.log('Cv reçu:', data)), // debug
-    catchError((error: any) => {
-      console.error('Erreur lors de la récupération du Cv:', error);
-      return throwError(error);
-    })
-  );
-}
+  getById(id: any): Observable<Cv> {
+    if (!this.cvCache.has(id)) {
+      const request$ = this.http.get<Cv>(`${this.apiUrl}/${id}`).pipe(
+        catchError((error: any) => {
+          this.cvCache.delete(id); // on retire du cache en cas d'erreur, pour pouvoir réessayer
+          return throwError(error);
+        }),
+        shareReplay(1) // garde en mémoire le dernier résultat, partagé entre tous les abonnés
+      );
+      this.cvCache.set(id, request$);
+    }
+    return this.cvCache.get(id)!;
+  }
 
 
 // Cv.service.ts

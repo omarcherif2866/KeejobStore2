@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CentreFormation } from '../models/centre-formation';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CentreFormationService {
 
-  // private apiUrl = "http://localhost:9090/centres-formation";
-  private apiUrl = "/api/centres-formation";
+  private apiUrl = "http://localhost:9090/centres-formation";
+  // private apiUrl = "/api/centres-formation";
+private centreFormationCache = new Map<string, Observable<CentreFormation>>();
 
   constructor(private http: HttpClient) {}
 
@@ -18,9 +20,20 @@ export class CentreFormationService {
     return this.http.get<CentreFormation[]>(this.apiUrl);
   }
 
-  getCentreById(id: number): Observable<CentreFormation> {
-    return this.http.get<CentreFormation>(`${this.apiUrl}/${id}`);
+getById(id: number): Observable<CentreFormation> {
+  const key = id.toString();
+  if (!this.centreFormationCache.has(key)) {
+    const request$ = this.http.get<CentreFormation>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error: any) => {
+        this.centreFormationCache.delete(key);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.centreFormationCache.set(key, request$);
   }
+  return this.centreFormationCache.get(key)!;
+}
 
   // ⬇️ Accepte désormais du FormData (multipart), plus un objet CentreFormation en JSON
   createCentre(centre: FormData): Observable<CentreFormation> {

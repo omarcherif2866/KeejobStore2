@@ -257,4 +257,8 @@ splitInTwoLines(text: string): string[] {
   return [words.slice(0, bestSplit).join(' '), words.slice(bestSplit).join(' ')];
 }
 
+prefetchCertification(id: number): void {
+  this.certificationService.getById(id).subscribe();
+}
+
 }

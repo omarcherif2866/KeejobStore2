@@ -38,7 +38,7 @@ export class CentreFormationDetailsComponent implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
-      this.centreService.getCentreById(id).subscribe({
+      this.centreService.getById(id).subscribe({
         next: (data) => { this.centre = data; this.loading = false; console.log('Centre data:', data); },
         error: () => { this.loading = false; }
       });

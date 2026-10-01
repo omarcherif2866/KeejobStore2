@@ -28,6 +28,7 @@ sending = false;
 
 
   ngOnInit(): void {
+  
     this.routeSub = this.route.paramMap.subscribe(params => {
       this.cvId = Number(params.get('id'));
       this.fetchCvById(this.cvId);
@@ -40,7 +41,7 @@ sending = false;
 
     fetchCvById(id: number) {
       this.loading = true;
-      this.cvService.getCvById(id).subscribe({
+      this.cvService.getById(id).subscribe({
         next: (response: any) => {
           // Mettre UNE SEULE évaluation dans le tableau
           this.cvs = [new Cv(response)];

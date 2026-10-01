@@ -44,7 +44,7 @@ sending = false;
 fetchCoachingById(id: number) {
   this.loading = true;
 
-  this.coachingService.getCoachingById(id).subscribe({
+  this.coachingService.getById(id).subscribe({
     next: (response: any) => {
 
       // Mettre une seule coaching dans le tableau

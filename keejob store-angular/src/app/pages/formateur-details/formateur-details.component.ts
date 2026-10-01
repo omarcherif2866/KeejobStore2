@@ -23,7 +23,7 @@ export class FormateurDetailsComponent implements OnInit {
 getFormateurDetails(formateurId: string): void {
 
   // 1 — Récupérer le formateur
-  this.formateurService.getFormateurById(formateurId).subscribe((data: any) => {
+  this.formateurService.getById(formateurId).subscribe((data: any) => {
 
     this.formateur = new Formateur(
       data.id,

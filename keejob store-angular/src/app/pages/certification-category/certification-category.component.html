@@ -206,10 +206,11 @@
       </div>
 
       <div class="formations-table" *ngIf="displayedCertifications.length > 0; else noCertificationsBlock">
-        <div class="formation-row"
-             *ngFor="let certification of displayedCertifications"
-             [routerLink]="['/certification', certification.id]"
-             style="cursor: pointer;">
+<div class="formation-row"
+     *ngFor="let certification of displayedCertifications"
+     [routerLink]="['/certification', certification.id]"
+     (mouseenter)="prefetchCertification(certification.id)"
+     style="cursor: pointer;">
           <div class="formation-icon">
             <img [src]="sanitizeImage(certification.image)" [alt]="certification.titre">
           </div>

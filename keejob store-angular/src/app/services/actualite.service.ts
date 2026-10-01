@@ -15,7 +15,7 @@ export class ActualiteService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  getActualiteById(id: any): Observable<Actualite> {
+  getById(id: any): Observable<Actualite> {
     return this.http.get<Actualite>(`${this.apiUrl}/` + id);
   } 
 

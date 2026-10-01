@@ -152,8 +152,10 @@
     </div>
 
     <div class="centres-grid" *ngIf="!loading">
-      <div class="centre-card" *ngFor="let centre of displayedCentres" [routerLink]="['/centre_formation', centre.id]">
-
+<div class="centre-card" 
+     *ngFor="let centre of displayedCentres" 
+     [routerLink]="['/centre_formation', centre.id]"
+     (mouseenter)="prefetchCentre(centre.id)">
         <div class="centre-card-image">
           <img [src]="sanitizeImage(centre.image)" [alt]="centre.nom">
           <span class="centre-badge" *ngIf="centre.certifie">

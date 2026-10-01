@@ -150,7 +150,7 @@
     </div>
 
     <div class="centres-grid" *ngIf="!loading">
-      <div class="centre-card" *ngFor="let formateur of displayedFormateurs" [routerLink]="['/formateur', formateur.id]">
+      <div class="centre-card" *ngFor="let formateur of displayedFormateurs" [routerLink]="['/formateur', formateur.id]" (mouseenter)="prefetchFormateur(formateur.id)">
 
         <div class="centre-card-image">
           <img [src]="sanitizeImage(formateur.image)" [alt]="formateur.firstName + ' ' + formateur.lastName">

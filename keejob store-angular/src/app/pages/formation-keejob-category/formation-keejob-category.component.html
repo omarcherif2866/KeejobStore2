@@ -205,6 +205,7 @@
 <div class="formation-row" 
      *ngFor="let formation of displayedFormations"
      [routerLink]="['/formation', formation.id]"
+     (mouseenter)="prefetchFormation(formation.id)"
      style="cursor: pointer;">
   <div class="formation-icon">
     <img [src]="sanitizeImage(formation.image)" [alt]="formation.titre">

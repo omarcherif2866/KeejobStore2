@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Formateur } from '../models/formateur';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 import { ServiceFormateur } from '../models/service-formateur';
 import { TitleWhy } from '../models/title-why';
 
@@ -15,18 +15,26 @@ export class FormateurService {
 
   // private apiUrl = "http://localhost:9090/formateur";
   private apiUrl = "/api/formateur";
+private formateurCache = new Map<string, Observable<Formateur>>();
 
 
   constructor(private http: HttpClient, private router: Router) { }
 
-getFormateurById(id: any): Observable<Formateur> {
-  return this.http.get<Formateur>(`${this.apiUrl}/${id}`).pipe(
-    tap(data => console.log('Formateur reçu:', data)), // debug
-    catchError((error: any) => {
-      console.error('Erreur lors de la récupération du formateur:', error);
-      return throwError(error);
-    })
-  );
+getById(id: any): Observable<Formateur> {
+  const key = id.toString();
+  if (!this.formateurCache.has(key)) {
+    const request$ = this.http.get<Formateur>(`${this.apiUrl}/${id}`).pipe(
+      tap(data => console.log('Formateur reçu:', data)),
+      catchError((error: any) => {
+        this.formateurCache.delete(key);
+        console.error('Erreur lors de la récupération du formateur:', error);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.formateurCache.set(key, request$);
+  }
+  return this.formateurCache.get(key)!;
 }
 
 

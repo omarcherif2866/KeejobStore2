@@ -3,30 +3,38 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { Evaluation, EvaluationCategory } from '../models/evaluation';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvaluationService {
-  // private apiUrl = "http://localhost:9090/evaluation";
-  // private apiUrlImage = "http://localhost:9090/images";
+  private apiUrl = "http://localhost:9090/evaluation";
+  private apiUrlImage = "http://localhost:9090/images";
 
-  private apiUrl = "/api/evaluation";
-  private apiUrlImage = "/api/images";
+  // private apiUrl = "/api/evaluation";
+  // private apiUrlImage = "/api/images";
+private evaluationCache = new Map<string, Observable<Evaluation>>();
 
 
   constructor(private http: HttpClient, private router: Router) { }
 
-getEvaluationById(id: any): Observable<Evaluation> {
-  return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
-    map(item => new Evaluation(item)),
-    tap(data => console.log('Evaluation reçu:', data)),
-    catchError((error: any) => {
-      console.error('Erreur lors de la récupération du Evaluation:', error);
-      return throwError(error);
-    })
-  );
+getById(id: any): Observable<Evaluation> {
+  const key = id.toString();
+  if (!this.evaluationCache.has(key)) {
+    const request$ = this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
+      map(item => new Evaluation(item)),
+      tap(data => console.log('Evaluation reçu:', data)),
+      catchError((error: any) => {
+        this.evaluationCache.delete(key);
+        console.error('Erreur lors de la récupération du Evaluation:', error);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.evaluationCache.set(key, request$);
+  }
+  return this.evaluationCache.get(key)!;
 }
 
 

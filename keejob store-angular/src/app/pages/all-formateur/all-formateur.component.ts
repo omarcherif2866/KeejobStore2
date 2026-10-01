@@ -227,4 +227,9 @@ export class AllFormateurComponent implements OnInit {
     }
     return url;
   }
+
+  prefetchFormateur(id: number): void {
+    this.formateurService.getById(id).subscribe();
+  }
+
 }

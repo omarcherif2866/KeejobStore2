@@ -108,13 +108,14 @@
       {{ categoryDisplay.split(' ').slice(0, -1).join(' ') }}
       <span class="highlight">{{ categoryDisplay.split(' ').slice(-1)[0] }}</span>
     </h1>
-    <a class="btn-see-all" [routerLink]="['/evaluations']">Découvrir tous les tests →</a>
+    <!-- <a class="btn-see-all" [routerLink]="['/evaluations']">Découvrir tous les tests →</a> -->
   </div>
 
-  <div class="evaluation-grid">
-    <a class="evaluation-card tone-{{ i % 4 }}"
-       *ngFor="let ev of evaluations; let i = index"
-       [routerLink]="['/evaluation', ev.id]">
+<div class="evaluation-grid">
+  <a class="evaluation-card tone-{{ i % 4 }}"
+     *ngFor="let ev of evaluations; let i = index"
+     [routerLink]="['/evaluation', ev.id]"
+     (mouseenter)="prefetchEvaluation(ev.id)">
 
       <div class="evaluation-card-img-wrap">
         <img [src]="sanitizeImage(ev.image)" [alt]="ev.name" class="evaluation-card-img">

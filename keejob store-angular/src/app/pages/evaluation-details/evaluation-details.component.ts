@@ -42,7 +42,7 @@ export class EvaluationDetailsComponent implements OnInit, OnDestroy {
   load(id: string): void {
     this.loading = true;
     this.notFound = false;
-    this.evaluationService.getEvaluationById(id).subscribe({
+    this.evaluationService.getById(id).subscribe({
       next: (data) => {
         this.ev = data;
         this.loading = false;

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Certification, CategoryCertification } from '../models/certification';
+import { catchError, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { Certification, CategoryCertification } from '../models/certification';
 export class CertificationService {
   // private apiUrl = "http://localhost:9090/certification";
   private apiUrl = "/api/certification";
+private certificationCache = new Map<string, Observable<Certification>>();
 
   constructor(private http: HttpClient) {}
 
@@ -16,9 +18,20 @@ export class CertificationService {
     return this.http.get<Certification[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Certification> {
-    return this.http.get<Certification>(`${this.apiUrl}/${id}`);
+getById(id: number): Observable<Certification> {
+  const key = id.toString();
+  if (!this.certificationCache.has(key)) {
+    const request$ = this.http.get<Certification>(`${this.apiUrl}/${id}`).pipe(
+      catchError((error: any) => {
+        this.certificationCache.delete(key);
+        return throwError(error);
+      }),
+      shareReplay(1)
+    );
+    this.certificationCache.set(key, request$);
   }
+  return this.certificationCache.get(key)!;
+}
 
   // ✅ Création avec image (multipart)
   create(certification: Certification, plateformeId: number, image?: File): Observable<Certification> {

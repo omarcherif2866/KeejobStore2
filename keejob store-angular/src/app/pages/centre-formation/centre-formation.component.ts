@@ -160,4 +160,9 @@ selectFormationTitre(titre: string): void {
     }
     return url;
   }
+
+  prefetchCentre(id: number): void {
+    this.centreService.getById(id).subscribe();
+  }
+  
 }
