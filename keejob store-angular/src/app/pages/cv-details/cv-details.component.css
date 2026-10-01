@@ -1114,7 +1114,7 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="1"] .hero-form-trigger { right: 40px; }
+[data-id="1"] .hero-form-trigger { right: 10px; }
 [data-id="1"] .hero-form-card {
   width: 480px;
   border: 1.5px solid var(--c-border);
