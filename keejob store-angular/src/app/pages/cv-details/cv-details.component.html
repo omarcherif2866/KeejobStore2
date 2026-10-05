@@ -44,8 +44,8 @@
                     [style.mask-image]="'url(' + sanitizeImage(detail.icon) + ')'">
                 </div>
                 <div class="trust-text">
-                  <strong>{{ detail.titre }}</strong>
-                  <span>{{ detail.description }}</span>
+                  <strong>{{ twoLines(detail.titre) }}</strong>
+                  <span>{{ twoLines(detail.description) }}</span>
                 </div>
               </div>
             </div>

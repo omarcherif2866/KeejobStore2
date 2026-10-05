@@ -159,10 +159,10 @@ body {
 
 .hero-trust-row {
   display: flex;
-  gap: 32px;
+  gap: 70px;              /* ← augmente progressivement : 32px, 40px, 48px... */
   flex-wrap: nowrap;
-  justify-content: space-between;   /* répartit les 3 blocs sur toute la largeur */
-  max-width: 480px;                  /* limite pour ne pas trop les écarter sur grand écran */
+  justify-content: center;
+  max-width: 480px;
 }
 
 .trust-item {
@@ -202,12 +202,15 @@ body {
   color: #1e2749;
   margin-bottom: 5px;
   display: block;
+  white-space: pre-line;   /* ← respecte les \n */
 }
 
 .trust-text span {
   font-size: 13px;
   color: #6b7280;
   line-height: 1.5;
+  display: block;
+  white-space: pre-line;   /* ← respecte les \n */
 }
 
 .hero-visual {

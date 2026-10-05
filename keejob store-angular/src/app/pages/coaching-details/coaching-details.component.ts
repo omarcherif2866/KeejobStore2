@@ -182,4 +182,26 @@ fetchCoachingById(id: number) {
   get coachingsStatLabel(): string {
     return this.statsLabelsByCategory[this.categoryCoaching] || 'Coachings réalisés';
   }
+
+twoLines(text: string): string {
+  if (!text) return text;
+  const words = text.trim().split(' ');
+  if (words.length < 2) return text;
+
+  let bestIndex = 1;
+  let bestDiff = Infinity;
+  let cumulative = 0;
+
+  for (let i = 0; i < words.length - 1; i++) {
+    cumulative += words[i].length + 1;
+    const diff = Math.abs(cumulative - text.length / 2);
+    if (diff < bestDiff) {
+      bestDiff = diff;
+      bestIndex = i + 1;
+    }
+  }
+
+  return words.slice(0, bestIndex).join(' ') + '\n' + words.slice(bestIndex).join(' ');
+}
+
 }
