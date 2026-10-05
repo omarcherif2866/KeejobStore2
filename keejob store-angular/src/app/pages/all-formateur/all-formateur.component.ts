@@ -74,29 +74,31 @@ export class AllFormateurComponent implements OnInit {
   }
 
   // ===== MAPPING JSON BRUT -> INSTANCES DE CLASSES =====
-  private toFormateur(item: any): Formateur {
-    const formations = (item.formationFormateurs || []).map((f: any) => this.toFormationFormateur(f));
-    const services = (item.servicesFormateurs || []).map((s: any) => this.toServiceFormateur(s));
-    const titlesWhy = (item.titleWhyList || []).map((t: any) => this.toTitleWhy(t));
+private toFormateur(item: any): Formateur {
+  const formations = (item.formationFormateurs || []).map((f: any) => this.toFormationFormateur(f));
+  const services = (item.servicesFormateurs || []).map((s: any) => this.toServiceFormateur(s));
+  const titlesWhy = (item.titleWhyList || []).map((t: any) => this.toTitleWhy(t));
 
-    return new Formateur(
-      item.id,
-      item.phone,
-      item.description,
-      item.address,
-      item.email,
-      item.experience,
-      item.poste,
-      item.firstName,
-      item.lastName,
-      item.university,
-      item.image,
-      item.discount,
-      services,
-      titlesWhy,
-      formations
-    );
-  }
+  return new Formateur(
+    item.id,
+    item.phone,
+    item.description,
+    item.address,
+    item.email,
+    item.experience,
+    item.poste,
+    item.firstName,
+    item.lastName,
+    item.university,
+    item.image,
+    item.discount,
+    item.formationPresentiel,   // ← ajouté
+    item.formationEnLigne,      // ← ajouté
+    services,
+    titlesWhy,
+    formations
+  );
+}
 
   // FormationFormateur(id, title, description, formateur)
   private toFormationFormateur(item: any): FormationFormateur {

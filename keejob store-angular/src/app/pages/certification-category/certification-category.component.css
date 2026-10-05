@@ -91,12 +91,12 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .hero-container {
   position: relative;
   z-index: 1;
-  width: 100%;                 /* ajouté */
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 24px;
   flex-wrap: nowrap;
 }
@@ -712,8 +712,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 
 .cat-Marketing_Digital .hero-image-card { 
     width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 1586 / 992;   /* même ratio que la photo source */
+  max-width: 580px;
+  aspect-ratio: 500 / 313;   /* même ratio que la photo source */
   height: auto;
  }
 .cat-Marketing_Digital .hero-image {

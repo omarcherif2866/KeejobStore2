@@ -23,6 +23,8 @@ formData = {
 };
 selectedFiles: File[] = [];
 sending = false;
+  categoryCV!: string;
+
   constructor(
     private cvService: CvService,  private route: ActivatedRoute,private cvRequestService: CvRequestService) { }
 
@@ -39,28 +41,34 @@ sending = false;
     this.routeSub.unsubscribe();
   }
 
-    fetchCvById(id: number) {
-      this.loading = true;
-      this.cvService.getById(id).subscribe({
-        next: (response: any) => {
-          // Mettre UNE SEULE évaluation dans le tableau
-          this.cvs = [new Cv(response)];
-          this.loading = false;
-          console.log('cvs chargée:', this.cvs[0]);
-          
-        },
-        error: (error) => {
-          console.error('Erreur lors du chargement de cv:', error);
-          this.loading = false;
-          Swal.fire({
-            icon: 'error',
-            title: 'Erreur lors du chargement des données',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
+fetchCvById(id: number) {
+  this.loading = true;
+
+  this.cvService.getById(id).subscribe({
+    next: (response: any) => {
+      console.log('Réponse brute de l\'API:', response);   // ← ajouté
+
+      this.cvs = [new Cv(response)];
+      console.log('Objet cv après transformation:', this.cvs[0]);   // ← ajouté
+
+      this.categoryCV = this.cvs[0]?.Category;
+      console.log('categoryCV:', this.categoryCV);   // ← ajouté
+
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Erreur chargement Coaching:', error);
+      this.loading = false;
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur lors du chargement des données',
+        showConfirmButton: false,
+        timer: 1500
       });
     }
+  });
+}
 
     sanitizeImage(url: string | null): string {
     if (!url) return '';
@@ -163,5 +171,22 @@ submitForm(cvName: string) {
     words.slice(bestSplit).join(' ')
   ];
 }
+
+
+  private statsLabelsByCategory: { [key: string]: string } = {
+  'Traduction_de_CV_et_LM': 'CV\ntraités'
+  };
+
+    private secondStatsLabelsByCategory: { [key: string]: string } = {
+    'Traduction_de_CV_et_LM': 'Lettres traduites'
+  };
+
+  get cvStatLabel(): string {
+    return this.statsLabelsByCategory[this.categoryCV] || 'CV corrigés';
+  }
+
+    get cvSecondStatLabel(): string {
+    return this.secondStatsLabelsByCategory[this.categoryCV] || 'Lettres de motivation';
+  }
 
 }

@@ -88,7 +88,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 40px;
   flex-wrap: wrap;
 }
@@ -211,7 +211,14 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.hero-right { flex: 1; min-width: 320px; display: flex; justify-content: center; position: relative; }
+.hero-right {
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  position: relative;
+}
 
 .hero-image-card {
   position: relative;
@@ -723,8 +730,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 /* Image : la boîte épouse exactement la photo, le masque tombe donc sur ses vrais bords */
 .cat-Formations_Design .hero-image-card {
   width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 1501 / 1048;   /* même ratio que la photo source */
+  max-width: 570px;
+  aspect-ratio: 500 / 349;   /* même ratio que la photo source */
   height: auto;
 }
 .cat-Formations_Design .hero-image {
@@ -812,7 +819,6 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><path d='M2 7 Q 50 1 98 6' fill='none' stroke='%23d946a8' stroke-width='2.5' stroke-linecap='round'/></svg>") no-repeat left bottom / 100% 100%;
 }
 
-.cat-Formations_office .hero-subtitle { color: #5f5878; }
 
 /* Bouton indigo */
 .cat-Formations_office .btn-search {
@@ -907,7 +913,6 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   -webkit-text-fill-color: transparent;
 }
 
-.cat-Formations_Digital .hero-subtitle { color: #5b6180; }
 
 /* Bouton */
 .cat-Formations_Digital .btn-search {
@@ -925,8 +930,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 /* Image : agrandie, collée à droite, bords estompés (dont le côté droit) */
 .cat-Formations_Digital .hero-image-card {
   width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 1752 / 1204;   /* même ratio que la photo source */
+  max-width: 570px;
+  aspect-ratio: 500 / 363;   /* même ratio que la photo source */
   height: auto;
 }
 .cat-Formations_Digital .hero-image {
@@ -1007,7 +1012,6 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   -webkit-text-fill-color: transparent;
 }
 
-.cat-Formations_langues .hero-subtitle { color: #5a6286; }
 
 /* Bouton */
 .cat-Formations_langues .btn-search {

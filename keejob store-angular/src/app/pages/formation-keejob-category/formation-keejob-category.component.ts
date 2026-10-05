@@ -65,6 +65,77 @@ private categoryVisuals: {
   layout: 'blobs-sky'
 },
 };
+
+
+  private heroTitleParts: { [key: string]: { normal: string; highlight: string } } = {
+  'Formations_langues': {
+    normal: 'Développez vos',
+    highlight: 'compétences linguistiques'
+  },
+  'Formations_office': {
+    normal: 'Maîtrisez les outils',
+    highlight: 'Office'
+  },
+  'Formations_Design': {
+    normal: 'Développez vos compétences',
+    highlight: 'en Design'
+  },
+  'Formations_Digital': {
+    normal: 'Maîtrisez les métiers du',
+    highlight: 'Digital'
+  }
+};
+
+  private heroSubtitles: { [key: string]: string } = {
+    'Formations_langues':
+      "Des <strong>formations en langues</strong> en ligne, sélectionnées selon vos besoins et accessibles sur des plateformes reconnues.",
+    'Formations_office':
+      "Des <strong>formations Office</strong> en ligne pour développer vos compétences sur les outils bureautiques essentiels.",
+    'Formations_Design':
+      "Des <strong>formations Design</strong> en ligne pour maîtriser les outils, méthodes et techniques de création visuelle.",
+    'Formations_Digital':
+      "Des <strong>formations Digital</strong> en ligne pour renforcer vos compétences et évoluer dans les métiers du numérique.",
+  };
+
+  private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: string; title: string; subtitle: string }[] } = {
+  'Formations_langues': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Contenus actualisés', subtitle: 'Formations adaptées' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+  ],
+  'Formations_office': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences pratiques', subtitle: 'Outils et méthodes' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+  ],
+  'Formations_Design': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences créatives', subtitle: 'Outils et techniques' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+  ],
+  'Formations_Digital': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Parcours sélectionnés', subtitle: 'Formations reconnues' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Savoirs opérationnels', subtitle: 'Compétences actuelles' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accès flexible', subtitle: 'Quand vous voulez' }
+  ]
+};
+
+get heroFeatures() {
+  return this.heroFeaturesByCategory[this.category] || this.heroFeaturesByCategory['Les_tests_psychometriques'];
+}
+
+  get heroSubtitle(): string {
+    return this.heroSubtitles[this.category] || this.heroSubtitles['Les_tests_psychometriques'];
+  }
+
+get heroTitleNormal(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Formations_langues']).normal;
+}
+
+get heroTitleHighlight(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Formations_langues']).highlight;
+}
+
 get categoryBlobs(): [string, string, string] {
   return this.categoryVisuals[this.category]?.blobs ?? ['#8a4aa8', '#ef6f5b', '#f2c14e'];
 }

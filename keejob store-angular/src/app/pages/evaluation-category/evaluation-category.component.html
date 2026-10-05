@@ -38,25 +38,25 @@
 
       <img [src]="centralTestLogo" alt="Central Test" class="hero-title-logo">
 
-      <h1 class="hero-title">
-        Optimisez le potentiel humain avec notre outil
-        <span class="highlight">Central Test</span>
-      </h1>
+<h1 class="hero-title">
+  {{ heroTitleNormal }}
+  <span class="highlight">{{ heroTitleHighlight }}</span>
+</h1>
 
       <p class="hero-subtitle" *ngIf="heroSubtitle">{{ heroSubtitle }}</p>
 
-      <div class="hero-features">
-        <div class="hero-feature" *ngFor="let f of heroFeatures">
-            <span class="feature-icon" [ngClass]="f.iconClass">{{ f.icon }}</span>
-          <div>
-            <strong>
-              {{ splitInTwoLines(f.title)[0] }}<br>
-              {{ splitInTwoLines(f.title)[1] }}
-            </strong>
-            <span>{{ f.subtitle }}</span>
-          </div>
-        </div>
-      </div>
+<div class="hero-features">
+  <div class="hero-feature" *ngFor="let f of heroFeatures">
+    <span class="feature-icon" [ngClass]="f.iconClass">{{ f.icon }}</span>
+    <div>
+      <strong>
+        {{ splitInTwoLines(f.title)[0] }}<br>
+        {{ splitInTwoLines(f.title)[1] }}
+      </strong>
+      <span>{{ f.subtitle }}</span>
+    </div>
+  </div>
+</div>
     </div>
 
     <div class="hero-right">

@@ -32,16 +32,43 @@ export class EvaluationCategoryComponent implements OnInit {
   centralTestLogo = 'assets/logo/central-test-logo.webp';
   heroImage = 'assets/Les tests psychometriques.webp';
   competenceImage = 'assets/Les tests de competences.webp';
-  heroSubtitle =
-    "Keejob, avec son partenaire français Central Test, met à votre disposition un service " +
-    "d'évaluation et de tests pour vos futurs recrutés ou vos collaborateurs, en vue de programmes " +
-    "de formation ou de mobilité.";
+  private heroSubtitles: { [key: string]: string } = {
+    'Les_tests_psychometriques':
+      "Des tests psychométriques pour évaluer la personnalité, les aptitudes et les motivations de vos candidats et collaborateurs",
+    'Les_tests_de_competences':
+      "Une solution de tests et d’évaluation des compétences pour vos recrutements, vos formations et la mobilité de vos collaborateurs."
+  };
 
-  heroFeatures = [
+  //   private heroTitles: { [key: string]: string } = {
+  //   'Les_tests_psychometriques':
+  //     "Mieux connaître les profils et révéler leur potentiel",
+  //   'Les_tests_de_competences':
+  //     "Evaluez les compétences et révélez le potentiel de vos talents"
+  // };
+
+  private heroTitleParts: { [key: string]: { normal: string; highlight: string } } = {
+  'Les_tests_psychometriques': {
+    normal: 'Mieux connaître les profils et',
+    highlight: 'révéler leur potentiel'
+  },
+  'Les_tests_de_competences': {
+    normal: 'Evaluez les compétences et',
+    highlight: 'révélez le potentiel de vos talents'
+  }
+};
+
+private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: string; title: string; subtitle: string }[] } = {
+  'Les_tests_psychometriques': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution certifiée', subtitle: 'Partenaire officiel Central Test' },
-    { icon: '🎯', iconClass: 'icon-orange', title: 'Adapté au marché tunisien', subtitle: 'Packs étudiés localement' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Sélection et interprétation' }
-  ];
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Évaluation précise', subtitle: 'Profils et aptitudes analysés' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Conseil, analyse et interprétation' }
+  ],
+  'Les_tests_de_competences': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution certifiée', subtitle: 'Partenaire officiel Central Test' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Adaptée au marché tunisien', subtitle: 'Rapport par compétence' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Conseil, analyse et interprétation' }
+  ]
+};
 
   solutionParagraphs = [
     "Keejob avec son partenaire français Central Test met à votre disposition un service d'évaluation " +
@@ -101,6 +128,26 @@ export class EvaluationCategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private evaluationService: EvaluationService
   ) {}
+
+  get heroSubtitle(): string {
+    return this.heroSubtitles[this.category] || this.heroSubtitles['Les_tests_psychometriques'];
+  }
+
+get heroTitleNormal(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Les_tests_psychometriques']).normal;
+}
+
+get heroTitleHighlight(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Les_tests_psychometriques']).highlight;
+}
+
+get heroFeatures() {
+  return this.heroFeaturesByCategory[this.category] || this.heroFeaturesByCategory['Les_tests_psychometriques'];
+}
+
+  //   get heroTitle(): string {
+  //   return this.heroTitles[this.category] || this.heroTitles['Les_tests_psychometriques'];
+  // }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {

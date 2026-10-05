@@ -20,15 +20,19 @@ export class CoachingDetailsComponent implements OnInit {
   currentIndexPartners = 0;
   visiblePartners: any[] = [];
   formData = {
-  fullname: '',
-  email: '',
-  whatsapp: ''
-};
-selectedFiles: File[] = [];
-sending = false;
-  constructor(
-    private coachingService: CoachingService, private cvRequestService: CvRequestService,  private route: ActivatedRoute) { }
+    fullname: '',
+    email: '',
+    whatsapp: ''
+  };
+  selectedFiles: File[] = [];
+  sending = false;
+  categoryCoaching!: string;
 
+  constructor(
+    private coachingService: CoachingService,
+    private cvRequestService: CvRequestService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe(params => {
@@ -46,13 +50,13 @@ fetchCoachingById(id: number) {
 
   this.coachingService.getById(id).subscribe({
     next: (response: any) => {
+      console.log('Réponse brute de l\'API:', response);   // ← ajouté
 
-      // Mettre une seule coaching dans le tableau
       this.coachings = [new Coaching(response)];
+      console.log('Objet Coaching après transformation:', this.coachings[0]);   // ← ajouté
 
-      // ⬇️ AJOUTE CETTE LIGNE POUR LE CARROUSEL
-
-      // ⬇️ MET À JOUR POUR AFFICHER LES 4 PREMIERS
+      this.categoryCoaching = this.coachings[0]?.Category;
+      console.log('categoryCoaching:', this.categoryCoaching);   // ← ajouté
 
       this.loading = false;
     },
@@ -70,8 +74,7 @@ fetchCoachingById(id: number) {
   });
 }
 
-
-    sanitizeImage(url: string | null): string {
+  sanitizeImage(url: string | null): string {
     if (!url) return '';
 
     if (url.includes("https://res.cloudinary.com") && url.split("https://res.cloudinary.com").length > 2) {
@@ -82,35 +85,34 @@ fetchCoachingById(id: number) {
     return url;
   }
 
-getColorClass(i: number): string {
-  const colors = ['card-blue', 'card-green', 'card-yellow'];
-  return colors[i % 3];   // cycle automatiquement
-}
-
-
-getBadgeClass(i: number): string {
-  const badges = ['badge-blue', 'badge-green', 'badge-orange'];
-  return badges[i % 3];
-}
-
-getBtnClass(i: number): string {
-  const btns = ['btn-blue', 'btn-green', 'btn-orange'];
-  return btns[i % 3];
-}
-
-getIconColor(i: number): string {
-  const colors = ['#5958A0', '#4caf50', '#f59e0b'];
-  return colors[i % 3];
-}
-
-onFileSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    this.selectedFiles = Array.from(input.files);
+  getColorClass(i: number): string {
+    const colors = ['card-blue', 'card-green', 'card-yellow'];
+    return colors[i % 3];
   }
-}
 
-submitForm(cvName: string) {
+  getBadgeClass(i: number): string {
+    const badges = ['badge-blue', 'badge-green', 'badge-orange'];
+    return badges[i % 3];
+  }
+
+  getBtnClass(i: number): string {
+    const btns = ['btn-blue', 'btn-green', 'btn-orange'];
+    return btns[i % 3];
+  }
+
+  getIconColor(i: number): string {
+    const colors = ['#5958A0', '#4caf50', '#f59e0b'];
+    return colors[i % 3];
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFiles = Array.from(input.files);
+    }
+  }
+
+  submitForm(cvName: string) {
     if (!this.formData.fullname || !this.formData.email || !this.formData.whatsapp) {
       Swal.fire({
         icon: 'warning',
@@ -127,8 +129,8 @@ submitForm(cvName: string) {
       fullname: this.formData.fullname,
       email: this.formData.email,
       whatsapp: this.formData.whatsapp,
-      cvFiles: this.selectedFiles,   // ⬅️ renommé + tableau
-      serviceName: cvName        // ← récupéré automatiquement depuis cv.name
+      cvFiles: this.selectedFiles,
+      serviceName: cvName
     }).subscribe({
       next: () => {
         this.sending = false;
@@ -147,33 +149,37 @@ submitForm(cvName: string) {
     this.selectedFiles = [];
   }
 
+  splitInTwoLines(text: string): string[] {
+    if (!text) return ['', ''];
 
-// Découpe un texte en 2 lignes équilibrées (par mots)
-splitInTwoLines(text: string): string[] {
-  if (!text) return ['', ''];
+    const words = text.trim().split(' ');
+    if (words.length === 1) return [text, ''];
 
-  const words = text.trim().split(' ');
-  if (words.length === 1) return [text, '']; // un seul mot : pas de coupure possible
+    let bestSplit = 1;
+    let bestDiff = Infinity;
 
-  let bestSplit = 1;
-  let bestDiff = Infinity;
+    for (let i = 1; i < words.length; i++) {
+      const line1 = words.slice(0, i).join(' ');
+      const line2 = words.slice(i).join(' ');
+      const diff = Math.abs(line1.length - line2.length);
 
-  // Cherche le point de coupure qui équilibre le mieux la longueur des 2 lignes
-  for (let i = 1; i < words.length; i++) {
-    const line1 = words.slice(0, i).join(' ');
-    const line2 = words.slice(i).join(' ');
-    const diff = Math.abs(line1.length - line2.length);
-
-    if (diff < bestDiff) {
-      bestDiff = diff;
-      bestSplit = i;
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        bestSplit = i;
+      }
     }
+
+    return [
+      words.slice(0, bestSplit).join(' '),
+      words.slice(bestSplit).join(' ')
+    ];
   }
 
-  return [
-    words.slice(0, bestSplit).join(' '),
-    words.slice(bestSplit).join(' ')
-  ];
-}
+  private statsLabelsByCategory: { [key: string]: string } = {
+    'Simulation_dentretint': 'Simulations réalisées'
+  };
 
+  get coachingsStatLabel(): string {
+    return this.statsLabelsByCategory[this.categoryCoaching] || 'Coachings réalisés';
+  }
 }

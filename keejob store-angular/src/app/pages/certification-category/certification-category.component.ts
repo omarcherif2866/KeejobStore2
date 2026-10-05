@@ -59,6 +59,65 @@ private categoryVisuals: {
   }
 };
 
+
+  private heroTitleParts: { [key: string]: { normal: string; highlight: string } } = {
+  'Marketing_Digital': {
+    normal: 'Valorisez vos compétences en',
+    highlight: 'Marketing Digital'
+  },
+  'Entrepreneuriat': {
+    normal: 'Certifiez vos compétences',
+    highlight: 'entrepreneuriales'
+  },
+  'AI': {
+    normal: 'Développez votre expertise en',
+    highlight: 'Intelligence Artificielle'
+  }
+};
+
+  private heroSubtitles: { [key: string]: string } = {
+    'Marketing_Digital':
+      "Des <strong>certifications en Marketing Digital </strong>en ligne pour valider vos acquis et renforcer votre profil professionnel.",
+    'Entrepreneuriat':
+      "Des <strong>certifications en Entrepreneuriat</strong> en ligne pour valider vos compétences en création, gestion et développement d’entreprise.",
+    'AI':
+      "Des <strong>certifications en IA</strong> en ligne pour valider vos connaissances et renforcer votre expertise dans les technologies d’intelligence artificielle.",
+  };
+
+  private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: string; title: string; subtitle: string }[] } = {
+  'Marketing_Digital': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Certifications reconnues', subtitle: 'Organismes de référence' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences certifiées', subtitle: 'Savoirs validés' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Valeur professionnelle', subtitle: 'Profil renforcé' }
+  ],
+  'Entrepreneuriat': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Certifications reconnues', subtitle: 'Organismes spécialisés' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences validées', subtitle: 'Savoirs entrepreneuriaux' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Crédibilité renforcée', subtitle: 'Profil valorisé' }
+  ],
+  'AI': [
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Certifications reconnues', subtitle: 'Acteurs de référence' },
+    { icon: '🎯', iconClass: 'icon-orange', title: 'Expertise validée', subtitle: 'Compétences en IA' },
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Profil valorisé', subtitle: 'Compétences certifiées' }
+  ]
+};
+
+get heroFeatures() {
+  return this.heroFeaturesByCategory[this.category] || this.heroFeaturesByCategory['Les_tests_psychometriques'];
+}
+
+  get heroSubtitle(): string {
+    return this.heroSubtitles[this.category] || this.heroSubtitles['Les_tests_psychometriques'];
+  }
+
+get heroTitleNormal(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Marketing_Digital']).normal;
+}
+
+get heroTitleHighlight(): string {
+  return (this.heroTitleParts[this.category] || this.heroTitleParts['Marketing_Digital']).highlight;
+}
+
 get categoryBlobs(): [string, string, string] {
   return this.categoryVisuals[this.category]?.blobs ?? ['#8a4aa8', '#ef6f5b', '#f2c14e'];
 }

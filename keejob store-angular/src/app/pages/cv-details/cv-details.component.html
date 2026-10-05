@@ -31,7 +31,7 @@
               <span class="line2">{{ splitInTwoLines(cv.name)[1] }}</span>
             </h1>
 
-            <p class="hero-desc">{{ cv.sections[0]?.subtitle }}</p>
+            <p class="hero-desc">{{ cv.description }}</p>
 
             <div class="hero-actions">
               <a href="#pricing-section" class="btn btn-primary">Commander maintenant</a>
@@ -52,12 +52,12 @@
             <div class="hero-mini-stats">
               <div class="mini-stat">
                 <span class="mini-stat-number">1226+</span>
-                <strong><span class="mini-stat-label">CV corrigés</span></strong>
+                <strong><span class="mini-stat-label">{{ cvStatLabel }}</span></strong>
               </div>
               <div class="mini-stat-divider"></div>
               <div class="mini-stat">
                 <span class="mini-stat-number">1153+</span>
-                <strong><span class="mini-stat-label">LM corrigées</span></strong>
+                <strong><span class="mini-stat-label">{{ cvSecondStatLabel }}</span></strong>
               </div>
               <div class="mini-stat-divider"></div>              
               <div class="mini-stat">
