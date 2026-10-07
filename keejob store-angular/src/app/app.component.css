@@ -5,7 +5,7 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background-color: #72B656;
+  background-color: #00C6FD;
   color: #ffffff;
   border: none;
   display: flex;
@@ -29,7 +29,7 @@
 }
 
 .scroll-to-top:hover {
-  background-color: #5f9a46;
+  background-color: #2191D0;
   transform: translateY(-3px);
 }
 
