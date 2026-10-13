@@ -1068,6 +1068,8 @@ section {
 [data-id="1"] .hero-actions { display: none; }
 
 /* ---------- Icônes de confiance dans une pastille claire ---------- */
+
+
 [data-id="1"] .trust-icon-wrap {
   width: 52px; height: 52px;
   border-radius: 50%;
@@ -1076,14 +1078,8 @@ section {
   align-items: center;
   justify-content: center;
 }
-[data-id="1"] .trust-icon {
-  width: 28px; height: 28px;
-  background-color: var(--c-accent);
-}
-[data-id="1"] .trust-text strong {
-  font-size: 13px;
-  font-weight: 600;
-}
+[data-id="1"] .trust-icon { width: 28px; height: 28px; background-color:var(--c-accent); }
+[data-id="1"] .trust-text strong { font-size: 13px; font-weight: 600; }
 
 /* ---------- Carte de stats blanche ---------- */
 [data-id="1"] .hero-mini-stats {
@@ -1123,9 +1119,9 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="1"] .hero-form-trigger { right: -40px; }
+[data-id="1"] .hero-form-trigger { right: -140px; }
 [data-id="1"] .hero-form-card {
-  width: 420px;
+  width: 480px;
   border: 1.5px solid #c7d8f8;
   box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
@@ -1386,9 +1382,9 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="2"] .hero-form-trigger { right: -40px; }
+[data-id="2"] .hero-form-trigger { right: -140px; }
 [data-id="2"] .hero-form-card {
-  width: 420px;
+  width: 480px;
   border: 1.5px solid #c7d8f8;
   box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
@@ -1520,9 +1516,9 @@ section {
 }
 
 /* Formulaire : plus étroit, bordure douce, bouton dégradé */
-[data-id="3"] .hero-form-trigger { right: -40px; }
+[data-id="3"] .hero-form-trigger { right: -140px; }
 [data-id="3"] .hero-form-card {
-  width: 420px;
+  width: 480px;
   border: 1.5px solid #c7d8f8;
   box-shadow: 0 18px 44px rgba(40, 80, 180, .16);
 }
