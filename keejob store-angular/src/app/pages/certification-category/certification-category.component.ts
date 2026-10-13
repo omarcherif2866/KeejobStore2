@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Certification } from 'src/app/models/certification';
 import { Plateforme } from 'src/app/models/platforme';
@@ -15,7 +15,9 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./certification-category.component.css']
 })
 export class CertificationCategoryComponent implements OnInit {
-
+menuTop = 0;
+menuLeft = 0;
+dropdownOpen = false;
   category!: string;
   searchQuery = '';
 
@@ -386,6 +388,26 @@ splitInTwoLines(text: string): string[] {
 
 prefetchCertification(id: number): void {
   this.certificationService.getById(id).subscribe();
+}
+
+
+chooseCategory(value: string): void {
+  this.selectedCategory = value;
+  this.dropdownOpen = false;
+}
+toggleDropdown(btn: HTMLElement): void {
+  if (!this.dropdownOpen) {
+    const r = btn.getBoundingClientRect();
+    this.menuTop = r.bottom + 10;
+    this.menuLeft = r.left - 14;
+  }
+  this.dropdownOpen = !this.dropdownOpen;
+}
+
+@HostListener('window:scroll')
+@HostListener('window:resize')
+closeOnMove(): void {
+  this.dropdownOpen = false;
 }
 
 }

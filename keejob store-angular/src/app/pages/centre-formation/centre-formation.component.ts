@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CentreFormation } from 'src/app/models/centre-formation';
 import { CentreFormationService } from 'src/app/services/centre-formation.service';
 
@@ -23,18 +23,26 @@ export class CentreFormationComponent implements OnInit {
 
   sortBy: 'note' | 'nom' | 'avis' = 'note';
 dropdownOpen = false;
-
+menuTop = 0;
+menuLeft = 0;
   constructor(private centreService: CentreFormationService) {}
 
   ngOnInit(): void {
     this.fetchCentres();
   }
 
-toggleDropdown(): void {
+toggleDropdown(btn: HTMLElement): void {
+  if (!this.dropdownOpen) {
+    const r = btn.getBoundingClientRect();
+    this.menuTop = r.bottom + 10;
+    this.menuLeft = r.left - 14;
+  }
   this.dropdownOpen = !this.dropdownOpen;
 }
 
-closeDropdown(): void {
+@HostListener('window:scroll')
+@HostListener('window:resize')
+closeOnMove(): void {
   this.dropdownOpen = false;
 }
 

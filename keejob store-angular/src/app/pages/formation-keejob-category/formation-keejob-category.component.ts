@@ -15,7 +15,9 @@ import { PlateformeService } from 'src/app/services/platforme.service';
   styleUrls: ['./formation-keejob-category.component.css']
 })
 export class FormationKeejobCategoryComponent implements OnInit {
-
+menuTop = 0;
+menuLeft = 0;
+dropdownOpen = false;
   category!: string;
   searchQuery = '';
 
@@ -95,7 +97,6 @@ private categoryVisuals: {
     highlight: 'Digital'
   }
 };
-dropdownOpen = false;
 
   private heroSubtitles: { [key: string]: string } = {
     'Formations_langues':
@@ -393,8 +394,18 @@ chooseCategory(value: string): void {
   this.selectedCategory = value;
   this.dropdownOpen = false;
 }
-@HostListener('document:click')
-closeDropdown(): void {
+toggleDropdown(btn: HTMLElement): void {
+  if (!this.dropdownOpen) {
+    const r = btn.getBoundingClientRect();
+    this.menuTop = r.bottom + 10;
+    this.menuLeft = r.left - 14;
+  }
+  this.dropdownOpen = !this.dropdownOpen;
+}
+
+@HostListener('window:scroll')
+@HostListener('window:resize')
+closeOnMove(): void {
   this.dropdownOpen = false;
 }
 }

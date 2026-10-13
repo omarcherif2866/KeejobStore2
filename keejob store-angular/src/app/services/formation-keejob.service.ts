@@ -9,8 +9,8 @@ import { FormationCategory, FormationKeejob } from '../models/formation-keejob';
   providedIn: 'root'
 })
 export class FormationKeejobService {
-  // private apiUrl = "http://localhost:9090/formationKeejob";
-  private apiUrl = "/api/formationKeejob";
+  private apiUrl = "http://localhost:9090/formationKeejob";
+  // private apiUrl = "/api/formationKeejob";
 
 private formationKeejobCache = new Map<string, Observable<FormationKeejob>>();
 

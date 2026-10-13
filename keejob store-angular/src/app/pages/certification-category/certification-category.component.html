@@ -31,12 +31,25 @@
            (keyup.enter)="onSearch()">
   </div>
   <div class="search-divider"></div>
-  <div class="search-select-wrapper">
-    <select [(ngModel)]="selectedCategory" aria-label="Catégorie">
-      <option value="">Toutes les certifications</option>
-      <option *ngFor="let c of categories" [value]="c.value">{{ c.label }}</option>
-    </select>
+<div class="search-select-wrapper">
+  <div class="custom-select" (click)="$event.stopPropagation()">
+<button type="button" class="custom-select-btn" #selectBtn
+        (click)="toggleDropdown(selectBtn)">
+  <span>{{ selectedCategory ? categoryLabels[selectedCategory] : 'Toutes les certifications' }}</span>
+  <svg width="12" height="8" viewBox="0 0 12 8" [class.rotated]="dropdownOpen">
+    <path d="M1 1.5l5 5 5-5" fill="none" stroke="#9c93ab" stroke-width="1.8" stroke-linecap="round"/>
+  </svg>
+</button>
+
+<ul class="custom-select-menu" *ngIf="dropdownOpen"
+    [style.top.px]="menuTop" [style.left.px]="menuLeft">
+  <li [class.active]="!selectedCategory" (click)="chooseCategory('')">Toutes les certifications</li>
+  <li *ngFor="let c of categories"
+      [class.active]="selectedCategory === c.value"
+      (click)="chooseCategory(c.value)">{{ c.label }}</li>
+</ul>
   </div>
+</div>
   <button class="btn-search" (click)="onSearch()">Rechercher <span class="btn-arrow">→</span></button>
 </div>
 
@@ -150,20 +163,23 @@
 
   <div class="loading-state" *ngIf="searchLoading"><div class="spinner"></div></div>
 
-  <div class="formations-table" *ngIf="!searchLoading && searchResults.length">
-    <div class="formation-row" *ngFor="let f of searchResults" [routerLink]="['/certification', f.id]"
-         (mouseenter)="prefetchCertification(f.id)" style="cursor: pointer;">
-      <div class="formations-table">
-        <div class="formation-icon">
-          <img [src]="sanitizeImage(f.image)" [alt]="f.titre">
-        </div>
-        <div class="formation-info">
-          <h4>{{ f.titre }}</h4>
-          <p>{{ f.description }}</p>
-        </div>
-      </div>
+<div class="results-list" *ngIf="!searchLoading && searchResults.length">
+  <a class="result-card" *ngFor="let f of searchResults"
+     [routerLink]="['/certification', f.id]"
+     (mouseenter)="prefetchCertification(f.id)">
+
+    <div class="result-logo">
+      <img [src]="sanitizeImage(f.image)" [alt]="f.titre">
     </div>
-  </div>
+
+    <div class="result-info">
+      <h4>{{ f.titre }}</h4>
+      <p>{{ f.description }}</p>
+    </div>
+
+    <span class="result-arrow">→</span>
+  </a>
+</div>
 
   <p class="no-formations" *ngIf="!searchLoading && !searchResults.length">
     Aucune formation ne correspond à votre recherche.

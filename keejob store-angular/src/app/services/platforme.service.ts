@@ -9,8 +9,8 @@ import { catchError, shareReplay } from 'rxjs/operators';
 })
 export class PlateformeService {
 
-  // private apiUrl = "http://localhost:9090/plateformes";
-  private apiUrl = "/api/plateformes";
+  private apiUrl = "http://localhost:9090/plateformes";
+  // private apiUrl = "/api/plateformes";
 private plateformeCache = new Map<string, Observable<Plateforme>>();
 
   constructor(private http: HttpClient) {}

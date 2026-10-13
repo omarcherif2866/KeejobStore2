@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Formateur } from 'src/app/models/formateur';
 import { FormationFormateur } from 'src/app/models/formation-formateur';
@@ -30,20 +30,28 @@ export class AllFormateurComponent implements OnInit {
 
   sortBy: 'nom' | 'experience' = 'nom';
   dropdownOpen = false;
-
+menuTop = 0;
+menuLeft = 0;
   constructor(private formateurService: FormateurService) {}
 
   ngOnInit(): void {
     this.fetchFormateurs();
   }
-
-  toggleDropdown(): void {
-    this.dropdownOpen = !this.dropdownOpen;
+toggleDropdown(btn: HTMLElement): void {
+  if (!this.dropdownOpen) {
+    const r = btn.getBoundingClientRect();
+    this.menuTop = r.bottom + 10;
+    this.menuLeft = r.left - 14;
   }
+  this.dropdownOpen = !this.dropdownOpen;
+}
 
-  closeDropdown(): void {
-    this.dropdownOpen = false;
-  }
+@HostListener('window:scroll')
+@HostListener('window:resize')
+closeOnMove(): void {
+  this.dropdownOpen = false;
+}
+
 
   selectCompetence(competence: string): void {
     this.searchCompetence = competence;

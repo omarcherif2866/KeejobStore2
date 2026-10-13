@@ -3,6 +3,7 @@
 
   <!-- Contenu à gauche -->
   <div class="centres-hero-content">
+    <div class="hero-left">
     <span class="hero-badge">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
@@ -12,7 +13,7 @@
     </span>
 
     <h1>Trouvez le centre <br> de formation <span class="hl-green">adapté</span></h1>
-    <p class="hero-desc">Découvrez des <strong>centres de formation certifiés</strong> et trouvez rapidement l’établissement qui correspond à vos besoins.</p>
+    <p class="hero-desc">Découvrez des <strong>centres de formation certifiés</strong> <br> et trouvez rapidement l’établissement qui correspond à vos besoins.</p>
 
     <div class="search-bar">
       <div class="search-field">
@@ -23,15 +24,16 @@
         <input type="text" [(ngModel)]="searchLocalisation" placeholder="Ville ou région">
       </div>
 
-      <div class="search-field select-field custom-dropdown" [class.open]="dropdownOpen" (clickOutside)="closeDropdown()">
-        <button type="button" class="dropdown-trigger" (click)="toggleDropdown()">
+      <div class="search-field select-field custom-dropdown" [class.open]="dropdownOpen" (clickOutside)="closeOnMove()">
+        <button type="button" class="dropdown-trigger" #trigger (click)="toggleDropdown(trigger)">
           <span>{{ searchFormationTitre || 'Toutes les formations' }}</span>
           <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
 
-        <div class="dropdown-panel" *ngIf="dropdownOpen">
+        <div class="dropdown-panel" *ngIf="dropdownOpen"
+            [style.top.px]="menuTop" [style.left.px]="menuLeft">
           <div class="dropdown-header">Toutes les formations</div>
           <div class="dropdown-option"
                [class.selected]="!searchFormationTitre"
@@ -97,6 +99,7 @@
           <span>Conseil et orientation</span>
         </div>
       </div>
+    </div>
     </div>
   </div>
 

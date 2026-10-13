@@ -46,48 +46,79 @@ position: relative; z-index: 1;
 }
 
 .centres-hero-content h1 {
+  display: block;
+  white-space: nowrap;
+  min-height: calc(1.25em * 2);
   font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: clamp(34px, 3.4vw, 54px);
-  line-height: 1.15;
+  font-size: 42px;
+  font-weight: 700;
   color: #1e2749;
-  margin: 0 0 20px;
+  line-height: 1.25;
+  margin-bottom: 16px;
 }
 .centres-hero-content h1 .hl-green { color: #2191D0; }
 
 .hero-desc {
-  font-size: clamp(16px, 1.3vw, 21px);
-  color: #6b7280;
-  margin: 0 0 32px;
+  display: block;
+  white-space: nowrap;
+  max-width: none;               /* retire la limite de 480px qui provoquait des retours automatiques */
+  min-height: calc(1.6em * 2); 
+  font-size: 15px;
+  color: #000000;
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: 28px;
 }
 
+.hero-left { min-width: 0; max-width: 720px;  padding-left: 60px;   /* ajustez : 30px = léger, 60px = marqué */
+ }
+
 /* ---------- Barre de recherche ---------- */
+/* ===== Barre de recherche : même design que Formations ===== */
 .search-bar {
-  --bar-fs: clamp(14px, 1.15vw, 18px);
+  --bar-fs: 14px;
   display: flex;
   align-items: center;
   background: #ffffff;
-  padding: 8px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(30, 39, 73, 0.08);
+  border: none;
+  border-radius: 30px;
+  padding: 8px 8px 8px 22px;
+  box-shadow: 0 8px 24px rgba(43, 20, 60, 0.12);
+  max-width: 560px;   /* était 720px : ajustez 520-600px */
+  width: 100%;
   margin-bottom: 40px;
-  max-width: 720px;
 }
 
 .search-field {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex: 1;
   min-width: 0;
-  padding: 10px 18px;
-  border-right: 1px solid #e9edf3;
+  padding: 0 12px;
+  border-right: none;
+  position: relative;
 }
-.search-field:first-child { flex: 0.75; }
-.search-field:last-of-type { border-right: none; }
+.search-field:first-child { flex: 0 0 170px; padding-left: 0; }
+.search-field.select-field { flex: 1 1 0; min-width: 0; }
+.search-bar .dropdown-trigger span {
+  overflow: hidden;
+  text-overflow: ellipsis;   /* « Toutes les formations » ne pousse plus la barre */
+  white-space: nowrap;
+}
+/* séparateur fin entre les champs (remplace la bordure) */
+.search-field + .search-field::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 24px;
+  background: #e5e0ec;
+}
 
-.search-field input,
-.search-field select {
+.search-field input {
   border: none;
   outline: none;
   font-size: var(--bar-fs);
@@ -96,30 +127,61 @@ position: relative; z-index: 1;
   color: #1e2749;
   background: transparent;
 }
-.search-bar .dropdown-trigger { font-size: var(--bar-fs); }
+.search-field input::placeholder { color: #9c93ab; }
 
+/* icônes en violet doux */
+.search-field > svg { stroke: #9c93ab; flex-shrink: 0; }
+
+.search-bar .dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--bar-fs);
+  font-weight: 500;
+  color: #4b4560;
+  cursor: pointer;
+  padding: 6px 0;
+  white-space: nowrap;
+}
+.search-bar .dropdown-trigger .chevron { color: #9c93ab; transition: transform .2s; }
+.search-field.open .dropdown-trigger .chevron { transform: rotate(180deg); }
+
+/* Bouton Rechercher : pilule violette */
 .btn-search {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  height: 56px;
-  padding: 0 32px;
-  background: #1e2749;
+  gap: 8px;
+  height: auto;
+  padding: 13px 24px;
+  background: #4f5bd5;
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 24px;
+  font-family: 'Poppins', sans-serif;
   font-size: var(--bar-fs);
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 6px 16px rgba(30, 39, 73, 0.25);
-  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: none;
+  transition: background .2s ease, transform .15s ease;
+   flex-shrink: 0; padding: 12px 20px;
 }
-.btn-search:hover  { background: #14203f; box-shadow: 0 8px 20px rgba(30, 39, 73, 0.3); }
-.btn-search:active { transform: scale(0.98); box-shadow: 0 4px 10px rgba(30, 39, 73, 0.2); }
+.btn-search:hover  { background: #3f4ab8; transform: translateY(-1px); box-shadow: none; }
+.btn-search:active { transform: scale(0.98); }
 .btn-search svg { flex-shrink: 0; }
 
+@media (max-width: 600px) {
+  .search-bar { flex-wrap: wrap; border-radius: 20px; padding: 12px; }
+  .search-field { flex: 1 1 100%; padding: 8px 0; }
+  .search-field + .search-field::before { display: none; }
+  .btn-search { width: 100%; margin-top: 8px; }
+}
 /* ---------- Fonctionnalités ---------- */
 .hero-features-row {
   display: flex;
@@ -509,50 +571,34 @@ position: relative; z-index: 1;
 }
 
 .dropdown-panel {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  min-width: 260px;
-  max-height: 320px;
+  position: fixed;       /* échappe à overflow: hidden */
+  /* supprimez top / left définis avant : ils viennent du TypeScript */
+  min-width: 230px;
+  max-height: 260px;
   overflow-y: auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 15px 35px rgba(30, 39, 73, 0.15);
-  border: 1px solid #eef0f4;
-  z-index: 20;
-  padding: 6px 0;
+  z-index: 1000;
+  background: #fff;
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 12px 32px rgba(43, 20, 60, 0.18);
 }
-
-.dropdown-header {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #9ca3af;
-  padding: 10px 16px 6px;
-}
-
+.dropdown-header { display: none; }   /* doublon avec la 1re option */
 .dropdown-option {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 10px 16px;
+  padding: 10px 14px;
+  border-radius: 10px;
   font-size: 14px;
   color: #1e2749;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: background .15s;
 }
-
-.dropdown-option:hover {
-  background-color: #f0f7ee;
-  color: #2f7a1f;
-}
-
+.dropdown-option:hover { background: #f4f4fb; }
 .dropdown-option.selected {
-  color: #2f7a1f;
+  background: #eef0fd;
+  color: #4f5bd5;
   font-weight: 600;
-  background-color: #f0f7ee;
 }
 
 /* Scrollbar discrète pour la liste si elle dépasse max-height */
