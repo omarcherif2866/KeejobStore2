@@ -148,6 +148,7 @@ get categoryBlobLayout(): string {
       if (cat) {
         this.category = cat;
         this.selectedPlatform = null;
+            this.clearSearch();            // ← ajouté : on repart sans résultats de recherche
         this.loadData();
       }
     });
@@ -232,7 +233,7 @@ onSearch(): void {
   if (!q) {
     this.clearSearch();
     if (this.selectedCategory && this.selectedCategory !== this.category) {
-      this.router.navigate(['/formations', this.selectedCategory]);   // ← adaptez à votre route
+      this.router.navigate(['/certification/category', this.selectedCategory]);   // ← adaptez à votre route
     }
     return;
   }

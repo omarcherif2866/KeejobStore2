@@ -796,3 +796,25 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 @media (max-width: 900px) {
   .cat-Entrepreneuriat .hero-float-badge-bottom { top: 0; }
 }
+
+
+.search-select-wrapper { position: relative; }
+
+.search-select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  outline: none;
+  background: transparent url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%239c93ab' stroke-width='1.8' stroke-linecap='round'/></svg>") no-repeat right 4px center;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b4560;
+  cursor: pointer;
+  padding: 6px 22px 6px 0;
+  max-width: 190px;
+}
+.search-select-wrapper select option {
+  color: #1e2749;
+  background: #fff;
+}

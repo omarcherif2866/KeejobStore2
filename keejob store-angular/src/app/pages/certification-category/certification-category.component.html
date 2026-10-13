@@ -151,14 +151,16 @@
   <div class="loading-state" *ngIf="searchLoading"><div class="spinner"></div></div>
 
   <div class="formations-table" *ngIf="!searchLoading && searchResults.length">
-    <div class="formation-row" *ngFor="let f of searchResults" [routerLink]="['/certification/category', f.id]"
+    <div class="formation-row" *ngFor="let f of searchResults" [routerLink]="['/certification', f.id]"
          (mouseenter)="prefetchCertification(f.id)" style="cursor: pointer;">
-      <div class="formation-info">
+      <div class="formations-table">
         <div class="formation-icon">
           <img [src]="sanitizeImage(f.image)" [alt]="f.titre">
         </div>
-        <h4>{{ f.titre }}</h4>
-        <p>{{ f.description }}</p>
+        <div class="formation-info">
+          <h4>{{ f.titre }}</h4>
+          <p>{{ f.description }}</p>
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -95,6 +95,7 @@ private categoryVisuals: {
     highlight: 'Digital'
   }
 };
+dropdownOpen = false;
 
   private heroSubtitles: { [key: string]: string } = {
     'Formations_langues':
@@ -169,6 +170,7 @@ get categoryBlobLayout(): string {
       if (cat) {
         this.category = cat;
         this.selectedPlatform = null;
+        this.clearSearch();
         this.loadData();
       }
     });
@@ -230,7 +232,7 @@ onSearch(): void {
   if (!q) {
     this.clearSearch();
     if (this.selectedCategory && this.selectedCategory !== this.category) {
-      this.router.navigate(['/formations', this.selectedCategory]);   // ← adaptez à votre route
+      this.router.navigate(['/formation/category', this.selectedCategory]);   // ← adaptez à votre route
     }
     return;
   }
@@ -387,4 +389,12 @@ prefetchFormation(id: number): void {
   this.formationService.getById(id).subscribe();
 }
 
+chooseCategory(value: string): void {
+  this.selectedCategory = value;
+  this.dropdownOpen = false;
+}
+@HostListener('document:click')
+closeDropdown(): void {
+  this.dropdownOpen = false;
+}
 }
