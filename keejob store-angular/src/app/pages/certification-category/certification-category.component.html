@@ -22,18 +22,23 @@
       <p class="hero-subtitle" *ngIf="heroSubtitle" [innerHTML]="heroSubtitle"></p>
       
 
-      <div class="hero-search">
-        <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Que souhaitez-vous certifier ?" [(ngModel)]="searchQuery">
-        </div>
-        <div class="search-divider"></div>
-        <div class="search-select-wrapper">
-          <span>Toutes les certifications</span>
-          <span class="chevron">⌄</span>
-        </div>
-        <button class="btn-search" (click)="onSearch()">🔍 Rechercher</button>
-      </div>
+<div class="hero-search">
+  <div class="search-input-wrapper">
+    <span class="search-icon">🔍</span>
+    <input type="text"
+           placeholder="Photoshop, Excel, Français…"
+           [(ngModel)]="searchQuery"
+           (keyup.enter)="onSearch()">
+  </div>
+  <div class="search-divider"></div>
+  <div class="search-select-wrapper">
+    <select [(ngModel)]="selectedCategory" aria-label="Catégorie">
+      <option value="">Toutes les certifications</option>
+      <option *ngFor="let c of categories" [value]="c.value">{{ c.label }}</option>
+    </select>
+  </div>
+  <button class="btn-search" (click)="onSearch()">Rechercher <span class="btn-arrow">→</span></button>
+</div>
 
 <div class="hero-features">
   <div class="hero-feature" *ngFor="let f of heroFeatures">
@@ -79,8 +84,11 @@
   <div class="spinner"></div>
 </div>
 
+
 <ng-container *ngIf="!loading">
 
+
+  
   <!-- ===================== TOUTES LES PLATEFORMES ===================== -->
 <section class="platforms-section" *ngIf="platforms.length > 0">
   <div class="section-header">
@@ -128,6 +136,36 @@
       </a>
     </div>
   </div>
+</section>
+
+
+<section class="formations-section search-results-section" *ngIf="searchActive">
+  <div class="section-header">
+    <h2>
+      {{ searchResults.length }} résultat(s) pour « {{ searchQuery }} »
+      <ng-container *ngIf="selectedCategory"> en {{ categoryLabels[selectedCategory] }}</ng-container>
+    </h2>
+    <button class="btn-reset-link" (click)="clearSearch()">✕ Effacer la recherche</button>
+  </div>
+
+  <div class="loading-state" *ngIf="searchLoading"><div class="spinner"></div></div>
+
+  <div class="formations-table" *ngIf="!searchLoading && searchResults.length">
+    <div class="formation-row" *ngFor="let f of searchResults" [routerLink]="['/certification/category', f.id]"
+         (mouseenter)="prefetchCertification(f.id)" style="cursor: pointer;">
+      <div class="formation-info">
+        <div class="formation-icon">
+          <img [src]="sanitizeImage(f.image)" [alt]="f.titre">
+        </div>
+        <h4>{{ f.titre }}</h4>
+        <p>{{ f.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="no-formations" *ngIf="!searchLoading && !searchResults.length">
+    Aucune formation ne correspond à votre recherche.
+  </p>
 </section>
 
   <!-- ===================== BLOC AFFICHÉ UNIQUEMENT APRÈS CLIC SUR UNE PLATEFORME ===================== -->

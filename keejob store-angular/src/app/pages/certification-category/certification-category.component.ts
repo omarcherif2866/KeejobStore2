@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Certification } from 'src/app/models/certification';
 import { Plateforme } from 'src/app/models/platforme';
 import { EvaluationService } from 'src/app/services/evaluation.service';
 
 import { CertificationService } from 'src/app/services/certification.service';
 import { PlateformeService } from 'src/app/services/platforme.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-certification-category',
@@ -26,14 +27,20 @@ export class CertificationCategoryComponent implements OnInit {
 
   loading = true;
 carouselStartIndex = 0;
-
-  private categoryLabels: { [key: string]: string } = {
+ categoryLabels: { [key: string]: string } = {
     'Marketing_Digital': 'Marketing Digital',
     'Entrepreneuriat': 'Entrepreneuriat',
     'AI': 'AI',
   };
   loadingIcons = false;
   availableIcons: string[] = [];
+
+categories = Object.entries(this.categoryLabels).map(([value, label]) => ({ value, label }));
+selectedCategory = '';                          // '' = toutes les catégories
+searchActive = false;
+searchLoading = false;
+searchResults: Certification[] = [];
+private certificationsByCategoryCache: { [cat: string]: Certification[] } = {};
 
   // Config visuelle par catégorie : couleur du highlight + image hero
 private categoryVisuals: {
@@ -130,7 +137,9 @@ get categoryBlobLayout(): string {
     private route: ActivatedRoute,
     private certificationService: CertificationService,
     private evaluationservice: EvaluationService,
-    private plateformeService: PlateformeService
+    private plateformeService: PlateformeService,
+    private router: Router,                       // ← ajouté
+
   ) {}
 
   ngOnInit(): void {
@@ -216,14 +225,72 @@ loadData(): void {
     this.displayedCertifications = [];
   }
 
-  onSearch(): void {
-    if (!this.searchQuery.trim()) return;
-    this.certificationService.search(this.searchQuery).subscribe(results => {
-      this.allCertifications = results;
-      this.selectedPlatform = null;
-      this.displayedCertifications = [];
-    });
+onSearch(): void {
+  const q = this.normalize(this.searchQuery);
+
+  // Pas de mot-clé : on change juste de catégorie, ou on réinitialise
+  if (!q) {
+    this.clearSearch();
+    if (this.selectedCategory && this.selectedCategory !== this.category) {
+      this.router.navigate(['/formations', this.selectedCategory]);   // ← adaptez à votre route
+    }
+    return;
   }
+
+  const cats = this.selectedCategory
+    ? [this.selectedCategory]
+    : Object.keys(this.categoryLabels);
+
+  this.searchLoading = true;
+  this.searchActive = true;
+  this.selectedPlatform = null;
+  this.displayedCertifications = [];
+
+  forkJoin(cats.map(c => this.getCategoryFormations(c))).subscribe({
+    next: lists => {
+      const all = ([] as Certification[]).concat(...lists);
+      this.searchResults = all.filter(f => this.matches(f, q));
+      this.searchLoading = false;
+      setTimeout(() => {
+        document.querySelector('.search-results-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    },
+    error: () => { this.searchResults = []; this.searchLoading = false; }
+  });
+}
+
+clearSearch(): void {
+  this.searchQuery = '';
+  this.searchActive = false;
+  this.searchResults = [];
+}
+
+// Charge une catégorie une seule fois (cache)
+private getCategoryFormations(cat: string) {
+  const cached = this.certificationsByCategoryCache[cat];
+  if (cached) return of(cached);
+  return this.certificationService.getByCategory(cat).pipe(
+    tap(list => this.certificationsByCategoryCache[cat] = list)
+  );
+}
+
+private matches(f: any, q: string): boolean {
+  const parts: string[] = [];
+  const collect = (obj: any, depth = 0) => {
+    if (!obj || depth > 2) return;
+    for (const v of Object.values(obj)) {
+      if (typeof v === 'string') parts.push(v);
+      else if (v && typeof v === 'object') collect(v, depth + 1);
+    }
+  };
+  collect(f);
+  return this.normalize(parts.join(' ')).includes(q);
+}
+
+// "Français" et "francais" donnent le même résultat
+private normalize(s: string): string {
+  return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
 
   get categoryLabel(): string {
     return this.categoryLabels[this.category] || this.category;
