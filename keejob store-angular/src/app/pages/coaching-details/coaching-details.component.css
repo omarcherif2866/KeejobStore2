@@ -161,9 +161,9 @@ body {
 }
 .hero-trust-row {
   display: flex;
-  gap: 70px;              /* ← augmente progressivement : 32px, 40px, 48px... */
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;   /* au lieu de center : les items ne se recentrent plus selon le contenu */
+  gap: 30px;
   max-width: 480px;
 }
 
@@ -173,8 +173,10 @@ body {
   align-items: center;
   text-align: center;
   gap: 12px;
-  flex: 0 1 auto;
-  max-width: 150px;   /* légèrement réduit pour matcher les proportions de ta capture */
+  flex: 0 0 140px;               /* largeur fixe, identique pour tous */
+  width: 140px;
+    max-width: 140px;
+
 }
 
 .trust-icon {

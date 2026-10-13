@@ -162,11 +162,13 @@ body {
 
 .hero-trust-row {
   display: flex;
-  gap: 70px;              /* ← augmente progressivement : 32px, 40px, 48px... */
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: flex-start;   /* au lieu de center : les items ne se recentrent plus selon le contenu */
+  gap: 30px;
   max-width: 480px;
 }
+
+
 
 .trust-item {
   display: flex;
@@ -174,8 +176,10 @@ body {
   align-items: center;
   text-align: center;
   gap: 12px;
-  flex: 0 1 auto;
-  max-width: 150px;   /* légèrement réduit pour matcher les proportions de ta capture */
+  flex: 0 0 140px;               /* largeur fixe, identique pour tous */
+  width: 140px;
+    max-width: 140px;
+
 }
 
 .trust-icon {
@@ -1075,14 +1079,8 @@ section {
   align-items: center;
   justify-content: center;
 }
-[data-id="1"] .trust-icon {
-  width: 28px; height: 28px;
-  background-color: var(--c-accent);
-}
-[data-id="1"] .trust-text strong {
-  font-size: 13px;
-  font-weight: 600;
-}
+[data-id="1"] .trust-icon { width: 28px; height: 28px; background-color:var(--c-accent); }
+[data-id="1"] .trust-text strong { font-size: 13px; font-weight: 600; }
 
 /* ---------- Carte de stats blanche ---------- */
 [data-id="1"] .hero-mini-stats {
