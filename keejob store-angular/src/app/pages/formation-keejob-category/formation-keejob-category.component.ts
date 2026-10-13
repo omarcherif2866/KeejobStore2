@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FormationKeejob } from 'src/app/models/formation-keejob';
 import { Plateforme } from 'src/app/models/platforme';
 import { EvaluationService } from 'src/app/services/evaluation.service';
@@ -27,7 +28,9 @@ export class FormationKeejobCategoryComponent implements OnInit {
   loading = true;
 carouselStartIndex = 0;
 
-  private categoryLabels: { [key: string]: string } = {
+
+
+ categoryLabels: { [key: string]: string } = {
     'Formations_langues': 'Langues',
     'Formations_office': 'Office',
     'Formations_Design': 'Design',
@@ -35,6 +38,13 @@ carouselStartIndex = 0;
   };
   loadingIcons = false;
   availableIcons: string[] = [];
+
+categories = Object.entries(this.categoryLabels).map(([value, label]) => ({ value, label }));
+selectedCategory = '';                          // '' = toutes les catégories
+searchActive = false;
+searchLoading = false;
+searchResults: FormationKeejob[] = [];
+private formationsByCategoryCache: { [cat: string]: FormationKeejob[] } = {};
 
 // Config visuelle par catégorie : couleur du highlight + image hero
 private categoryVisuals: {
@@ -101,17 +111,17 @@ private categoryVisuals: {
   'Formations_langues': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Contenus actualisés', subtitle: 'Formations adaptées' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Formation à votre rythme', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Formation à votre rythme', subtitle: 'Apprentissage libre' }
   ],
   'Formations_office': [
-    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection efficace', subtitle: 'Outils certifiés' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences pratiques', subtitle: 'Outils et méthodes' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage personnalisé', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage personnalisé', subtitle: 'Parcours sur mesure' }
   ],
   'Formations_Design': [
-    { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Talents qualifiés', subtitle: 'Talents ciblés' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences créatives', subtitle: 'Outils et techniques' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Flexibilité d’apprentissage', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Flexibilité d’apprentissage', subtitle: 'Selon vos besoins' }
   ],
   'Formations_Digital': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Parcours sélectionnés', subtitle: 'Formations reconnues' },
@@ -148,7 +158,9 @@ get categoryBlobLayout(): string {
     private route: ActivatedRoute,
     private formationService: FormationKeejobService,
     private evaluationservice: EvaluationService,
-    private plateformeService: PlateformeService
+    private plateformeService: PlateformeService,
+    private router: Router,                       // ← ajouté
+
   ) {}
 
   ngOnInit(): void {
@@ -211,14 +223,72 @@ loadData(): void {
     this.displayedFormations = [];
   }
 
-  onSearch(): void {
-    if (!this.searchQuery.trim()) return;
-    this.formationService.search(this.searchQuery).subscribe(results => {
-      this.allFormations = results;
-      this.selectedPlatform = null;
-      this.displayedFormations = [];
-    });
+onSearch(): void {
+  const q = this.normalize(this.searchQuery);
+
+  // Pas de mot-clé : on change juste de catégorie, ou on réinitialise
+  if (!q) {
+    this.clearSearch();
+    if (this.selectedCategory && this.selectedCategory !== this.category) {
+      this.router.navigate(['/formations', this.selectedCategory]);   // ← adaptez à votre route
+    }
+    return;
   }
+
+  const cats = this.selectedCategory
+    ? [this.selectedCategory]
+    : Object.keys(this.categoryLabels);
+
+  this.searchLoading = true;
+  this.searchActive = true;
+  this.selectedPlatform = null;
+  this.displayedFormations = [];
+
+  forkJoin(cats.map(c => this.getCategoryFormations(c))).subscribe({
+    next: lists => {
+      const all = ([] as FormationKeejob[]).concat(...lists);
+      this.searchResults = all.filter(f => this.matches(f, q));
+      this.searchLoading = false;
+      setTimeout(() => {
+        document.querySelector('.search-results-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 0);
+    },
+    error: () => { this.searchResults = []; this.searchLoading = false; }
+  });
+}
+
+clearSearch(): void {
+  this.searchQuery = '';
+  this.searchActive = false;
+  this.searchResults = [];
+}
+
+// Charge une catégorie une seule fois (cache)
+private getCategoryFormations(cat: string) {
+  const cached = this.formationsByCategoryCache[cat];
+  if (cached) return of(cached);
+  return this.formationService.getByCategory(cat).pipe(
+    tap(list => this.formationsByCategoryCache[cat] = list)
+  );
+}
+
+private matches(f: any, q: string): boolean {
+  const parts: string[] = [];
+  const collect = (obj: any, depth = 0) => {
+    if (!obj || depth > 2) return;
+    for (const v of Object.values(obj)) {
+      if (typeof v === 'string') parts.push(v);
+      else if (v && typeof v === 'object') collect(v, depth + 1);
+    }
+  };
+  collect(f);
+  return this.normalize(parts.join(' ')).includes(q);
+}
+
+// "Français" et "francais" donnent le même résultat
+private normalize(s: string): string {
+  return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
 
   get categoryLabel(): string {
     return this.categoryLabels[this.category] || this.category;

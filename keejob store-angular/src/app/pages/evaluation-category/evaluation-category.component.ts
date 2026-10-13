@@ -48,12 +48,12 @@ export class EvaluationCategoryComponent implements OnInit {
 
   private heroTitleParts: { [key: string]: { normal: string; highlight: string } } = {
   'Les_tests_psychometriques': {
-    normal: 'Mieux connaître les profils et',
-    highlight: 'révéler leur potentiel'
+    normal: 'Mieux connaître les profils ',
+    highlight: 'et révéler leur potentiel'
   },
   'Les_tests_de_competences': {
-    normal: 'Evaluez les compétences et',
-    highlight: 'révélez le potentiel de vos talents'
+    normal: 'Évaluez les compétences ',
+    highlight: 'et révélez les talents.'
   }
 };
 

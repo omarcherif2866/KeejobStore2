@@ -26,16 +26,26 @@
 
 /* ===================== HERO ===================== */
 /* ===================== HERO ===================== */
-.hero-section,
-.hero-section-competences {
+.hero-section {
   position: relative;
-  isolation: isolate;
-  background: linear-gradient(135deg, #e9f0ff 0%, #e4edfe 50%, #dce8fd 100%);
-  padding: 48px 3% 32px;   /* était 6% sur les côtés */
-  border-radius: 0;
+  background: #ece8f3;
+  border-radius: 24px;
   overflow: hidden;
+  margin: 30px 6%;
+  padding: 50px 4% 40px;
+  isolation: isolate;
 }
 
+
+
+.hero-section-competences {
+  margin: 30px 6%;
+  padding: 50px 4% 40px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0% 100%, rgba(226, 232, 252, .75) 0%, rgba(226, 232, 252, 0) 40%),
+    linear-gradient(135deg, #f6faff 0%, #f2f6fe 55%, #edf2fc 100%);
+}
 /* le contenu passe au-dessus du décor */
 .hero-container {
   position: relative;
@@ -99,7 +109,8 @@
   .shape-1 { width: 380px; height: 380px; left: -180px; }
 }
 
-.hero-left { min-width: 0; max-width: 720px; }
+.hero-left { min-width: 0; max-width: 720px;  padding-left: 60px;   /* ajustez : 30px = léger, 60px = marqué */
+ }
 
 .hero-right {
   display: flex;
