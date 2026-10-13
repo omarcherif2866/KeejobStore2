@@ -1057,7 +1057,7 @@ section {
 }
 
 /* ---------- Titre : ligne 1 sombre, ligne 2 violet ---------- */
-[data-id="1"] .hero-text h1 { font-size: 46px; }
+[data-id="1"] .hero-text h1 { font-size: 42px; }
 [data-id="1"] .hero-text h1 .line1 { color: var(--c-dark); }
 [data-id="1"] .hero-text h1 .line2 { color: var(--c-accent); }
 
@@ -1100,6 +1100,8 @@ section {
   background: none;
   border-radius: 0;
   box-shadow: none;
+  transform: translateX(60px);   /* ← déplace l'image vers la droite */
+
 }
 [data-id="1"] .hero-image-wrap::after { display: none; }
 [data-id="1"] .hero-image {
@@ -1317,7 +1319,7 @@ section {
 }
 
 /* ---------- Titre : ligne 1 sombre, ligne 2 vert ---------- */
-[data-id="2"] .hero-text h1 { font-size: 46px; }
+[data-id="2"] .hero-text h1 { font-size: 42px; }
 [data-id="2"] .hero-text h1 .line1 { color: var(--c-dark); }
 [data-id="2"] .hero-text h1 .line2 { color: var(--c-accent); }
 
@@ -1357,10 +1359,12 @@ section {
 /* ---------- Image : pleine couleur, fondue sur les 4 côtés ---------- */
 [data-id="2"] .hero-image-wrap {
   width: 62%;
-  right: 15px;
+  /* right: 15px; */
   background: none;
   border-radius: 0;
   box-shadow: none;
+  transform: translateX(60px);   /* ← déplace l'image vers la droite */
+
 }
 [data-id="2"] .hero-image-wrap::after { display: none; }
 [data-id="2"] .hero-image {
@@ -1456,7 +1460,7 @@ section {
 }
 
 /* Titre : ligne 1 sombre, ligne 2 bleu vif */
-[data-id="3"] .hero-text h1 { font-size: 46px; }
+[data-id="3"] .hero-text h1 { font-size: 42px; }
 [data-id="3"] .hero-text h1 .line1 { color: #141a3c; }
 [data-id="3"] .hero-text h1 .line2 { color: #1d5be0; }
 
@@ -1490,10 +1494,12 @@ section {
 /* Image : pleine couleur, fondue sur ses côtés, plus de voile */
 [data-id="3"] .hero-image-wrap {   
   width: 62%;
-  right: 15px;
+  /* right: 15px; */
   background: none;
   border-radius: 0;
   box-shadow: none;
+  transform: translateX(60px);   /* ← déplace l'image vers la droite */
+
 }
 [data-id="3"] .hero-image-wrap::after { display: none; }
 [data-id="3"] .hero-image {
