@@ -39,9 +39,12 @@ body {
 /* ===== HERO ===== */
 .hero-section {
   position: relative;
-  padding: 60px 0 20px;
-  isolation: isolate;
+  background: #ece8f3;
+  border-radius: 24px;
   overflow: hidden;
+  margin: 30px 6%;
+  padding: 50px 4% 40px;
+  isolation: isolate;
 }
 
 .hero-backdrop {
@@ -1053,7 +1056,7 @@ section {
 }
 
 /* ---------- Titre : ligne 1 sombre, ligne 2 violet ---------- */
-[data-id="1"] .hero-text h1 { font-size: 46px; }
+[data-id="1"] .hero-text h1 { font-size: 42px; }
 [data-id="1"] .hero-text h1 .line1 { color: var(--c-dark); }
 [data-id="1"] .hero-text h1 .line2 { color: var(--c-accent); }
 
@@ -1096,6 +1099,8 @@ section {
   background: none;
   border-radius: 0;
   box-shadow: none;
+  transform: translateX(60px);   /* ← déplace l'image vers la droite */
+
 }
 [data-id="1"] .hero-image-wrap::after { display: none; }
 [data-id="1"] .hero-image {
@@ -1117,7 +1122,7 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="1"] .hero-form-trigger { right: 10px; }
+[data-id="1"] .hero-form-trigger { right: -140px; }
 [data-id="1"] .hero-form-card {
   width: 480px;
   border: 1.5px solid var(--c-border);
@@ -1315,7 +1320,7 @@ section {
 }
 
 /* ---------- Titre : ligne 1 sombre, ligne 2 vert ---------- */
-[data-id="2"] .hero-text h1 { font-size: 41px; }
+[data-id="2"] .hero-text h1 { font-size: 42px; }
 [data-id="2"] .hero-text h1 .line1 { color: var(--c-dark); }
 [data-id="2"] .hero-text h1 .line2 { color: var(--c-accent); }
 
@@ -1355,10 +1360,12 @@ section {
 /* ---------- Image : pleine couleur, fondue sur les 4 côtés ---------- */
 [data-id="2"] .hero-image-wrap {
   width: 62%;
-  right: 38px;
+  /* right: 38px; */
   background: none;
   border-radius: 0;
   box-shadow: none;
+    transform: translateX(60px);   /* ← déplace l'image vers la droite */
+
 }
 [data-id="2"] .hero-image-wrap::after { display: none; }
 [data-id="2"] .hero-image {
@@ -1380,7 +1387,7 @@ section {
 }
 
 /* ---------- Formulaire ---------- */
-[data-id="2"] .hero-form-trigger { right: 10px; }
+[data-id="2"] .hero-form-trigger { right: -140px; }
 [data-id="2"] .hero-form-card {
   width: 480px;
   border: 1.5px solid var(--c-border);
@@ -1454,7 +1461,7 @@ section {
 }
 
 /* Titre : ligne 1 sombre, ligne 2 bleu vif */
-[data-id="3"] .hero-text h1 { font-size: 46px; }
+[data-id="3"] .hero-text h1 { font-size: 42px; }
 [data-id="3"] .hero-text h1 .line1 { color: #141a3c; }
 [data-id="3"] .hero-text h1 .line2 { color: #1d5be0; }
 
@@ -1486,7 +1493,11 @@ section {
 [data-id="3"] .mini-stat strong { font-weight: 500; }
 
 /* Image : pleine couleur, fondue sur ses côtés, plus de voile */
-[data-id="3"] .hero-image-wrap { width: 62%; right: 38px; }
+[data-id="3"] .hero-image-wrap { 
+  width: 62%;
+  /* right: 38px; */
+  transform: translateX(60px);   /* ← déplace l'image vers la droite */
+ }
 [data-id="3"] .hero-image-wrap::after { display: none; }
 [data-id="3"] .hero-image {
   opacity: 1;
@@ -1506,7 +1517,7 @@ section {
 }
 
 /* Formulaire : plus étroit, bordure douce, bouton dégradé */
-[data-id="3"] .hero-form-trigger { right: 10px; }
+[data-id="3"] .hero-form-trigger { right: -140px; }
 [data-id="3"] .hero-form-card {
   width: 480px;
   border: 1.5px solid #c7d8f8;

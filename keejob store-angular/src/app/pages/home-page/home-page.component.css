@@ -1317,11 +1317,16 @@ body {
 .cv-section {
   background-color: #eef2f9;
   border-radius: 32px;
-  padding: -10px 0 0 60px; /* haut réduit (60px -> 30px) + gauche seulement */
+  padding: 0 0 0 60px;
   margin: 40px auto;
+  overflow: hidden;
   color: white;
   max-width: 1460px;
-  overflow: hidden; /* coupe proprement tout débordement au bord arrondi */
+}
+
+.cv-left {
+  align-self: center;
+  padding: 30px 0;
 }
 
 .cv-section .container {
@@ -1330,9 +1335,9 @@ body {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 60px;
-  align-items: end;
+  align-items: stretch;      /* les 2 colonnes prennent la même hauteur */
   padding-right: 0;
-  transform: translateY(-30px); /* remonte tout le contenu */
+  /* transform supprimé */
 }
 
 .cv-section .section-line {
@@ -1542,7 +1547,7 @@ body {
 
 .cv-visual {
   position: relative;
-  height: 560px;
+  height: 440px;             /* était 560px : section plus courte */
   display: flex;
   align-items: flex-end; /* colle le contenu visuel en bas */
   justify-content: flex-end; /* colle à droite */
@@ -1551,10 +1556,10 @@ body {
 
 .cv-bg-blob {
   position: absolute;
-  top: 120px; /* était 0, descendu de 60px */
-  right: -60px; /* était -20px, on pousse davantage vers la droite */
-  width: 400px; /* était 480px, réduit */
-  height: 400px; /* était 480px, réduit */
+  top: 30px;                 /* était 120px : le cercle monte vers le haut */
+  right: -60px;
+  width: 380px;
+  height: 380px;
   background: linear-gradient(135deg, #e4e6fa 0%, #c9cdf2 100%);
   border-radius: 50%;
   z-index: 0;
@@ -1612,10 +1617,11 @@ body {
 .cv-main-img {
   position: relative;
   z-index: 3;
-  max-width: 90%;
+  max-width: 85%;              /* était 90% : image plus petite */
   height: auto;
   display: block;
-  margin-left: auto; /* pousse l'image vers la droite dans son conteneur */
+  margin-left: auto;
+  margin-bottom: -10px;         /* remonte l'image depuis le bas */
 }
 
 /* Badge "Prêt à postuler" */
@@ -3205,7 +3211,7 @@ body {
 
 .certif-corner-img {
   position: absolute;
-  bottom: -175px;
+  bottom: -183px;
   right: -80px;
   width: 480px;
   height: 400px;

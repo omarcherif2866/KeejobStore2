@@ -15,11 +15,13 @@
     <div class="hero-left">
       <span class="hero-badge"><span class="check-dot">✓</span> Annuaire certifié</span>
 <h1 class="hero-title">
-    {{ heroTitleNormal }} <br>
-  <span class="highlight highlight-outline" [style.color]="categoryColor">{{ heroTitleHighlight }}</span>
+  <span class="title-line">{{ heroTitleNormal }}</span>
+  <span class="title-line">
+    <span class="highlight highlight-outline" [style.color]="categoryColor">{{ heroTitleHighlight }}</span>
+  </span>
 </h1>
 
-      <p class="hero-subtitle" *ngIf="heroSubtitle" [innerHTML]="heroSubtitle"></p>
+<p class="hero-subtitle" [innerHTML]="heroSubtitle || ''"></p>
 
       <div class="hero-search">
         <div class="search-input-wrapper">

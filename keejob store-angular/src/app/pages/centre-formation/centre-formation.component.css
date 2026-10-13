@@ -4,19 +4,33 @@ body { font-family: 'Poppins', sans-serif; color: #1e2749; background: #ffffff; 
 .hl-green { color: #2191D0; }
 
 /* ===== HERO ===== */
-.centres-hero {
+/* .centres-hero {
   position: relative;
   background: #f4f7fc;
   min-height: 575px;
+} */
+
+.centres-hero {
+  position: relative;
+  background: #f4f7fc;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 30px 6%;
+  padding: 50px 4% 40px;
+  isolation: isolate;
 }
 
 .centres-hero-content {
+position: relative; z-index: 1; 
+}
+
+/* .centres-hero-content {
   position: relative;
-  z-index: 2;                  /* au-dessus de l'image : la barre la chevauche */
+  z-index: 2;                 
   width: min(720px, 100%);
   margin-left: 6vw;
   padding: 70px 0 60px;
-}
+} */
 
 .hero-badge {
   display: inline-flex;

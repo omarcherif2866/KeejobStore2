@@ -12,14 +12,7 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 /* ===================== HERO ===================== */
 /* ===================== HERO — B.A.-BA style ===================== */
 /* Remplace le bloc .hero-section existant par celui-ci */
-.hero-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: 44px;
-  font-weight: 700;
-  color: #1e2749;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
+
 .hero-title .highlight {
    color: var(--color-secondary); 
    transition: color 0.3s; 
@@ -107,6 +100,40 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   border-radius: 20px;
   margin-bottom: 22px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+
+/* ===== Titre et sous-titre : exactement 2 lignes ===== */
+.hero-title .title-line,
+.hero-subtitle .sub-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-title {
+  min-height: calc(1.25em * 2);
+}
+
+.hero-subtitle {
+  max-width: none;               /* retire la limite de 480px qui provoquait des retours automatiques */
+  min-height: calc(1.6em * 2);   /* réserve toujours 2 lignes */
+}
+
+/* Le mot en couleur garde son dégradé et son trait */
+.hero-title .highlight {
+  display: inline-block;
+}
+
+/* Petits écrans : on autorise le retour à la ligne pour éviter le débordement */
+@media (max-width: 900px) {
+  .hero-title .title-line,
+  .hero-subtitle .sub-line {
+    white-space: normal;
+  }
+  .hero-title,
+  .hero-subtitle {
+    min-height: 0;
+  }
 }
 
 .hero-title {
@@ -666,8 +693,25 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .blobs-airy .hero-blob-gold   { width: 640px; height: 640px; top: -12%;  right: -10%;  left: auto; }
 
 /* Badge « Annuaire certifié » teinté */
-.cat-Formations_Design .hero-badge { background: #efe9fb; color: #6d28d9; }
-.cat-Formations_Design .check-dot  { background: #6d28d9; }
+.cat-Formations_Design .hero-badge { 
+  background: #ac84eb83;
+  color: #6d28d9;
+  font-size: 14px;
+  padding: 8px 18px 8px 10px;
+
+}
+.cat-Formations_office .check-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #6d28d9;
+  color: #fff;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 
 /* Titre : « Design » en dégradé magenta → violet, avec trait dessous */
 .cat-Formations_Design .hero-title .highlight {
@@ -698,6 +742,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .cat-Formations_Design .hero-feature:nth-child(1) .feature-icon { background: #e4edff; }
 .cat-Formations_Design .hero-feature:nth-child(2) .feature-icon { background: #ffe6f0; }
 .cat-Formations_Design .hero-feature:nth-child(3) .feature-icon { background: #fff2cf; }
+.cat-Formations_Design .hero-feature { align-items: center; gap: 12px; }
+.cat-Formations_Design .feature-icon { width: 46px; height: 46px; font-size: 20px; }
 
 /* Image : bords estompés pour se fondre dans le fond */
 .cat-Formations_Design .hero-image {
@@ -714,13 +760,14 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 /* Badges : références en haut à droite, formations certifiées en bas à gauche */
 .cat-Formations_Design .hero-float-badge-top    { top: 4%;  right: 0; left: auto; bottom: auto; }
 .cat-Formations_Design .hero-float-badge-bottom { top: auto; bottom: 4%; left: 4%; right: auto; }
+
 /* Pastille de coche (au cas où la règle de base manque) */
 .cat-Formations_Design .check-dot {
-  width: 20px; height: 20px;
+  width: 24px; height: 24px;
   border-radius: 50%;
   background: #6d28d9;
   color: #fff;
-  font-size: 11px;
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -867,6 +914,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
     linear-gradient(135deg, #f8f6ff 0%, #f4f5ff 55%, #eef1fd 100%);
 }
 
+
+
 /* Cercles : lavande et bleu très pâles */
 .hero-section.cat-Formations_Digital .hero-blob-purple {   /* bord gauche */
   width: 480px; height: 480px;
@@ -904,15 +953,32 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 }
 
 /* Titre : « Digital » en dégradé bleu → indigo */
-.cat-Formations_Digital .hero-title .highlight {
+/* .cat-Formations_Digital .hero-title .highlight {
   display: inline-block;
   background: linear-gradient(90deg, #3b3fe0 0%, #5b7cf0 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent !important;
   -webkit-text-fill-color: transparent;
-}
+} */
 
+.cat-Formations_Digital .hero-title .highlight {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+  background: linear-gradient(90deg, #3b3fe0 0%, #5b7cf0 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+.cat-Formations_Digital .hero-title .highlight::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 8px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%233b3fe0'/><stop offset='1' stop-color='%235b7cf0'/></linearGradient></defs><path d='M2 7 Q 50 1 98 6' fill='none' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round'/></svg>") no-repeat left bottom / 100% 100%;
+}
 
 /* Bouton */
 .cat-Formations_Digital .btn-search {
@@ -1003,13 +1069,31 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 }
 
 /* Titre : « Langues » en dégradé bleu → indigo */
-.cat-Formations_langues .hero-title .highlight {
+/* .cat-Formations_langues .hero-title .highlight {
   display: inline-block;
   background: linear-gradient(90deg, #3b4be0 0%, #5b7cf5 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent !important;
   -webkit-text-fill-color: transparent;
+} */
+
+.cat-Formations_langues .hero-title .highlight {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+  background: linear-gradient(90deg, #3b4be0 0%, #5b7cf5 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+.cat-Formations_langues .hero-title .highlight::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 8px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 10' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%233b4be0'/><stop offset='1' stop-color='%235b7cf5'/></linearGradient></defs><path d='M2 7 Q 50 1 98 6' fill='none' stroke='url(%23g)' stroke-width='2.5' stroke-linecap='round'/></svg>") no-repeat left bottom / 100% 100%;
 }
 
 

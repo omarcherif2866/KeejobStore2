@@ -61,10 +61,10 @@ private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: stri
   'Les_tests_psychometriques': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution certifiée', subtitle: 'Partenaire officiel Central Test' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Évaluation précise', subtitle: 'Profils et aptitudes analysés' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Conseil, analyse et interprétation' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Expertise dédiée', subtitle: 'Expertise et interprétation' }
   ],
   'Les_tests_de_competences': [
-    { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution certifiée', subtitle: 'Partenaire officiel Central Test' },
+    { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution agréée', subtitle: 'Partenaire certifié Central Test' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Adaptée au marché tunisien', subtitle: 'Rapport par compétence' },
     { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Conseil, analyse et interprétation' }
   ]

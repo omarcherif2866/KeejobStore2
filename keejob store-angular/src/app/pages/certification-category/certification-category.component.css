@@ -63,7 +63,11 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .blobs-scattered .hero-blob-purple { width: 520px; height: 520px; top: -300px; left: -4%;  right: auto; }
 .blobs-scattered .hero-blob-coral  { width: 460px; height: 460px; top: -280px; left: 38%;  right: auto; }
 .blobs-scattered .hero-blob-gold   { width: 700px; height: 700px; top: 30%;    right: -10%; left: auto; }
-
+.cat-AI .hero-feature { align-items: center; gap: 12px; }
+.cat-AI .feature-icon { width: 46px; height: 46px; font-size: 20px; }
+.cat-AI .hero-feature:nth-child(1) .feature-icon { background: #e4edff; }
+.cat-AI .hero-feature:nth-child(2) .feature-icon { background: #ffe6f0; }
+.cat-AI .hero-feature:nth-child(3) .feature-icon { background: #fff2cf; }
 /* Cercles supplémentaires (uniquement layout dispersé)
    fonctionne que la classe blobs-scattered soit sur .hero-backdrop ou sur un parent */
 .blobs-scattered.hero-backdrop::before,
@@ -741,6 +745,9 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .cat-Marketing_Digital .hero-feature:nth-child(2) .feature-icon { background: #ffe6f0; }
 .cat-Marketing_Digital .hero-feature:nth-child(3) .feature-icon { background: #fff2cf; }
 
+.cat-Marketing_Digital .hero-feature { align-items: center; gap: 12px; }
+.cat-Marketing_Digital .feature-icon { width: 46px; height: 46px; font-size: 20px; }
+
 @media (max-width: 900px) {
   .cat-Marketing_Digital .hero-float-badge-top    { left: 0; }
   .cat-Marketing_Digital .hero-float-badge-bottom { top: 0; }
@@ -754,7 +761,11 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 /* Titre lisible */
 .cat-Entrepreneuriat .hero-title .highlight { color: #5b4bc4 !important; }
 .cat-Entrepreneuriat .highlight-underline { background-size: 100% 8px; }
-
+.cat-Entrepreneuriat .hero-feature { align-items: center; gap: 12px; }
+.cat-Entrepreneuriat .feature-icon { width: 46px; height: 46px; font-size: 20px; }
+.cat-Entrepreneuriat .hero-feature:nth-child(1) .feature-icon { background: #e4edff; }
+.cat-Entrepreneuriat .hero-feature:nth-child(2) .feature-icon { background: #ffe6f0; }
+.cat-Entrepreneuriat .hero-feature:nth-child(3) .feature-icon { background: #fff2cf; }
 /* Cercles : couleurs fixées ici (indépendantes du TS) */
 .cat-Entrepreneuriat .hero-blob-purple {   /* grand cercle foncé à gauche */
   background: #b9a9e6;

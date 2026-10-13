@@ -39,9 +39,12 @@ body {
 /* ===== HERO ===== */
 .hero-section {
   position: relative;
-  padding: 60px 0 20px;
-  isolation: isolate;
+  background: #ece8f3;
+  border-radius: 24px;
   overflow: hidden;
+  margin: 30px 6%;
+  padding: 50px 4% 40px;
+  isolation: isolate;
 }
 
 .hero-backdrop {

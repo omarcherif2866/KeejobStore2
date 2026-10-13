@@ -81,7 +81,7 @@ private categoryVisuals: {
     'Entrepreneuriat':
       "Des <strong>certifications en Entrepreneuriat</strong> en ligne pour valider vos compétences en création, gestion et développement d’entreprise.",
     'AI':
-      "Des <strong>certifications en IA</strong> en ligne pour valider vos connaissances et renforcer votre expertise dans les technologies d’intelligence artificielle.",
+      "Des <strong>certifications en IA</strong> en ligne pour valider vos connaissances et renforcer votre expertise dans les technologies d’IA.",
   };
 
   private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: string; title: string; subtitle: string }[] } = {

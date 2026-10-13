@@ -101,17 +101,17 @@ private categoryVisuals: {
   'Formations_langues': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Contenus actualisés', subtitle: 'Formations adaptées' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Formation à votre rythme', subtitle: 'À votre rythme' }
   ],
   'Formations_office': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences pratiques', subtitle: 'Outils et méthodes' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage personnalisé', subtitle: 'À votre rythme' }
   ],
   'Formations_Design': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Sélection de qualité', subtitle: 'Plateformes reconnues' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Compétences créatives', subtitle: 'Outils et techniques' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Apprentissage flexible', subtitle: 'À votre rythme' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Flexibilité d’apprentissage', subtitle: 'À votre rythme' }
   ],
   'Formations_Digital': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Parcours sélectionnés', subtitle: 'Formations reconnues' },
