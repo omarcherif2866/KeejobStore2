@@ -655,3 +655,45 @@
     margin: 0 auto;
   }
 }
+
+
+/* ===== Écrans ~15" : titre et sous-titre sur 2 lignes ===== */
+@media (min-width: 901px) and (max-width: 1600px) {
+  .hero-section-psycho .hero-image {
+    transform: translate(50px, -20px);   /* y négatif = vers le haut */
+  }
+  .hero-container {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+
+  .hero-right {
+    align-items: flex-end;     /* l'image se cale vers le bas */
+  }
+
+  .hero-image {
+    width: 130%;               /* agrandie : montez (135%) pour plus grand */
+    max-width: 145%;
+  transform: translate(50px, 20px);   /* x : gauche (-) / droite (+) | y : haut (-) / bas (+) */
+  }
+  .hero-left { max-width: none;   transform: translateX(-50px);   /* -2px ou -3px */
+}
+
+  /* Titre : plus petit, sur 2 lignes */
+  .hero-title {
+    font-size: clamp(43px, 2.5vw, 48px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    text-wrap: balance;          /* répartit le texte en 2 lignes équilibrées */
+  }
+  .hero-title .highlight { display: inline; }
+
+  /* Sous-titre : plus large et plus petit, sur 2 lignes */
+  .hero-subtitle {
+    font-size: 16px;
+    max-width: none;
+    text-wrap: balance;
+  }
+
+
+
+}

@@ -1569,3 +1569,98 @@ section {
   [data-id="3"] .hero-image { -webkit-mask-image: none; mask-image: none; }
   [data-id="3"] .hero-form-card { width: 100%; }
 }
+
+
+
+/* ===== Écrans ~15" : CV, identique à coaching ===== */
+@media (min-width: 993px) and (max-width: 1600px) {
+
+  .hero-text .hero-badge-label {
+    align-self: flex-start;
+    width: fit-content;
+    margin-bottom: 14px;
+  }
+
+  .hero-content {
+    --hero-h: 420px;                       /* était 470px */
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: flex-start;
+  }
+
+  /* ---------- Colonne gauche ---------- */
+  .hero-text {
+    height: var(--hero-h);
+    display: flex;
+    flex-direction: column;
+  }
+  [data-id] .hero-text h1 { font-size: 34px; margin-bottom: 12px; }
+  .hero-desc {
+    font-size: 14px;
+    max-width: 380px;
+    margin-bottom: 18px;                   /* était 14px */
+  }
+
+  .hero-trust-row {
+    gap: 14px;
+    max-width: 380px;
+  }
+  .trust-item {
+    flex: 0 0 115px;
+    width: 115px;
+    max-width: 115px;
+  }
+  [data-id] .trust-icon-wrap { width: 44px; height: 44px; }
+  [data-id] .trust-icon { width: 24px; height: 24px; }
+  .trust-text strong { font-size: 12px; }
+  .trust-text span { font-size: 12px; }
+
+  .hero-mini-stats {
+    max-width: 380px;
+    padding: 14px 16px;
+    gap: 14px;
+    margin-top: auto;
+    position: relative;
+    top: 16px;
+  }
+  .mini-stat-number { font-size: 18px; }
+  .mini-stat-label { font-size: 11px; }
+
+  /* ---------- Colonne droite ---------- */
+  .hero-form-trigger { top: 0; }
+
+  [data-id] .hero-image-wrap {
+    width: 55%;
+    height: var(--hero-h);
+    transform: translateX(120px);          /* était translate(160px, 30px) */
+  }
+
+  [data-id] .hero-form-card {
+    width: 360px;
+    height: auto;
+    min-height: var(--hero-h);
+    padding: 22px 18px;
+    position: relative;
+    left: -20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+  }
+
+  .form-header { margin-bottom: 8px; }
+  .form-subtitle { font-size: 12px; margin: 0 0 12px; }
+
+  .hero-form-card .form-group {
+    padding: 13px 14px;
+    margin-bottom: 12px;
+  }
+  .form-group input { font-size: 13px; }
+  .file-text { font-size: 12px; }
+
+  [data-id] .btn-submit {
+    padding: 14px 0;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  .form-note { margin-top: 12px; }
+}

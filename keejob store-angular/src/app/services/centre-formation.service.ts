@@ -10,8 +10,8 @@ import { catchError, shareReplay } from 'rxjs/operators';
 })
 export class CentreFormationService {
 
-  private apiUrl = "http://localhost:9090/centres-formation";
-  // private apiUrl = "/api/centres-formation";
+  // private apiUrl = "http://localhost:9090/centres-formation";
+  private apiUrl = "/api/centres-formation";
 private centreFormationCache = new Map<string, Observable<CentreFormation>>();
 
   constructor(private http: HttpClient) {}

@@ -1576,3 +1576,97 @@ section {
 
 
 
+/* ===== Écrans ~15" : pour coching ===== */
+@media (min-width: 993px) and (max-width: 1600px) {
+  .hero-text .hero-badge-label {
+    align-self: flex-start;   /* annule l'étirement sur toute la largeur */
+    width: fit-content;
+    margin-bottom: 14px;
+  }
+  /* Hauteur commune des 3 blocs : modifiez cette seule valeur pour tout ajuster */
+  .hero-content {
+    --hero-h: 420px;
+    grid-template-columns: 0.95fr 1.05fr;
+    align-items: flex-start;
+  }
+
+  /* ---------- Colonne gauche ---------- */
+  .hero-text {
+    height: var(--hero-h);
+    display: flex;
+    flex-direction: column;
+  }
+  [data-id] .hero-text h1 { font-size: 34px; margin-bottom: 12px; }
+  .hero-desc {
+    font-size: 14px;
+    max-width: 380px;
+    margin-bottom: 18px;
+  }
+
+  .hero-trust-row {
+    gap: 14px;
+    max-width: 380px;
+  }
+  .trust-item {
+    flex: 0 0 115px;
+    width: 115px;
+    max-width: 115px;
+  }
+  [data-id] .trust-icon-wrap { width: 44px; height: 44px; }
+  [data-id] .trust-icon { width: 24px; height: 24px; }
+  .trust-text strong { font-size: 12px; }
+  .trust-text span { font-size: 12px; }
+
+  /* Les stats se collent en bas de la colonne : elles finissent au même niveau que le reste */
+.hero-mini-stats {
+  max-width: 380px;
+  padding: 14px 16px;
+  gap: 14px;
+  margin-top: auto;
+  position: relative;
+  top: 16px;               /* descend la carte : augmentez (24px) pour plus d'espace */
+}
+  .mini-stat-number { font-size: 18px; }
+  .mini-stat-label { font-size: 11px; }
+
+  /* ---------- Colonne droite ---------- */
+  /* Le formulaire commence en haut, comme l'image et le texte */
+  .hero-form-trigger { top: 0; }
+
+[data-id] .hero-image-wrap {
+  width: 55%;
+  height: var(--hero-h);
+  transform: translateX(120px);   /* était 100px : augmentez pour aller plus à droite */
+
+}
+
+[data-id] .hero-form-card {
+  width: 360px;
+  height: auto;                 /* au lieu de var(--hero-h) : plus de débordement */
+  min-height: var(--hero-h);    /* mais jamais plus petit que les autres blocs */
+  padding: 22px 18px;
+  position: relative;
+  left: -20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+}
+
+.form-header { margin-bottom: 8px; }
+.form-subtitle { font-size: 12px; margin: 0 0 12px; }
+
+.hero-form-card .form-group {
+  padding: 13px 14px;           /* était 16px : un peu moins haut */
+  margin-bottom: 12px;
+}
+
+[data-id] .btn-submit {
+  padding: 14px 0;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.form-note { margin-top: 12px; }   /* la note suit le bouton, plus de chevauchement */
+  
+}

@@ -66,7 +66,7 @@ private heroFeaturesByCategory: { [key: string]: { icon: string; iconClass: stri
   'Les_tests_de_competences': [
     { icon: '🛡️', iconClass: 'icon-blue', title: 'Solution agréée', subtitle: 'Partenaire certifié Central Test' },
     { icon: '🎯', iconClass: 'icon-orange', title: 'Adaptée au marché tunisien', subtitle: 'Rapport par compétence' },
-    { icon: '⭐', iconClass: 'icon-yellow', title: 'Accompagnement expert', subtitle: 'Conseil, analyse et interprétation' }
+    { icon: '⭐', iconClass: 'icon-yellow', title: 'Conseil spécialisé', subtitle: 'Conseil, analyse, interprétation' }
   ]
 };
 

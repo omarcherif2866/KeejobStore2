@@ -683,3 +683,63 @@ position: relative; z-index: 1;
     border-radius: 12px;
   }
 }
+
+
+/* ===== Écrans ~15" : même partition, barre au-dessus de l'image, features resserrées ===== */
+@media (min-width: 993px) and (max-width: 1600px) {
+
+  /* Le contenu passe au-dessus de l'image et de son dégradé */
+  .centres-hero-content {
+    position: relative;
+    z-index: 3;
+  }
+
+  /* Barre de recherche : plus compacte, toujours entière */
+  .search-bar {
+    max-width: 520px;
+    padding: 6px 6px 6px 18px;
+  }
+  .search-field:first-child { flex: 0 0 150px; }
+  .search-field { padding: 0 10px; }
+  .btn-search {
+    padding: 11px 18px;
+    flex-shrink: 0;
+  }
+
+  /* Features : espace réduit entre elles */
+  .hero-features-row {
+    flex-wrap: nowrap;
+    gap: 14px;
+  }
+
+  .hero-feature-item {
+    gap: 8px;
+    flex: 0 1 auto;
+  }
+
+  .hero-feature-text {
+    max-width: none;
+  }
+
+  .hero-feature-text strong,
+  .hero-feature-text span {
+    white-space: normal;
+    text-wrap: balance;   /* lignes d'égale longueur */
+  }
+
+  .hero-feature-text strong { font-size: 12px; }
+  .hero-feature-text span   { font-size: 11px; }
+
+  /* Largeur par feature : force la coupure sur 2 lignes */
+  .hero-feature-item:nth-child(1) .hero-feature-text { width: 85px; }
+  .hero-feature-item:nth-child(2) .hero-feature-text { width: 95px; }
+  .hero-feature-item:nth-child(3) .hero-feature-text { width: 115px; }
+  .hero-feature-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .hero-feature-icon svg { width: 18px; height: 18px; }
+  .hero-feature-text { max-width: 100px; }
+  .hero-feature-text strong { font-size: 12px; }
+  .hero-feature-text span { font-size: 11px; }
+}
