@@ -170,44 +170,58 @@ get categoryBlobLayout(): string {
       const cat = params.get('category');
       if (cat) {
         this.category = cat;
-        this.selectedPlatform = null;
+        // this.selectedPlatform = null;
         this.clearSearch();
         this.loadData();
       }
     });
   }
 
- 
-loadData(): void {
+  loadData(): void {
   this.loading = true;
-
-  forkJoin({
-    platforms: this.plateformeService.getAll(),
-    formations: this.formationService.getByCategory(this.category)
-  }).subscribe({
-    next: ({ platforms, formations }) => {
+  this.formationService.getByCategory(this.category).subscribe({
+    next: (formations) => {
       this.allFormations = formations;
-
-      // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
-      const plateformeIdsAvecFormations = new Set(
-        formations
-          .map(f => (f.plateforme as Plateforme)?.id)
-          .filter((id): id is number => id !== undefined && id !== null)
-      );
-
-      // Ne garde que les plateformes présentes dans cet ensemble
-      this.platforms = platforms.filter(p => plateformeIdsAvecFormations.has(p.id!));
-
       this.loading = false;
-      console.log('Formations chargées pour la catégorie', this.category, ':', formations);
-      console.log('Plateformes filtrées:', this.platforms);
     },
     error: (err) => {
-      console.error('Erreur lors du chargement des données:', err);
+      console.error('Erreur lors du chargement des formations:', err);
+      this.allFormations = [];
       this.loading = false;
     }
   });
 }
+ 
+// loadData(): void {
+//   this.loading = true;
+
+//   forkJoin({
+//     platforms: this.plateformeService.getAll(),
+//     formations: this.formationService.getByCategory(this.category)
+//   }).subscribe({
+//     next: ({ platforms, formations }) => {
+//       this.allFormations = formations;
+
+//       // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
+//       const plateformeIdsAvecFormations = new Set(
+//         formations
+//           .map(f => (f.plateforme as Plateforme)?.id)
+//           .filter((id): id is number => id !== undefined && id !== null)
+//       );
+
+//       // Ne garde que les plateformes présentes dans cet ensemble
+//       this.platforms = platforms.filter(p => plateformeIdsAvecFormations.has(p.id!));
+
+//       this.loading = false;
+//       console.log('Formations chargées pour la catégorie', this.category, ':', formations);
+//       console.log('Plateformes filtrées:', this.platforms);
+//     },
+//     error: (err) => {
+//       console.error('Erreur lors du chargement des données:', err);
+//       this.loading = false;
+//     }
+//   });
+// }
 
   // Clic sur une plateforme → filtre les formations de la catégorie appartenant à cette plateforme
   selectPlatform(platform: Plateforme): void {
@@ -244,8 +258,8 @@ onSearch(): void {
 
   this.searchLoading = true;
   this.searchActive = true;
-  this.selectedPlatform = null;
-  this.displayedFormations = [];
+  // this.selectedPlatform = null;
+  // this.displayedFormations = [];
 
   forkJoin(cats.map(c => this.getCategoryFormations(c))).subscribe({
     next: lists => {
