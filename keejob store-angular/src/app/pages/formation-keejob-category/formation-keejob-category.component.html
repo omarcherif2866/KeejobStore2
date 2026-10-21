@@ -155,7 +155,7 @@
   </div>
 
   <div class="platforms-grid">
-    <div *ngFor="let formation of allFormations"
+    <div *ngFor="let formation of pagedFormations"
          class="platform-card"
          [routerLink]="['/formation', formation.id]"
          (mouseenter)="prefetchFormation(formation.id)">
@@ -186,6 +186,19 @@
       </a>
     </div>
   </div>
+  <nav class="pagination" *ngIf="totalPages > 1" aria-label="Pagination">
+    <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">‹</button>
+
+    <ng-container *ngFor="let p of pages">
+      <span *ngIf="p === '...'" class="page-dots">…</span>
+      <button *ngIf="p !== '...'"
+              class="page-btn"
+              [class.active]="p === currentPage"
+              (click)="goToPage(p)">{{ p }}</button>
+    </ng-container>
+
+    <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">›</button>
+  </nav>
 </section>
 
 <div class="formations-table" *ngIf="!loading && allFormations.length === 0">

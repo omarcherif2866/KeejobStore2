@@ -30,7 +30,8 @@ dropdownOpen = false;
   loading = true;
 carouselStartIndex = 0;
 
-
+pageSize = 8;
+currentPage = 1;
 
  categoryLabels: { [key: string]: string } = {
     'Formations_langues': 'Langues',
@@ -182,6 +183,7 @@ get categoryBlobLayout(): string {
   this.formationService.getByCategory(this.category).subscribe({
     next: (formations) => {
       this.allFormations = formations;
+      this.currentPage = 1;   // ← ajouter
       this.loading = false;
     },
     error: (err) => {
@@ -422,4 +424,37 @@ toggleDropdown(btn: HTMLElement): void {
 closeOnMove(): void {
   this.dropdownOpen = false;
 }
+
+get totalPages(): number {
+  return Math.ceil(this.allFormations.length / this.pageSize);
+}
+
+get pagedFormations(): FormationKeejob[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.allFormations.slice(start, start + this.pageSize);
+}
+
+// Pages affichées : 1 ... 4 5 6 ... 12
+get pages(): (number | '...')[] {
+  const total = this.totalPages;
+  const cur = this.currentPage;
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+  const result: (number | '...')[] = [1];
+  if (cur > 3) result.push('...');
+  for (let p = Math.max(2, cur - 1); p <= Math.min(total - 1, cur + 1); p++) result.push(p);
+  if (cur < total - 2) result.push('...');
+  result.push(total);
+  return result;
+}
+
+goToPage(p: number | '...'): void {
+  if (p === '...' || p < 1 || p > this.totalPages || p === this.currentPage) return;
+  this.currentPage = p;
+  setTimeout(() => {
+    document.querySelector('.platforms-section')?.scrollIntoView({ behavior: 'smooth' });
+  }, 0);
+}
+
+
 }

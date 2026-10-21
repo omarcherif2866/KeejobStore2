@@ -27,6 +27,9 @@ dropdownOpen = false;
   platforms: Plateforme[] = [];                     // TOUTES les plateformes du site
   selectedPlatform: Plateforme | null = null;
 
+pageSize = 8;
+currentPage = 1;
+
   loading = true;
 carouselStartIndex = 0;
  categoryLabels: { [key: string]: string } = {
@@ -149,7 +152,7 @@ get categoryBlobLayout(): string {
       const cat = params.get('category');
       if (cat) {
         this.category = cat;
-        this.selectedPlatform = null;
+        // this.selectedPlatform = null;
             this.clearSearch();            // ← ajouté : on repart sans résultats de recherche
         this.loadData();
       }
@@ -158,58 +161,52 @@ get categoryBlobLayout(): string {
 
 loadData(): void {
   this.loading = true;
-
-  forkJoin({
-    platforms: this.plateformeService.getAll(),
-    certifications: this.certificationService.getByCategory(this.category)
-  }).subscribe({
-    next: ({ platforms, certifications }) => {
+  this.certificationService.getByCategory(this.category).subscribe({
+    next: (certifications) => {
       this.allCertifications = certifications;
-
-      // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
-      const plateformeIdsAvecCertifications = new Set(
-        certifications
-          .map(f => (f.plateforme as Plateforme)?.id)
-          .filter((id): id is number => id !== undefined && id !== null)
-      );
-
-      // Ne garde que les plateformes présentes dans cet ensemble
-      this.platforms = platforms.filter(p => plateformeIdsAvecCertifications.has(p.id!));
-
+      this.currentPage = 1;
       this.loading = false;
-      console.log('Certifications chargées pour la catégorie', this.category, ':', certifications);
-      console.log('Plateformes filtrées:', this.platforms);
     },
     error: (err) => {
-      console.error('Erreur lors du chargement des données:', err);
+      console.error('Erreur lors du chargement des certifications:', err);
+      this.allCertifications = [];
       this.loading = false;
     }
   });
 }
+
+// loadData(): void {
+//   this.loading = true;
+
+//   forkJoin({
+//     platforms: this.plateformeService.getAll(),
+//     certifications: this.certificationService.getByCategory(this.category)
+//   }).subscribe({
+//     next: ({ platforms, certifications }) => {
+//       this.allCertifications = certifications;
+
+//       // Récupère les IDs de plateformes qui ont au moins une formation dans cette catégorie
+//       const plateformeIdsAvecCertifications = new Set(
+//         certifications
+//           .map(f => (f.plateforme as Plateforme)?.id)
+//           .filter((id): id is number => id !== undefined && id !== null)
+//       );
+
+//       // Ne garde que les plateformes présentes dans cet ensemble
+//       this.platforms = platforms.filter(p => plateformeIdsAvecCertifications.has(p.id!));
+
+//       this.loading = false;
+//       console.log('Certifications chargées pour la catégorie', this.category, ':', certifications);
+//       console.log('Plateformes filtrées:', this.platforms);
+//     },
+//     error: (err) => {
+//       console.error('Erreur lors du chargement des données:', err);
+//       this.loading = false;
+//     }
+//   });
+// }
   
-  // loadData(): void {
-  //   this.loading = true;
-
-  //   // On charge en parallèle : toutes les plateformes + les certifications de la catégorie
-  //   this.plateformeService.getAll().subscribe({
-  //     next: (platforms) => {
-  //       this.platforms = platforms;
-  //     },
-  //     error: (err) => console.error('Erreur plateformes:', err)
-  //   });
-
-  //   this.certificationService.getByCategory(this.category).subscribe({
-  //     next: (data) => {
-  //       this.allCertifications = data;
-  //       this.loading = false;
-  //       console.log('Certifications chargées pour la catégorie', this.category, ':', data);
-  //     },
-  //     error: (err) => {
-  //       console.error('Erreur certifications:', err);
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
+  
 
   // Clic sur une plateforme → filtre les certifications de la catégorie appartenant à cette plateforme
   selectPlatform(platform: Plateforme): void {
@@ -246,8 +243,8 @@ onSearch(): void {
 
   this.searchLoading = true;
   this.searchActive = true;
-  this.selectedPlatform = null;
-  this.displayedCertifications = [];
+  // this.selectedPlatform = null;
+  // this.displayedCertifications = [];
 
   forkJoin(cats.map(c => this.getCategoryFormations(c))).subscribe({
     next: lists => {
@@ -408,6 +405,36 @@ toggleDropdown(btn: HTMLElement): void {
 @HostListener('window:resize')
 closeOnMove(): void {
   this.dropdownOpen = false;
+}
+
+get totalPages(): number {
+  return Math.ceil(this.allCertifications.length / this.pageSize);
+}
+
+get pagedCertifications(): Certification[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.allCertifications.slice(start, start + this.pageSize);
+}
+
+get pages(): (number | '...')[] {
+  const total = this.totalPages;
+  const cur = this.currentPage;
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+  const result: (number | '...')[] = [1];
+  if (cur > 3) result.push('...');
+  for (let p = Math.max(2, cur - 1); p <= Math.min(total - 1, cur + 1); p++) result.push(p);
+  if (cur < total - 2) result.push('...');
+  result.push(total);
+  return result;
+}
+
+goToPage(p: number | '...'): void {
+  if (p === '...' || p < 1 || p > this.totalPages || p === this.currentPage) return;
+  this.currentPage = p;
+  setTimeout(() => {
+    document.querySelector('.platforms-section')?.scrollIntoView({ behavior: 'smooth' });
+  }, 0);
 }
 
 }
