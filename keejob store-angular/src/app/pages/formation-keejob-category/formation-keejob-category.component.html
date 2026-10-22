@@ -167,6 +167,8 @@
         <h3 class="platform-card-name">{{ formation.titre }}</h3>
       </div>
 
+
+
       <div class="platform-card-rating">
         <span class="stars">★★★★★</span>
         <span class="rating-score">{{ formation.note }}</span>
@@ -180,7 +182,17 @@
         <span class="tag" *ngIf="formation.duree">{{ formation.duree }}</span>
         <span class="tag" *ngIf="formation.plateforme?.nom">{{ formation.plateforme.nom }}</span>
       </div>
+      <div class="sidebar-price-row">
+        <ng-container *ngIf="formation.prix && +formation.prix !== 0; else gratuit">
+          <span class="price-current">{{ formation.prix }} DNT</span>
+          <span class="price-original" *ngIf="hasDiscount(formation)">{{ formation.prixOriginal }} DNT</span>
+          <span class="price-badge" *ngIf="formation.reduction">-{{ formation.reduction }} %</span>
+        </ng-container>
 
+        <ng-template #gratuit>
+          <span class="price-free">Gratuit</span>
+        </ng-template>
+      </div>
       <a class="platform-link">
         Voir la formation <span class="arrow">→</span>
       </a>

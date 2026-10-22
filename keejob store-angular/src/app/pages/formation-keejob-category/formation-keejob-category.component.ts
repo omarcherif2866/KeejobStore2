@@ -176,7 +176,12 @@ get categoryBlobLayout(): string {
         this.loadData();
       }
     });
+
   }
+
+hasDiscount(formation: FormationKeejob): boolean {
+  return !!formation?.prixOriginal && formation.prixOriginal > (formation.prix || 0);
+}
 
   loadData(): void {
   this.loading = true;

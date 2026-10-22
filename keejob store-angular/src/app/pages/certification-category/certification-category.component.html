@@ -186,7 +186,17 @@
         <span class="tag" *ngIf="certification.dureeExamen">{{ certification.dureeExamen }}</span>
         <span class="tag" *ngIf="$any(certification.plateforme)?.nom">{{ $any(certification.plateforme).nom }}</span>
       </div>
+      <div class="sidebar-price-row">
+        <ng-container *ngIf="certification.prix && +certification.prix !== 0; else gratuit">
+          <span class="price-current">{{ certification.prix }} DNT</span>
+          <span class="price-original" *ngIf="hasDiscount(certification)">{{ certification.prixOriginal }} DNT</span>
+          <span class="price-badge" *ngIf="certification.reduction">-{{ certification.reduction }} %</span>
+        </ng-container>
 
+        <ng-template #gratuit>
+          <span class="price-free">Gratuit</span>
+        </ng-template>
+      </div>
       <a class="platform-link">
         Voir la certification <span class="arrow">→</span>
       </a>

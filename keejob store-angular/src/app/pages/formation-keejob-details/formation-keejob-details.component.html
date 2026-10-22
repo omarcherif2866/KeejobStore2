@@ -188,9 +188,15 @@
                   {{ of.duree }} <span *ngIf="of.niveau">• {{ of.niveau }}</span>
                 </div>
                 <div class="other-formation-price">
-                  <strong>{{ of.prix }} DNT</strong>
-                  <span class="price-original" *ngIf="of.prixOriginal">{{ of.prixOriginal }} DNT</span>
-                  <span class="price-reduction" *ngIf="of.reduction">-{{ of.reduction }}%</span>
+                  <ng-container *ngIf="of.prix && +of.prix !== 0; else gratuitOc">
+                    <strong >{{ of.prix }} DNT</strong>
+                    <span class="price-original" *ngIf="of.prixOriginal && of.prixOriginal > of.prix">{{ of.prixOriginal }} DNT</span>
+                    <span class="price-reduction" *ngIf="of.reduction">-{{ of.reduction }}%</span>
+                  </ng-container>
+
+                  <ng-template #gratuitOc>
+                    <strong class="price-free">Gratuit</strong>
+                  </ng-template>
                 </div>
               </div>
             </div>
@@ -218,9 +224,15 @@
         </div>
 
         <div class="sidebar-price-row">
-          <span class="price-current">{{ f.prix }} DNT</span>
-          <span class="price-original" *ngIf="hasDiscount">{{ f.prixOriginal }} DNT</span>
-          <span class="price-badge" *ngIf="f.reduction">-{{ f.reduction }} %</span>
+          <ng-container *ngIf="f.prix && +f.prix !== 0; else gratuitC">
+            <span class="price-current">{{ f.prix }} DNT</span>
+            <span class="price-original" *ngIf="f.prixOriginal && f.prixOriginal > f.prix">{{ f.prixOriginal }} DNT</span>
+            <span class="price-badge" *ngIf="f.reduction">-{{ f.reduction }} %</span>
+          </ng-container>
+
+          <ng-template #gratuitC>
+            <span class="price-free">Gratuit</span>
+          </ng-template>
         </div>
 
         <div class="sidebar-features">

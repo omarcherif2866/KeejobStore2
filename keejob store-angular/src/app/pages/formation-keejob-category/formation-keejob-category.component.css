@@ -395,6 +395,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
+  align-items: stretch;
+
 }
 
 @media (max-width: 1200px) { .platforms-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -456,12 +458,35 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   transition: transform 0.25s, box-shadow 0.25s;
   text-align: left;
   border: 2px solid transparent;
+  height: 100%;
+
 }
 .platform-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(217,218,226,0.5); }
 .platform-card.active { border-color: var(--color-secondary); }
 
 .platform-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.sidebar-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.platform-card > .sidebar-price-row {
+  margin-top: auto;      /* pousse prix + lien vers le bas */
+  min-height: 0;
+  margin-bottom: 10px;
+}
 
+.price-current { font-size: 26px; font-weight: 700; color:var(--color-primary); }
+.price-original { color: #9ca3af; text-decoration: line-through; font-size: 12px; }
+.price-badge {
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+.price-free {
+  font-size: 26px;
+  font-weight: 700;
+  color: #059669;
+}
 .platform-logo-wrapper {
   width: 90px; height: 90px;
   border-radius: 10px;
@@ -480,7 +505,11 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 
 
 
-.platform-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.platform-tags {
+  min-height: 0;
+  align-content: flex-start;
+  margin-bottom: 12px;
+}
 .tag {
   background: #f4f4fb;
   color: #4b5568;
@@ -499,6 +528,8 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   align-items: center;
   gap: 4px;
   cursor: pointer;
+  margin-top: 0;
+
 }
 .platform-link .arrow { transition: transform 0.2s; }
 .platform-link:hover .arrow { transform: translateX(3px); }
@@ -759,10 +790,9 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
   font-size: 13px;
   color: #919ca2;
   line-height: 1.6;
-  margin-bottom: 14px;
-  flex-grow: 1;
-  min-height: 0;           /* ← corrige le bug flex + line-clamp */
-  max-height: 42px;         /* ← filet de sécurité : 13px × 1.6 × 2 lignes ≈ 42px */
+  flex-grow: 0;
+  min-height: 42px;
+  margin-bottom: 12px;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;

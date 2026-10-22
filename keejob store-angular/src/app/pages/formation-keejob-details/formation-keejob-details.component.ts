@@ -38,6 +38,7 @@ export class FormationKeejobDetailsComponent implements OnInit {
         this.loadFormation(+id);
       }
     });
+    
   }
 
   loadFormation(id: number): void {

@@ -14,6 +14,15 @@ body { font-family: 'Poppins', sans-serif; }
   --border: #e5e7eb;
   --text-muted: #6b7280;
 }
+.other-formation-price .price-free {
+  color: var(--color-primary);
+}
+.price-free {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.price-current { color: var(--color-primary) !important; }
 
 .loading-state { display: flex; justify-content: center; padding: 100px 0; }
 .spinner {

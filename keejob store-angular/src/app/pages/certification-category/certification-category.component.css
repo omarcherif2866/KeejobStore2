@@ -446,7 +446,28 @@ body { font-family: 'Poppins', sans-serif; background-color: #f9fafb; color: #33
 .platform-card.active { border-color: var(--color-secondary); }
 
 .platform-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.sidebar-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.platform-card > .sidebar-price-row {
+  margin-top: auto;      /* pousse prix + lien vers le bas */
+  min-height: 0;
+  margin-bottom: 10px;
+}
 
+.price-current { font-size: 26px; font-weight: 700; color:var(--color-primary); }
+.price-original { color: #9ca3af; text-decoration: line-through; font-size: 12px; }
+.price-badge {
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+.price-free {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
 .platform-logo-wrapper {
   width: 90px; height: 90px;
   border-radius: 10px;

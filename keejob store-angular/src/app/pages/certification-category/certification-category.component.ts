@@ -159,6 +159,10 @@ get categoryBlobLayout(): string {
     });
   }
 
+hasDiscount(c: Certification): boolean {
+  return !!c?.prixOriginal && c.prixOriginal > (c.prix || 0);
+}
+
 loadData(): void {
   this.loading = true;
   this.certificationService.getByCategory(this.category).subscribe({
