@@ -1,4 +1,4 @@
-import { Plateforme } from "./platforme";
+import { CentreFormation } from "./centre-formation";   // ← remplace l'import de Plateforme
 
 
 
@@ -52,7 +52,7 @@ export interface FormationKeejob {
   competencesAcquises: string[];
   publicCible: string[];
 
-  plateforme?: Plateforme | { id: number };
+  centreFormation?: CentreFormation | { id: number };   // ← remplace plateforme
 
   // avis est marqué @JsonIgnore côté back → généralement non exposé
   // avis?: Avis[];

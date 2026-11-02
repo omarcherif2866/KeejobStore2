@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { CaracteristiqueCentre, CentreFormation, Formation } from 'src/app/models/centre-formation';
+import { CaracteristiqueCentre, CentreFormation, Formation, TypeCentre } from 'src/app/models/centre-formation';
 import { AuthService } from 'src/app/services/auth.service';
 import { CentreFormationService } from 'src/app/services/centre-formation.service';
 import { EvaluationService } from 'src/app/services/evaluation.service';
@@ -20,12 +20,13 @@ export class CentreComponent implements OnInit {
   itemsPerPage = 5;
   showModal = false;
   modalMode: 'add' | 'edit' = 'add';
-
+  typeCentreEnum = TypeCentre;
   // ====== FORM DATA (Step 1 à 4 : champs "plats") ======
   formData = {
     id: null as any,
     nom: '',
     certifie: false,
+    type: TypeCentre.centre_physique as TypeCentre,   // ← ajouté (valeur par défaut)
     image: '' as string,
     localisation: '',
     note: 0,
@@ -157,6 +158,7 @@ export class CentreComponent implements OnInit {
       id: null,
       nom: '',
       certifie: false,
+      type: TypeCentre.centre_physique,   // ← ajouté
       image: '',
       localisation: '',
       note: 0,
@@ -200,6 +202,7 @@ export class CentreComponent implements OnInit {
       id: centre.id ?? null,
       nom: centre.nom || '',
       certifie: !!centre.certifie,
+      type: centre.type ?? TypeCentre.centre_physique,   // ← ajouté (anciens centres sans type)
       image: centre.image || '',
       localisation: centre.localisation || '',
       note: centre.note ?? 0,
@@ -482,7 +485,8 @@ export class CentreComponent implements OnInit {
     fd.append('note', String(this.formData.note));
     fd.append('nombreAvis', String(this.formData.nombreAvis));
     fd.append('description', this.formData.description);
-
+    fd.append('type', this.formData.type);
+    
     fd.append('telephone', this.formData.telephone);
     fd.append('email', this.formData.email);
     fd.append('siteWeb', this.formData.siteWeb);

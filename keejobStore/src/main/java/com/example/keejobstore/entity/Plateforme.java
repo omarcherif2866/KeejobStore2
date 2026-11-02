@@ -39,12 +39,5 @@ public class Plateforme {
     @Column(columnDefinition = "JSON")
     private List<String> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "plateforme", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<FormationKeejob> formations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "plateforme", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Certification> certifications = new ArrayList<>();
 
 }

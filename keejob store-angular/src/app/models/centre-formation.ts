@@ -10,6 +10,11 @@ export interface Formation {
   icone: string;
 }
 
+export enum TypeCentre {
+    centre_en_ligne = "centre_en_ligne",
+    centre_physique = "centre_physique"
+}
+
 export interface CentreFormation {
   id?: number;
   nom: string;
@@ -25,7 +30,7 @@ export interface CentreFormation {
   email: string;
   siteWeb: string;
   adresse: string;
-
+  type: TypeCentre;
   // Statistiques
   nombreFormations: number;
   nombreFormateurs: number;

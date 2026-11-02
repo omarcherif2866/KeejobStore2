@@ -366,6 +366,16 @@ position: relative; z-index: 1;
   border-radius: 20px;
 }
 
+.centre-badge.badge-physical {
+  background: #e7f7e5;
+  color: #2f7a1f;
+}
+
+.centre-badge.badge-online {
+  background: #e0e9fb;
+  color: #1d5be0;
+}
+
 .centre-card-body {
   padding: 18px;
   display: flex;               /* ← ajouté */

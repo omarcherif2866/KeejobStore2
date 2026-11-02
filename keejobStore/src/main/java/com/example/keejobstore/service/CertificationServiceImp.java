@@ -1,6 +1,7 @@
 package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.*;
+import com.example.keejobstore.repository.CentreFormationRepository;
 import com.example.keejobstore.repository.CertificationRepository;
 import com.example.keejobstore.repository.PlateformeRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,9 @@ import java.util.List;
 public class CertificationServiceImp implements CertificationService {
 
     private final CertificationRepository certificationRepository;
-    private final PlateformeRepository plateformeRepository;
+
     private final CloudinaryService cloudinaryService;
+    private final CentreFormationRepository centreFormationRepository;
 
     @Override
     public List<Certification> getAll() {
@@ -30,44 +32,44 @@ public class CertificationServiceImp implements CertificationService {
     }
 
     @Override
-    public Certification create(Certification certification, Long plateformeId) {
-        Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-        certification.setPlateforme(plateforme);
+    public Certification create(Certification certification, Long CentreFormationId) {
+        CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                .orElseThrow(() -> new RuntimeException("CentreFormation introuvable avec id " + CentreFormationId));
+        certification.setCentreFormationCertification(CentreFormation);
         return certificationRepository.save(certification);
     }
 
     // ✅ Création avec upload d'image sur Cloudinary
-    public Certification createWithImage(Certification certification, Long plateformeId, MultipartFile image) throws IOException {
+    public Certification createWithImage(Certification certification, Long CentreFormationId, MultipartFile image) throws IOException {
         if (image != null && !image.isEmpty()) {
             certification.setImage(cloudinaryService.uploadImage(image));
         }
-        return create(certification, plateformeId);
+        return create(certification, CentreFormationId);
     }
 
     @Override
-    public Certification update(Long id, Certification certification, Long plateformeId) {
+    public Certification update(Long id, Certification certification, Long CentreFormationId) {
         Certification existing = getById(id);
         applyFields(existing, certification);
 
-        if (plateformeId != null) {
-            Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-            existing.setPlateforme(plateforme);
+        if (CentreFormationId != null) {
+            CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                    .orElseThrow(() -> new RuntimeException("CentreFormation introuvable avec id " + CentreFormationId));
+            existing.setCentreFormationCertification(CentreFormation);
         }
 
         return certificationRepository.save(existing);
     }
 
     // updateWithImage doit aussi accepter et appliquer plateformeId
-    public Certification updateWithImage(Long id, Certification certification, Long plateformeId, MultipartFile image) throws IOException {
+    public Certification updateWithImage(Long id, Certification certification, Long CentreFormationId, MultipartFile image) throws IOException {
         Certification existing = getById(id);
         applyFields(existing, certification);
 
-        if (plateformeId != null) {
-            Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-            existing.setPlateforme(plateforme);
+        if (CentreFormationId != null) {
+            CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + CentreFormationId));
+            existing.setCentreFormationCertification(CentreFormation);
         }
 
         if (image != null && !image.isEmpty()) {
@@ -119,7 +121,7 @@ public class CertificationServiceImp implements CertificationService {
 
     @Override
     public List<Certification> getCertificationsByPlateforme(Long plateformeId) {
-        return certificationRepository.findByPlateformeId(plateformeId);
+        return certificationRepository.findByCentreFormationCertificationId(plateformeId);
     }
 
     @Override

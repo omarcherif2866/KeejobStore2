@@ -213,16 +213,16 @@ loadData(): void {
   
 
   // Clic sur une plateforme → filtre les certifications de la catégorie appartenant à cette plateforme
-  selectPlatform(platform: Plateforme): void {
-    this.selectedPlatform = platform;
-    this.displayedCertifications = this.allCertifications.filter(
-      c => (c.plateforme as Plateforme)?.id === platform.id
-    );
+  // selectPlatform(platform: Plateforme): void {
+  //   this.selectedPlatform = platform;
+  //   this.displayedCertifications = this.allCertifications.filter(
+  //     c => (c.plateforme as Plateforme)?.id === platform.id
+  //   );
 
-    setTimeout(() => {
-      document.querySelector('.certifications-section')?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
-  }
+  //   setTimeout(() => {
+  //     document.querySelector('.certifications-section')?.scrollIntoView({ behavior: 'smooth' });
+  //   }, 0);
+  // }
 
   resetPlatform(): void {
     this.selectedPlatform = null;

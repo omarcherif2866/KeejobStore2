@@ -72,8 +72,8 @@ public class Certification {
     private List<String> publicCible = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "plateforme_id")
-    private Plateforme plateforme;
+    @JoinColumn(name = "centre_formation_id")
+    private CentreFormation centreFormationCertification;
 
     @OneToMany(mappedBy = "certification", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

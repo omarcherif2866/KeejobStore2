@@ -161,11 +161,22 @@
      (mouseenter)="prefetchCentre(centre.id)">
         <div class="centre-card-image">
           <img [src]="sanitizeImage(centre.image)" [alt]="centre.nom">
-          <span class="centre-badge" *ngIf="centre.certifie">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="20 6 9 17 4 12"></polyline>
+          <span class="centre-badge"
+                *ngIf="centre.type"
+                [class.badge-online]="centre.type === 'centre_en_ligne'"
+                [class.badge-physical]="centre.type === 'centre_physique'">
+            <!-- icône écran pour en ligne -->
+            <svg *ngIf="centre.type === 'centre_en_ligne'" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
             </svg>
-            Certifié
+            <!-- icône épingle pour physique -->
+            <svg *ngIf="centre.type === 'centre_physique'" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            {{ getTypeLabel(centre) }}
           </span>
         </div>
 

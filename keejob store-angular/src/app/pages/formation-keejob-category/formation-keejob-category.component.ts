@@ -231,16 +231,16 @@ hasDiscount(formation: FormationKeejob): boolean {
 // }
 
   // Clic sur une plateforme → filtre les formations de la catégorie appartenant à cette plateforme
-  selectPlatform(platform: Plateforme): void {
-    this.selectedPlatform = platform;
-    this.displayedFormations = this.allFormations.filter(
-      f => (f.plateforme as Plateforme)?.id === platform.id
-    );
+  // selectPlatform(platform: Plateforme): void {
+  //   this.selectedPlatform = platform;
+  //   this.displayedFormations = this.allFormations.filter(
+  //     f => (f.plateforme as Plateforme)?.id === platform.id
+  //   );
 
-    setTimeout(() => {
-      document.querySelector('.formations-section')?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
-  }
+  //   setTimeout(() => {
+  //     document.querySelector('.formations-section')?.scrollIntoView({ behavior: 'smooth' });
+  //   }, 0);
+  // }
 
   resetPlatform(): void {
     this.selectedPlatform = null;

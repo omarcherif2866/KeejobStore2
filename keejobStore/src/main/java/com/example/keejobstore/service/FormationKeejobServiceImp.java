@@ -1,6 +1,7 @@
 package com.example.keejobstore.service;
 
 import com.example.keejobstore.entity.*;
+import com.example.keejobstore.repository.CentreFormationRepository;
 import com.example.keejobstore.repository.FormationKeejobRepository;
 import com.example.keejobstore.repository.PlateformeRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
     private final FormationKeejobRepository formationRepository;
     private final PlateformeRepository plateformeRepository;
     private final CloudinaryService cloudinaryService;   // ← ajouté
+    private final CentreFormationRepository centreFormationRepository;
 
     @Override
     public List<FormationKeejob> getAll() {
@@ -30,45 +32,45 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
     }
 
     @Override
-    public FormationKeejob create(FormationKeejob formation, Long plateformeId) {
-        Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-        formation.setPlateforme(plateforme);
+    public FormationKeejob create(FormationKeejob formation, Long CentreFormationId) {
+        CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                .orElseThrow(() -> new RuntimeException("CentreFormation introuvable avec id " + CentreFormationId));
+        formation.setCentreFormation(CentreFormation);
         return formationRepository.save(formation);
     }
 
     // ✅ NOUVELLE MÉTHODE : création avec upload d'image sur Cloudinary
-    public FormationKeejob createWithImage(FormationKeejob formation, Long plateformeId, MultipartFile image) throws IOException {
+    public FormationKeejob createWithImage(FormationKeejob formation, Long CentreFormationId, MultipartFile image) throws IOException {
         if (image != null && !image.isEmpty()) {
             String imageUrl = cloudinaryService.uploadImage(image);
             formation.setImage(imageUrl);
         }
-        return create(formation, plateformeId);
+        return create(formation, CentreFormationId);
     }
 
     @Override
-    public FormationKeejob update(Long id, FormationKeejob formation, Long plateformeId) {
+    public FormationKeejob update(Long id, FormationKeejob formation, Long CentreFormationId) {
         FormationKeejob existing = getById(id);
         applyFields(existing, formation);
 
-        if (plateformeId != null) {
-            Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-            existing.setPlateforme(plateforme);
+        if (CentreFormationId != null) {
+            CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                    .orElseThrow(() -> new RuntimeException("CentreFormation introuvable avec id " + CentreFormationId));
+            existing.setCentreFormation(CentreFormation);
         }
 
         return formationRepository.save(existing);
     }
 
     // updateWithImage doit aussi accepter et appliquer plateformeId
-    public FormationKeejob updateWithImage(Long id, FormationKeejob formation, Long plateformeId, MultipartFile image) throws IOException {
+    public FormationKeejob updateWithImage(Long id, FormationKeejob formation, Long CentreFormationId, MultipartFile image) throws IOException {
         FormationKeejob existing = getById(id);
         applyFields(existing, formation);
 
-        if (plateformeId != null) {
-            Plateforme plateforme = plateformeRepository.findById(plateformeId)
-                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + plateformeId));
-            existing.setPlateforme(plateforme);
+        if (CentreFormationId != null) {
+            CentreFormation CentreFormation = centreFormationRepository.findById(CentreFormationId)
+                    .orElseThrow(() -> new RuntimeException("Plateforme introuvable avec id " + CentreFormationId));
+            existing.setCentreFormation(CentreFormation);
         }
 
         if (image != null && !image.isEmpty()) {
@@ -119,7 +121,7 @@ public class FormationKeejobServiceImp implements FormationKeejobService {
 
     @Override
     public List<FormationKeejob> getFormationsByPlateforme(Long plateformeId) {
-        return formationRepository.findByPlateformeId(plateformeId);
+        return formationRepository.findByCentreFormationId(plateformeId);
     }
 
     @Override

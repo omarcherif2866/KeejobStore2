@@ -1,5 +1,5 @@
 import { Avis } from './avis';
-import { Plateforme } from './platforme';
+import { CentreFormation } from './centre-formation';   // ← remplace l'import de Plateforme
 
 export enum CategoryCertification {
   Marketing_Digital = 'Marketing_Digital',
@@ -50,6 +50,6 @@ export interface Certification {
   competencesValidees?: string[];
   publicCible?: string[];
 
-  plateforme?: Plateforme;
+  centreFormationCertification?: CentreFormation | { id: number };   // ← même nom que l'entité Java
   avis?: Avis[];
 }

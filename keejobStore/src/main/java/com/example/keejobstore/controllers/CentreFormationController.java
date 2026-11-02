@@ -3,6 +3,7 @@ package com.example.keejobstore.controllers;
 import com.example.keejobstore.entity.CentreFormation;
 import com.example.keejobstore.entity.CentreFormation.CaracteristiqueCentre;
 import com.example.keejobstore.entity.CentreFormation.Formation;
+import com.example.keejobstore.entity.TypeCentre;
 import com.example.keejobstore.service.CentreFormationService;
 import com.example.keejobstore.service.CloudinaryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -65,8 +67,8 @@ public class CentreFormationController {
             @RequestParam(value = "certifications", required = false) String certifications,
             @RequestParam(value = "domainesFormation", required = false) String domainesFormationJson,
             @RequestParam(value = "caracteristiques", required = false) String caracteristiquesJson,
-            @RequestParam(value = "formations", required = false) String formationsJson
-    ) {
+            @RequestParam(value = "formations", required = false) String formationsJson,
+            @RequestParam(value = "type", required = false) String type ) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             CentreFormation centreFormation = new CentreFormation();
@@ -89,7 +91,7 @@ public class CentreFormationController {
             centreFormation.setLanguesEnseignement(languesEnseignement);
             centreFormation.setModalites(modalites);
             centreFormation.setCertifications(certifications);
-
+            centreFormation.setType(parseType(type));
             // ===== Upload image vers Cloudinary =====
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
@@ -127,7 +129,12 @@ public class CentreFormationController {
         } catch (JsonProcessingException e) {
             System.err.println("❌ ERREUR JSON CREATE CentreFormation: " + e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", "JSON invalide : " + e.getMessage()));
-        } catch (Exception e) {
+        }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "Type invalide. Valeurs acceptées : " + Arrays.toString(TypeCentre.values())));
+        }
+        catch (Exception e) {
             System.err.println("❌ ERREUR CREATE CentreFormation: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -161,8 +168,8 @@ public class CentreFormationController {
             @RequestParam(value = "certifications", required = false) String certifications,
             @RequestParam(value = "domainesFormation", required = false) String domainesFormationJson,
             @RequestParam(value = "caracteristiques", required = false) String caracteristiquesJson,
-            @RequestParam(value = "formations", required = false) String formationsJson
-    ) {
+            @RequestParam(value = "formations", required = false) String formationsJson,
+            @RequestParam(value = "type", required = false) String type ) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             CentreFormation existing = centreFormationService.getCentreById(id)
@@ -187,7 +194,7 @@ public class CentreFormationController {
             if (languesEnseignement != null) existing.setLanguesEnseignement(languesEnseignement);
             if (modalites != null) existing.setModalites(modalites);
             if (certifications != null) existing.setCertifications(certifications);
-
+            if (type != null && !type.isBlank()) existing.setType(parseType(type));
             // ===== Upload nouvelle image si fournie =====
             if (image != null && !image.isEmpty()) {
                 String imageUrl = cloudinaryService.uploadImage(image);
@@ -221,7 +228,12 @@ public class CentreFormationController {
         } catch (JsonProcessingException e) {
             System.err.println("❌ ERREUR JSON UPDATE CentreFormation: " + e.getMessage());
             return ResponseEntity.badRequest().body(Map.of("error", "JSON invalide : " + e.getMessage()));
-        } catch (Exception e) {
+        }
+         catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "error", "Type invalide. Valeurs acceptées : " + Arrays.toString(TypeCentre.values())));
+        }
+        catch (Exception e) {
             System.err.println("❌ ERREUR UPDATE CentreFormation: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -257,5 +269,10 @@ public class CentreFormationController {
     @GetMapping("/search/domaine")
     public ResponseEntity<List<CentreFormation>> searchByDomaine(@RequestParam String q) {
         return ResponseEntity.ok(centreFormationService.searchByDomaine(q));
+    }
+
+    private TypeCentre parseType(String type) {
+        if (type == null || type.isBlank()) return null;
+        return TypeCentre.valueOf(type.trim());   // lève IllegalArgumentException si valeur inconnue
     }
 }

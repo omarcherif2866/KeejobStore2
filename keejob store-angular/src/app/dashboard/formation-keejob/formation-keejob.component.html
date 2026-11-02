@@ -161,7 +161,7 @@
                     {{ formation.prixOriginal }} DT
                   </span>
                 </td>
-                <td>{{ getPlateformeName(formation.plateforme) }}</td>
+                <td>{{ getCentreName(formation) }}</td>
                 <td class="actions">
                   <button (click)="handleEdit(formation)" class="action-btn edit-btn" title="Modifier la formation">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -280,19 +280,17 @@
           </option>
         </select>
 
-        <label>Plateforme *</label>
-        <div *ngIf="loadingPlateformes" class="loading-icons">
+        <label>Centre de formation *</label>
+        <div *ngIf="loadingCentres" class="loading-icons">
           <div class="spinner"></div>
-          <p>Chargement des plateformes...</p>
+          <p>Chargement des centres...</p>
         </div>
-        <select *ngIf="!loadingPlateformes" [(ngModel)]="selectedPlateformeId" class="form-input category-select">
-          <option [ngValue]="null" disabled>-- Sélectionnez une plateforme --</option>
-          <option *ngFor="let p of plateformes" [ngValue]="p.id">
-            {{ getPlateformeName(p) }}
-          </option>
+        <select *ngIf="!loadingCentres" [(ngModel)]="selectedCentreId" class="form-input category-select">
+          <option [ngValue]="null" disabled>-- Sélectionnez un centre de formation --</option>
+          <option *ngFor="let c of centres" [ngValue]="c.id">{{ c.nom }}</option>
         </select>
-        <div *ngIf="!loadingPlateformes && plateformes.length === 0" class="no-icons-message">
-          <p>Aucune plateforme disponible.</p>
+        <div *ngIf="!loadingCentres && centres.length === 0" class="no-icons-message">
+          <p>Aucun centre de formation disponible.</p>
         </div>
 
         <label>Lien de la formation</label>
@@ -473,7 +471,7 @@
               <strong>Catégorie:</strong> {{ formatCategory(formData.categoryFormationKeejob) }}
             </div>
             <div class="summary-item">
-              <strong>Plateforme:</strong> {{ getPlateformeNameById(selectedPlateformeId) }}
+              <strong>Centre de formation:</strong> {{ getCentreNameById(selectedCentreId) }}
             </div>
             <div class="summary-item">
               <strong>Prix:</strong> {{ formData.prix || 0 }} DT

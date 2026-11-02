@@ -6,8 +6,11 @@ import Swal from 'sweetalert2';
 import { FormationCategory, FormationKeejob } from 'src/app/models/formation-keejob';
 import { FormationKeejobService } from 'src/app/services/formation-keejob.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { PlateformeService } from 'src/app/services/platforme.service';
+// import { PlateformeService } from 'src/app/services/platforme.service';
 // ⚠️ Adaptez le chemin/nom si votre service de plateformes est différent
+import { CentreFormationService } from 'src/app/services/centre-formation.service';
+import { CentreFormation } from 'src/app/models/centre-formation';
+
 
 @Component({
   selector: 'app-formation-keejob',
@@ -31,9 +34,9 @@ export class FormationKeejobComponent implements OnInit {
   availableCategories = Object.values(FormationCategory);
 
   // ⚠️ typé "any" car le modèle Plateforme n'a pas été fourni : adaptez les champs utilisés (nom, id, ...)
-  plateformes: any[] = [];
-  loadingPlateformes = false;
-  selectedPlateformeId: number | null = null;
+centres: CentreFormation[] = [];
+loadingCentres = false;
+selectedCentreId: number | null = null;
 
   editId: number | null = null;
   selectedImage: File | null = null;
@@ -46,7 +49,7 @@ export class FormationKeejobComponent implements OnInit {
 
   constructor(
     private formationService: FormationKeejobService,
-    private plateformeService: PlateformeService,
+    private centreService: CentreFormationService,   // ← remplace plateformeService
     private authService: AuthService,
     private router: Router,
     private sanitizer: DomSanitizer
@@ -65,7 +68,7 @@ export class FormationKeejobComponent implements OnInit {
   this.isFormateur = role === 'FORMATEUR';
   this.isAdminOrSuper = ['ADMIN', 'SUPERADMIN'].includes(role);
     this.fetchFormations();
-    this.fetchPlateformes();
+    this.fetchCentres();
   }
   // Retourne ['/formationFormateur', 12] ou ['/formationFormateur']
   get formationLink(): any[] {
@@ -133,37 +136,37 @@ export class FormationKeejobComponent implements OnInit {
     });
   }
 
-  fetchPlateformes() {
-    this.loadingPlateformes = true;
-    this.plateformeService.getAll().subscribe({
-      next: (data: any[]) => {
-        this.plateformes = data || [];
-        this.loadingPlateformes = false;
-      },
-      error: (error) => {
-        console.error('Erreur lors du chargement des plateformes:', error);
-        this.loadingPlateformes = false;
-        Swal.fire({
-          icon: 'error',
-          title: 'Erreur',
-          text: 'Impossible de charger la liste des plateformes',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    });
-  }
+fetchCentres() {
+  this.loadingCentres = true;
+  this.centreService.getAllCentres().subscribe({
+    next: (data: CentreFormation[]) => {
+      this.centres = data || [];
+      this.loadingCentres = false;
+    },
+    error: (error) => {
+      console.error('Erreur lors du chargement des centres:', error);
+      this.loadingCentres = false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: 'Impossible de charger la liste des centres de formation',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  });
+}
 
-  getPlateformeName(p: any): string {
-    if (!p) return '';
-    return p.nom || p.nomPlateforme || p.name || `Plateforme #${p.id}`;
-  }
+getCentreName(formation: FormationKeejob): string {
+  const centre: any = formation.centreFormation;
+  return centre?.nom || 'Non renseigné';
+}
 
-  getPlateformeNameById(id: number | null | undefined): string {
-    if (!id) return 'Non renseignée';
-    const p = this.plateformes.find(pf => pf.id === id);
-    return p ? this.getPlateformeName(p) : `Plateforme #${id}`;
-  }
+getCentreNameById(id: number | null | undefined): string {
+  if (!id) return 'Non renseigné';
+  const c = this.centres.find(ct => ct.id === id);
+  return c ? c.nom : `Centre #${id}`;
+}
 
   get currentItems(): FormationKeejob[] {
     const indexOfLastItem = this.currentPage * this.itemsPerPage;
@@ -205,7 +208,7 @@ export class FormationKeejobComponent implements OnInit {
     this.modalMode = 'add';
     this.formData = this.getEmptyFormation();
     this.selectedImage = null;
-    this.selectedPlateformeId = null;
+    this.selectedCentreId = null;
     this.editId = null;
     this.currentModalStep = 1;
     this.showModal = true;
@@ -226,8 +229,8 @@ export class FormationKeejobComponent implements OnInit {
     this.editId = formation.id ?? null;
     this.selectedImage = null;
 
-    const plateformeVal: any = formation.plateforme;
-    this.selectedPlateformeId = plateformeVal?.id ?? null;
+const centreVal: any = formation.centreFormation;
+this.selectedCentreId = centreVal?.id ?? null;
 
     this.currentModalStep = 1;
     this.showModal = true;
@@ -238,7 +241,7 @@ export class FormationKeejobComponent implements OnInit {
     this.showModal = false;
     this.formData = this.getEmptyFormation();
     this.selectedImage = null;
-    this.selectedPlateformeId = null;
+    this.selectedCentreId = null;
     this.editId = null;
     this.currentModalStep = 1;
   }
@@ -307,11 +310,11 @@ export class FormationKeejobComponent implements OnInit {
         return;
       }
 
-      if (!this.selectedPlateformeId) {
+      if (!this.selectedCentreId) {
         Swal.fire({
           icon: 'warning',
-          title: 'Plateforme manquante',
-          text: 'Veuillez sélectionner une plateforme',
+          title: 'Centre de formation manquant',
+          text: 'Veuillez sélectionner un centre de formation',
           timer: 2000,
           showConfirmButton: false
         });
@@ -459,11 +462,11 @@ export class FormationKeejobComponent implements OnInit {
       return;
     }
 
-    if (!this.selectedPlateformeId) {
+    if (!this.selectedCentreId) {
       Swal.fire({
         icon: 'warning',
-        title: 'Plateforme manquante',
-        text: 'Veuillez sélectionner une plateforme',
+        title: 'Centre de formation manquant',
+        text: 'Veuillez sélectionner un centre de formation',
         timer: 2000,
         showConfirmButton: false
       });
@@ -481,11 +484,11 @@ export class FormationKeejobComponent implements OnInit {
     };
 
     // Le backend reçoit la plateforme via l'URL (create) ou déjà associée (update)
-    delete (payload as any).plateforme;
+    delete (payload as any).centreFormation;
 
 const request$ = this.modalMode === 'add'
-  ? this.formationService.create(payload, this.selectedPlateformeId, this.selectedImage || undefined)
-  : this.formationService.update(this.editId as number, payload, this.selectedPlateformeId as number, this.selectedImage || undefined);
+  ? this.formationService.create(payload, this.selectedCentreId, this.selectedImage || undefined)
+  : this.formationService.update(this.editId as number, payload, this.selectedCentreId as number, this.selectedImage || undefined);
 
     request$.subscribe({
       next: () => {

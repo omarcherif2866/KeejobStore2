@@ -69,8 +69,8 @@ public class FormationKeejob {
     private List<String> publicCible = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "plateforme_id")
-    private Plateforme plateforme;
+    @JoinColumn(name = "centre_formation_id")
+    private CentreFormation centreFormation;
 
     @OneToMany(mappedBy = "formation", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

@@ -287,11 +287,20 @@
                   placeholder="Décrivez le centre de formation"
                   class="form-input"></textarea>
 
-        <div class="form-group">
-          <label>
-            <input type="checkbox" [(ngModel)]="formData.certifie">
-            Centre certifié
-          </label>
+        <div class="toggle-field">
+          <label class="toggle-label">Type de centre *</label>
+          <div class="toggle-switch">
+            <button type="button" class="toggle-option"
+                    [class.active]="formData.type === typeCentreEnum.centre_physique"
+                    (click)="formData.type = typeCentreEnum.centre_physique">
+              Centre physique
+            </button>
+            <button type="button" class="toggle-option"
+                    [class.active]="formData.type === typeCentreEnum.centre_en_ligne"
+                    (click)="formData.type = typeCentreEnum.centre_en_ligne">
+              Centre en ligne
+            </button>
+          </div>
         </div>
 
         <!-- <label>Note (sur 5)</label>
@@ -571,6 +580,10 @@
           <div class="summary-grid">
             <div class="summary-item">
               <strong>Nom:</strong> {{ formData.nom || 'Non renseigné' }}
+            </div>
+            <div class="summary-item">
+              <strong>Type:</strong>
+              {{ formData.type === typeCentreEnum.centre_en_ligne ? 'Centre en ligne' : 'Centre physique' }}
             </div>
             <div class="summary-item">
               <strong>Localisation:</strong> {{ formData.localisation || 'Non renseignée' }}

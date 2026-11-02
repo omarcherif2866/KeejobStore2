@@ -49,8 +49,8 @@ export class FormationKeejobDetailsComponent implements OnInit {
         this.formation = data;
         this.loading = false;
 
-        if (data.plateforme?.id) {
-          this.loadOtherFormations(data.plateforme.id, id);
+        if (data.centreFormation?.id) {
+          this.loadOtherFormations(data.centreFormation.id, id);
         }
         this.loadAvis(id);
         console.log('Formation chargée:', data);

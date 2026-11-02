@@ -48,8 +48,8 @@ export class CertificationDetailsComponent implements OnInit {
         this.certification = data;
         this.loading = false;
 
-        if (data.plateforme?.id) {
-          this.loadOtherCertifications(data.plateforme.id, id);
+        if (data.centreFormationCertification?.id) {
+          this.loadOtherCertifications(data.centreFormationCertification.id, id);
         }
         this.loadAvis(id);
         console.log('Certification chargée:', data);

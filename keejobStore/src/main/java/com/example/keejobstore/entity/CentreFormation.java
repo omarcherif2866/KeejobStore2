@@ -3,10 +3,12 @@ package com.example.keejobstore.entity;
 import com.example.keejobstore.converter.CaracteristiquesConverter;
 import com.example.keejobstore.converter.DomainesFormationConverter;
 import com.example.keejobstore.converter.FormationsConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -36,6 +38,8 @@ public class CentreFormation {
     private String email;
     private String siteWeb;
     private String adresse;               // "Centre Urbain Nord, Tunis"
+    @Enumerated(EnumType.STRING)
+    private TypeCentre type;
 
     // Statistiques (15+, 5+, 1200+, 98%)
     private Integer nombreFormations;
@@ -102,4 +106,14 @@ public class CentreFormation {
         private String duree;   // "6 mois"
         private String icone;
     }
+
+    @OneToMany(mappedBy = "centreFormation")
+    @JsonIgnore
+    private List<FormationKeejob> formationsKeejob = new ArrayList<>();
+
+    @OneToMany(mappedBy = "centreFormationCertification")
+    @JsonIgnore
+    private List<Certification> centreFormationCertification = new ArrayList<>();
+
 }
+

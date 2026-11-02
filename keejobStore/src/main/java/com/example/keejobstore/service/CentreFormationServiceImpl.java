@@ -51,6 +51,7 @@ public class CentreFormationServiceImpl implements CentreFormationService {
         existant.setEmail(centreFormation.getEmail());
         existant.setSiteWeb(centreFormation.getSiteWeb());
         existant.setAdresse(centreFormation.getAdresse());
+        existant.setType(centreFormation.getType());   // ← ajouté
         existant.setNombreFormations(centreFormation.getNombreFormations());
         existant.setNombreFormateurs(centreFormation.getNombreFormateurs());
         existant.setNombreApprenants(centreFormation.getNombreApprenants());

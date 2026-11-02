@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { CentreFormation } from 'src/app/models/centre-formation';
+import { CentreFormation, TypeCentre } from 'src/app/models/centre-formation';
 import { CentreFormationService } from 'src/app/services/centre-formation.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class CentreFormationComponent implements OnInit {
   searchLocalisation = '';
   searchFormationTitre = '';            // ← remplace searchDomaine
   availableFormationTitres: string[] = [];
-
+typeCentreEnum = TypeCentre;
   sortBy: 'note' | 'nom' | 'avis' = 'note';
 dropdownOpen = false;
 menuTop = 0;
@@ -173,4 +173,12 @@ selectFormationTitre(titre: string): void {
     this.centreService.getById(id).subscribe();
   }
   
+getTypeLabel(centre: CentreFormation): string {
+  switch (centre.type) {
+    case TypeCentre.centre_en_ligne: return 'Centre en ligne';
+    case TypeCentre.centre_physique: return 'Centre physique';
+    default: return '';
+  }
+}
+
 }
