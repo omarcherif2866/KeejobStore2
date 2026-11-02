@@ -497,7 +497,7 @@ export class CentreComponent implements OnInit {
     fd.append('nombreApprenants', String(this.formData.nombreApprenants));
     fd.append('tauxSatisfaction', String(this.formData.tauxSatisfaction));
 
-    fd.append('aPropos', this.formData.apropos ?? '');   // ✅
+    fd.append('apropos', this.formData.apropos ?? '');
     fd.append('horaires', this.formData.horaires);
     fd.append('languesEnseignement', this.formData.languesEnseignement);
     fd.append('modalites', this.formData.modalites);

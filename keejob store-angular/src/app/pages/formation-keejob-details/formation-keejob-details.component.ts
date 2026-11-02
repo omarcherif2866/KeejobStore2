@@ -54,6 +54,7 @@ export class FormationKeejobDetailsComponent implements OnInit {
         }
         this.loadAvis(id);
         console.log('Formation chargée:', data);
+
       },
       error: (err) => {
         console.error('Erreur lors du chargement de la formation:', err);
