@@ -37,7 +37,7 @@ export interface CentreFormation {
   nombreApprenants: number;
   tauxSatisfaction: number;
 
-  apropos: string;
+  aPropos: string;
 
   // Anciennement InformationsPratiques (@Embedded côté backend) : champs aplatis
   horaires: string;              // "Lun - Ven : 8h30 - 17h30"
