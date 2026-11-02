@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CentreFormationService } from '../../services/centre-formation.service';
@@ -15,6 +15,9 @@ type TabId = 'presentation' | 'formations' | 'formateurs' | 'avis' | 'infos';
   styleUrls: ['./centre-formation-details.component.css']
 })
 export class CentreFormationDetailsComponent implements OnInit {
+  @ViewChild('info') info!: ElementRef<HTMLElement>;
+  @ViewChild('desc') desc!: ElementRef<HTMLElement>;
+  lignes = 6;
 
   centre?: CentreFormation;
   avisList: Avis[] = [];
@@ -97,5 +100,23 @@ get totalAvis(): number {
   return this.avisList.length;
 }
 
+
+  ngAfterViewInit() {
+    setTimeout(() => this.calculerLignes());
+  }
+
+  @HostListener('window:resize')
+  calculerLignes() {
+    const info = this.info.nativeElement;
+    const desc = this.desc.nativeElement;
+    const card = info.closest('.header-card') as HTMLElement;
+    const img = card.querySelector('.header-image') as HTMLElement;
+
+    const hauteurMax = img.offsetHeight;
+    const hauteurAvant = desc.offsetTop - info.offsetTop;
+    const lineHeight = parseFloat(getComputedStyle(desc).lineHeight);
+
+    this.lignes = Math.max(1, Math.floor((hauteurMax - hauteurAvant) / lineHeight));
+  }
 
 }

@@ -34,17 +34,19 @@
            <strong>{{ centre.note }}</strong> -->
           <span class="text-muted">({{ centre.nombreAvis }} avis clients)</span>
         </p>
-        <p class="description">{{ centre.description }}</p>
+        <p class="description" #desc [style.-webkit-line-clamp]="lignes">
+          {{ centre.description }}
+        </p>
       </div>
     </div>
 
     <div class="contact-card">
       <h3>Informations de contact</h3>
       <ul>
-        <li><span class="icon-phone"></span> {{ centre.telephone }}</li>
-        <li><span class="icon-mail"></span> {{ centre.email }}</li>
-        <li><span class="icon-globe"></span> {{ centre.siteWeb }}</li>
-        <li><span class="icon-pin"></span> {{ centre.adresse }}</li>
+        <li><span class="icon-phone"></span> {{ centre.telephone || '-' }}</li>
+        <li><span class="icon-mail"></span> {{ centre.email || '-' }}</li>
+        <li><span class="icon-globe"></span> {{ centre.siteWeb || '-' }}</li>
+        <li><span class="icon-pin"></span> {{ centre.adresse || '-' }}</li>
       </ul>
       <button class="btn-contact">
         <span class="icon-message"></span> Contacter le centre
@@ -57,28 +59,28 @@
     <div class="stat-card">
       <div class="stat-icon green"><span class="icon-cap"></span></div>
       <div>
-        <div class="stat-value">{{ centre.nombreFormations }}+</div>
+        <div class="stat-value">{{ centre.nombreFormations ? centre.nombreFormations + '+' : '-' }}</div>
         <div class="stat-label">Formations</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon blue"><span class="icon-users"></span></div>
       <div>
-        <div class="stat-value">{{ centre.nombreFormateurs }}+</div>
+        <div class="stat-value">{{ centre.nombreFormateurs ? centre.nombreFormateurs + '+' : '-' }}</div>
         <div class="stat-label">Formateurs</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon purple"><span class="icon-book"></span></div>
       <div>
-        <div class="stat-value">{{ centre.nombreApprenants }}+</div>
+        <div class="stat-value">{{ centre.nombreApprenants ? centre.nombreApprenants + '+' : '-' }}</div>
         <div class="stat-label">Apprenants</div>
       </div>
     </div>
     <div class="stat-card">
       <div class="stat-icon yellow"><span class="icon-smile"></span></div>
       <div>
-        <div class="stat-value">{{ centre.tauxSatisfaction }}%</div>
+        <div class="stat-value">{{ centre.tauxSatisfaction ? centre.tauxSatisfaction + '%' : '-' }}</div>
         <div class="stat-label">Satisfaction</div>
       </div>
     </div>
@@ -177,7 +179,7 @@
         </div>
         <div class="info-item">
           <span class="icon-shield"></span>
-          <div><h4>Certifications</h4><p>{{ centre.certifications }}</p></div>
+          <div><h4>Certifications</h4><p>{{ centre.certifications || '-' }}</p></div>
         </div>
       </div>
     </div>
