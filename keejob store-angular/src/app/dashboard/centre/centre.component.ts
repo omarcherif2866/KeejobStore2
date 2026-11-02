@@ -43,7 +43,7 @@ export class CentreComponent implements OnInit {
     nombreApprenants: 0,
     tauxSatisfaction: 0,
 
-    aPropos: '',
+    apropos: '',
     horaires: '',
     languesEnseignement: '',
     modalites: '',
@@ -175,7 +175,7 @@ export class CentreComponent implements OnInit {
       nombreApprenants: 0,
       tauxSatisfaction: 0,
 
-      aPropos: '',
+      apropos: '',
       horaires: '',
       languesEnseignement: '',
       modalites: '',
@@ -219,7 +219,7 @@ export class CentreComponent implements OnInit {
       nombreApprenants: centre.nombreApprenants ?? 0,
       tauxSatisfaction: centre.tauxSatisfaction ?? 0,
 
-      aPropos: centre.aPropos || '',
+      apropos: centre.apropos || '',
       horaires: centre.horaires || '',
       languesEnseignement: centre.languesEnseignement || '',
       modalites: centre.modalites || '',
@@ -497,7 +497,7 @@ export class CentreComponent implements OnInit {
     fd.append('nombreApprenants', String(this.formData.nombreApprenants));
     fd.append('tauxSatisfaction', String(this.formData.tauxSatisfaction));
 
-    fd.append('aPropos', this.formData.aPropos ?? '');   // ✅
+    fd.append('aPropos', this.formData.apropos ?? '');   // ✅
     fd.append('horaires', this.formData.horaires);
     fd.append('languesEnseignement', this.formData.languesEnseignement);
     fd.append('modalites', this.formData.modalites);

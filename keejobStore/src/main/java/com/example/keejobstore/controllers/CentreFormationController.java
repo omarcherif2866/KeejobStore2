@@ -60,7 +60,7 @@ public class CentreFormationController {
             @RequestParam(value = "nombreFormateurs", required = false) Integer nombreFormateurs,
             @RequestParam(value = "nombreApprenants", required = false) Integer nombreApprenants,
             @RequestParam(value = "tauxSatisfaction", required = false) Double tauxSatisfaction,
-            @RequestParam(value = "aPropos", required = false) String aPropos,
+            @RequestParam(value = "apropos", required = false) String apropos,
             @RequestParam(value = "horaires", required = false) String horaires,
             @RequestParam(value = "languesEnseignement", required = false) String languesEnseignement,
             @RequestParam(value = "modalites", required = false) String modalites,
@@ -86,7 +86,7 @@ public class CentreFormationController {
             centreFormation.setNombreFormateurs(nombreFormateurs);
             centreFormation.setNombreApprenants(nombreApprenants);
             centreFormation.setTauxSatisfaction(tauxSatisfaction);
-            centreFormation.setApropos(aPropos);
+            centreFormation.setApropos(apropos);
             centreFormation.setHoraires(horaires);
             centreFormation.setLanguesEnseignement(languesEnseignement);
             centreFormation.setModalites(modalites);
@@ -161,7 +161,7 @@ public class CentreFormationController {
             @RequestParam(value = "nombreFormateurs", required = false) Integer nombreFormateurs,
             @RequestParam(value = "nombreApprenants", required = false) Integer nombreApprenants,
             @RequestParam(value = "tauxSatisfaction", required = false) Double tauxSatisfaction,
-            @RequestParam(value = "aPropos", required = false) String aPropos,
+            @RequestParam(value = "apropos", required = false) String apropos,
             @RequestParam(value = "horaires", required = false) String horaires,
             @RequestParam(value = "languesEnseignement", required = false) String languesEnseignement,
             @RequestParam(value = "modalites", required = false) String modalites,
@@ -189,7 +189,7 @@ public class CentreFormationController {
             if (nombreFormateurs != null) existing.setNombreFormateurs(nombreFormateurs);
             if (nombreApprenants != null) existing.setNombreApprenants(nombreApprenants);
             if (tauxSatisfaction != null) existing.setTauxSatisfaction(tauxSatisfaction);
-            if (aPropos != null) existing.setApropos(aPropos);
+            if (apropos != null) existing.setApropos(apropos);
             if (horaires != null) existing.setHoraires(horaires);
             if (languesEnseignement != null) existing.setLanguesEnseignement(languesEnseignement);
             if (modalites != null) existing.setModalites(modalites);
