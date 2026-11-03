@@ -198,11 +198,11 @@
       <!-- Carte plateforme + prix -->
       <div class="sidebar-card">
         <div class="sidebar-platform-row">
-          <a class="sidebar-platform-logo" [routerLink]="['/centre_formation', f.centreFormationCertification?.id]">
-            <img [src]="sanitizeImage(f.centreFormationCertification?.image)" [alt]="f.centreFormationCertification?.nom">
+          <a class="sidebar-platform-logo" [routerLink]="['/centre_formation', c.centreFormationCertification?.id]">
+            <img [src]="sanitizeImage(c.centreFormationCertification?.image)" [alt]="c.centreFormationCertification?.nom">
           </a>
-          <a class="sidebar-platform-name" [routerLink]="['/centre_formation', f.centreFormationCertification?.id]">
-            <strong>{{ f.centreFormationCertification?.nom }}</strong>
+          <a class="sidebar-platform-name" [routerLink]="['/centre_formation', c.centreFormationCertification?.id]">
+            <strong>{{ c.centreFormationCertification?.nom }}</strong>
           </a>
         </div>
 
