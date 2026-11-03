@@ -217,10 +217,12 @@
       <!-- Carte plateforme + prix -->
       <div class="sidebar-card">
         <div class="sidebar-platform-row">
-          <div class="sidebar-platform-logo">
+          <a class="sidebar-platform-logo" [routerLink]="['/centre_formation', f.centreFormation?.id]">
             <img [src]="sanitizeImage(f.centreFormation?.image)" [alt]="f.centreFormation?.nom">
-          </div>
-          <strong>{{ f.centreFormation?.nom }}</strong>
+          </a>
+          <a class="sidebar-platform-name" [routerLink]="['/centre_formation', f.centreFormation?.id]">
+            <strong>{{ f.centreFormation?.nom }}</strong>
+          </a>
         </div>
 
         <div class="sidebar-price-row">

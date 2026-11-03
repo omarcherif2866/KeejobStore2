@@ -1,6 +1,5 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CentreFormationService } from '../../services/centre-formation.service';
 import { AvisService } from '../../services/avis.service';
 import { CentreFormation } from 'src/app/models/centre-formation';
@@ -15,9 +14,21 @@ type TabId = 'presentation' | 'formations' | 'formateurs' | 'avis' | 'infos';
   styleUrls: ['./centre-formation-details.component.css']
 })
 export class CentreFormationDetailsComponent implements OnInit {
-  @ViewChild('info') info!: ElementRef<HTMLElement>;
-  @ViewChild('desc') desc!: ElementRef<HTMLElement>;
-  lignes = 6;
+
+lignes = 6;
+
+private infoRef?: ElementRef<HTMLElement>;
+private descRef?: ElementRef<HTMLElement>;
+
+@ViewChild('info') set info(el: ElementRef<HTMLElement> | undefined) {
+  this.infoRef = el;
+  this.planifierCalcul();
+}
+
+@ViewChild('desc') set desc(el: ElementRef<HTMLElement> | undefined) {
+  this.descRef = el;
+  this.planifierCalcul();
+}
 
   centre?: CentreFormation;
   avisList: Avis[] = [];
@@ -35,7 +46,8 @@ export class CentreFormationDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private centreService: CentreFormationService,
-    private avisService: AvisService
+    private avisService: AvisService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -101,22 +113,32 @@ get totalAvis(): number {
 }
 
 
-  ngAfterViewInit() {
-    setTimeout(() => this.calculerLignes());
+@HostListener('window:resize')
+planifierCalcul() {
+  setTimeout(() => this.calculerLignes());
+}
+
+private calculerLignes() {
+  if (!this.infoRef || !this.descRef) return;
+
+  const info = this.infoRef.nativeElement;
+  const desc = this.descRef.nativeElement;
+  const img = info.closest('.header-card')?.querySelector('.header-image') as HTMLElement | null;
+  if (!img) return;
+
+  const lineHeight = parseFloat(getComputedStyle(desc).lineHeight);
+  if (!lineHeight || isNaN(lineHeight)) return;
+
+  const hauteurMax = img.offsetHeight;
+  const hauteurAvant = desc.offsetTop - info.offsetTop;
+  const nouvelles = Math.max(1, Math.floor((hauteurMax - hauteurAvant) / lineHeight));
+
+  if (nouvelles !== this.lignes) {
+    this.lignes = nouvelles;
+    this.cdr.detectChanges();
   }
+}
 
-  @HostListener('window:resize')
-  calculerLignes() {
-    const info = this.info.nativeElement;
-    const desc = this.desc.nativeElement;
-    const card = info.closest('.header-card') as HTMLElement;
-    const img = card.querySelector('.header-image') as HTMLElement;
 
-    const hauteurMax = img.offsetHeight;
-    const hauteurAvant = desc.offsetTop - info.offsetTop;
-    const lineHeight = parseFloat(getComputedStyle(desc).lineHeight);
-
-    this.lignes = Math.max(1, Math.floor((hauteurMax - hauteurAvant) / lineHeight));
-  }
 
 }
