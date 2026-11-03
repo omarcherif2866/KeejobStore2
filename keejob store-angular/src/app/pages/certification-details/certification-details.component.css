@@ -436,15 +436,37 @@ body { font-family: 'Poppins', sans-serif; }
 
 .sidebar-card h3 { font-size: 15px; color: #1e2749; margin-bottom: 16px; }
 
-.sidebar-platform-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.sidebar-platform-logo {
-  width: 40px; height: 40px;
-  border-radius: 8px;
-  background: #f4f4fb;
-  display: flex; align-items: center; justify-content: center;
+.sidebar-platform-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
-.sidebar-platform-logo img { max-width: 70%; max-height: 70%; }
-.sidebar-platform-row strong { font-size: 16px; color: #1e2749; }
+.sidebar-platform-logo {
+  display: block;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  overflow: hidden;      /* coupe l'image aux coins arrondis */
+  background: #fff;
+  border: 1px solid #e5e7eb;
+}
+
+.sidebar-platform-logo img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;     /* remplit tout le cadre */
+  display: block;
+}
+
+.sidebar-platform-row:hover strong,
+.sidebar-platform-name:hover strong {
+  color: #4f5bd5;
+  text-decoration: underline;
+}
 
 .sidebar-price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
 .price-current { font-size: 26px; font-weight: 700; color: #1e2749; }
