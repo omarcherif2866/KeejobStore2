@@ -25,6 +25,7 @@ typeCentreEnum = TypeCentre;
 dropdownOpen = false;
 menuTop = 0;
 menuLeft = 0;
+selectedType: '' | 'centre_en_ligne' | 'centre_physique' = '';
   constructor(private centreService: CentreFormationService) {}
 
   ngOnInit(): void {
@@ -117,28 +118,27 @@ selectFormationTitre(titre: string): void {
   }
 
   // ===== RECHERCHE / FILTRE =====
-  onSearch(): void {
-    this.currentPage = 1;
+onSearch(): void {
+  this.currentPage = 1;
 
-    if (this.searchLocalisation?.trim()) {
-      this.loading = true;
-      this.centreService.searchByLocalisation(this.searchLocalisation).subscribe({
-        next: (data) => {
-          this.centres = this.filterByFormationTitre(data);
-          this.applySort();
-          this.updateDisplayed();
-          this.loading = false;
-        },
-        error: () => (this.loading = false)
-      });
-      return;
-    }
-
-    this.centres = this.filterByFormationTitre(this.allCentres);
-    this.applySort();
-    this.updateDisplayed();
+  if (this.searchLocalisation?.trim()) {
+    this.loading = true;
+    this.centreService.searchByLocalisation(this.searchLocalisation).subscribe({
+      next: (data) => {
+        this.centres = this.filterByType(this.filterByFormationTitre(data));   // ← modifié
+        this.applySort();
+        this.updateDisplayed();
+        this.loading = false;
+      },
+      error: () => (this.loading = false)
+    });
+    return;
   }
 
+  this.centres = this.filterByType(this.filterByFormationTitre(this.allCentres));   // ← modifié
+  this.applySort();
+  this.updateDisplayed();
+}
   private filterByFormationTitre(list: CentreFormation[]): CentreFormation[] {
     if (!this.searchFormationTitre) return list;
     return list.filter(centre =>
@@ -179,6 +179,16 @@ getTypeLabel(centre: CentreFormation): string {
     case TypeCentre.centre_physique: return 'Centre physique';
     default: return '';
   }
+}
+
+private filterByType(list: CentreFormation[]): CentreFormation[] {
+  if (!this.selectedType) return list;
+  return list.filter(centre => centre.type === this.selectedType);
+}
+
+onTypeChange(type: '' | 'centre_en_ligne' | 'centre_physique'): void {
+  this.selectedType = type;
+  this.onSearch();   // réapplique localisation + formation + type, puis tri et pagination
 }
 
 }

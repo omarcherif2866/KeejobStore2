@@ -228,6 +228,9 @@
         </div>
       </div>
     </div>
+<p class="no-results" *ngIf="!loading && centres.length === 0">
+  Aucun centre ne correspond à votre recherche.
+</p>
 
 <div class="pagination" *ngIf="!loading && totalPages > 1">
   <button class="pagination-arrow" [disabled]="currentPage === 1" (click)="previousPage()">
