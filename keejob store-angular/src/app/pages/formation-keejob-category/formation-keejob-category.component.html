@@ -164,7 +164,9 @@
         <div class="platform-logo-wrapper">
           <img [src]="sanitizeImage(formation.image)" [alt]="formation.titre" class="platform-logo" loading="lazy">
         </div>
-        <h3 class="platform-card-name">{{ formation.titre }}</h3>
+        <h3 class="platform-card-name" [title]="formation.titre">
+          {{ formation.titre }}
+        </h3>
       </div>
 
 

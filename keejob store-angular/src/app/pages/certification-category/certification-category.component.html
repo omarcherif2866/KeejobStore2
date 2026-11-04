@@ -170,7 +170,7 @@
         <div class="platform-logo-wrapper">
           <img [src]="sanitizeImage(certification.image)" [alt]="certification.titre" class="platform-logo" loading="lazy">
         </div>
-        <h3 class="platform-card-name">{{ certification.titre }}</h3>
+        <h3 class="platform-card-name" [title]="certification.titre">{{ certification.titre }}</h3>
       </div>
 
       <div class="platform-card-rating">

@@ -698,6 +698,11 @@ position: relative; z-index: 1;
 /* ===== Écrans ~15" : même partition, barre au-dessus de l'image, features resserrées ===== */
 @media (min-width: 993px) and (max-width: 1600px) {
 
+  .type-chip {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
   /* Le contenu passe au-dessus de l'image et de son dégradé */
   .centres-hero-content {
     position: relative;
@@ -752,4 +757,38 @@ position: relative; z-index: 1;
   .hero-feature-text { max-width: 100px; }
   .hero-feature-text strong { font-size: 12px; }
   .hero-feature-text span { font-size: 11px; }
+}
+
+.type-filter {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: #f4f4fb;
+  border-radius: 999px;
+}
+
+.type-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.type-chip:hover {
+  color: #1e2749;
+}
+
+.type-chip.active {
+  background: #fff;
+  color: #4f5bd5;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(30, 39, 73, 0.12);
 }
